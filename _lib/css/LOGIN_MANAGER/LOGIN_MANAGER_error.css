@@ -1,0 +1,6 @@
+.scErrorTable { background-color: #ededed; background-image: none; opacity: 1; filter: alpha(opacity=100); border-color: #cccccc; border-style: solid; border-width: 1px }
+.scErrorTitle { background-color: #f06969; background-image: none; opacity: 1; filter: alpha(opacity=100); border-color: #DBDBDB; border-style: solid; border-width: 1px; color: #f7f4f4; font-family: verdana;arial; font-size: 14px; padding: 5px; letter-spacing: 3px; text-decoration: none; vertical-align: middle }
+.scErrorTitleFont { color: #f7f4f4; font-family: verdana;arial; font-size: 14px; text-decoration: none }
+.scErrorMessage { background-color: #f06969; background-image: none; opacity: 1; filter: alpha(opacity=100); border-style: solid; color: #f7f4f4; font-family: verdana;arial; font-size: 12px; padding: 2px; text-decoration: none; vertical-align: middle }
+.scErrorMessageFont { color: #f7f4f4; font-family: verdana;arial; font-size: 12px; text-decoration: none }
+.scErrorLine { background-color: #FFBBBB; background-image: none; opacity: 1; filter: alpha(opacity=100); color: #000000; font-family: verdana;arial; font-size: 16px; text-decoration: none }

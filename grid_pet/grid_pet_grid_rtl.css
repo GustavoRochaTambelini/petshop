@@ -1,0 +1,16 @@
+.css_idpet_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_idpet_grid_line {vertical-align: top;text-align: right;}
+.css_nome_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_nome_grid_line {vertical-align: top;text-align: right;}
+.css_idpet_especie_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_idpet_especie_grid_line {vertical-align: top;text-align: right;}
+.css_idpet_pelagem_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_idpet_pelagem_grid_line {vertical-align: top;text-align: right;}
+.css_idpet_raca_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_idpet_raca_grid_line {vertical-align: top;text-align: right;}
+.css_sexo_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_sexo_grid_line {vertical-align: top;text-align: right;}
+.css_idcliente_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_idcliente_grid_line {vertical-align: top;text-align: right;}
+.css_data_nascimento_label {text-align:center;vertical-align:middle;justify-content:center;font-weight:bold;}
+.css_data_nascimento_grid_line {vertical-align: top;text-align: center;}

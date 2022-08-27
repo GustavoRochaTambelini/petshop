@@ -1,0 +1,16 @@
+.css_idconta_corrente_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_idconta_corrente_grid_line {vertical-align: top;text-align: right;}
+.css_descricao_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_descricao_grid_line {vertical-align: top;text-align: right;}
+.css_ativo_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_ativo_grid_line {vertical-align: top;text-align: right;}
+.css_saldo_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_saldo_grid_line {text-align: right;}
+.css_agencia_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_agencia_grid_line {vertical-align: top;text-align: right;}
+.css_conta_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_conta_grid_line {vertical-align: top;text-align: right;}
+.css_carteira_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_carteira_grid_line {vertical-align: top;text-align: right;}
+.css_mora_juros_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_mora_juros_grid_line {vertical-align: top;text-align: right;}

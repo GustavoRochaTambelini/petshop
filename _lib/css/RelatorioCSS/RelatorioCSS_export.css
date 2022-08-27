@@ -1,0 +1,9 @@
+.scExportPage { background-color: #FFFFFF; background-image: none; opacity: 1; filter: alpha(opacity=100) }
+.scExportTable { background-image: none; opacity: 1; filter: alpha(opacity=100); border-collapse: collapse; border-color: #000000; border-style: solid; border-width: 0,3px; height: 100px; width: 400px }
+.scExportTitle { background-image: none; opacity: 1; filter: alpha(opacity=100); color: #0B0000; font-family: Courier New, Courier, mono; font-size: 16px; font-weight: normal; text-decoration: none }
+.scExportLine { background-image: none; opacity: 1; filter: alpha(opacity=100) }
+.scExportLineFont { color: #0B0000; font-family: Courier New, Courier, mono; font-size: 16px; font-weight: normal; text-decoration: none }
+.scExportBar { border-collapse: collapse; height: 20px !important; margin: 10px 0 }
+.scExportBarRest { background-color: #dfdfdf !important; background-image: none !important; opacity: 1; filter: alpha(opacity=100); border-style: inset !important; border-width: 1px; padding: 0 }
+.scExportBarDone { background-image: none !important; opacity: 1; filter: alpha(opacity=100); border-color: #797979; border-style: outset !important; border-width: 1px; padding: 0 }
+.ui-progressbar-value { background-image: none !important; opacity: 1; filter: alpha(opacity=100); border-color: #797979; border-style: outset !important; border-width: 1px; padding: 0 }

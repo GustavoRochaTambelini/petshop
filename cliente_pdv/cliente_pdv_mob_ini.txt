@@ -1,0 +1,7 @@
+cliente_pdv_mob.php
+petshop
+cliente_pdv_mob
+NAO
+contr
+cliente_pdv
+LigMd5

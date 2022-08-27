@@ -1,0 +1,7 @@
+index.php
+petshop
+itens_captura
+NAO
+cons
+itens_captura
+LigMd5

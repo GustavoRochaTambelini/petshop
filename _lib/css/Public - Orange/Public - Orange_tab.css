@@ -1,0 +1,13 @@
+.scTabPage { background-image: none; opacity: 1; filter: alpha(opacity=100) }
+.scTabTable { background-image: none; opacity: 1; filter: alpha(opacity=100) }
+.scTabTableApls { border-color: #000000; border-style: solid; border-collapse: collapse }
+.scTabLine { background-image: none; opacity: 1; filter: alpha(opacity=100); width: 100%; margin: 0; padding: 0; list-style-type: none }
+.scTabHeader { background-image: none; opacity: 1; filter: alpha(opacity=100) }
+.scTabHeaderFont { color: Gray; font-family: Arial, sans-serif; font-size: 12px; font-weight: normal; text-decoration: none }
+.scTabActive { list-style: none; background-image: none; opacity: 1; filter: alpha(opacity=100); border-width: 1px; border-color: #000; border-style: solid; border-collapse: collapse; padding: 5px 16px 2px 16px; margin: 2px; display: inline; position: static }
+.scTabActive, .scTabActive a { font-family: Arial, sans-serif; font-size: 12px; font-weight: normal; text-decoration: none }
+.scTabInactive { list-style: none; background-image: none; opacity: 1; filter: alpha(opacity=100); border-width: 1px; border-color: #ccc; border-style: solid; border-collapse: collapse; padding: 5px 16px 2px 16px; margin: 2px; display: inline; position: static }
+.scTabInactive, .scTabInactive a { font-family: Arial, sans-serif; font-size: 12px; font-weight: normal; text-decoration: none }
+.scTabActiveLink, .scTabActiveLink a { font-family: Arial, sans-serif; font-size: 12px; font-weight: normal; text-decoration: none; padding: 2px; margin: 2px; display: inline }
+.scTabInactiveLink, .scTabInactiveLink a { font-family: Arial, sans-serif; font-size: 12px; font-weight: normal; text-decoration: none; padding: 2px; margin: 2px; display: inline }
+.scTabInactiveLink:hover, .scTabInactiveLink:hover a { cursor: pointer; text-decoration: underline }

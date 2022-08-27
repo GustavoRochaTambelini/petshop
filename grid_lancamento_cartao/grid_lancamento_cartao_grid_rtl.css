@@ -1,0 +1,34 @@
+.css_data_label {text-align:center;vertical-align:middle;justify-content:center;font-weight:bold;}
+.css_data_grid_line {vertical-align: top;text-align: center;}
+.css_idforma_pagamento_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_idforma_pagamento_grid_line {vertical-align: top;text-align: right;}
+.css_quantidade_parcelas_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_quantidade_parcelas_grid_line {vertical-align: top;text-align: right;}
+.css_numero_parcela_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_numero_parcela_grid_line {vertical-align: top;text-align: right;}
+.css_valor_venda_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_valor_venda_grid_line {vertical-align: top;text-align: right;}
+.css_taxa_cartao_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_taxa_cartao_grid_line {vertical-align: top;text-align: right;}
+.css_valor_da_taxa_cartao_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_valor_da_taxa_cartao_grid_line {vertical-align: top;text-align: right;}
+.css_valor_liquido_cartao_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_valor_liquido_cartao_grid_line {vertical-align: top;text-align: right;}
+.css_taxa_antecipacao_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_taxa_antecipacao_grid_line {vertical-align: top;text-align: right;}
+.css_valor_liquido_antecipacao_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_valor_liquido_antecipacao_grid_line {vertical-align: top;text-align: right;}
+.css_valor_antecipacao_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_valor_antecipacao_grid_line {vertical-align: top;text-align: right;}
+.css_dia_recebimento_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_dia_recebimento_grid_line {vertical-align: top;text-align: right;}
+.css_data_prevista_recebimento_label {text-align:center;vertical-align:middle;justify-content:center;font-weight:bold;}
+.css_data_prevista_recebimento_grid_line {vertical-align: top;text-align: center;}
+.css_observacao_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_observacao_grid_line {vertical-align: top;text-align: right;}
+.css_status_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_status_grid_line {vertical-align: top;text-align: right;}
+.css_idlancamento_cartao_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_idlancamento_cartao_grid_line {vertical-align: top;text-align: right;}
+.css_idcontas_receber_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_idcontas_receber_grid_line {vertical-align: top;text-align: right;}

@@ -1,0 +1,9 @@
+.scExportPage { background-color: #FCFFC7; background-image: none; opacity: 1; filter: alpha(opacity=100); margin: 20px }
+.scExportTable { background-image: none; opacity: 1; filter: alpha(opacity=100); border-collapse: collapse; border-color: #406080; border-style: solid; border-width: 1px; height: 100px; width: 400px }
+.scExportTitle { background-color: #F3D328; background-image: none; opacity: 1; filter: alpha(opacity=100); border-color: #406080; border-style: solid; border-width: 1px; color: #FFFFFF; font-family: Verdana, Arial, sans-serif; font-size: 12px; font-weight: bold; padding: 4px }
+.scExportLine { background-color: #FFF5B5; background-image: none; opacity: 1; filter: alpha(opacity=100); padding: 4px }
+.scExportLineFont { color: #404040; font-family: Tahoma, Arial, sans-serif; font-size: 12px }
+.scExportBar { border-collapse: collapse; height: 20px !important; margin: 10px 0 }
+.scExportBarRest { background-color: #dfdfdf !important; background-image: none !important; opacity: 1; filter: alpha(opacity=100); border-style: inset !important; border-width: 1px; padding: 0 }
+.scExportBarDone { background-color: #F3D328 !important; background-image: none !important; opacity: 1; filter: alpha(opacity=100); border-color: #797979; border-style: outset !important; border-width: 1px; padding: 0 }
+.ui-progressbar-value { background-color: #F3D328 !important; background-image: none !important; opacity: 1; filter: alpha(opacity=100); border-color: #797979; border-style: outset !important; border-width: 1px; padding: 0 }

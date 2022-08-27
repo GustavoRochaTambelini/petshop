@@ -1,0 +1,18 @@
+.css_idorcamento_label { }
+.css_idorcamento_line {text-align:left;}
+.css_idorcamento_obj {text-align:left;}
+.css_idcliente_label { }
+.css_idcliente_line {text-align:left;}
+.css_idcliente_obj {text-align:left;}
+.css_observacao_label { }
+.css_observacao_line {width:150px;height:50px;}
+.css_observacao_obj {width:150px;height:50px;}
+.css_valor_total_label {font-size:15px;font-weight:bold;text-align:left;}
+.css_valor_total_line {font-size:24px;color:#000066;background-color:#FFFF99;font-weight:bold;text-align:center;}
+.css_valor_total_obj {font-size:15px;font-weight:bold;text-align:right;}
+.css_grid_itens_label { }
+.css_grid_itens_line { }
+.css_grid_itens_obj { }
+.css_produto_label { }
+.css_produto_line { }
+.css_produto_obj {font-size:20px;}

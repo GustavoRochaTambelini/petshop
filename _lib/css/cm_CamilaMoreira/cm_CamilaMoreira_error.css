@@ -1,0 +1,6 @@
+.scErrorTable { background-color: #f2dede; background-image: none; opacity: 1; filter: alpha(opacity=100); border-color: #ebccd1; border-style: solid; border-width: 1px; height: 30px; width: 320px; -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0 }
+.scErrorTitle { background-color: ;}#id_error_display_table_text hr {      border-color: transparent;  }  .scFormErrorTitle {; background-image: none; opacity: 1; filter: alpha(opacity=100); border-color: ; display: none; color: #ebccd1; border-style: solid; border-width: 1px; color: #a94442; font-family: sans-serif; font-size: 14px; text-decoration: none; vertical-align: middle }
+.scErrorTitleFont { color: #a94442; font-family: sans-serif; font-size: 14px; text-decoration: none }
+.scErrorMessage { background-color: #f2dede; background-image: none; opacity: 1; filter: alpha(opacity=100); color: #a94442; font-family: sans-serif; font-size: 14px; padding: 10px; text-decoration: none }
+.scErrorMessageFont { color: #a94442; font-family: sans-serif; font-size: 14px; text-decoration: none }
+.scErrorLine { background-color: transparent; background-image: none; opacity: 1; filter: alpha(opacity=100); color: #a94442; font-family: sans-serif; font-size: 14px; padding: 12px 15px; letter-spacing: 0px; text-decoration: none }

@@ -1,0 +1,20 @@
+.scGridHeaderFont { text-align: center }
+.scGridFooterFont { text-align: center }
+.scGridObjectOdd { text-align: center }
+.scGridBlock { text-align: left }
+.scGridFieldEvenFont { text-align: center }
+.scGridFieldEvenVert { text-align: center }
+.scGridFieldOddFont { text-align: center }
+.scGridFieldOddVert { text-align: center }
+.scGridLabelVert { text-align: center }
+.scGridLabelFont { text-align: center }
+.scGridSummarySearchLabel { text-align: center }
+.scGridSummaryLabel { text-align: center }
+.scGridSummaryLineEven { text-align: center }
+.scGridSummaryLineOdd { text-align: center }
+.scGridSummaryGroupbyVisible { text-align: left }
+.scGridSummaryGroupbyInvisible { text-align: left }
+.scGridSummaryGroupbySeq { text-align: center }
+.SumoSelect > .optWrapper.multiple > .MultiControls > p.btnOk { text-align: center }
+.SumoSelect > .optWrapper.multiple > .MultiControls { text-align: css_summarysearch_multiselectbuttonline_text_align }
+.SumoSelect > .optWrapper.multiple > .MultiControls > p.btnCancel { text-align: center }

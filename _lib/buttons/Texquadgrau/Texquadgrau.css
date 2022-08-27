@@ -1,0 +1,4 @@
+.scLink_default { text-decoration: none; font-size: 11px; color: #000066;  }
+.scLink_default:visited { text-decoration: none; font-size: 11px; color: #000066;  }
+.scLink_default:active { text-decoration: none; font-size: 11px; color: #000066;  }
+.scLink_default:hover { text-decoration: underline; font-size: 11px; color: #000066;  }

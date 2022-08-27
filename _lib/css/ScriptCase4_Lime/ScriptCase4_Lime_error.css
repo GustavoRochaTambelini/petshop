@@ -1,0 +1,6 @@
+.scErrorTable { background-image: none; opacity: 1; filter: alpha(opacity=100) }
+.scErrorTitle { background-color: 8ecd3b; background-image: none; opacity: 1; filter: alpha(opacity=100); border-color: #FF0000; border-style: solid; border-width: 1px; color: #FFFFBB; font-family: Arial, sans-serif; font-size: 13px; font-weight: bold; padding: 2px }
+.scErrorTitleFont { color: #FFFFBB; font-family: Arial, sans-serif; font-size: 13px; font-weight: bold }
+.scErrorMessage { background-color: ecfcd5; background-image: none; opacity: 1; filter: alpha(opacity=100); border-color: d3efad; border-style: solid; border-width: 1px; color: 5d862d; font-family: Arial, Arial, sans-serif; font-size: 11px; padding: 2px }
+.scErrorMessageFont { color: 5d862d; font-family: Arial, Arial, sans-serif; font-size: 11px }
+.scErrorLine { background-color: ecfcd5; background-image: none; opacity: 1; filter: alpha(opacity=100) }

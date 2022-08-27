@@ -1,0 +1,6 @@
+.scErrorTable { background-image: none; opacity: 1; filter: alpha(opacity=100); border-collapse: collapse; border-color: gray; border-style: solid; border-width: 1px }
+.scErrorTitle { background-color: #265A93; background-image: none; opacity: 1; filter: alpha(opacity=100); color: #ffffff; font-family: arial; text-decoration: none }
+.scErrorTitleFont { color: #ffffff; font-family: arial; text-decoration: none }
+.scErrorMessage { background-color: #265A93; background-image: none; opacity: 1; filter: alpha(opacity=100); color: #ffffff; font-family: arial; text-decoration: none }
+.scErrorMessageFont { color: #ffffff; font-family: arial; text-decoration: none }
+.scErrorLine { background-image: none; opacity: 1; filter: alpha(opacity=100); font-family: arial; text-decoration: none }

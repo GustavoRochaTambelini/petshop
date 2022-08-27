@@ -1,0 +1,12 @@
+.scTabPage { background-color: #FFFFFF; background-image: none; opacity: 1; filter: alpha(opacity=100) }
+.scTabTable { background-image: none; opacity: 1; filter: alpha(opacity=100) }
+.scTabLine { background-image: none; opacity: 1; filter: alpha(opacity=100); width: 100%; margin: 0; padding: 5px 0 0 20px; list-style-type: none }
+.scTabHeader { background-color: #b5d9e3; background-image: none; opacity: 1; filter: alpha(opacity=100) }
+.scTabHeaderFont { color: #000000; font-family: Verdana, Arial, sans-serif; font-size: 14px; font-weight: bold }
+.scTabActive { list-style: none; background-color: #4CA1B8; background-image: none; background-position: center center; opacity: 1; filter: alpha(opacity=100); border-width: 1px 1px 1px 1px; border-color: #e0e6ed #e0e6ed white #e0e6ed; border-style: solid; border-collapse: collapse; margin: 1px 0 0 1px; -moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; border-radius: 4px 4px 0 0; display: inline-block; position: static }
+.scTabActive, .scTabActive a { color: #0030FF; font-family: Verdana, Arial, sans-serif; font-size: 12px; font-weight: bold; text-decoration: none }
+.scTabInactive { list-style: none; background-color: #03699C; background-image: none; background-position: center center; opacity: 1; filter: alpha(opacity=100); border-width: 1px 1px 0 1px; border-color: #e0e6ed; border-style: solid; border-collapse: collapse; margin: 1px 0 0 1px; -moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; border-radius: 4px 4px 0 0; display: inline-block; position: static }
+.scTabInactive, .scTabInactive a { color: #CCCCCC; font-family: Verdana, Arial, sans-serif; font-size: 12px; font-weight: bold; text-decoration: none }
+.scTabActiveLink, .scTabActiveLink a { color: #0030FF; font-family: Verdana, Arial, sans-serif; font-size: 12px; padding: 2px 5px; margin: 3px 1px; display: inline-block }
+.scTabInactiveLink, .scTabInactiveLink a { color: #CCCCCC; font-family: Verdana, Arial, sans-serif; font-size: 12px; padding: 2px 5px; margin: 3px 1px; display: inline-block }
+.scTabInactiveLink:hover, .scTabInactiveLink:hover a { cursor: pointer; text-decoration: underline }

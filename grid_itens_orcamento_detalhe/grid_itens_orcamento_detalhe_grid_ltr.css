@@ -1,0 +1,16 @@
+.css_idproduto_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_idproduto_grid_line {vertical-align: top;text-align: right;}
+.css_descricao_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_descricao_grid_line {vertical-align: top;text-align: left;}
+.css_unidade_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_unidade_grid_line {vertical-align: top;text-align: left;}
+.css_valor_unitario_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_valor_unitario_grid_line {vertical-align: top;text-align: right;}
+.css_quantidade_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_quantidade_grid_line {vertical-align: top;text-align: right;}
+.css_valor_total_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_valor_total_grid_line {vertical-align: top;text-align: right;}
+.css_iditens_orcamento_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_iditens_orcamento_grid_line {vertical-align: top;text-align: right;}
+.css_idorcamento_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_idorcamento_grid_line {vertical-align: top;text-align: right;}

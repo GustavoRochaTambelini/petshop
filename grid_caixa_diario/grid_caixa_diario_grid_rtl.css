@@ -1,0 +1,22 @@
+.css_data_label {text-align:center;vertical-align:middle;justify-content:center;font-weight:bold;}
+.css_data_grid_line {vertical-align: top;text-align: center;}
+.css_idcliente_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_idcliente_grid_line {vertical-align: top;text-align: right;}
+.css_observacao_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_observacao_grid_line {vertical-align: top;text-align: right;}
+.css_entrada_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_entrada_grid_line {color:#0033CC;vertical-align: top;text-align: right;}
+.css_entrada_tot_ger {text-align: ;text-align: right;font-size:16px;color:#0033CC;}
+.css_saida_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_saida_grid_line {color:#FF3300;vertical-align: top;text-align: right;}
+.css_saida_tot_ger {text-align: ;text-align: right;font-size:16px;color:#FF3300;}
+.css_valor_total_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_valor_total_grid_line {color:#009900;text-align: right;}
+.css_idforma_pagamento_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_idforma_pagamento_grid_line {vertical-align: top;text-align: right;}
+.css_idcaixa_diario_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_idcaixa_diario_grid_line {vertical-align: top;text-align: right;}
+.css_idconta_corrente_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_idconta_corrente_grid_line {vertical-align: top;text-align: right;}
+.css_entrada_S_tot_ger {text-align: right;font-size:16px;color:#0033CC;}
+.css_saida_S_tot_ger {text-align: right;font-size:16px;color:#FF3300;}

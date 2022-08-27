@@ -1,0 +1,11 @@
+.scFormHeaderFont { text-align: center }
+.scFormLabelOdd { text-align: right }
+.scFormLabelOddMult { text-align: left }
+.scFormObjectOdd { text-align: right }
+.scFormObjectFocusOdd { text-align: right }
+.scFormDataOdd { text-align: right }
+.scFormDataDragNDrop { text-align: center }
+.scFormErrorTitle { text-align: left }
+.scFormErrorMessage { text-align: left }
+.scFormBlock { text-align: left }
+.scAjaxDiv { text-align: center }
