@@ -3553,6 +3553,35 @@ if (!$_SESSION['sc_session'][$this->Ini->sc_page]['chart_fluxo_caixa_sete_dias']
            $nm_saida->saida(" <link rel=\"stylesheet\" href=\"" . $this->Ini->path_prod . "/third/font-awesome/css/all.min.css\" type=\"text/css\" media=\"screen\" />\r\n");
            $nm_saida->saida(" <script type=\"text/javascript\" src=\"" . $this->Ini->path_prod . "/third/jquery_plugin/touch_punch/jquery.ui.touch-punch.min.js\"></script>\r\n");
            $nm_saida->saida(" <script type=\"text/javascript\" src=\"" . $this->Ini->path_prod . "/third/jquery_plugin/malsup-blockui/jquery.blockUI.js\"></script>\r\n");
+           if ($_SESSION['scriptcase']['proc_mobile'] && !$_SESSION['sc_session'][$this->Ini->sc_page]['chart_fluxo_caixa_sete_dias']['ajax_nav']) {  
+               $forced_mobile = (isset($_SESSION['scriptcase']['force_mobile']) && $_SESSION['scriptcase']['force_mobile']) ? 'true' : 'false';
+               $sc_app_data   = json_encode([ 
+                   'forceMobile' => $forced_mobile, 
+                   'appType' => 'summary', 
+                   'improvements' => true, 
+                   'displayOptionsButton' => false, 
+                   'displayScrollUp' => true, 
+                   'bottomToolbarFixed' => true, 
+                   'mobileSimpleToolbar' => false, 
+                   'scrollUpPosition' => 'R', 
+                   'toolbarOrientation' => 'H', 
+                   'mobilePanes' => 'true', 
+                   'navigationBarButtons' => unserialize('a:5:{i:0;s:14:"sys_format_ini";i:1;s:14:"sys_format_ret";i:2;s:15:"sys_format_rows";i:3;s:14:"sys_format_ava";i:4;s:14:"sys_format_fim";}'), 
+                   'langs' => [ 
+                       'lang_refined_search' => html_entity_decode($this->Ini->Nm_lang['lang_refined_search'], ENT_COMPAT, $_SESSION['scriptcase']['charset']), 
+                       'lang_summary_search_button' => html_entity_decode($this->Ini->Nm_lang['lang_summary_search_button'], ENT_COMPAT, $_SESSION['scriptcase']['charset']), 
+                       'lang_details_button' => html_entity_decode($this->Ini->Nm_lang['lang_details_button'], ENT_COMPAT, $_SESSION['scriptcase']['charset']), 
+                   ], 
+               ]); ?> 
+        <input type="hidden" id="sc-mobile-app-data" value='<?php echo $sc_app_data; ?>' />
+        <script type="text/javascript" src="../_lib/lib/js/nm_modal_panes.jquery.js"></script>
+        <script type="text/javascript" src="../_lib/lib/js/nm_mobile.js"></script>
+        <link rel='stylesheet' href='../_lib/lib/css/nm_mobile.css' type='text/css'/>
+                    <script>
+                        $(document).ready(function(){
+                            bootstrapMobile();
+                        });
+                    </script>           <?php }
            $nm_saida->saida(" <script type=\"text/javascript\" src=\"chart_fluxo_caixa_sete_dias_ajax.js\"></script>\r\n");
            $nm_saida->saida(" <script type=\"text/javascript\">\r\n");
            $nm_saida->saida("   var sc_ajaxBg = '" . $this->Ini->Color_bg_ajax . "';\r\n");
@@ -5888,15 +5917,7 @@ if (!$_SESSION['sc_session'][$this->Ini->sc_page]['chart_fluxo_caixa_sete_dias']
      $this->nm_field_dinamico = array();
      $this->nm_order_dinamico = array();
      $_SESSION['scriptcase']['sc_sql_ult_conexao'] = ""; 
-     if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-     { 
-         $nmgp_select = "SELECT data, Entradas, Saidas, media from " . $this->Ini->nm_tabela; 
-     } 
-     elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
-     { 
-         $nmgp_select = "SELECT data, Entradas, Saidas, media from " . $this->Ini->nm_tabela; 
-     } 
-     elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
+     if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
      { 
          $nmgp_select = "SELECT data, Entradas, Saidas, media from " . $this->Ini->nm_tabela; 
      } 

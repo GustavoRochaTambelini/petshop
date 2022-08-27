@@ -3463,7 +3463,7 @@ if ($this->quantidade_total != "")
           $this->valor_total = 0;
           $this->sc_force_zero[] = 'valor_total';
       } 
-      $nm_bases_lob_geral = array_merge($this->Ini->nm_bases_oracle, $this->Ini->nm_bases_ibase, $this->Ini->nm_bases_informix, $this->Ini->nm_bases_mysql, $this->Ini->nm_bases_access, $this->Ini->nm_bases_sqlite, array('pdo_ibm'), array('pdo_sqlsrv'));
+      $nm_bases_lob_geral = array_merge($this->Ini->nm_bases_ibase, $this->Ini->nm_bases_mysql, $this->Ini->nm_bases_access, $this->Ini->nm_bases_sqlite);
       if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_pacote_cliente']['decimal_db'] == ",") 
       {
           $this->nm_troca_decimal(".", ",");
@@ -3508,21 +3508,6 @@ if ($this->quantidade_total != "")
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente ";
               $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente "); 
           }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente ";
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente ";
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente ";
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente "); 
-          }  
           else  
           {
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente ";
@@ -3557,21 +3542,6 @@ if ($this->quantidade_total != "")
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
                   $SC_fields_update[] = "idpacote = $this->idpacote, idcliente = $this->idcliente, quantidade_total = $this->quantidade_total, qunatidade_realizada = $this->qunatidade_realizada, valor_total = $this->valor_total, pago = '$this->pago'"; 
               } 
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              { 
-                  $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idpacote = $this->idpacote, idcliente = $this->idcliente, quantidade_total = $this->quantidade_total, qunatidade_realizada = $this->qunatidade_realizada, valor_total = $this->valor_total, pago = '$this->pago'"; 
-              } 
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              { 
-                  $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idpacote = $this->idpacote, idcliente = $this->idcliente, quantidade_total = $this->quantidade_total, qunatidade_realizada = $this->qunatidade_realizada, valor_total = $this->valor_total, pago = '$this->pago'"; 
-              } 
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              { 
-                  $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idpacote = $this->idpacote, idcliente = $this->idcliente, quantidade_total = $this->quantidade_total, qunatidade_realizada = $this->qunatidade_realizada, valor_total = $this->valor_total, pago = '$this->pago'"; 
-              } 
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
@@ -3592,18 +3562,6 @@ if ($this->quantidade_total != "")
               {
                   $comando .= " WHERE idpacote_cliente = $this->idpacote_cliente ";  
               }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-                  $comando .= " WHERE idpacote_cliente = $this->idpacote_cliente ";  
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $comando .= " WHERE idpacote_cliente = $this->idpacote_cliente ";  
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                  $comando .= " WHERE idpacote_cliente = $this->idpacote_cliente ";  
-              }  
               else  
               {
                   $comando .= " WHERE idpacote_cliente = $this->idpacote_cliente ";  
@@ -3612,13 +3570,6 @@ if ($this->quantidade_total != "")
               $comando = str_replace("'null'", "null", $comando) ; 
               $comando = str_replace("#null#", "null", $comando) ; 
               $comando = str_replace($this->Ini->date_delim . "null" . $this->Ini->date_delim1, "null", $comando) ; 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                $comando = str_replace("EXTEND('', YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND('', YEAR TO DAY)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO DAY)", "null", $comando) ; 
-              }  
               $useUpdateProcedure = false;
               if (!empty($SC_fields_update) || $useUpdateProcedure)
               { 
@@ -3682,9 +3633,6 @@ if ($this->quantidade_total != "")
               elseif (isset($this->itens_pacote)) { $this->nm_limpa_alfa($this->itens_pacote); }
 
               $this->nm_formatar_campos();
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-              }
 
               $aOldRefresh               = $this->nmgp_refresh_fields;
               $this->nmgp_refresh_fields = array_diff(array('idpacote_cliente', 'idcliente', 'idpacote', 'quantidade_total', 'valor_total', 'pago', 'qunatidade_realizada', 'itens_pacote'), $aDoNotUpdate);
@@ -3741,31 +3689,11 @@ if ($this->quantidade_total != "")
               { 
                   $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (idpacote, idcliente, quantidade_total, qunatidade_realizada, valor_total, pago) VALUES ($this->idpacote, $this->idcliente, $this->quantidade_total, $this->qunatidade_realizada, $this->valor_total, '$this->pago')"; 
               }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              { 
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idpacote, idcliente, quantidade_total, qunatidade_realizada, valor_total, pago) VALUES (" . $NM_seq_auto . "$this->idpacote, $this->idcliente, $this->quantidade_total, $this->qunatidade_realizada, $this->valor_total, '$this->pago')"; 
-              }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-              { 
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idpacote, idcliente, quantidade_total, qunatidade_realizada, valor_total, pago) VALUES (" . $NM_seq_auto . "$this->idpacote, $this->idcliente, $this->quantidade_total, $this->qunatidade_realizada, $this->valor_total, '$this->pago')"; 
-              }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idpacote, idcliente, quantidade_total, qunatidade_realizada, valor_total, pago) VALUES (" . $NM_seq_auto . "$this->idpacote, $this->idcliente, $this->quantidade_total, $this->qunatidade_realizada, $this->valor_total, '$this->pago')"; 
-              }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idpacote, idcliente, quantidade_total, qunatidade_realizada, valor_total, pago) VALUES (" . $NM_seq_auto . "$this->idpacote, $this->idcliente, $this->quantidade_total, $this->qunatidade_realizada, $this->valor_total, '$this->pago')"; 
-              }
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
               {
                   $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idpacote, idcliente, quantidade_total, qunatidade_realizada, valor_total, pago) VALUES (" . $NM_seq_auto . "$this->idpacote, $this->idcliente, $this->quantidade_total, $this->qunatidade_realizada, $this->valor_total, '$this->pago')"; 
               }
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sqlite))
-              {
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idpacote, idcliente, quantidade_total, qunatidade_realizada, valor_total, pago) VALUES (" . $NM_seq_auto . "$this->idpacote, $this->idcliente, $this->quantidade_total, $this->qunatidade_realizada, $this->valor_total, '$this->pago')"; 
-              }
-              elseif ($this->Ini->nm_tpbanco == 'pdo_ibm')
               {
                   $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idpacote, idcliente, quantidade_total, qunatidade_realizada, valor_total, pago) VALUES (" . $NM_seq_auto . "$this->idpacote, $this->idcliente, $this->quantidade_total, $this->qunatidade_realizada, $this->valor_total, '$this->pago')"; 
               }
@@ -3777,13 +3705,6 @@ if ($this->quantidade_total != "")
               $comando = str_replace("'null'", "null", $comando) ; 
               $comando = str_replace("#null#", "null", $comando) ; 
               $comando = str_replace($this->Ini->date_delim . "null" . $this->Ini->date_delim1, "null", $comando) ; 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                $comando = str_replace("EXTEND('', YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND('', YEAR TO DAY)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO DAY)", "null", $comando) ; 
-              }  
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = $comando; 
               $rs = $this->Db->Execute($comando); 
               if ($rs === false)  
@@ -3809,7 +3730,7 @@ if ($this->quantidade_total != "")
               }  
               if ('refresh_insert' != $this->nmgp_opcao)
               {
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql) || in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access) || in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase)) 
+              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access)) 
               { 
                   $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select @@identity"; 
                   $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
@@ -3829,47 +3750,6 @@ if ($this->quantidade_total != "")
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
               { 
                   $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select last_insert_id()"; 
-                  $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
-                  if ($rsy === false && !$rsy->EOF)  
-                  { 
-                      $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dbas'], $this->Db->ErrorMsg()); 
-                      exit; 
-                  } 
-                  $this->idpacote_cliente = $rsy->fields[0];
-                  $rsy->Close(); 
-              } 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              { 
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "SELECT dbinfo('sqlca.sqlerrd1') FROM " . $this->Ini->nm_tabela; 
-                  $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
-                  if ($rsy === false && !$rsy->EOF)  
-                  { 
-                      $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dbas'], $this->Db->ErrorMsg()); 
-                      exit; 
-                  } 
-                  $this->idpacote_cliente = $rsy->fields[0];
-                  $rsy->Close(); 
-              } 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              { 
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select .currval from dual"; 
-                  $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
-                  if ($rsy === false && !$rsy->EOF)  
-                  { 
-                      $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dbas'], $this->Db->ErrorMsg()); 
-                      exit; 
-                  } 
-                  $this->idpacote_cliente = $rsy->fields[0];
-                  $rsy->Close(); 
-              } 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
-              { 
-                  $str_tabela = "SYSIBM.SYSDUMMY1"; 
-                  if($this->Ini->nm_con_use_schema == "N") 
-                  { 
-                          $str_tabela = "SYSDUMMY1"; 
-                  } 
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "SELECT IDENTITY_VAL_LOCAL() FROM " . $str_tabela; 
                   $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
                   if ($rsy === false && !$rsy->EOF)  
                   { 
@@ -3964,21 +3844,6 @@ if ($this->quantidade_total != "")
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente"; 
               $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente "); 
           }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente"; 
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente"; 
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente"; 
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente "); 
-          }  
           else  
           {
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente"; 
@@ -4005,21 +3870,6 @@ if ($this->quantidade_total != "")
           { 
               $rs1->Close(); 
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
-              {
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente "; 
-                  $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente "); 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente "; 
-                  $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente "); 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente "; 
-                  $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente "); 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
               {
                   $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente "; 
                   $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where idpacote_cliente = $this->idpacote_cliente "); 
@@ -4239,43 +4089,12 @@ $_SESSION['scriptcase']['form_pacote_cliente']['contr_erro'] = 'off';
           { 
               $GLOBALS["NM_ERRO_IBASE"] = 1;  
           } 
-          if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-          { 
-              $nmgp_select = "SELECT idpacote_cliente, idpacote, idcliente, quantidade_total, qunatidade_realizada, valor_total, pago from " . $this->Ini->nm_tabela ; 
-          } 
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          { 
-              $nmgp_select = "SELECT idpacote_cliente, idpacote, idcliente, quantidade_total, qunatidade_realizada, valor_total, pago from " . $this->Ini->nm_tabela ; 
-          } 
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          { 
-              $nmgp_select = "SELECT idpacote_cliente, idpacote, idcliente, quantidade_total, qunatidade_realizada, valor_total, pago from " . $this->Ini->nm_tabela ; 
-          } 
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          { 
-              $nmgp_select = "SELECT idpacote_cliente, idpacote, idcliente, quantidade_total, qunatidade_realizada, valor_total, pago from " . $this->Ini->nm_tabela ; 
-          } 
-          else 
-          { 
-              $nmgp_select = "SELECT idpacote_cliente, idpacote, idcliente, quantidade_total, qunatidade_realizada, valor_total, pago from " . $this->Ini->nm_tabela ; 
-          } 
+          $nmgp_select = "SELECT idpacote_cliente, idpacote, idcliente, quantidade_total, qunatidade_realizada, valor_total, pago from " . $this->Ini->nm_tabela ; 
           $aWhere = array();
           $aWhere[] = $sc_where_filter;
           if ($this->nmgp_opcao == "igual" || (($_SESSION['sc_session'][$this->Ini->sc_page]['form_pacote_cliente']['run_iframe'] == "F" || $_SESSION['sc_session'][$this->Ini->sc_page]['form_pacote_cliente']['run_iframe'] == "R") && ($this->sc_evento == "insert" || $this->sc_evento == "update")) )
           { 
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
-              {
-                  $aWhere[] = "idpacote_cliente = $this->idpacote_cliente"; 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-                  $aWhere[] = "idpacote_cliente = $this->idpacote_cliente"; 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $aWhere[] = "idpacote_cliente = $this->idpacote_cliente"; 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
               {
                   $aWhere[] = "idpacote_cliente = $this->idpacote_cliente"; 
               }  
@@ -5528,17 +5347,8 @@ if ($this->quantidade_total != "")
           if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access)) {
               $Nm_accent = $this->Ini->Nm_accent_access;
           }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2)) {
-              $Nm_accent = $this->Ini->Nm_accent_db2;
-          }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase)) {
               $Nm_accent = $this->Ini->Nm_accent_ibase;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix)) {
-              $Nm_accent = $this->Ini->Nm_accent_informix;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql)) {
-              $Nm_accent = $this->Ini->Nm_accent_mssql;
           }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql)) {
               $Nm_accent = $this->Ini->Nm_accent_mysql;
@@ -5546,23 +5356,8 @@ if ($this->quantidade_total != "")
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres)) {
               $Nm_accent = $this->Ini->Nm_accent_postgres;
           }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle)) {
-              $Nm_accent = $this->Ini->Nm_accent_oracle;
-          }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sqlite)) {
               $Nm_accent = $this->Ini->Nm_accent_sqlite;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase)) {
-              $Nm_accent = $this->Ini->Nm_accent_sybase;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_vfp)) {
-              $Nm_accent = $this->Ini->Nm_accent_vfp;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_odbc)) {
-              $Nm_accent = $this->Ini->Nm_accent_odbc;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress)) {
-              $Nm_accent = $this->Ini->Nm_accent_progress;
           }
       }
       $nm_numeric[] = "idpacote_cliente";$nm_numeric[] = "idpacote";$nm_numeric[] = "idcliente";$nm_numeric[] = "quantidade_total";$nm_numeric[] = "qunatidade_realizada";$nm_numeric[] = "valor_total";
@@ -5608,18 +5403,6 @@ if ($this->quantidade_total != "")
          if (in_array($campo_join, $nm_esp_postgres) && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
          {
              $nome      = "CAST ($nome AS TEXT)";
-             $nm_aspas  = "'";
-             $nm_aspas1 = "'";
-         }
-         if (in_array($campo_join, $nm_numeric) && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase) && (strtoupper($condicao) == "II" || strtoupper($condicao) == "QP" || strtoupper($condicao) == "NP"))
-         {
-             $nome      = "CAST ($nome AS VARCHAR)";
-             $nm_aspas  = "'";
-             $nm_aspas1 = "'";
-         }
-         if (in_array($campo_join, $nm_numeric) && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress) && (strtoupper($condicao) == "II" || strtoupper($condicao) == "QP" || strtoupper($condicao) == "NP"))
-         {
-             $nome      = "CAST ($nome AS VARCHAR(255))";
              $nm_aspas  = "'";
              $nm_aspas1 = "'";
          }

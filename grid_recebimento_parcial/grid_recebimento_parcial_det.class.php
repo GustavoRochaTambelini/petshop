@@ -223,26 +223,7 @@ class grid_recebimento_parcial_det
    $nm_data_fixa = date($Str); 
    $this->nm_data->SetaData(date("Y/m/d H:i:s"), "YYYY/MM/DD HH:II:SS"); 
    $this->Ini->sc_Include($this->Ini->path_lib_php . "/nm_edit.php", "F", "nmgp_Form_Num_Val") ; 
-   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase)) 
-   { 
        $nmgp_select = "SELECT idrecebimento_parcial, idcontas_receber, idforma_pagamento, data, valor, observacao, multa, juros from " . $this->Ini->nm_tabela; 
-   } 
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql)) 
-   { 
-       $nmgp_select = "SELECT idrecebimento_parcial, idcontas_receber, idforma_pagamento, data, valor, observacao, multa, juros from " . $this->Ini->nm_tabela; 
-   } 
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle)) 
-   { 
-       $nmgp_select = "SELECT idrecebimento_parcial, idcontas_receber, idforma_pagamento, TO_DATE(TO_CHAR(data, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), valor, observacao, multa, juros from " . $this->Ini->nm_tabela; 
-   } 
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix)) 
-   { 
-       $nmgp_select = "SELECT idrecebimento_parcial, idcontas_receber, idforma_pagamento, data, valor, LOTOFILE(observacao, '" . $this->Ini->root . $this->Ini->path_imag_temp . "/sc_blob_informix', 'client') as observacao, multa, juros from " . $this->Ini->nm_tabela; 
-   } 
-   else 
-   { 
-       $nmgp_select = "SELECT idrecebimento_parcial, idcontas_receber, idforma_pagamento, data, valor, observacao, multa, juros from " . $this->Ini->nm_tabela; 
-   } 
    $parms_det = explode("*PDet*", $_SESSION['sc_session'][$this->Ini->sc_page]['grid_recebimento_parcial']['chave_det']) ; 
    foreach ($parms_det as $key => $cada_par)
    {
@@ -250,10 +231,6 @@ class grid_recebimento_parcial_det
        $parms_det[$key] = substr($parms_det[$key], 1, strlen($parms_det[$key]) - 2);
    } 
    if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
-   {
-       $nmgp_select .= " where  idrecebimento_parcial = $parms_det[0]" ;  
-   } 
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
    {
        $nmgp_select .= " where  idrecebimento_parcial = $parms_det[0]" ;  
    } 
@@ -279,19 +256,7 @@ class grid_recebimento_parcial_det
    $this->valor = $rs->fields[4] ;  
    $this->valor = str_replace(",", ".", $this->valor);
    $this->valor = (string)$this->valor;
-   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-   { 
-       $this->observacao = "";  
-       if (is_file($rs->fields[5])) 
-       { 
-           $this->observacao = file_get_contents($rs->fields[5]);  
-       } 
-   } 
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-   { 
-       $this->observacao = $this->Db->BlobDecode($rs->fields[5]) ;  
-   } 
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
+   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
    { 
        $this->observacao = $this->Db->BlobDecode($rs->fields[5]) ;  
    } 
@@ -391,6 +356,35 @@ class grid_recebimento_parcial_det
    $nm_saida->saida(" <script type=\"text/javascript\" src=\"../_lib/lib/js/jquery-3.6.0.min.js\"></script>\r\n");
            $nm_saida->saida("   <link rel=\"stylesheet\" type=\"text/css\" href=\"" . $this->Ini->path_prod . "/third/jquery_plugin/viewerjs/viewer.css\" />\r\n");
            $nm_saida->saida("   <script type=\"text/javascript\" src=\"" . $this->Ini->path_prod . "/third/jquery_plugin/viewerjs/viewer.js\"></script>\r\n");
+           if ($_SESSION['scriptcase']['proc_mobile']) {  
+               $forced_mobile = (isset($_SESSION['scriptcase']['force_mobile']) && $_SESSION['scriptcase']['force_mobile']) ? 'true' : 'false';
+               $sc_app_data = json_encode([ 
+                   'forceMobile' => $forced_mobile, 
+                   'appType' => 'detail', 
+                   'improvements' => true, 
+                   'displayOptionsButton' => false, 
+                   'displayScrollUp' => true, 
+                   'bottomToolbarFixed' => true, 
+                   'mobileSimpleToolbar' => true, 
+                   'scrollUpPosition' => 'R', 
+                   'toolbarOrientation' => 'H', 
+                   'mobilePanes' => 'true', 
+                   'navigationBarButtons' => unserialize('a:5:{i:0;s:14:"sys_format_ini";i:1;s:14:"sys_format_ret";i:2;s:15:"sys_format_rows";i:3;s:14:"sys_format_ava";i:4;s:14:"sys_format_fim";}'), 
+                   'langs' => [ 
+                       'lang_refined_search' => html_entity_decode($this->Ini->Nm_lang['lang_refined_search'], ENT_COMPAT, $_SESSION['scriptcase']['charset']), 
+                       'lang_summary_search_button' => html_entity_decode($this->Ini->Nm_lang['lang_summary_search_button'], ENT_COMPAT, $_SESSION['scriptcase']['charset']), 
+                       'lang_details_button' => html_entity_decode($this->Ini->Nm_lang['lang_details_button'], ENT_COMPAT, $_SESSION['scriptcase']['charset']), 
+                   ], 
+               ]); ?> 
+        <input type="hidden" id="sc-mobile-app-data" value='<?php echo $sc_app_data; ?>' />
+        <script type="text/javascript" src="../_lib/lib/js/nm_modal_panes.jquery.js"></script>
+        <script type="text/javascript" src="../_lib/lib/js/nm_mobile.js"></script>
+        <link rel='stylesheet' href='../_lib/lib/css/nm_mobile.css' type='text/css'/>
+    <script>
+        $(document).ready(function(){
+            bootstrapMobile();
+        });
+    </script>          <?php }
 $nm_saida->saida("<script>\r\n");
 $nm_saida->saida("function ajax_check_file(img_name, field , i , p, p_cache){\r\n");
 $nm_saida->saida("    $(document).ready(function(){\r\n");

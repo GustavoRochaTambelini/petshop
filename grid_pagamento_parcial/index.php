@@ -130,18 +130,10 @@ class grid_pagamento_parcial_ini
    var $sc_tem_trans_banco;
    var $nm_bases_all;
    var $nm_bases_access;
-   var $nm_bases_db2;
    var $nm_bases_ibase;
-   var $nm_bases_informix;
-   var $nm_bases_mssql;
    var $nm_bases_mysql;
    var $nm_bases_postgres;
-   var $nm_bases_oracle;
    var $nm_bases_sqlite;
-   var $nm_bases_sybase;
-   var $nm_bases_vfp;
-   var $nm_bases_odbc;
-   var $nm_bases_progress;
    var $sc_page;
    var $sc_lig_md5 = array();
    var $sc_lig_target = array();
@@ -227,17 +219,17 @@ class grid_pagamento_parcial_ini
       $this->nm_script_by    = "netmake";
       $this->nm_script_type  = "PHP";
       $this->nm_versao_sc    = "v9"; 
-      $this->nm_tp_lic_sc    = "demo"; 
+      $this->nm_tp_lic_sc    = "sb_micro_bronze"; 
       $this->nm_dt_criacao   = "20220821"; 
       $this->nm_hr_criacao   = "160829"; 
       $this->nm_autor_alt    = "admin"; 
-      $this->nm_dt_ult_alt   = "20220823"; 
-      $this->nm_hr_ult_alt   = "145755"; 
+      $this->nm_dt_ult_alt   = "20220827"; 
+      $this->nm_hr_ult_alt   = "154301"; 
       $this->Apl_paginacao   = "PARCIAL"; 
       $temp_bug_list         = explode(" ", microtime()); 
       list($NM_usec, $NM_sec) = $temp_bug_list; 
       $this->nm_timestamp    = (float) $NM_sec; 
-      $this->nm_app_version  = "1.0";
+      $this->nm_app_version  = "1.0.0";
       $this->nm_tp_variance  = "P";
 // 
 // 
@@ -875,33 +867,17 @@ class grid_pagamento_parcial_ini
           exit;
       }
       $this->nm_bases_access     = array("access", "ado_access", "ace_access");
-      $this->nm_bases_db2        = array("db2", "db2_odbc", "odbc_db2", "odbc_db2v6", "pdo_db2_odbc", "pdo_ibm");
       $this->nm_bases_ibase      = array("ibase", "firebird", "pdo_firebird", "borland_ibase");
-      $this->nm_bases_informix   = array("informix", "informix72", "pdo_informix");
-      $this->nm_bases_mssql      = array("mssql", "ado_mssql", "adooledb_mssql", "odbc_mssql", "mssqlnative", "pdo_sqlsrv", "pdo_dblib", "azure_mssql", "azure_ado_mssql", "azure_adooledb_mssql", "azure_odbc_mssql", "azure_mssqlnative", "azure_pdo_sqlsrv", "azure_pdo_dblib", "googlecloud_mssql", "googlecloud_ado_mssql", "googlecloud_adooledb_mssql", "googlecloud_odbc_mssql", "googlecloud_mssqlnative", "googlecloud_pdo_sqlsrv", "googlecloud_pdo_dblib", "amazonrds_mssql", "amazonrds_ado_mssql", "amazonrds_adooledb_mssql", "amazonrds_odbc_mssql", "amazonrds_mssqlnative", "amazonrds_pdo_sqlsrv", "amazonrds_pdo_dblib");
       $this->nm_bases_mysql      = array("mysql", "mysqlt", "mysqli", "maxsql", "pdo_mysql", "azure_mysql", "azure_mysqlt", "azure_mysqli", "azure_maxsql", "azure_pdo_mysql", "googlecloud_mysql", "googlecloud_mysqlt", "googlecloud_mysqli", "googlecloud_maxsql", "googlecloud_pdo_mysql", "amazonrds_mysql", "amazonrds_mysqlt", "amazonrds_mysqli", "amazonrds_maxsql", "amazonrds_pdo_mysql");
       $this->nm_bases_postgres   = array("postgres", "postgres64", "postgres7", "pdo_pgsql", "azure_postgres", "azure_postgres64", "azure_postgres7", "azure_pdo_pgsql", "googlecloud_postgres", "googlecloud_postgres64", "googlecloud_postgres7", "googlecloud_pdo_pgsql", "amazonrds_postgres", "amazonrds_postgres64", "amazonrds_postgres7", "amazonrds_pdo_pgsql");
-      $this->nm_bases_oracle     = array("oci8", "oci805", "oci8po", "odbc_oracle", "oracle", "pdo_oracle", "oraclecloud_oci8", "oraclecloud_oci805", "oraclecloud_oci8po", "oraclecloud_odbc_oracle", "oraclecloud_oracle", "oraclecloud_pdo_oracle", "amazonrds_oci8", "amazonrds_oci805", "amazonrds_oci8po", "amazonrds_odbc_oracle", "amazonrds_oracle", "amazonrds_pdo_oracle");
       $this->sqlite_version      = "old";
       $this->nm_bases_sqlite     = array("sqlite", "sqlite3", "pdosqlite");
-      $this->nm_bases_sybase     = array("sybase", "pdo_sybase_odbc", "pdo_sybase_dblib");
-      $this->nm_bases_vfp        = array("vfp");
-      $this->nm_bases_odbc       = array("odbc");
-      $this->nm_bases_progress     = array("pdo_progress_odbc", "progress");
-      $this->nm_bases_all        = array_merge($this->nm_bases_access, $this->nm_bases_db2, $this->nm_bases_ibase, $this->nm_bases_informix, $this->nm_bases_mssql, $this->nm_bases_mysql, $this->nm_bases_postgres, $this->nm_bases_oracle, $this->nm_bases_sqlite, $this->nm_bases_sybase, $this->nm_bases_vfp, $this->nm_bases_odbc, $this->nm_bases_progress);
+      $this->nm_bases_all        = array_merge($this->nm_bases_access, $this->nm_bases_ibase, $this->nm_bases_mysql, $this->nm_bases_postgres, $this->nm_bases_sqlite);
       $this->Nm_accent_access    = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_db2       = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
       $this->Nm_accent_ibase     = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_informix  = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_mssql     = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
       $this->Nm_accent_mysql     = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
       $this->Nm_accent_postgres  = array('cmp_i'=>"unaccent(",'cmp_f'=>")",'cmp_apos'=>"",'arg_i'=>"' || unaccent('",'arg_f'=>"') || '",'arg_apos'=>"");
-      $this->Nm_accent_oracle    = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
       $this->Nm_accent_sqlite    = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_sybase    = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_vfp       = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_odbc      = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_progress  = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
       $this->nm_font_ttf = array("ar", "ja", "pl", "ru", "sk", "thai", "zh_cn", "zh_hk", "cz", "el", "ko", "mk");
       $this->nm_ttf_arab = array("ar");
       $this->nm_ttf_jap  = array("ja");
@@ -910,8 +886,7 @@ class grid_pagamento_parcial_ini
       $this->nm_ttf_chi  = array("zh_cn", "zh_hk", "ko");
       $_SESSION['sc_session'][$this->sc_page]['grid_pagamento_parcial']['seq_dir'] = 0; 
       $_SESSION['sc_session'][$this->sc_page]['grid_pagamento_parcial']['sub_dir'] = array(); 
-      $_SESSION['scriptcase']['nm_bases_security']  = "enc_nm_enc_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";
-$_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 108, 101, 61, 34, 102, 111, 110, 116, 45, 102, 97, 109, 105, 108, 121, 58, 32, 84, 97, 104, 111, 109, 97, 44, 32, 65, 114, 105, 97, 108, 44, 32, 115, 97, 110, 115, 45, 115, 101, 114, 105, 102, 59, 32, 102, 111, 110, 116, 45, 115, 105, 122, 101, 58, 32, 49, 51, 112, 120, 59, 32, 102, 111, 110, 116, 45, 119, 101, 105, 103, 104, 116, 58, 32, 98, 111, 108, 100, 59, 32, 116, 101, 120, 116, 45, 97, 108, 105, 103, 110, 58, 32, 99, 101, 110, 116, 101, 114, 34, 62, 84, 104, 105, 115, 32, 97, 112, 112, 108, 105, 99, 97, 116, 105, 111, 110, 32, 119, 97, 115, 32, 100, 101, 118, 101, 108, 111, 112, 101, 100, 32, 97, 110, 100, 32, 112, 117, 98, 108, 105, 115, 104, 101, 100, 32, 117, 115, 105, 110, 103, 32, 97, 32, 116, 114, 105, 97, 108, 32, 118, 101, 114, 115, 105, 111, 110, 32, 111, 102, 32, 83, 99, 114, 105, 112, 116, 67, 97, 115, 101, 32, 97, 110, 100, 32, 105, 116, 115, 32, 116, 114, 105, 97, 108, 32, 112, 101, 114, 105, 111, 100, 32, 104, 97, 115, 32, 101, 120, 112, 105, 114, 101, 100, 46, 60, 47, 100, 105, 118, 62);
+      $_SESSION['scriptcase']['nm_bases_security']  = "enc_nm_enc_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";
       $this->prep_conect();
       $this->conectDB();
       if (!in_array(strtolower($this->nm_tpbanco), $this->nm_bases_all))
@@ -1125,30 +1100,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
       {
           $this->nm_arr_db_extra_args['mysql_ssl_cipher'] = $_SESSION['scriptcase']['glo_mysql_ssl_cipher']; 
       }
-      if (isset($_SESSION['scriptcase']['glo_db2_autocommit']))
-      {
-          $this->nm_con_db2['db2_autocommit'] = $_SESSION['scriptcase']['glo_db2_autocommit']; 
-      }
-      if (isset($_SESSION['scriptcase']['glo_db2_i5_lib']))
-      {
-          $this->nm_con_db2['db2_i5_lib'] = $_SESSION['scriptcase']['glo_db2_i5_lib']; 
-      }
-      if (isset($_SESSION['scriptcase']['glo_db2_i5_naming']))
-      {
-          $this->nm_con_db2['db2_i5_naming'] = $_SESSION['scriptcase']['glo_db2_i5_naming']; 
-      }
-      if (isset($_SESSION['scriptcase']['glo_db2_i5_commit']))
-      {
-          $this->nm_con_db2['db2_i5_commit'] = $_SESSION['scriptcase']['glo_db2_i5_commit']; 
-      }
-      if (isset($_SESSION['scriptcase']['glo_db2_i5_query_optimize']))
-      {
-          $this->nm_con_db2['db2_i5_query_optimize'] = $_SESSION['scriptcase']['glo_db2_i5_query_optimize']; 
-      }
-      if (isset($_SESSION['scriptcase']['oracle_type']))
-      {
-          $this->nm_arr_db_extra_args['oracle_type'] = $_SESSION['scriptcase']['oracle_type']; 
-      }
       if (isset($_SESSION['scriptcase']['glo_use_persistent']))
       {
           $this->nm_con_persistente = $_SESSION['scriptcase']['glo_use_persistent']; 
@@ -1159,11 +1110,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
       }
       $this->date_delim  = "'";
       $this->date_delim1 = "'";
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sybase))
-      {
-          $this->date_delim  = "";
-          $this->date_delim1 = "";
-      }
       if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_access))
       {
           $this->date_delim  = "#";
@@ -1351,31 +1297,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
           {
               if (isset($ibase_version->fields[0]) && substr($ibase_version->fields[0], 0, 1) > 2) {$this->Ibase_version = "new";}
           }
-      } 
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sybase))
-      {
-          $this->Db->fetchMode = ADODB_FETCH_BOTH;
-          $this->Db->Execute("set dateformat ymd");
-          $this->Db->Execute("set quoted_identifier ON");
-      } 
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_db2))
-      {
-          $this->Db->fetchMode = ADODB_FETCH_NUM;
-      } 
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql))
-      {
-          $this->Db->Execute("set dateformat ymd");
-          $this->Db->Execute("SET TEXTSIZE 2147483647");
-      } 
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle))
-      {
-          $this->Db->Execute("alter session set nls_date_format         = 'yyyy-mm-dd hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_timestamp_format    = 'yyyy-mm-dd hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_timestamp_tz_format = 'yyyy-mm-dd hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_time_format         = 'hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_time_tz_format      = 'hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_numeric_characters  = '.,'");
-          $_SESSION['sc_session'][$this->sc_page]['grid_pagamento_parcial']['decimal_db'] = "."; 
       } 
       if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_postgres))
       {
@@ -1832,11 +1753,7 @@ class grid_pagamento_parcial_apl
           $_SESSION['sc_session'][$script_case_init]['grid_pagamento_parcial']['embutida_form_full'] = false;
           $_SESSION['sc_session'][$script_case_init]['grid_pagamento_parcial']['embutida_pai'] = "";
       } 
-      $_SESSION['scriptcase']['sc_ctl_ajax'] = 'full';
-      if ($this->NM_ajax_flag || $NM_run_iframe == 1)
-      {
-          $_SESSION['scriptcase']['sc_ctl_ajax'] = 'part';
-      }
+      $_SESSION['scriptcase']['sc_ctl_ajax'] = 'part';
       if (!$this->Ini || isset($_SESSION['sc_session'][$script_case_init]['grid_pagamento_parcial']['embutida_ibase'])) 
       { 
           $this->Ini = new grid_pagamento_parcial_ini(); 
@@ -3473,17 +3390,8 @@ if (window.parent && typeof window.parent.updateGeneratedPdfFile === "function")
           if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access)) {
               $Nm_accent = $this->Ini->Nm_accent_access;
           }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2)) {
-              $Nm_accent = $this->Ini->Nm_accent_db2;
-          }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase)) {
               $Nm_accent = $this->Ini->Nm_accent_ibase;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix)) {
-              $Nm_accent = $this->Ini->Nm_accent_informix;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql)) {
-              $Nm_accent = $this->Ini->Nm_accent_mssql;
           }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql)) {
               $Nm_accent = $this->Ini->Nm_accent_mysql;
@@ -3491,23 +3399,8 @@ if (window.parent && typeof window.parent.updateGeneratedPdfFile === "function")
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres)) {
               $Nm_accent = $this->Ini->Nm_accent_postgres;
           }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle)) {
-              $Nm_accent = $this->Ini->Nm_accent_oracle;
-          }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sqlite)) {
               $Nm_accent = $this->Ini->Nm_accent_sqlite;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase)) {
-              $Nm_accent = $this->Ini->Nm_accent_sybase;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_vfp)) {
-              $Nm_accent = $this->Ini->Nm_accent_vfp;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_odbc)) {
-              $Nm_accent = $this->Ini->Nm_accent_odbc;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress)) {
-              $Nm_accent = $this->Ini->Nm_accent_progress;
           }
       }
       $nm_numeric[] = "idpagamento_parcial";$nm_numeric[] = "idcontas_pagar";$nm_numeric[] = "idforma_pagamento";$nm_numeric[] = "valor";$nm_numeric[] = "juros";
@@ -3556,18 +3449,6 @@ if (window.parent && typeof window.parent.updateGeneratedPdfFile === "function")
           $nm_aspas  = "'";
           $nm_aspas1 = "'";
       }
-      if (in_array($campo_join, $nm_numeric) && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase) && (strtoupper($condicao) == "II" || strtoupper($condicao) == "QP" || strtoupper($condicao) == "NP"))
-      {
-          $nome      = "CAST ($nome AS VARCHAR)";
-          $nm_aspas  = "'";
-          $nm_aspas1 = "'";
-      }
-      if (in_array($campo_join, $nm_numeric) && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress) && (strtoupper($condicao) == "II" || strtoupper($condicao) == "QP" || strtoupper($condicao) == "NP"))
-      {
-          $nome      = "CAST ($nome AS VARCHAR(255))";
-          $nm_aspas  = "'";
-          $nm_aspas1 = "'";
-      }
       $Nm_datas['data'] = "datetime";
       if (isset($Nm_datas[$nome]))
       {
@@ -3607,34 +3488,6 @@ if (window.parent && typeof window.parent.updateGeneratedPdfFile === "function")
           elseif ($Nm_datas[$campo_join] == "time" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
           {
               $nome = "to_char (" . $nome . ", 'hh24:mi:ss')";
-          }
-          elseif ($Nm_datas[$campo_join] == "date" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          {
-              $nome = "convert(char(10)," . $nome . ",121)";
-          }
-          elseif (($Nm_datas[$campo_join] == "datetime" || $Nm_datas[$campo_join] == "timestamp") && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          {
-              $nome = "convert(char(19)," . $nome . ",121)";
-          }
-          elseif (($Nm_datas[$campo_join] == "times" || $Nm_datas[$campo_join] == "datetime" || $Nm_datas[$campo_join] == "timestamp") && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $nome  = "TO_DATE(TO_CHAR(" . $nome . ", 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss')";
-          }
-          elseif ($Nm_datas[$campo_join] == "datetime" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $nome = "EXTEND(" . $nome . ", YEAR TO FRACTION)";
-          }
-          elseif ($Nm_datas[$campo_join] == "date" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $nome = "EXTEND(" . $nome . ", YEAR TO DAY)";
-          }
-          elseif ($Nm_datas[$campo_join] == "date" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress))
-          {
-              $nome = "to_char (" . $nome . ", 'YYYY-MM-DD')";
-          }
-          elseif (($Nm_datas[$campo_join] == "datetime" || $Nm_datas[$campo_join] == "timestamp") && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress))
-          {
-              $nome = "to_char (" . $nome . ", 'YYYY-MM-DD hh24:mi:ss')";
           }
       }
          $comando .= (!empty($comando) ? " or " : "");
@@ -4577,6 +4430,33 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['grid_pagamento_parcial'][$path_doc
    {
        $_SESSION['sc_session'][$script_case_init]['grid_pagamento_parcial']['b_sair'] = true;
    }
+   $STR_lang    = (isset($_SESSION['scriptcase']['str_lang']) && !empty($_SESSION['scriptcase']['str_lang'])) ? $_SESSION['scriptcase']['str_lang'] : "pt_br";
+   if (isset($_SESSION['scriptcase']['grid_pagamento_parcial']['session_timeout']['lang'])) {
+       $STR_lang = $_SESSION['scriptcase']['grid_pagamento_parcial']['session_timeout']['lang'];
+   }
+   $STR_schema_all = (isset($_SESSION['scriptcase']['str_schema_all']) && !empty($_SESSION['scriptcase']['str_schema_all'])) ? $_SESSION['scriptcase']['str_schema_all'] : "Sc8_BlueWood/Sc8_BlueWood";
+   $NM_arq_lang = "../_lib/lang/" . $STR_lang . ".lang.php";
+   $Nm_lang = array();
+   if (is_file($NM_arq_lang))
+   {
+       $Lixo = file($NM_arq_lang);
+       foreach ($Lixo as $Cada_lin) 
+       {
+           if (strpos($Cada_lin, "array()") === false && (trim($Cada_lin) != "<?php")  && (trim($Cada_lin) != "?" . ">"))
+           {
+               eval (str_replace("\$this->", "\$", $Cada_lin));
+           }
+       }
+   }
+   $_SESSION['scriptcase']['charset'] = "UTF-8";
+   ini_set('default_charset', $_SESSION['scriptcase']['charset']);
+   foreach ($Nm_lang as $ind => $dados)
+   {
+      if ($_SESSION['scriptcase']['charset'] != "UTF-8" && NM_is_utf8($dados))
+      {
+          $Nm_lang[$ind] = sc_convert_encoding($dados, $_SESSION['scriptcase']['charset'], "UTF-8");
+      }
+   }
    if (isset($_SESSION['scriptcase']['sc_outra_jan']) && $_SESSION['scriptcase']['sc_outra_jan'] == 'grid_pagamento_parcial')
    {
        $_SESSION['sc_session'][$script_case_init]['grid_pagamento_parcial']['sc_outra_jan'] = true;
@@ -4775,6 +4655,98 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['grid_pagamento_parcial'][$path_doc
            $_SESSION['scriptcase']['sc_url_saida'][$script_case_init] = $salva_url_saida;
        } 
        $GLOBALS["NM_ERRO_IBASE"] = 0;  
+       if (isset($_SESSION['nm_session']['user']['sec']['flag']) && $_SESSION['nm_session']['user']['sec']['flag'] == "N") 
+       { 
+           $_SESSION['scriptcase']['sc_apl_seg']['grid_pagamento_parcial'] = "on";
+       } 
+       if (isset($_GET['SC_Link_View']) && !empty($_GET['SC_Link_View']) && is_numeric($_GET['SC_Link_View']))
+       { 
+           $_SESSION['scriptcase']['sc_apl_seg']['grid_pagamento_parcial'] = "on";
+       } 
+       if (!$_SESSION['sc_session'][$script_case_init]['grid_pagamento_parcial']['opc_psq'] && !isset($_SESSION['scriptcase']['grid_pagamento_parcial']['session_timeout']['redir'])) 
+       { 
+          if (!isset($_SESSION['scriptcase']['sc_apl_seg']['grid_pagamento_parcial']) || $_SESSION['scriptcase']['sc_apl_seg']['grid_pagamento_parcial'] != "on")
+          { 
+              $NM_Mens_Erro = $Nm_lang['lang_errm_unth_user'];
+              $nm_botao_ok = ($_SESSION['sc_session'][$script_case_init]['grid_pagamento_parcial']['iframe_menu']) ? false : true;
+              if (isset($_SESSION['scriptcase']['sc_aba_iframe']))
+              {
+                  foreach ($_SESSION['scriptcase']['sc_aba_iframe'] as $aba => $apls_aba)
+                  {
+                      if (in_array("grid_pagamento_parcial", $apls_aba))
+                      {
+                          $nm_botao_ok = false;
+                           break;
+                      }
+                  }
+              }
+              if ((isset($_SESSION['sc_session'][$script_case_init]['grid_pagamento_parcial']['embutida']) && $_SESSION['sc_session'][$script_case_init]['grid_pagamento_parcial']['embutida']) || (isset($_SESSION['sc_session'][$script_case_init]['grid_pagamento_parcial']['embutida_form']) && $_SESSION['sc_session'][$script_case_init]['grid_pagamento_parcial']['embutida_form']))
+              {
+                   $nm_botao_ok = false;
+              }
+?>
+             <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+            "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+              <HTML>
+               <HEAD>
+                <TITLE></TITLE>
+               <META http-equiv="Content-Type" content="text/html; charset=<?php echo $_SESSION['scriptcase']['charset_html'] ?>" />
+<?php
+if ($_SESSION['scriptcase']['proc_mobile'])
+{
+?>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<?php
+}
+?>
+                <META http-equiv="Expires" content="Fri, Jan 01 1900 00:00:00 GMT"/>                <META http-equiv="Pragma" content="no-cache"/>
+                <link rel="shortcut icon" href="../_lib/img/scriptcase__NM__ico__NM__favicon.ico">
+                <link rel="stylesheet" type="text/css" href="../_lib/css/<?php echo $STR_schema_all ?>_grid.css" /> 
+                <link rel="stylesheet" type="text/css" href="../_lib/css/<?php echo $STR_schema_all ?>_grid<?php echo $_SESSION['scriptcase']['reg_conf']['css_dir'] ?>.css" /> 
+               </HEAD>
+               <body class="scGridPage">
+                <table align="center"><tr><td style="padding: 0"><div class="scGridBorder">
+                <table class="scGridTabela" width='100%' cellspacing=0 cellpadding=0><tr class="scGridFieldOdd"><td class="scGridFieldOddFont" style="padding: 15px 30px; text-align: center">
+                 <?php echo $NM_Mens_Erro; ?>
+<?php
+              if ($nm_botao_ok)
+              {
+?>
+                <br />
+                <form name="Fseg" method="post" 
+                                    action="<?php echo $nm_url_saida; ?>" 
+                                    target="_self"> 
+                 <input type="hidden" name="script_case_init" value="<?php echo NM_encode_input($script_case_init) ?>"/> 
+                 <input type="submit" name="sc_sai_seg" value="OK"> 
+                </form> 
+<?php
+              }
+?>
+                </td></tr></table>
+                </div></td></tr></table>
+<?php
+              if (isset($_SESSION['scriptcase']['nm_sc_retorno']) && !empty($_SESSION['scriptcase']['nm_sc_retorno']))
+              {
+?>
+<br /><br /><br />
+<table align="center" style="width: 450px"><tr><td style="padding: 0"><div class="scGridBorder">
+ <table style="width: 100%" class="scGridTabela">
+  <tr class="scGridFieldOdd">
+   <td class="scGridFieldOddFont" style="padding: 15px 30px">
+    <?php echo $Nm_lang['lang_errm_unth_hwto']; ?>
+   </td>
+  </tr>
+ </table>
+</div></td></tr></table>
+<?php
+              }
+?>
+               </body>
+              </HTML>
+<?php
+              exit;
+          } 
+       } 
        if (isset($_SESSION['sc_session'][$script_case_init]['grid_pagamento_parcial']['sc_outra_jan']) && $_SESSION['sc_session'][$script_case_init]['grid_pagamento_parcial']['sc_outra_jan'])
        {
            $nm_apl_dependente = 0;

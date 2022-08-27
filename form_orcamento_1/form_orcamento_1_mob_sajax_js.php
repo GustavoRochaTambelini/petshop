@@ -3703,11 +3703,13 @@ foreach ($this->Ini->sc_lig_iframe as $tmp_i => $tmp_v)
     scAjaxSetFields(false);
     scAjaxSetVariables();
     document.F2.idorcamento.value = scAjaxGetKeyValue("idorcamento");
+    scAjaxSetSummary();
     scAjaxShowDebug();
     scAjaxSetLabel(true);
     scAjaxSetReadonly(true);
     scAjaxSetMaster();
     scAjaxSetNavStatus("t");
+    scAjaxSetNavStatus("b");
     scAjaxSetDisplay(true);
     if (scMasterDetailIframe && scMasterDetailIframe["nmsc_iframe_liga_grid_itens_orcamento_detalhe"] && "nmsc_iframe_liga_grid_itens_orcamento_detalhe" != scMasterDetailIframe["nmsc_iframe_liga_grid_itens_orcamento_detalhe"]) {
         scMoveMasterDetail(scMasterDetailIframe["nmsc_iframe_liga_grid_itens_orcamento_detalhe"]);

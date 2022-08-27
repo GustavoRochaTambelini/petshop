@@ -63,10 +63,6 @@ class grid_recebimento_parcial_total
       { 
           $nm_comando = "select count(*), sum(valor) from " . $this->Ini->nm_tabela . " " . $_SESSION['sc_session'][$this->Ini->sc_page]['grid_recebimento_parcial']['where_pesq']; 
       } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-          $nm_comando = "select count(*), sum(valor) from " . $this->Ini->nm_tabela . " " . $_SESSION['sc_session'][$this->Ini->sc_page]['grid_recebimento_parcial']['where_pesq']; 
-      } 
       else 
       { 
           $nm_comando = "select count(*), sum(valor) from " . $this->Ini->nm_tabela . " " . $_SESSION['sc_session'][$this->Ini->sc_page]['grid_recebimento_parcial']['where_pesq']; 
@@ -115,18 +111,6 @@ class grid_recebimento_parcial_total
           {
                   $comando = str_replace(array('variance(','stddev('), array('var_pop(','stddev_pop('), $comando);
           }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $comando = str_replace(array('variance(','stddev('), array('sum(','sum('), $comando);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-          {
-              $comando = str_replace(array('variance(','stddev('), array('var_pop(','stddev_pop('), $comando);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $comando = str_replace(array('variance(','stddev('), array('var_pop(','stddev_pop('), $comando);
-          }
       }
       if ($this->Ini->nm_tp_variance == "A")
       {
@@ -153,26 +137,6 @@ class grid_recebimento_parcial_total
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
           {
                   $comando = str_replace(array('variance(','stddev('), array('var_samp(','stddev_samp('), $comando);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $comando = str_replace(array('variance(','stddev('), array('var_samp(','stddev_samp('), $comando);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          { 
-              $comando = str_replace(array('varp(','stdevp('), array('var(','stdev('), $comando);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $comando = str_replace('stddev(', 'stdev(', $comando);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
-          {
-              $comando = str_replace(array('variance(','stddev('), array('variance_samp(','stddev_samp('), $comando);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-          {
-              $comando = str_replace(array('variance(','stddev('), array('var_samp(','stddev_samp('), $comando);
           }
       }
       return $comando;

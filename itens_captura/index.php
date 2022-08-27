@@ -130,18 +130,10 @@ class itens_captura_ini
    var $sc_tem_trans_banco;
    var $nm_bases_all;
    var $nm_bases_access;
-   var $nm_bases_db2;
    var $nm_bases_ibase;
-   var $nm_bases_informix;
-   var $nm_bases_mssql;
    var $nm_bases_mysql;
    var $nm_bases_postgres;
-   var $nm_bases_oracle;
    var $nm_bases_sqlite;
-   var $nm_bases_sybase;
-   var $nm_bases_vfp;
-   var $nm_bases_odbc;
-   var $nm_bases_progress;
    var $sc_page;
    var $sc_lig_md5 = array();
    var $sc_lig_target = array();
@@ -227,17 +219,17 @@ class itens_captura_ini
       $this->nm_script_by    = "netmake";
       $this->nm_script_type  = "PHP";
       $this->nm_versao_sc    = "v9"; 
-      $this->nm_tp_lic_sc    = "demo"; 
+      $this->nm_tp_lic_sc    = "sb_micro_bronze"; 
       $this->nm_dt_criacao   = "20140808"; 
       $this->nm_hr_criacao   = "233545"; 
       $this->nm_autor_alt    = "admin"; 
-      $this->nm_dt_ult_alt   = "20220630"; 
-      $this->nm_hr_ult_alt   = "093207"; 
+      $this->nm_dt_ult_alt   = "20220827"; 
+      $this->nm_hr_ult_alt   = "154301"; 
       $this->Apl_paginacao   = "PARCIAL"; 
       $temp_bug_list         = explode(" ", microtime()); 
       list($NM_usec, $NM_sec) = $temp_bug_list; 
       $this->nm_timestamp    = (float) $NM_sec; 
-      $this->nm_app_version  = "1.0";
+      $this->nm_app_version  = "1.0.0";
       $this->nm_tp_variance  = "P";
 // 
 // 
@@ -276,7 +268,7 @@ class itens_captura_ini
           $_SESSION['scriptcase']['itens_captura']['save_session']['save_grid_state_session'] = false;
           $_SESSION['scriptcase']['itens_captura']['save_session']['data'] = '';
       } 
-      $this->str_schema_all    = (isset($_SESSION['scriptcase']['str_schema_all']) && !empty($_SESSION['scriptcase']['str_schema_all'])) ? $_SESSION['scriptcase']['str_schema_all'] : "Sc7_Blue/Sc7_Blue";
+      $this->str_schema_all    = (isset($_SESSION['scriptcase']['str_schema_all']) && !empty($_SESSION['scriptcase']['str_schema_all'])) ? $_SESSION['scriptcase']['str_schema_all'] : "Sc8_BlueWood/Sc8_BlueWood";
       $_SESSION['scriptcase']['erro']['str_schema'] = $this->str_schema_all . "_error.css";
       $_SESSION['scriptcase']['erro']['str_lang']   = $this->str_lang;
       $this->server          = (!isset($_SERVER['HTTP_HOST'])) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
@@ -643,21 +635,23 @@ class itens_captura_ini
       if (!is_dir($this->root . $this->path_prod))
       {
           echo "<style type=\"text/css\">";
-          echo ".scButton_default { font-family:Tahoma, Arial, sans-serif; color:#000000; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#cdcdcd; border-style:solid; border-radius:4px; background-image:url(../../img/scriptcase__NM__bgButtonsGoogle.png); filter: alpha(opacity=100); opacity:1; padding:1px 5px; cursor:pointer;  }";
-          echo ".scButton_default:hover { font-family:Tahoma, Arial, sans-serif; color:#000000; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#cdcdcd; border-style:solid; border-radius:4px; background-color:#F6F6F6; filter: alpha(opacity=100); opacity:1; padding:1px 5px; cursor:pointer;  }";
-          echo ".scButton_default:active { font-family:Tahoma, Arial, sans-serif; color:#000000; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#2575cf; border-style:solid; border-radius:4px; background-image:url(../../img/scriptcase__NM__sc6_linha_aba_info_bg.png); filter: alpha(opacity=100); opacity:1; padding:1px 5px; cursor:pointer;  }";
-          echo ".scButton_default_disabled { font-family:Tahoma, Arial, sans-serif; color:gray; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#cdcdcd; border-style:solid; border-radius:4px; background-color:#EEEEEE; filter: alpha(opacity=100); opacity:1; padding:1px 5px; cursor:pointer;  }";
-          echo ".scButton_default_selected { font-family:Tahoma, Arial, sans-serif; color:#000000; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#cdcdcd; border-style:solid; border-radius:4px; background-image:url(../../img/scriptcase__NM__bgButtonsGoogle.png); filter: alpha(opacity=100); opacity:1; padding:1px 5px; cursor:pointer;  }";
+          echo ".scButton_default { font-family:Tahoma, Arial, sans-serif; color:#FFFFFF; font-size:13px; font-weight:normal; text-shadow:;transition: all 0.5s;-o-transition: all 0.5s;-ms-transition: all 0.5s;-webkit-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-backface-visibility: hidden;-webkit-transition: background-color linear 0.2s; text-decoration:none; border-width:1px; border-color:#253E4D; border-style:solid; border-radius:3px; background-color:#34495E; filter: alpha(opacity=100); opacity:1; padding:8px 10px; cursor:pointer;  }";
+          echo ".scButton_default:hover { font-family:Tahoma, Arial, sans-serif; color:#FFFFFF; font-size:13px; font-weight:normal; text-shadow:;transition: all 0.5s;-o-transition: all 0.5s;-ms-transition: all 0.5s;-webkit-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-backface-visibility: hidden;-webkit-transition: background-color linear 0.2s; text-decoration:none; border-width:1px; border-color:#6a93ad; border-style:solid; border-radius:3px; background-color:#5D6D7E; filter: alpha(opacity=100); opacity:1; padding:8px 10px; cursor:pointer;  }";
+          echo ".scButton_default:active { font-family:Tahoma, Arial, sans-serif; color:#FFFFFF; font-size:13px; font-weight:normal; text-shadow:;transition: all 0.5s;-o-transition: all 0.5s;-ms-transition: all 0.5s;-webkit-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-backface-visibility: hidden;-webkit-transition: background-color linear 0.2s; text-decoration:none; border-width:1px; border-color:#c0c5ed; border-style:solid; border-radius:3px; background-color:#5D6D7E; filter: alpha(opacity=100); opacity:1; padding:8px 10px; cursor:pointer;  }";
+          echo ".scButton_default_disabled { font-family:Tahoma, Arial, sans-serif; color:#7d7d7d; font-size:13px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#c9c9c9; border-style:solid; border-radius:3px; background-color:#e6e6e6; filter: alpha(opacity=100); opacity:1; padding:8px 10px; cursor:default;  }";
+          echo ".scButton_default_selected { font-family:Tahoma, Arial, sans-serif; color:#FFFFFF; font-size:13px; font-weight:normal; text-shadow:;transition: all 0.5s;-o-transition: all 0.5s;-ms-transition: all 0.5s;-webkit-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-backface-visibility: hidden;-webkit-transition: background-color linear 0.2s; text-decoration:none; border-width:1px; border-color:#253E4D; border-style:solid; border-radius:3px; background-color:#34495E; filter: alpha(opacity=100); opacity:1; padding:8px 10px; cursor:pointer;  }";
           echo ".scButton_default_list { background-color:#ffffff; filter: alpha(opacity=100); opacity:1; padding:6px 52px 6px 15px; cursor:pointer; font-family:Arial, sans-serif; font-size:13px; text-decoration:none; color:#3C4858;  }";
           echo ".scButton_default_list:hover { background-color:#EFF2F7; filter: alpha(opacity=100); opacity:1; padding:6px 52px 6px 15px; cursor:pointer; font-family:Arial, sans-serif; font-size:13px; text-decoration:none; color:#3C4858;  }";
           echo ".scButton_default_list_disabled { background-color:#ffffff; font-family:Arial, sans-serif; font-size:13px; text-decoration:none; color:#3C4858; padding:6px 52px 6px 15px; filter: alpha(opacity=45); opacity:0.45; cursor:default;  }";
           echo ".scButton_default_list_selected { background-color:#ffffff; font-family:Arial, sans-serif; font-size:13px; text-decoration:none; color:#3C4858; padding:6px 52px 6px 15px; cursor:pointer; filter: alpha(opacity=100); opacity:1;  }";
           echo ".scButton_default_list:active { background-color:#EFF2F7; filter: alpha(opacity=100); opacity:1; padding:6px 52px 6px 15px; cursor:pointer; font-family:Arial, sans-serif; font-size:13px; text-decoration:none; color:#3C4858;  }";
-          echo ".scButton_small { font-family:Tahoma, Arial, sans-serif; color:#000000; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#cdcdcd; border-style:solid; border-radius:4px; background-image:url(../../img/scriptcase__NM__bgButtonsGoogle.png); filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:pointer;  }";
-          echo ".scButton_small:hover { font-family:Tahoma, Arial, sans-serif; color:#000000; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#cdcdcd; border-style:solid; border-radius:4px; background-color:#F6F6F6; filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:pointer;  }";
-          echo ".scButton_small:active { font-family:Tahoma, Arial, sans-serif; color:#000000; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#2575cf; border-style:solid; border-radius:4px; background-image:url(../../img/scriptcase__NM__sc6_linha_aba_info_bg.png); filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:pointer;  }";
-          echo ".scButton_small_disabled { font-family:Tahoma, Arial, sans-serif; color:gray; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#cdcdcd; border-style:solid; border-radius:4px; background-color:#EEEEEE; filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:pointer;  }";
-          echo ".scButton_small_selected { font-family:Tahoma, Arial, sans-serif; color:#000000; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#cdcdcd; border-style:solid; border-radius:4px; background-image:url(../../img/scriptcase__NM__bgButtonsGoogle.png); filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:pointer;  }";
+          echo ".scButton_small { font-family:Tahoma, Arial, sans-serif; color:#FFFFFF; font-size:13px; font-weight:normal; text-shadow:;transition: all 0.5s;-o-transition: all 0.5s;-ms-transition: all 0.5s;-webkit-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-backface-visibility: hidden;-webkit-transition: background-color linear 0.2s; text-decoration:none; border-width:1px; border-color:#253E4D; border-style:solid; border-radius:3px; background-color:#34495E; filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:pointer;  }";
+          echo ".scButton_small:hover { font-family:Tahoma, Arial, sans-serif; color:#FFFFFF; font-size:13px; font-weight:normal; text-shadow:;transition: all 0.5s;-o-transition: all 0.5s;-ms-transition: all 0.5s;-webkit-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-backface-visibility: hidden;-webkit-transition: background-color linear 0.2s; text-decoration:none; border-width:1px; border-color:#6a93ad; border-style:solid; border-radius:3px; background-color:#5D6D7E; filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:pointer;  }";
+          echo ".scButton_small:active { font-family:Tahoma, Arial, sans-serif; color:#FFFFFF; font-size:13px; font-weight:normal; text-shadow:;transition: all 0.5s;-o-transition: all 0.5s;-ms-transition: all 0.5s;-webkit-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-backface-visibility: hidden;-webkit-transition: background-color linear 0.2s; text-decoration:none; border-width:1px; border-color:#c0c5ed; border-style:solid; border-radius:3px; background-color:#5D6D7E; filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:pointer;  }";
+          echo ".scButton_small_disabled { font-family:Tahoma, Arial, sans-serif; color:#7d7d7d; font-size:13px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#c9c9c9; border-style:solid; border-radius:3px; background-color:#e6e6e6; filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:default;  }";
+          echo ".scButton_small_selected { font-family:Tahoma, Arial, sans-serif; color:#FFFFFF; font-size:13px; font-weight:normal; text-shadow:;transition: all 0.5s;-o-transition: all 0.5s;-ms-transition: all 0.5s;-webkit-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-backface-visibility: hidden;-webkit-transition: background-color linear 0.2s; text-decoration:none; border-width:1px; border-color:#253E4D; border-style:solid; border-radius:3px; background-color:#34495E; filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:pointer;  }";
+          echo ".scButton_small_list { filter: alpha(opacity=100); opacity:1;  }";
+          echo ".scButton_small_list:hover { filter: alpha(opacity=100); opacity:1;  }";
           echo ".scButton_sweetalertok_list { filter: alpha(opacity=100); opacity:1;  }";
           echo ".scButton_sweetalertok_list:hover { filter: alpha(opacity=100); opacity:1;  }";
           echo ".scButton_sweetalertok { font-family:Arial, sans-serif; color:#fff; font-size:17px; font-weight:normal; text-decoration:none; border-width:0px; border-color:#3085d6; border-style:solid; border-radius:4.25px; background-color:#3085d6; box-shadow:none; filter: alpha(opacity=100); opacity:1; padding:9px 12px; cursor:pointer; transition:all 0.2s;  }";
@@ -873,33 +867,17 @@ class itens_captura_ini
           exit;
       }
       $this->nm_bases_access     = array("access", "ado_access", "ace_access");
-      $this->nm_bases_db2        = array("db2", "db2_odbc", "odbc_db2", "odbc_db2v6", "pdo_db2_odbc", "pdo_ibm");
       $this->nm_bases_ibase      = array("ibase", "firebird", "pdo_firebird", "borland_ibase");
-      $this->nm_bases_informix   = array("informix", "informix72", "pdo_informix");
-      $this->nm_bases_mssql      = array("mssql", "ado_mssql", "adooledb_mssql", "odbc_mssql", "mssqlnative", "pdo_sqlsrv", "pdo_dblib", "azure_mssql", "azure_ado_mssql", "azure_adooledb_mssql", "azure_odbc_mssql", "azure_mssqlnative", "azure_pdo_sqlsrv", "azure_pdo_dblib", "googlecloud_mssql", "googlecloud_ado_mssql", "googlecloud_adooledb_mssql", "googlecloud_odbc_mssql", "googlecloud_mssqlnative", "googlecloud_pdo_sqlsrv", "googlecloud_pdo_dblib", "amazonrds_mssql", "amazonrds_ado_mssql", "amazonrds_adooledb_mssql", "amazonrds_odbc_mssql", "amazonrds_mssqlnative", "amazonrds_pdo_sqlsrv", "amazonrds_pdo_dblib");
       $this->nm_bases_mysql      = array("mysql", "mysqlt", "mysqli", "maxsql", "pdo_mysql", "azure_mysql", "azure_mysqlt", "azure_mysqli", "azure_maxsql", "azure_pdo_mysql", "googlecloud_mysql", "googlecloud_mysqlt", "googlecloud_mysqli", "googlecloud_maxsql", "googlecloud_pdo_mysql", "amazonrds_mysql", "amazonrds_mysqlt", "amazonrds_mysqli", "amazonrds_maxsql", "amazonrds_pdo_mysql");
       $this->nm_bases_postgres   = array("postgres", "postgres64", "postgres7", "pdo_pgsql", "azure_postgres", "azure_postgres64", "azure_postgres7", "azure_pdo_pgsql", "googlecloud_postgres", "googlecloud_postgres64", "googlecloud_postgres7", "googlecloud_pdo_pgsql", "amazonrds_postgres", "amazonrds_postgres64", "amazonrds_postgres7", "amazonrds_pdo_pgsql");
-      $this->nm_bases_oracle     = array("oci8", "oci805", "oci8po", "odbc_oracle", "oracle", "pdo_oracle", "oraclecloud_oci8", "oraclecloud_oci805", "oraclecloud_oci8po", "oraclecloud_odbc_oracle", "oraclecloud_oracle", "oraclecloud_pdo_oracle", "amazonrds_oci8", "amazonrds_oci805", "amazonrds_oci8po", "amazonrds_odbc_oracle", "amazonrds_oracle", "amazonrds_pdo_oracle");
       $this->sqlite_version      = "old";
       $this->nm_bases_sqlite     = array("sqlite", "sqlite3", "pdosqlite");
-      $this->nm_bases_sybase     = array("sybase", "pdo_sybase_odbc", "pdo_sybase_dblib");
-      $this->nm_bases_vfp        = array("vfp");
-      $this->nm_bases_odbc       = array("odbc");
-      $this->nm_bases_progress     = array("pdo_progress_odbc", "progress");
-      $this->nm_bases_all        = array_merge($this->nm_bases_access, $this->nm_bases_db2, $this->nm_bases_ibase, $this->nm_bases_informix, $this->nm_bases_mssql, $this->nm_bases_mysql, $this->nm_bases_postgres, $this->nm_bases_oracle, $this->nm_bases_sqlite, $this->nm_bases_sybase, $this->nm_bases_vfp, $this->nm_bases_odbc, $this->nm_bases_progress);
+      $this->nm_bases_all        = array_merge($this->nm_bases_access, $this->nm_bases_ibase, $this->nm_bases_mysql, $this->nm_bases_postgres, $this->nm_bases_sqlite);
       $this->Nm_accent_access    = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_db2       = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
       $this->Nm_accent_ibase     = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_informix  = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_mssql     = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
       $this->Nm_accent_mysql     = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
       $this->Nm_accent_postgres  = array('cmp_i'=>"unaccent(",'cmp_f'=>")",'cmp_apos'=>"",'arg_i'=>"' || unaccent('",'arg_f'=>"') || '",'arg_apos'=>"");
-      $this->Nm_accent_oracle    = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
       $this->Nm_accent_sqlite    = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_sybase    = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_vfp       = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_odbc      = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_progress  = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
       $this->nm_font_ttf = array("ar", "ja", "pl", "ru", "sk", "thai", "zh_cn", "zh_hk", "cz", "el", "ko", "mk");
       $this->nm_ttf_arab = array("ar");
       $this->nm_ttf_jap  = array("ja");
@@ -908,8 +886,7 @@ class itens_captura_ini
       $this->nm_ttf_chi  = array("zh_cn", "zh_hk", "ko");
       $_SESSION['sc_session'][$this->sc_page]['itens_captura']['seq_dir'] = 0; 
       $_SESSION['sc_session'][$this->sc_page]['itens_captura']['sub_dir'] = array(); 
-      $_SESSION['scriptcase']['nm_bases_security']  = "enc_nm_enc_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";
-$_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 108, 101, 61, 34, 102, 111, 110, 116, 45, 102, 97, 109, 105, 108, 121, 58, 32, 84, 97, 104, 111, 109, 97, 44, 32, 65, 114, 105, 97, 108, 44, 32, 115, 97, 110, 115, 45, 115, 101, 114, 105, 102, 59, 32, 102, 111, 110, 116, 45, 115, 105, 122, 101, 58, 32, 49, 51, 112, 120, 59, 32, 102, 111, 110, 116, 45, 119, 101, 105, 103, 104, 116, 58, 32, 98, 111, 108, 100, 59, 32, 116, 101, 120, 116, 45, 97, 108, 105, 103, 110, 58, 32, 99, 101, 110, 116, 101, 114, 34, 62, 84, 104, 105, 115, 32, 97, 112, 112, 108, 105, 99, 97, 116, 105, 111, 110, 32, 119, 97, 115, 32, 100, 101, 118, 101, 108, 111, 112, 101, 100, 32, 97, 110, 100, 32, 112, 117, 98, 108, 105, 115, 104, 101, 100, 32, 117, 115, 105, 110, 103, 32, 97, 32, 116, 114, 105, 97, 108, 32, 118, 101, 114, 115, 105, 111, 110, 32, 111, 102, 32, 83, 99, 114, 105, 112, 116, 67, 97, 115, 101, 32, 97, 110, 100, 32, 105, 116, 115, 32, 116, 114, 105, 97, 108, 32, 112, 101, 114, 105, 111, 100, 32, 104, 97, 115, 32, 101, 120, 112, 105, 114, 101, 100, 46, 60, 47, 100, 105, 118, 62);
+      $_SESSION['scriptcase']['nm_bases_security']  = "enc_nm_enc_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";
       $this->prep_conect();
       $this->conectDB();
       if (!in_array(strtolower($this->nm_tpbanco), $this->nm_bases_all))
@@ -925,11 +902,11 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
           { 
               if (isset($_SESSION['scriptcase']['nm_sc_retorno']) && !empty($_SESSION['scriptcase']['nm_sc_retorno'])) 
               { 
-                  echo "<a href='" . $_SESSION['scriptcase']['nm_sc_retorno'] . "' target='_self'><img border='0' src='" . $this->path_botoes . "/nm_Scriptcase7_SilverBlue_bvoltar.gif' title='" . $this->Nm_lang['lang_btns_rtrn_scrp_hint'] . "' align=absmiddle></a> \n" ; 
+                  echo "<a href='" . $_SESSION['scriptcase']['nm_sc_retorno'] . "' target='_self'><img border='0' src='" . $this->path_botoes . "/nm_scriptcase8_BlueWood_bvoltar.gif' title='" . $this->Nm_lang['lang_btns_rtrn_scrp_hint'] . "' align=absmiddle></a> \n" ; 
               } 
               else 
               { 
-                  echo "<a href='$nm_url_saida' target='_self'><img border='0' src='" . $this->path_botoes . "/nm_Scriptcase7_SilverBlue_bsair.gif' title='" . $this->Nm_lang['lang_btns_exit_appl_hint'] . "' align=absmiddle></a> \n" ; 
+                  echo "<a href='$nm_url_saida' target='_self'><img border='0' src='" . $this->path_botoes . "/nm_scriptcase8_BlueWood_bsair.gif' title='" . $this->Nm_lang['lang_btns_exit_appl_hint'] . "' align=absmiddle></a> \n" ; 
               } 
           } 
           exit ;
@@ -1123,30 +1100,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
       {
           $this->nm_arr_db_extra_args['mysql_ssl_cipher'] = $_SESSION['scriptcase']['glo_mysql_ssl_cipher']; 
       }
-      if (isset($_SESSION['scriptcase']['glo_db2_autocommit']))
-      {
-          $this->nm_con_db2['db2_autocommit'] = $_SESSION['scriptcase']['glo_db2_autocommit']; 
-      }
-      if (isset($_SESSION['scriptcase']['glo_db2_i5_lib']))
-      {
-          $this->nm_con_db2['db2_i5_lib'] = $_SESSION['scriptcase']['glo_db2_i5_lib']; 
-      }
-      if (isset($_SESSION['scriptcase']['glo_db2_i5_naming']))
-      {
-          $this->nm_con_db2['db2_i5_naming'] = $_SESSION['scriptcase']['glo_db2_i5_naming']; 
-      }
-      if (isset($_SESSION['scriptcase']['glo_db2_i5_commit']))
-      {
-          $this->nm_con_db2['db2_i5_commit'] = $_SESSION['scriptcase']['glo_db2_i5_commit']; 
-      }
-      if (isset($_SESSION['scriptcase']['glo_db2_i5_query_optimize']))
-      {
-          $this->nm_con_db2['db2_i5_query_optimize'] = $_SESSION['scriptcase']['glo_db2_i5_query_optimize']; 
-      }
-      if (isset($_SESSION['scriptcase']['oracle_type']))
-      {
-          $this->nm_arr_db_extra_args['oracle_type'] = $_SESSION['scriptcase']['oracle_type']; 
-      }
       if (isset($_SESSION['scriptcase']['glo_use_persistent']))
       {
           $this->nm_con_persistente = $_SESSION['scriptcase']['glo_use_persistent']; 
@@ -1157,11 +1110,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
       }
       $this->date_delim  = "'";
       $this->date_delim1 = "'";
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sybase))
-      {
-          $this->date_delim  = "";
-          $this->date_delim1 = "";
-      }
       if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_access))
       {
           $this->date_delim  = "#";
@@ -1191,21 +1139,23 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
       if (!empty($this->nm_falta_var) || !empty($this->nm_falta_var_db) || $nm_crit_perfil)
       {
           echo "<style type=\"text/css\">";
-          echo ".scButton_default { font-family:Tahoma, Arial, sans-serif; color:#000000; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#cdcdcd; border-style:solid; border-radius:4px; background-image:url(../../img/scriptcase__NM__bgButtonsGoogle.png); filter: alpha(opacity=100); opacity:1; padding:1px 5px; cursor:pointer;  }";
-          echo ".scButton_default:hover { font-family:Tahoma, Arial, sans-serif; color:#000000; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#cdcdcd; border-style:solid; border-radius:4px; background-color:#F6F6F6; filter: alpha(opacity=100); opacity:1; padding:1px 5px; cursor:pointer;  }";
-          echo ".scButton_default:active { font-family:Tahoma, Arial, sans-serif; color:#000000; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#2575cf; border-style:solid; border-radius:4px; background-image:url(../../img/scriptcase__NM__sc6_linha_aba_info_bg.png); filter: alpha(opacity=100); opacity:1; padding:1px 5px; cursor:pointer;  }";
-          echo ".scButton_default_disabled { font-family:Tahoma, Arial, sans-serif; color:gray; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#cdcdcd; border-style:solid; border-radius:4px; background-color:#EEEEEE; filter: alpha(opacity=100); opacity:1; padding:1px 5px; cursor:pointer;  }";
-          echo ".scButton_default_selected { font-family:Tahoma, Arial, sans-serif; color:#000000; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#cdcdcd; border-style:solid; border-radius:4px; background-image:url(../../img/scriptcase__NM__bgButtonsGoogle.png); filter: alpha(opacity=100); opacity:1; padding:1px 5px; cursor:pointer;  }";
+          echo ".scButton_default { font-family:Tahoma, Arial, sans-serif; color:#FFFFFF; font-size:13px; font-weight:normal; text-shadow:;transition: all 0.5s;-o-transition: all 0.5s;-ms-transition: all 0.5s;-webkit-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-backface-visibility: hidden;-webkit-transition: background-color linear 0.2s; text-decoration:none; border-width:1px; border-color:#253E4D; border-style:solid; border-radius:3px; background-color:#34495E; filter: alpha(opacity=100); opacity:1; padding:8px 10px; cursor:pointer;  }";
+          echo ".scButton_default:hover { font-family:Tahoma, Arial, sans-serif; color:#FFFFFF; font-size:13px; font-weight:normal; text-shadow:;transition: all 0.5s;-o-transition: all 0.5s;-ms-transition: all 0.5s;-webkit-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-backface-visibility: hidden;-webkit-transition: background-color linear 0.2s; text-decoration:none; border-width:1px; border-color:#6a93ad; border-style:solid; border-radius:3px; background-color:#5D6D7E; filter: alpha(opacity=100); opacity:1; padding:8px 10px; cursor:pointer;  }";
+          echo ".scButton_default:active { font-family:Tahoma, Arial, sans-serif; color:#FFFFFF; font-size:13px; font-weight:normal; text-shadow:;transition: all 0.5s;-o-transition: all 0.5s;-ms-transition: all 0.5s;-webkit-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-backface-visibility: hidden;-webkit-transition: background-color linear 0.2s; text-decoration:none; border-width:1px; border-color:#c0c5ed; border-style:solid; border-radius:3px; background-color:#5D6D7E; filter: alpha(opacity=100); opacity:1; padding:8px 10px; cursor:pointer;  }";
+          echo ".scButton_default_disabled { font-family:Tahoma, Arial, sans-serif; color:#7d7d7d; font-size:13px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#c9c9c9; border-style:solid; border-radius:3px; background-color:#e6e6e6; filter: alpha(opacity=100); opacity:1; padding:8px 10px; cursor:default;  }";
+          echo ".scButton_default_selected { font-family:Tahoma, Arial, sans-serif; color:#FFFFFF; font-size:13px; font-weight:normal; text-shadow:;transition: all 0.5s;-o-transition: all 0.5s;-ms-transition: all 0.5s;-webkit-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-backface-visibility: hidden;-webkit-transition: background-color linear 0.2s; text-decoration:none; border-width:1px; border-color:#253E4D; border-style:solid; border-radius:3px; background-color:#34495E; filter: alpha(opacity=100); opacity:1; padding:8px 10px; cursor:pointer;  }";
           echo ".scButton_default_list { background-color:#ffffff; filter: alpha(opacity=100); opacity:1; padding:6px 52px 6px 15px; cursor:pointer; font-family:Arial, sans-serif; font-size:13px; text-decoration:none; color:#3C4858;  }";
           echo ".scButton_default_list:hover { background-color:#EFF2F7; filter: alpha(opacity=100); opacity:1; padding:6px 52px 6px 15px; cursor:pointer; font-family:Arial, sans-serif; font-size:13px; text-decoration:none; color:#3C4858;  }";
           echo ".scButton_default_list_disabled { background-color:#ffffff; font-family:Arial, sans-serif; font-size:13px; text-decoration:none; color:#3C4858; padding:6px 52px 6px 15px; filter: alpha(opacity=45); opacity:0.45; cursor:default;  }";
           echo ".scButton_default_list_selected { background-color:#ffffff; font-family:Arial, sans-serif; font-size:13px; text-decoration:none; color:#3C4858; padding:6px 52px 6px 15px; cursor:pointer; filter: alpha(opacity=100); opacity:1;  }";
           echo ".scButton_default_list:active { background-color:#EFF2F7; filter: alpha(opacity=100); opacity:1; padding:6px 52px 6px 15px; cursor:pointer; font-family:Arial, sans-serif; font-size:13px; text-decoration:none; color:#3C4858;  }";
-          echo ".scButton_small { font-family:Tahoma, Arial, sans-serif; color:#000000; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#cdcdcd; border-style:solid; border-radius:4px; background-image:url(../../img/scriptcase__NM__bgButtonsGoogle.png); filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:pointer;  }";
-          echo ".scButton_small:hover { font-family:Tahoma, Arial, sans-serif; color:#000000; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#cdcdcd; border-style:solid; border-radius:4px; background-color:#F6F6F6; filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:pointer;  }";
-          echo ".scButton_small:active { font-family:Tahoma, Arial, sans-serif; color:#000000; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#2575cf; border-style:solid; border-radius:4px; background-image:url(../../img/scriptcase__NM__sc6_linha_aba_info_bg.png); filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:pointer;  }";
-          echo ".scButton_small_disabled { font-family:Tahoma, Arial, sans-serif; color:gray; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#cdcdcd; border-style:solid; border-radius:4px; background-color:#EEEEEE; filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:pointer;  }";
-          echo ".scButton_small_selected { font-family:Tahoma, Arial, sans-serif; color:#000000; font-size:11px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#cdcdcd; border-style:solid; border-radius:4px; background-image:url(../../img/scriptcase__NM__bgButtonsGoogle.png); filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:pointer;  }";
+          echo ".scButton_small { font-family:Tahoma, Arial, sans-serif; color:#FFFFFF; font-size:13px; font-weight:normal; text-shadow:;transition: all 0.5s;-o-transition: all 0.5s;-ms-transition: all 0.5s;-webkit-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-backface-visibility: hidden;-webkit-transition: background-color linear 0.2s; text-decoration:none; border-width:1px; border-color:#253E4D; border-style:solid; border-radius:3px; background-color:#34495E; filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:pointer;  }";
+          echo ".scButton_small:hover { font-family:Tahoma, Arial, sans-serif; color:#FFFFFF; font-size:13px; font-weight:normal; text-shadow:;transition: all 0.5s;-o-transition: all 0.5s;-ms-transition: all 0.5s;-webkit-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-backface-visibility: hidden;-webkit-transition: background-color linear 0.2s; text-decoration:none; border-width:1px; border-color:#6a93ad; border-style:solid; border-radius:3px; background-color:#5D6D7E; filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:pointer;  }";
+          echo ".scButton_small:active { font-family:Tahoma, Arial, sans-serif; color:#FFFFFF; font-size:13px; font-weight:normal; text-shadow:;transition: all 0.5s;-o-transition: all 0.5s;-ms-transition: all 0.5s;-webkit-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-backface-visibility: hidden;-webkit-transition: background-color linear 0.2s; text-decoration:none; border-width:1px; border-color:#c0c5ed; border-style:solid; border-radius:3px; background-color:#5D6D7E; filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:pointer;  }";
+          echo ".scButton_small_disabled { font-family:Tahoma, Arial, sans-serif; color:#7d7d7d; font-size:13px; font-weight:normal; text-decoration:none; border-width:1px; border-color:#c9c9c9; border-style:solid; border-radius:3px; background-color:#e6e6e6; filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:default;  }";
+          echo ".scButton_small_selected { font-family:Tahoma, Arial, sans-serif; color:#FFFFFF; font-size:13px; font-weight:normal; text-shadow:;transition: all 0.5s;-o-transition: all 0.5s;-ms-transition: all 0.5s;-webkit-transition:all 0.5s;-moz-transition:all 0.5s;-webkit-backface-visibility: hidden;-webkit-transition: background-color linear 0.2s; text-decoration:none; border-width:1px; border-color:#253E4D; border-style:solid; border-radius:3px; background-color:#34495E; filter: alpha(opacity=100); opacity:1; padding:3px 13px; cursor:pointer;  }";
+          echo ".scButton_small_list { filter: alpha(opacity=100); opacity:1;  }";
+          echo ".scButton_small_list:hover { filter: alpha(opacity=100); opacity:1;  }";
           echo ".scButton_sweetalertok_list { filter: alpha(opacity=100); opacity:1;  }";
           echo ".scButton_sweetalertok_list:hover { filter: alpha(opacity=100); opacity:1;  }";
           echo ".scButton_sweetalertok { font-family:Arial, sans-serif; color:#fff; font-size:17px; font-weight:normal; text-decoration:none; border-width:0px; border-color:#3085d6; border-style:solid; border-radius:4.25px; background-color:#3085d6; box-shadow:none; filter: alpha(opacity=100); opacity:1; padding:9px 12px; cursor:pointer; transition:all 0.2s;  }";
@@ -1347,31 +1297,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
           {
               if (isset($ibase_version->fields[0]) && substr($ibase_version->fields[0], 0, 1) > 2) {$this->Ibase_version = "new";}
           }
-      } 
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sybase))
-      {
-          $this->Db->fetchMode = ADODB_FETCH_BOTH;
-          $this->Db->Execute("set dateformat ymd");
-          $this->Db->Execute("set quoted_identifier ON");
-      } 
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_db2))
-      {
-          $this->Db->fetchMode = ADODB_FETCH_NUM;
-      } 
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql))
-      {
-          $this->Db->Execute("set dateformat ymd");
-          $this->Db->Execute("SET TEXTSIZE 2147483647");
-      } 
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle))
-      {
-          $this->Db->Execute("alter session set nls_date_format         = 'yyyy-mm-dd hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_timestamp_format    = 'yyyy-mm-dd hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_timestamp_tz_format = 'yyyy-mm-dd hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_time_format         = 'hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_time_tz_format      = 'hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_numeric_characters  = '.,'");
-          $_SESSION['sc_session'][$this->sc_page]['itens_captura']['decimal_db'] = "."; 
       } 
       if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_postgres))
       {
@@ -1728,7 +1653,7 @@ class itens_captura_sub_css
    function __construct()
    {
       global $script_case_init;
-      $str_schema_all = (isset($_SESSION['scriptcase']['str_schema_all']) && !empty($_SESSION['scriptcase']['str_schema_all'])) ? $_SESSION['scriptcase']['str_schema_all'] : "Sc7_Blue/Sc7_Blue";
+      $str_schema_all = (isset($_SESSION['scriptcase']['str_schema_all']) && !empty($_SESSION['scriptcase']['str_schema_all'])) ? $_SESSION['scriptcase']['str_schema_all'] : "Sc8_BlueWood/Sc8_BlueWood";
       if ($_SESSION['sc_session'][$script_case_init]['itens_captura']['SC_herda_css'] == "N")
       {
           $_SESSION['sc_session'][$script_case_init]['SC_sub_css']['itens_captura']    = $str_schema_all . "_grid.css";
@@ -1828,11 +1753,7 @@ class itens_captura_apl
           $_SESSION['sc_session'][$script_case_init]['itens_captura']['embutida_form_full'] = false;
           $_SESSION['sc_session'][$script_case_init]['itens_captura']['embutida_pai'] = "";
       } 
-      $_SESSION['scriptcase']['sc_ctl_ajax'] = 'full';
-      if ($this->NM_ajax_flag || $NM_run_iframe == 1)
-      {
-          $_SESSION['scriptcase']['sc_ctl_ajax'] = 'part';
-      }
+      $_SESSION['scriptcase']['sc_ctl_ajax'] = 'part';
       if (!$this->Ini || isset($_SESSION['sc_session'][$script_case_init]['itens_captura']['embutida_ibase'])) 
       { 
           $this->Ini = new itens_captura_ini(); 
@@ -3427,17 +3348,8 @@ if (window.parent && typeof window.parent.updateGeneratedPdfFile === "function")
           if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access)) {
               $Nm_accent = $this->Ini->Nm_accent_access;
           }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2)) {
-              $Nm_accent = $this->Ini->Nm_accent_db2;
-          }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase)) {
               $Nm_accent = $this->Ini->Nm_accent_ibase;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix)) {
-              $Nm_accent = $this->Ini->Nm_accent_informix;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql)) {
-              $Nm_accent = $this->Ini->Nm_accent_mssql;
           }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql)) {
               $Nm_accent = $this->Ini->Nm_accent_mysql;
@@ -3445,23 +3357,8 @@ if (window.parent && typeof window.parent.updateGeneratedPdfFile === "function")
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres)) {
               $Nm_accent = $this->Ini->Nm_accent_postgres;
           }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle)) {
-              $Nm_accent = $this->Ini->Nm_accent_oracle;
-          }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sqlite)) {
               $Nm_accent = $this->Ini->Nm_accent_sqlite;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase)) {
-              $Nm_accent = $this->Ini->Nm_accent_sybase;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_vfp)) {
-              $Nm_accent = $this->Ini->Nm_accent_vfp;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_odbc)) {
-              $Nm_accent = $this->Ini->Nm_accent_odbc;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress)) {
-              $Nm_accent = $this->Ini->Nm_accent_progress;
           }
       }
       $nm_numeric[] = "item_id";$nm_numeric[] = "empresa_id";$nm_numeric[] = "valor_venda";
@@ -3509,18 +3406,6 @@ if (window.parent && typeof window.parent.updateGeneratedPdfFile === "function")
       if (in_array($campo_join, $nm_esp_postgres) && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
       {
           $nome      = "CAST ($nome AS TEXT)";
-          $nm_aspas  = "'";
-          $nm_aspas1 = "'";
-      }
-      if (in_array($campo_join, $nm_numeric) && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase) && (strtoupper($condicao) == "II" || strtoupper($condicao) == "QP" || strtoupper($condicao) == "NP"))
-      {
-          $nome      = "CAST ($nome AS VARCHAR)";
-          $nm_aspas  = "'";
-          $nm_aspas1 = "'";
-      }
-      if (in_array($campo_join, $nm_numeric) && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress) && (strtoupper($condicao) == "II" || strtoupper($condicao) == "QP" || strtoupper($condicao) == "NP"))
-      {
-          $nome      = "CAST ($nome AS VARCHAR(255))";
           $nm_aspas  = "'";
           $nm_aspas1 = "'";
       }
@@ -4374,6 +4259,33 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['itens_captura'][$path_doc_md5][1] 
    {
        $_SESSION['sc_session'][$script_case_init]['itens_captura']['b_sair'] = true;
    }
+   $STR_lang    = (isset($_SESSION['scriptcase']['str_lang']) && !empty($_SESSION['scriptcase']['str_lang'])) ? $_SESSION['scriptcase']['str_lang'] : "pt_br";
+   if (isset($_SESSION['scriptcase']['itens_captura']['session_timeout']['lang'])) {
+       $STR_lang = $_SESSION['scriptcase']['itens_captura']['session_timeout']['lang'];
+   }
+   $STR_schema_all = (isset($_SESSION['scriptcase']['str_schema_all']) && !empty($_SESSION['scriptcase']['str_schema_all'])) ? $_SESSION['scriptcase']['str_schema_all'] : "Sc8_BlueWood/Sc8_BlueWood";
+   $NM_arq_lang = "../_lib/lang/" . $STR_lang . ".lang.php";
+   $Nm_lang = array();
+   if (is_file($NM_arq_lang))
+   {
+       $Lixo = file($NM_arq_lang);
+       foreach ($Lixo as $Cada_lin) 
+       {
+           if (strpos($Cada_lin, "array()") === false && (trim($Cada_lin) != "<?php")  && (trim($Cada_lin) != "?" . ">"))
+           {
+               eval (str_replace("\$this->", "\$", $Cada_lin));
+           }
+       }
+   }
+   $_SESSION['scriptcase']['charset'] = "UTF-8";
+   ini_set('default_charset', $_SESSION['scriptcase']['charset']);
+   foreach ($Nm_lang as $ind => $dados)
+   {
+      if ($_SESSION['scriptcase']['charset'] != "UTF-8" && NM_is_utf8($dados))
+      {
+          $Nm_lang[$ind] = sc_convert_encoding($dados, $_SESSION['scriptcase']['charset'], "UTF-8");
+      }
+   }
    if (isset($_SESSION['scriptcase']['sc_outra_jan']) && $_SESSION['scriptcase']['sc_outra_jan'] == 'itens_captura')
    {
        $_SESSION['sc_session'][$script_case_init]['itens_captura']['sc_outra_jan'] = true;
@@ -4572,6 +4484,98 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['itens_captura'][$path_doc_md5][1] 
            $_SESSION['scriptcase']['sc_url_saida'][$script_case_init] = $salva_url_saida;
        } 
        $GLOBALS["NM_ERRO_IBASE"] = 0;  
+       if (isset($_SESSION['nm_session']['user']['sec']['flag']) && $_SESSION['nm_session']['user']['sec']['flag'] == "N") 
+       { 
+           $_SESSION['scriptcase']['sc_apl_seg']['itens_captura'] = "on";
+       } 
+       if (isset($_GET['SC_Link_View']) && !empty($_GET['SC_Link_View']) && is_numeric($_GET['SC_Link_View']))
+       { 
+           $_SESSION['scriptcase']['sc_apl_seg']['itens_captura'] = "on";
+       } 
+       if (!$_SESSION['sc_session'][$script_case_init]['itens_captura']['opc_psq'] && !isset($_SESSION['scriptcase']['itens_captura']['session_timeout']['redir'])) 
+       { 
+          if (!isset($_SESSION['scriptcase']['sc_apl_seg']['itens_captura']) || $_SESSION['scriptcase']['sc_apl_seg']['itens_captura'] != "on")
+          { 
+              $NM_Mens_Erro = $Nm_lang['lang_errm_unth_user'];
+              $nm_botao_ok = ($_SESSION['sc_session'][$script_case_init]['itens_captura']['iframe_menu']) ? false : true;
+              if (isset($_SESSION['scriptcase']['sc_aba_iframe']))
+              {
+                  foreach ($_SESSION['scriptcase']['sc_aba_iframe'] as $aba => $apls_aba)
+                  {
+                      if (in_array("itens_captura", $apls_aba))
+                      {
+                          $nm_botao_ok = false;
+                           break;
+                      }
+                  }
+              }
+              if ((isset($_SESSION['sc_session'][$script_case_init]['itens_captura']['embutida']) && $_SESSION['sc_session'][$script_case_init]['itens_captura']['embutida']) || (isset($_SESSION['sc_session'][$script_case_init]['itens_captura']['embutida_form']) && $_SESSION['sc_session'][$script_case_init]['itens_captura']['embutida_form']))
+              {
+                   $nm_botao_ok = false;
+              }
+?>
+             <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+            "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+              <HTML>
+               <HEAD>
+                <TITLE></TITLE>
+               <META http-equiv="Content-Type" content="text/html; charset=<?php echo $_SESSION['scriptcase']['charset_html'] ?>" />
+<?php
+if ($_SESSION['scriptcase']['proc_mobile'])
+{
+?>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<?php
+}
+?>
+                <META http-equiv="Expires" content="Fri, Jan 01 1900 00:00:00 GMT"/>                <META http-equiv="Pragma" content="no-cache"/>
+                <link rel="shortcut icon" href="../_lib/img/scriptcase__NM__ico__NM__favicon.ico">
+                <link rel="stylesheet" type="text/css" href="../_lib/css/<?php echo $STR_schema_all ?>_grid.css" /> 
+                <link rel="stylesheet" type="text/css" href="../_lib/css/<?php echo $STR_schema_all ?>_grid<?php echo $_SESSION['scriptcase']['reg_conf']['css_dir'] ?>.css" /> 
+               </HEAD>
+               <body class="scGridPage">
+                <table align="center"><tr><td style="padding: 0"><div class="scGridBorder">
+                <table class="scGridTabela" width='100%' cellspacing=0 cellpadding=0><tr class="scGridFieldOdd"><td class="scGridFieldOddFont" style="padding: 15px 30px; text-align: center">
+                 <?php echo $NM_Mens_Erro; ?>
+<?php
+              if ($nm_botao_ok)
+              {
+?>
+                <br />
+                <form name="Fseg" method="post" 
+                                    action="<?php echo $nm_url_saida; ?>" 
+                                    target="_self"> 
+                 <input type="hidden" name="script_case_init" value="<?php echo NM_encode_input($script_case_init) ?>"/> 
+                 <input type="submit" name="sc_sai_seg" value="OK"> 
+                </form> 
+<?php
+              }
+?>
+                </td></tr></table>
+                </div></td></tr></table>
+<?php
+              if (isset($_SESSION['scriptcase']['nm_sc_retorno']) && !empty($_SESSION['scriptcase']['nm_sc_retorno']))
+              {
+?>
+<br /><br /><br />
+<table align="center" style="width: 450px"><tr><td style="padding: 0"><div class="scGridBorder">
+ <table style="width: 100%" class="scGridTabela">
+  <tr class="scGridFieldOdd">
+   <td class="scGridFieldOddFont" style="padding: 15px 30px">
+    <?php echo $Nm_lang['lang_errm_unth_hwto']; ?>
+   </td>
+  </tr>
+ </table>
+</div></td></tr></table>
+<?php
+              }
+?>
+               </body>
+              </HTML>
+<?php
+              exit;
+          } 
+       } 
        if (isset($_SESSION['sc_session'][$script_case_init]['itens_captura']['sc_outra_jan']) && $_SESSION['sc_session'][$script_case_init]['itens_captura']['sc_outra_jan'])
        {
            $nm_apl_dependente = 0;

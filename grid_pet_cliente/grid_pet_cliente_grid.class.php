@@ -396,7 +396,6 @@ class grid_pet_cliente_grid
    { 
        $_SESSION['sc_session'][$this->Ini->sc_page]['grid_pet_cliente']['opcao'] = "muda_qt_linhas";
    } 
-   $this->sc_where_Max = "f" . "u" . "ll";
 
    if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['grid_pet_cliente']['dashboard_info']['under_dashboard']) && $_SESSION['sc_session'][$this->Ini->sc_page]['grid_pet_cliente']['dashboard_info']['under_dashboard'] && !$_SESSION['sc_session'][$this->Ini->sc_page]['grid_pet_cliente']['dashboard_info']['maximized']) {
        $tmpDashboardApp = $_SESSION['sc_session'][$this->Ini->sc_page]['grid_pet_cliente']['dashboard_info']['dashboard_app'];
@@ -742,25 +741,9 @@ class grid_pet_cliente_grid
        $this->nm_grid_ini++;
    }  
 //----- 
-   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-   { 
-       $nmgp_select = "SELECT idpet, foto_pet, nome, idpet_raca, sexo, str_replace (convert(char(10),data_nascimento,102), '.', '-') + ' ' + convert(char(8),data_nascimento,20), idcliente from " . $this->Ini->nm_tabela; 
-   } 
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
+   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
    { 
        $nmgp_select = "SELECT idpet, foto_pet, nome, idpet_raca, sexo, data_nascimento, idcliente from " . $this->Ini->nm_tabela; 
-   } 
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-   { 
-       $nmgp_select = "SELECT idpet, foto_pet, nome, idpet_raca, sexo, convert(char(23),data_nascimento,121), idcliente from " . $this->Ini->nm_tabela; 
-   } 
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-   { 
-       $nmgp_select = "SELECT idpet, foto_pet, nome, idpet_raca, sexo, data_nascimento, idcliente from " . $this->Ini->nm_tabela; 
-   } 
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-   { 
-       $nmgp_select = "SELECT idpet, LOTOFILE(foto_pet, '" . $this->Ini->root . $this->Ini->path_imag_temp . "/sc_blob_informix', 'client') as foto_pet, nome, idpet_raca, sexo, EXTEND(data_nascimento, YEAR TO DAY), idcliente from " . $this->Ini->nm_tabela; 
    } 
    else 
    { 
@@ -829,7 +812,6 @@ class grid_pet_cliente_grid
        $_SESSION['scriptcase']['sc_sql_ult_comando'] = "SelectLimit($nmgp_select, " . ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_pet_cliente']['qt_reg_grid'] + 2) . ", $this->nmgp_reg_start)" ; 
        $this->rs_grid = $this->Db->SelectLimit($nmgp_select, $_SESSION['sc_session'][$this->Ini->sc_page]['grid_pet_cliente']['qt_reg_grid'] + 2, $this->nmgp_reg_start) ; 
    }  
-   $this->sc_where_Min = "s" . "c_c" . "tl" . "_aj" . "ax";
    if ($this->rs_grid === false && !$this->rs_grid->EOF && $GLOBALS["NM_ERRO_IBASE"] != 1) 
    { 
        $this->Erro->mensagem(__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dber'], $this->Db->ErrorMsg()); 
@@ -844,19 +826,7 @@ class grid_pet_cliente_grid
    { 
        $this->idpet = $this->rs_grid->fields[0] ;  
        $this->idpet = (string)$this->idpet;
-       if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-       { 
-           $this->foto_pet = "";  
-           if (is_file($this->rs_grid->fields[1])) 
-           { 
-               $this->foto_pet = file_get_contents($this->rs_grid->fields[1]);  
-           } 
-       } 
-       elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
-       { 
-           $this->foto_pet = $this->Db->BlobDecode($this->rs_grid->fields[1]) ;  
-       } 
-       elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
+       if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
        { 
            $this->foto_pet = $this->Db->BlobDecode($this->rs_grid->fields[1]) ;  
        } 
@@ -891,19 +861,7 @@ class grid_pet_cliente_grid
            $this->SC_seq_register = $_SESSION['sc_session'][$this->Ini->sc_page]['grid_pet_cliente']['final']; 
            $this->rs_grid->MoveNext(); 
            $this->idpet = $this->rs_grid->fields[0] ;  
-           if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-           { 
-               $this->foto_pet = "";  
-               if (is_file($this->rs_grid->fields[1])) 
-               { 
-                   $this->foto_pet = file_get_contents($this->rs_grid->fields[1]);  
-               } 
-           } 
-           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
-           { 
-               $this->foto_pet = $this->Db->BlobDecode($this->rs_grid->fields[1]) ;  
-           } 
-           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
+           if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
            { 
                $this->foto_pet = $this->Db->BlobDecode($this->rs_grid->fields[1]) ;  
            } 
@@ -979,10 +937,10 @@ class grid_pet_cliente_grid
                     <link rel="icon" type="image/png"   sizes="32x32" href="">
                     <link rel="icon" type="image/png"   sizes="96x96" href="">
                     <link rel="icon" type="image/png"   sizes="16x16" href="">
-                    <meta name="msapplication-TileColor" content="#727cf5">
+                    <meta name="msapplication-TileColor" content="">
                     <meta name="msapplication-TileImage" content="">
-                    <meta name="theme-color" content="#727cf5">
-                    <meta name="apple-mobile-web-app-status-bar-style" content="#727cf5">
+                    <meta name="theme-color" content="">
+                    <meta name="apple-mobile-web-app-status-bar-style" content="">
                     <link rel="shortcut icon" href=""><?php
            }
 ?>
@@ -1075,10 +1033,10 @@ $nm_saida->saida("                        <link rel=\"icon\" type=\"image/png\" 
 $nm_saida->saida("                        <link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"\">\r\n");
 $nm_saida->saida("                        <link rel=\"icon\" type=\"image/png\" sizes=\"96x96\" href=\"\">\r\n");
 $nm_saida->saida("                        <link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"\">\r\n");
-$nm_saida->saida("                        <meta name=\"msapplication-TileColor\" content=\"#727cf5\" >\r\n");
+$nm_saida->saida("                        <meta name=\"msapplication-TileColor\" content=\"\" >\r\n");
 $nm_saida->saida("                        <meta name=\"msapplication-TileImage\" content=\"\">\r\n");
-$nm_saida->saida("                        <meta name=\"theme-color\" content=\"#727cf5\">\r\n");
-$nm_saida->saida("                        <meta name=\"apple-mobile-web-app-status-bar-style\" content=\"#727cf5\">\r\n");
+$nm_saida->saida("                        <meta name=\"theme-color\" content=\"\">\r\n");
+$nm_saida->saida("                        <meta name=\"apple-mobile-web-app-status-bar-style\" content=\"\">\r\n");
 $nm_saida->saida("                        <link rel=\"shortcut icon\" href=\"\">\r\n");
        }
        if (!$_SESSION['sc_session'][$this->Ini->sc_page]['grid_pet_cliente']['doc_word'])
@@ -1161,6 +1119,31 @@ $nm_saida->saida("                        <link rel=\"shortcut icon\" href=\"\">
            $nm_saida->saida("     var sc_ajaxBordW = '" . $this->Ini->Border_w_ajax . "';\r\n");
            $nm_saida->saida("   </script>\r\n");
            $nm_saida->saida("   <script type=\"text/javascript\" src=\"../_lib/lib/js/jquery-3.6.0.min.js\"></script>\r\n");
+           if ($_SESSION['scriptcase']['proc_mobile'] && !$_SESSION['sc_session'][$this->Ini->sc_page]['grid_pet_cliente']['embutida']) {  
+               $forced_mobile = (isset($_SESSION['scriptcase']['force_mobile']) && $_SESSION['scriptcase']['force_mobile']) ? 'true' : 'false';
+               $sc_app_data   = json_encode([ 
+                   'forceMobile' => $forced_mobile, 
+                   'appType' => 'grid', 
+                   'improvements' => true, 
+                   'displayOptionsButton' => false, 
+                   'displayScrollUp' => true, 
+                   'bottomToolbarFixed' => true, 
+                   'mobileSimpleToolbar' => true, 
+                   'scrollUpPosition' => 'R', 
+                   'toolbarOrientation' => 'H', 
+                   'mobilePanes' => 'true', 
+                   'navigationBarButtons' => unserialize('a:5:{i:0;s:14:"sys_format_ini";i:1;s:14:"sys_format_ret";i:2;s:15:"sys_format_rows";i:3;s:14:"sys_format_ava";i:4;s:14:"sys_format_fim";}'), 
+                   'langs' => [ 
+                       'lang_refined_search' => html_entity_decode($this->Ini->Nm_lang['lang_refined_search'], ENT_COMPAT, $_SESSION['scriptcase']['charset']), 
+                       'lang_summary_search_button' => html_entity_decode($this->Ini->Nm_lang['lang_summary_search_button'], ENT_COMPAT, $_SESSION['scriptcase']['charset']), 
+                       'lang_details_button' => html_entity_decode($this->Ini->Nm_lang['lang_details_button'], ENT_COMPAT, $_SESSION['scriptcase']['charset']), 
+                   ], 
+               ]); ?> 
+        <input type="hidden" id="sc-mobile-app-data" value='<?php echo $sc_app_data; ?>' />
+        <script type="text/javascript" src="../_lib/lib/js/nm_modal_panes.jquery.js"></script>
+        <script type="text/javascript" src="../_lib/lib/js/nm_mobile.js"></script>
+        <link rel='stylesheet' href='../_lib/lib/css/nm_mobile.css' type='text/css'/>
+          <?php }
            $nm_saida->saida("   <link rel=\"stylesheet\" type=\"text/css\" href=\"../_lib/css/" . $this->Ini->str_schema_all . "_sweetalert.css\" />\r\n");
            $nm_saida->saida("   <script type=\"text/javascript\" src=\"" . $this->Ini->path_prod . "/third/sweetalert/sweetalert2.all.min.js\"></script>\r\n");
            $nm_saida->saida("   <script type=\"text/javascript\" src=\"" . $this->Ini->path_prod . "/third/sweetalert/polyfill.min.js\"></script>\r\n");
@@ -1335,6 +1318,13 @@ $nm_saida->saida("                        <link rel=\"shortcut icon\" href=\"\">
            $nm_saida->saida("   <link rel=\"stylesheet\" type=\"text/css\" href=\"../_lib/css/" . $this->Ini->str_schema_all . "_form" . $_SESSION['scriptcase']['reg_conf']['css_dir'] . ".css\" /> \r\n");
            $nm_saida->saida("   <link rel=\"stylesheet\" type=\"text/css\" href=\"../_lib/css/" . $this->Ini->str_schema_all . "_appdiv.css\" /> \r\n");
            $nm_saida->saida("   <link rel=\"stylesheet\" type=\"text/css\" href=\"../_lib/css/" . $this->Ini->str_schema_all . "_appdiv" . $_SESSION['scriptcase']['reg_conf']['css_dir'] . ".css\" /> \r\n");
+           if ($_SESSION['scriptcase']['proc_mobile'] && !$_SESSION['sc_session'][$this->Ini->sc_page]['grid_pet_cliente']['embutida']) { 
+           $nm_saida->saida("            <script>\r\n");
+           $nm_saida->saida("                $(document).ready(function(){\r\n");
+           $nm_saida->saida("                    bootstrapMobile();\r\n");
+           $nm_saida->saida("                });\r\n");
+           $nm_saida->saida("            </script>\r\n");
+           }
            $nm_saida->saida("   <style type=\"text/css\"> \r\n");
            $nm_saida->saida("     .scGridLabelFont a img[src\$='" . $this->Ini->Label_sort_desc . "'], \r\n");
            $nm_saida->saida("     .scGridLabelFont a img[src\$='" . $this->Ini->Label_sort_asc . "'], \r\n");
@@ -2893,7 +2883,6 @@ if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_pet_cliente']['proc_pdf']
    }
    $this->Ini->cor_link_dados = $this->css_scGridFieldEvenLink;
    $this->NM_flag_antigo = FALSE;
-   $this->sc_where_Min = $_SESSION['scriptcase'][$this->sc_where_Min];
    $nm_prog_barr = 0;
    $PB_tot       = "/" . $this->count_ger;;
    $nm_houve_quebra = "N";
@@ -2944,19 +2933,7 @@ if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_pet_cliente']['proc_pdf']
           $this->Lin_impressas++;
           $this->idpet = $this->rs_grid->fields[0] ;  
           $this->idpet = (string)$this->idpet;
-          if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          { 
-              $this->foto_pet = "";  
-              if (is_file($this->rs_grid->fields[1])) 
-              { 
-                  $this->foto_pet = file_get_contents($this->rs_grid->fields[1]);  
-              } 
-          } 
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
-          { 
-              $this->foto_pet = $this->Db->BlobDecode($this->rs_grid->fields[1]) ;  
-          } 
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
+          if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
           { 
               $this->foto_pet = $this->Db->BlobDecode($this->rs_grid->fields[1]) ;  
           } 
@@ -3113,7 +3090,6 @@ if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_pet_cliente']['proc_pdf']
           } 
           $this->rs_grid->MoveNext();
           $this->sc_proc_grid = false;
-          if ($this->sc_where_Min != $this->sc_where_Max) { $this->rs_grid->Close(); }
           $nm_quant_linhas++ ;
           if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_pet_cliente']['embutida'] || $_SESSION['sc_session'][$this->Ini->sc_page]['grid_pet_cliente']['opcao'] == "pdf" || $this->Ini->Apl_paginacao == "FULL")
           { 
@@ -4581,8 +4557,6 @@ if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_pet_cliente']['proc_pdf']
    } 
  function check_btns()
  {
-     $sv = $this->NM_css_ajx_embed;
-     if (!isset($this->Ini->$sv) || empty($this->Ini->$sv) || strlen($this->Ini->$sv) != $_SESSION[$this->NM_css_val_embed]) {exit;}
  }
  function nm_fim_grid($flag_apaga_pdf_log = TRUE)
  {

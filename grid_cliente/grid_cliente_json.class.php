@@ -265,23 +265,7 @@ class grid_cliente_json
       $this->nm_field_dinamico = array();
       $this->nm_order_dinamico = array();
       $nmgp_select_count = "SELECT count(*) AS countTest from " . $this->Ini->nm_tabela; 
-      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-      { 
-          $nmgp_select = "SELECT idcliente, cpf_cnpj, nome_fantasia, razao_social, email, logradouro, numero, bairro, cidade_idcidade from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
-      { 
-          $nmgp_select = "SELECT idcliente, cpf_cnpj, nome_fantasia, razao_social, email, logradouro, numero, bairro, cidade_idcidade from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-       $nmgp_select = "SELECT idcliente, cpf_cnpj, nome_fantasia, razao_social, email, logradouro, numero, bairro, cidade_idcidade from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-      { 
-          $nmgp_select = "SELECT idcliente, cpf_cnpj, nome_fantasia, razao_social, email, logradouro, numero, bairro, cidade_idcidade from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
+      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
       { 
           $nmgp_select = "SELECT idcliente, cpf_cnpj, nome_fantasia, razao_social, email, logradouro, numero, bairro, cidade_idcidade from " . $this->Ini->nm_tabela; 
       } 

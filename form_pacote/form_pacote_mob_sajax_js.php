@@ -3663,11 +3663,13 @@ foreach ($this->Ini->sc_lig_iframe as $tmp_i => $tmp_v)
     scAjaxSetFields(false);
     scAjaxSetVariables();
     document.F2.idpacote.value = scAjaxGetKeyValue("idpacote");
+    scAjaxSetSummary();
     scAjaxShowDebug();
     scAjaxSetLabel(true);
     scAjaxSetReadonly(true);
     scAjaxSetMaster();
     scAjaxSetNavStatus("t");
+    scAjaxSetNavStatus("b");
     scAjaxSetDisplay(true);
     if (scMasterDetailIframe && scMasterDetailIframe["nmsc_iframe_liga_form_pacote_itens_mob"] && "nmsc_iframe_liga_form_pacote_itens_mob" != scMasterDetailIframe["nmsc_iframe_liga_form_pacote_itens_mob"]) {
         scMoveMasterDetail(scMasterDetailIframe["nmsc_iframe_liga_form_pacote_itens_mob"]);

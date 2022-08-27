@@ -3825,11 +3825,13 @@ foreach ($this->Ini->sc_lig_iframe as $tmp_i => $tmp_v)
     scAjaxSetFields(false);
     scAjaxSetVariables();
     document.F2.idcontas_receber.value = scAjaxGetKeyValue("idcontas_receber");
+    scAjaxSetSummary();
     scAjaxShowDebug();
     scAjaxSetLabel(true);
     scAjaxSetReadonly(true);
     scAjaxSetMaster();
     scAjaxSetNavStatus("t");
+    scAjaxSetNavStatus("b");
     scAjaxSetDisplay(true);
     if (scMasterDetailIframe && scMasterDetailIframe["nmsc_iframe_liga_form_recebimento_parcial_mob"] && "nmsc_iframe_liga_form_recebimento_parcial_mob" != scMasterDetailIframe["nmsc_iframe_liga_form_recebimento_parcial_mob"]) {
         scMoveMasterDetail(scMasterDetailIframe["nmsc_iframe_liga_form_recebimento_parcial_mob"]);

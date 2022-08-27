@@ -312,25 +312,9 @@ class grid_funcionario_csv
       $this->nm_field_dinamico = array();
       $this->nm_order_dinamico = array();
       $nmgp_select_count = "SELECT count(*) AS countTest from " . $this->Ini->nm_tabela; 
-      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-      { 
-          $nmgp_select = "SELECT idfuncionario, cpf, nome, str_replace (convert(char(10),data_admissao,102), '.', '-') + ' ' + convert(char(8),data_admissao,20), str_replace (convert(char(10),data_demissao,102), '.', '-') + ' ' + convert(char(8),data_demissao,20) from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
+      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
       { 
           $nmgp_select = "SELECT idfuncionario, cpf, nome, data_admissao, data_demissao from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-       $nmgp_select = "SELECT idfuncionario, cpf, nome, convert(char(23),data_admissao,121), convert(char(23),data_demissao,121) from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-      { 
-          $nmgp_select = "SELECT idfuncionario, cpf, nome, data_admissao, data_demissao from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-      { 
-          $nmgp_select = "SELECT idfuncionario, cpf, nome, EXTEND(data_admissao, YEAR TO DAY), EXTEND(data_demissao, YEAR TO DAY) from " . $this->Ini->nm_tabela; 
       } 
       else 
       { 

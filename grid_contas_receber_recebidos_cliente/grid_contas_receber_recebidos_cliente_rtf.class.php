@@ -333,25 +333,9 @@ class grid_contas_receber_recebidos_cliente_rtf
       $this->nm_field_dinamico = array();
       $this->nm_order_dinamico = array();
       $nmgp_select_count = "SELECT count(*) AS countTest from " . $this->Ini->nm_tabela; 
-      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
+      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
       { 
           $nmgp_select = "SELECT numero_conta, data_emissao, data_vencimento, data_pagamento, valor_recebido, juros, idforma_pagamento, idnota_fiscal, observacoes, idcontas_receber, idcliente, idforma_pagamento_prevista, idgrupos_receitas, idtipos_receitas, valor_a_receber from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
-      { 
-          $nmgp_select = "SELECT numero_conta, data_emissao, data_vencimento, data_pagamento, valor_recebido, juros, idforma_pagamento, idnota_fiscal, observacoes, idcontas_receber, idcliente, idforma_pagamento_prevista, idgrupos_receitas, idtipos_receitas, valor_a_receber from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-       $nmgp_select = "SELECT numero_conta, data_emissao, data_vencimento, data_pagamento, valor_recebido, juros, idforma_pagamento, idnota_fiscal, observacoes, idcontas_receber, idcliente, idforma_pagamento_prevista, idgrupos_receitas, idtipos_receitas, valor_a_receber from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-      { 
-          $nmgp_select = "SELECT numero_conta, TO_DATE(TO_CHAR(data_emissao, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), TO_DATE(TO_CHAR(data_vencimento, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), TO_DATE(TO_CHAR(data_pagamento, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), valor_recebido, juros, idforma_pagamento, idnota_fiscal, observacoes, idcontas_receber, idcliente, idforma_pagamento_prevista, idgrupos_receitas, idtipos_receitas, valor_a_receber from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-      { 
-          $nmgp_select = "SELECT numero_conta, data_emissao, data_vencimento, data_pagamento, valor_recebido, juros, idforma_pagamento, idnota_fiscal, LOTOFILE(observacoes, '" . $this->Ini->root . $this->Ini->path_imag_temp . "/sc_blob_informix', 'client') as observacoes, idcontas_receber, idcliente, idforma_pagamento_prevista, idgrupos_receitas, idtipos_receitas, valor_a_receber from " . $this->Ini->nm_tabela; 
       } 
       else 
       { 
@@ -402,19 +386,7 @@ class grid_contas_receber_recebidos_cliente_rtf
          $this->idforma_pagamento = (string)$this->idforma_pagamento;
          $this->idnota_fiscal = $rs->fields[7] ;  
          $this->idnota_fiscal = (string)$this->idnota_fiscal;
-          if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          { 
-              $this->observacoes = "";  
-              if (is_file($rs_grid->fields[8])) 
-              { 
-                  $this->observacoes = file_get_contents($rs_grid->fields[8]);  
-              } 
-          } 
-         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
-         { 
-             $this->observacoes = $this->Db->BlobDecode($rs->fields[8]) ;  
-         } 
-         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
+         if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
          { 
              $this->observacoes = $this->Db->BlobDecode($rs->fields[8]) ;  
          } 

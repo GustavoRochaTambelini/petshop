@@ -68,6 +68,7 @@ class form_orcamento_1_mob_apl
    var $nmgp_opcao;
    var $nmgp_opc_ant;
    var $sc_evento;
+   var $sc_insert_on;
    var $nmgp_clone;
    var $nmgp_return_img = array();
    var $nmgp_dados_form = array();
@@ -684,11 +685,11 @@ class form_orcamento_1_mob_apl
       $this->nmgp_botoes['insert'] = "off";
       $this->nmgp_botoes['update'] = "on";
       $this->nmgp_botoes['delete'] = "off";
-      $this->nmgp_botoes['first'] = "off";
-      $this->nmgp_botoes['back'] = "off";
-      $this->nmgp_botoes['forward'] = "off";
-      $this->nmgp_botoes['last'] = "off";
-      $this->nmgp_botoes['summary'] = "off";
+      $this->nmgp_botoes['first'] = "on";
+      $this->nmgp_botoes['back'] = "on";
+      $this->nmgp_botoes['forward'] = "on";
+      $this->nmgp_botoes['last'] = "on";
+      $this->nmgp_botoes['summary'] = "on";
       $this->nmgp_botoes['navpage'] = "off";
       $this->nmgp_botoes['goto'] = "off";
       $this->nmgp_botoes['qtline'] = "off";
@@ -1074,6 +1075,7 @@ class form_orcamento_1_mob_apl
       }
       $this->NM_case_insensitive = false;
       $this->sc_evento = $this->nmgp_opcao;
+      $this->sc_insert_on = false;
             if ('ajax_check_file' == $this->nmgp_opcao ){
                  ob_start(); 
                  include_once("../_lib/lib/php/nm_api.php"); 
@@ -2691,10 +2693,6 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
           $nm_separa_data = strpos($this->field_config['data_venda']['date_format'], ";") ;
           $this->field_config['data_venda']['date_format'] = substr($this->field_config['data_venda']['date_format'], 0, $nm_separa_data) ;
           nm_conv_data($this->data_venda, $this->field_config['data_venda']['date_format']) ; 
-          if ('pdo_sqlsrv' == strtolower($this->Ini->nm_tpbanco) || 'pdo_dblib' == strtolower($this->Ini->nm_tpbanco))
-          {
-              $this->data_venda = str_replace('-', '', $this->data_venda);
-          }
           $this->field_config['data_venda']['date_format'] = substr($guarda_format_hora, $nm_separa_data + 1) ;
           nm_conv_hora($this->data_venda_hora, $this->field_config['data_venda']['date_format']) ; 
           if ($this->data_venda_hora == "" )  
@@ -2714,18 +2712,6 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
               $this->data_venda_hora = substr($this->data_venda_hora, 0, -4);
           }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
-          {
-              $this->data_venda_hora = substr($this->data_venda_hora, 0, -4);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $this->data_venda_hora = substr($this->data_venda_hora, 0, -4);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
-          {
-              $this->data_venda_hora = substr($this->data_venda_hora, 0, -4);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
           {
               $this->data_venda_hora = substr($this->data_venda_hora, 0, -4);
           }
@@ -3247,99 +3233,6 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['Lookup_sta
    } 
 //----------- 
 
-   function controle_navegacao()
-   {
-      global $sc_where;
-
-          if (false && !isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['total']))
-          {
-               $sc_where_pos = " WHERE ((idorcamento < $this->idorcamento))";
-               if ('' != $sc_where)
-               {
-                   if ('where ' == strtolower(substr(trim($sc_where), 0, 6)))
-                   {
-                       $sc_where = substr(trim($sc_where), 6);
-                   }
-                   if ('and ' == strtolower(substr(trim($sc_where), 0, 4)))
-                   {
-                       $sc_where = substr(trim($sc_where), 4);
-                   }
-                   $sc_where_pos .= ' AND (' . $sc_where . ')';
-                   $sc_where = ' WHERE ' . $sc_where;
-               }
-               $nmgp_sel_count = 'SELECT COUNT(*) AS countTest FROM ' . $this->Ini->nm_tabela . $sc_where;
-               $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nmgp_sel_count; 
-               $rsc = $this->Db->Execute($nmgp_sel_count); 
-               if ($rsc === false && !$rsc->EOF)  
-               { 
-                   $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dbas'], $this->Db->ErrorMsg()); 
-                   exit; 
-               }  
-               $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['total'] = $rsc->fields[0];
-               $rsc->Close(); 
-               if ('' != $this->idorcamento)
-               {
-               $nmgp_sel_count = 'SELECT COUNT(*) AS countTest FROM ' . $this->Ini->nm_tabela . $sc_where_pos;
-               $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nmgp_sel_count; 
-               $rsc = $this->Db->Execute($nmgp_sel_count); 
-               if ($rsc === false && !$rsc->EOF)  
-               { 
-                   $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dbas'], $this->Db->ErrorMsg()); 
-                   exit; 
-               }  
-               $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['inicio'] = $rsc->fields[0];
-               if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['inicio'] < 0)
-               {
-                   $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['inicio'] = 0;
-               }
-               $rsc->Close(); 
-               }
-               else
-               {
-                   $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['inicio'] = 0;
-               }
-          }
-          $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['qt_reg_grid'] = 1;
-          if (!isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['inicio']))
-          {
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['inicio'] = 0;
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['final']  = 0;
-          }
-          $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['opcao'] = $this->NM_ajax_info['param']['nmgp_opcao'];
-          if (in_array($_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['opcao'], array('incluir', 'alterar', 'excluir')))
-          {
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['opcao'] = '';
-          }
-          if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['opcao'] == 'inicio')
-          {
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['inicio'] = 0;
-          }
-          if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['opcao'] == 'retorna')
-          {
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['inicio'] = $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['inicio'] - $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['qt_reg_grid'];
-              if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['inicio'] < 0)
-              {
-                  $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['inicio'] = 0 ;
-              }
-          }
-          if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['opcao'] == 'avanca' && (!isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['total']) || $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['total'] > $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['final']))
-          {
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['inicio'] = $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['final'];
-          }
-          if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['opcao'] == 'final')
-          {
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['inicio'] = $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['total'] - $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['qt_reg_grid'];
-              if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['inicio'] < 0)
-              {
-                  $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['inicio'] = 0;
-              }
-          }
-          $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['final'] = $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['inicio'] + $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['qt_reg_grid'];
-          $this->Nav_permite_ret = 0 != $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['inicio'];
-          $this->Nav_permite_ava = $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['total'] != $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['final'];
-          $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['opcao'] = '';
-
-   }
 
    function temRegistros($sWhere)
    {
@@ -3410,18 +3303,6 @@ if (isset($this->NM_ajax_flag) && $this->NM_ajax_flag)
       {
           $sc_cmd_dependency = "SELECT COUNT(*) AS countTest FROM financeiro WHERE idorcamento = " . $this->idorcamento ;
       }
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      {
-          $sc_cmd_dependency = "SELECT COUNT(*) AS countTest FROM financeiro WHERE idorcamento = " . $this->idorcamento ;
-      }
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-      {
-          $sc_cmd_dependency = "SELECT COUNT(*) AS countTest FROM financeiro WHERE idorcamento = " . $this->idorcamento ;
-      }
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-      {
-          $sc_cmd_dependency = "SELECT COUNT(*) AS countTest FROM financeiro WHERE idorcamento = " . $this->idorcamento ;
-      }
       else
       {
           $sc_cmd_dependency = "SELECT COUNT(*) AS countTest FROM financeiro WHERE idorcamento = " . $this->idorcamento ;
@@ -3474,18 +3355,6 @@ if (isset($this->NM_ajax_flag) && $this->NM_ajax_flag)
 
             /* itens_orcamento */
       if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
-      {
-          $sc_cmd_dependency = "SELECT COUNT(*) AS countTest FROM itens_orcamento WHERE idorcamento = " . $this->idorcamento ;
-      }
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      {
-          $sc_cmd_dependency = "SELECT COUNT(*) AS countTest FROM itens_orcamento WHERE idorcamento = " . $this->idorcamento ;
-      }
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-      {
-          $sc_cmd_dependency = "SELECT COUNT(*) AS countTest FROM itens_orcamento WHERE idorcamento = " . $this->idorcamento ;
-      }
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
       {
           $sc_cmd_dependency = "SELECT COUNT(*) AS countTest FROM itens_orcamento WHERE idorcamento = " . $this->idorcamento ;
       }
@@ -3614,7 +3483,7 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
           $this->valor_total = 0;
           $this->sc_force_zero[] = 'valor_total';
       } 
-      $nm_bases_lob_geral = array_merge($this->Ini->nm_bases_oracle, $this->Ini->nm_bases_ibase, $this->Ini->nm_bases_informix, $this->Ini->nm_bases_mysql, $this->Ini->nm_bases_access, $this->Ini->nm_bases_sqlite, array('pdo_ibm'), array('pdo_sqlsrv'));
+      $nm_bases_lob_geral = array_merge($this->Ini->nm_bases_ibase, $this->Ini->nm_bases_mysql, $this->Ini->nm_bases_access, $this->Ini->nm_bases_sqlite);
       if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['decimal_db'] == ",") 
       {
           $this->nm_troca_decimal(".", ",");
@@ -3686,21 +3555,6 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento ";
               $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento "); 
           }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento ";
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento ";
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento ";
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento "); 
-          }  
           else  
           {
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento ";
@@ -3735,21 +3589,6 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
                   $SC_fields_update[] = "idcliente = $this->idcliente, data_venda = #$this->data_venda#, observacao = '$this->observacao', status = '$this->status', valor_total = $this->valor_total"; 
               } 
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              { 
-                  $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idcliente = $this->idcliente, data_venda = " . $this->Ini->date_delim . $this->data_venda . $this->Ini->date_delim1 . ", observacao = '$this->observacao', status = '$this->status', valor_total = $this->valor_total"; 
-              } 
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              { 
-                  $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idcliente = $this->idcliente, data_venda = " . $this->Ini->date_delim . $this->data_venda . $this->Ini->date_delim1 . ", observacao = '$this->observacao', status = '$this->status', valor_total = $this->valor_total"; 
-              } 
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              { 
-                  $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idcliente = $this->idcliente, data_venda = EXTEND('$this->data_venda', YEAR TO FRACTION), observacao = '$this->observacao', status = '$this->status', valor_total = $this->valor_total"; 
-              } 
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
@@ -3778,18 +3617,6 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
               {
                   $comando .= " WHERE idorcamento = $this->idorcamento ";  
               }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-                  $comando .= " WHERE idorcamento = $this->idorcamento ";  
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $comando .= " WHERE idorcamento = $this->idorcamento ";  
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                  $comando .= " WHERE idorcamento = $this->idorcamento ";  
-              }  
               else  
               {
                   $comando .= " WHERE idorcamento = $this->idorcamento ";  
@@ -3798,13 +3625,6 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
               $comando = str_replace("'null'", "null", $comando) ; 
               $comando = str_replace("#null#", "null", $comando) ; 
               $comando = str_replace($this->Ini->date_delim . "null" . $this->Ini->date_delim1, "null", $comando) ; 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                $comando = str_replace("EXTEND('', YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND('', YEAR TO DAY)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO DAY)", "null", $comando) ; 
-              }  
               $useUpdateProcedure = false;
               if (!empty($SC_fields_update) || $useUpdateProcedure)
               { 
@@ -3868,9 +3688,6 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
               elseif (isset($this->contas_receber)) { $this->nm_limpa_alfa($this->contas_receber); }
 
               $this->nm_formatar_campos();
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-              }
 
               $aOldRefresh               = $this->nmgp_refresh_fields;
               $this->nmgp_refresh_fields = array_diff(array('idorcamento', 'idcliente', 'data_venda', 'status', 'valor_total', 'observacao', 'itens_orcamento', 'contas_receber'), $aDoNotUpdate);
@@ -3935,50 +3752,6 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
                   } 
                   $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (idcliente, observacao, status, valor, desconto, valor_total $compl_insert) VALUES ($this->idcliente, '$this->observacao', '$this->status', $this->valor, $this->desconto, $this->valor_total $compl_insert_val)"; 
               }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              { 
-                  $compl_insert     = ""; 
-                  $compl_insert_val = ""; 
-                  if ($this->data_venda != "")
-                  { 
-                       $compl_insert     .= ", data_venda";
-                       $compl_insert_val .= ", " . $this->Ini->date_delim . $this->data_venda . $this->Ini->date_delim1 . "";
-                  } 
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idcliente, observacao, status, valor, desconto, valor_total $compl_insert) VALUES (" . $NM_seq_auto . "$this->idcliente, '$this->observacao', '$this->status', $this->valor, $this->desconto, $this->valor_total $compl_insert_val)"; 
-              }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-              { 
-                  $compl_insert     = ""; 
-                  $compl_insert_val = ""; 
-                  if ($this->data_venda != "")
-                  { 
-                       $compl_insert     .= ", data_venda";
-                       $compl_insert_val .= ", " . $this->Ini->date_delim . $this->data_venda . $this->Ini->date_delim1 . "";
-                  } 
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idcliente, observacao, status, valor, desconto, valor_total $compl_insert) VALUES (" . $NM_seq_auto . "$this->idcliente, '$this->observacao', '$this->status', $this->valor, $this->desconto, $this->valor_total $compl_insert_val)"; 
-              }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $compl_insert     = ""; 
-                  $compl_insert_val = ""; 
-                  if ($this->data_venda != "")
-                  { 
-                       $compl_insert     .= ", data_venda";
-                       $compl_insert_val .= ", " . $this->Ini->date_delim . $this->data_venda . $this->Ini->date_delim1 . "";
-                  } 
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idcliente, observacao, status, valor, desconto, valor_total $compl_insert) VALUES (" . $NM_seq_auto . "$this->idcliente, '$this->observacao', '$this->status', $this->valor, $this->desconto, $this->valor_total $compl_insert_val)"; 
-              }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                  $compl_insert     = ""; 
-                  $compl_insert_val = ""; 
-                  if ($this->data_venda != "")
-                  { 
-                       $compl_insert     .= ", data_venda";
-                       $compl_insert_val .= ", EXTEND('$this->data_venda', YEAR TO FRACTION)";
-                  } 
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idcliente, observacao, status, valor, desconto, valor_total $compl_insert) VALUES (" . $NM_seq_auto . "$this->idcliente, '$this->observacao', '$this->status', $this->valor, $this->desconto, $this->valor_total $compl_insert_val)"; 
-              }
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
               {
                   $compl_insert     = ""; 
@@ -3991,17 +3764,6 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
                   $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idcliente, observacao, status, valor, desconto, valor_total $compl_insert) VALUES (" . $NM_seq_auto . "$this->idcliente, '$this->observacao', '$this->status', $this->valor, $this->desconto, $this->valor_total $compl_insert_val)"; 
               }
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sqlite))
-              {
-                  $compl_insert     = ""; 
-                  $compl_insert_val = ""; 
-                  if ($this->data_venda != "")
-                  { 
-                       $compl_insert     .= ", data_venda";
-                       $compl_insert_val .= ", " . $this->Ini->date_delim . $this->data_venda . $this->Ini->date_delim1 . "";
-                  } 
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idcliente, observacao, status, valor, desconto, valor_total $compl_insert) VALUES (" . $NM_seq_auto . "$this->idcliente, '$this->observacao', '$this->status', $this->valor, $this->desconto, $this->valor_total $compl_insert_val)"; 
-              }
-              elseif ($this->Ini->nm_tpbanco == 'pdo_ibm')
               {
                   $compl_insert     = ""; 
                   $compl_insert_val = ""; 
@@ -4027,13 +3789,6 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
               $comando = str_replace("'null'", "null", $comando) ; 
               $comando = str_replace("#null#", "null", $comando) ; 
               $comando = str_replace($this->Ini->date_delim . "null" . $this->Ini->date_delim1, "null", $comando) ; 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                $comando = str_replace("EXTEND('', YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND('', YEAR TO DAY)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO DAY)", "null", $comando) ; 
-              }  
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = $comando; 
               $rs = $this->Db->Execute($comando); 
               if ($rs === false)  
@@ -4059,7 +3814,7 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
               }  
               if ('refresh_insert' != $this->nmgp_opcao)
               {
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql) || in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access) || in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase)) 
+              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access)) 
               { 
                   $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select @@identity"; 
                   $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
@@ -4079,47 +3834,6 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
               { 
                   $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select last_insert_id()"; 
-                  $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
-                  if ($rsy === false && !$rsy->EOF)  
-                  { 
-                      $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dbas'], $this->Db->ErrorMsg()); 
-                      exit; 
-                  } 
-                  $this->idorcamento = $rsy->fields[0];
-                  $rsy->Close(); 
-              } 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              { 
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "SELECT dbinfo('sqlca.sqlerrd1') FROM " . $this->Ini->nm_tabela; 
-                  $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
-                  if ($rsy === false && !$rsy->EOF)  
-                  { 
-                      $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dbas'], $this->Db->ErrorMsg()); 
-                      exit; 
-                  } 
-                  $this->idorcamento = $rsy->fields[0];
-                  $rsy->Close(); 
-              } 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              { 
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select .currval from dual"; 
-                  $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
-                  if ($rsy === false && !$rsy->EOF)  
-                  { 
-                      $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dbas'], $this->Db->ErrorMsg()); 
-                      exit; 
-                  } 
-                  $this->idorcamento = $rsy->fields[0];
-                  $rsy->Close(); 
-              } 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
-              { 
-                  $str_tabela = "SYSIBM.SYSDUMMY1"; 
-                  if($this->Ini->nm_con_use_schema == "N") 
-                  { 
-                          $str_tabela = "SYSDUMMY1"; 
-                  } 
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "SELECT IDENTITY_VAL_LOCAL() FROM " . $str_tabela; 
                   $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
                   if ($rsy === false && !$rsy->EOF)  
                   { 
@@ -4183,6 +3897,7 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
               $this->status = $this->status_before_qstr;
               $this->itens_orcamento = $this->itens_orcamento_before_qstr;
               $this->contas_receber = $this->contas_receber_before_qstr;
+              $this->sc_insert_on = true; 
               if (empty($this->sc_erro_insert)) {
                   $this->record_insert_ok = true;
               } 
@@ -4218,21 +3933,6 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento"; 
               $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento "); 
           }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento"; 
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento"; 
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento"; 
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento "); 
-          }  
           else  
           {
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento"; 
@@ -4263,21 +3963,6 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
                   $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento "; 
                   $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento "); 
               }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento "; 
-                  $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento "); 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento "; 
-                  $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento "); 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento "; 
-                  $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento "); 
-              }  
               else  
               {
                   $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where idorcamento = $this->idorcamento "; 
@@ -4303,6 +3988,11 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
               }
               $this->nmgp_opcao = "avanca"; 
               $this->nm_flag_iframe = true;
+              $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['reg_start']--; 
+              if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['reg_start'] < 0)
+              {
+                  $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['reg_start'] = 0; 
+              }
 
               $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['db_changed'] = true;
 
@@ -4388,43 +4078,12 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
           { 
               $GLOBALS["NM_ERRO_IBASE"] = 1;  
           } 
-          if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-          { 
-              $nmgp_select = "SELECT idorcamento, idcliente, str_replace (convert(char(10),data_venda,102), '.', '-') + ' ' + convert(char(8),data_venda,20), observacao, status, valor, desconto, valor_total from " . $this->Ini->nm_tabela ; 
-          } 
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          { 
-              $nmgp_select = "SELECT idorcamento, idcliente, convert(char(23),data_venda,121), observacao, status, valor, desconto, valor_total from " . $this->Ini->nm_tabela ; 
-          } 
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          { 
-              $nmgp_select = "SELECT idorcamento, idcliente, data_venda, observacao, status, valor, desconto, valor_total from " . $this->Ini->nm_tabela ; 
-          } 
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          { 
-              $nmgp_select = "SELECT idorcamento, idcliente, EXTEND(data_venda, YEAR TO FRACTION), observacao, status, valor, desconto, valor_total from " . $this->Ini->nm_tabela ; 
-          } 
-          else 
-          { 
-              $nmgp_select = "SELECT idorcamento, idcliente, data_venda, observacao, status, valor, desconto, valor_total from " . $this->Ini->nm_tabela ; 
-          } 
+          $nmgp_select = "SELECT idorcamento, idcliente, data_venda, observacao, status, valor, desconto, valor_total from " . $this->Ini->nm_tabela ; 
           $aWhere = array();
           $aWhere[] = $sc_where_filter;
           if ($this->nmgp_opcao == "igual" || (($_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['run_iframe'] == "F" || $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['run_iframe'] == "R") && ($this->sc_evento == "insert" || $this->sc_evento == "update")) )
           { 
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
-              {
-                  $aWhere[] = "idorcamento = $this->idorcamento"; 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-                  $aWhere[] = "idorcamento = $this->idorcamento"; 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $aWhere[] = "idorcamento = $this->idorcamento"; 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
               {
                   $aWhere[] = "idorcamento = $this->idorcamento"; 
               }  
@@ -4466,8 +4125,25 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
                   $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['select'] = ""; 
               } 
           } 
-          $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nmgp_select; 
-          $rs = $this->Db->Execute($nmgp_select) ; 
+          if ($this->nmgp_opcao == "igual") 
+          { 
+              $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nmgp_select; 
+              $rs = $this->Db->Execute($nmgp_select) ; 
+          } 
+          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql) || in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres) || in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
+          { 
+              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "SelectLimit($nmgp_select, 1, " . $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['reg_start'] . ")" ; 
+              $rs = $this->Db->SelectLimit($nmgp_select, 1, $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['reg_start']) ; 
+          } 
+          else  
+          { 
+              $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nmgp_select; 
+              $rs = $this->Db->Execute($nmgp_select) ; 
+              if (!$rs === false && !$rs->EOF) 
+              { 
+                  $rs->Move($_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['reg_start']) ;  
+              } 
+          } 
           if ($rs === false && !$rs->EOF && $GLOBALS["NM_ERRO_IBASE"] != 1) 
           { 
               $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dber'], $this->Db->ErrorMsg()); 
@@ -4481,9 +4157,6 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
           }  
           if ($rs->EOF) 
           { 
-              $this->NM_ajax_info['navSummary']['reg_ini'] = 0; 
-              $this->NM_ajax_info['navSummary']['reg_qtd'] = 0; 
-              $this->NM_ajax_info['navSummary']['reg_tot'] = 0; 
               if (!empty($_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['where_filter']))
               {
                   $this->nmgp_form_empty        = true;
@@ -4509,12 +4182,6 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
               $this->NM_ajax_info['buttonDisplay']['update'] = $this->nmgp_botoes['update'] = "off";
               $this->NM_ajax_info['buttonDisplay']['delete'] = $this->nmgp_botoes['delete'] = "off";
               return; 
-          } 
-          else 
-          { 
-              $this->NM_ajax_info['navSummary']['reg_ini'] = 1; 
-              $this->NM_ajax_info['navSummary']['reg_qtd'] = 1; 
-              $this->NM_ajax_info['navSummary']['reg_tot'] = 1; 
           } 
           if ($rs === false && $GLOBALS["NM_ERRO_IBASE"] == 1) 
           { 
@@ -4560,7 +4227,9 @@ $_SESSION['scriptcase']['form_orcamento_1_mob']['contr_erro'] = 'off';
           $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['dados_select'] = $this->nmgp_dados_select;
           if (!$this->NM_ajax_flag || 'backup_line' != $this->NM_ajax_opcao)
           {
-              $this->controle_navegacao();
+              $this->Nav_permite_ret = 0 != $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['reg_start'];
+              $this->Nav_permite_ava = $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['reg_start'] < $qt_geral_reg_form_orcamento_1_mob;
+              $_SESSION['sc_session'][$this->Ini->sc_page]['form_orcamento_1_mob']['opcao']   = '';
           }
       } 
       if ($this->nmgp_opcao == "novo" || $this->nmgp_opcao == "refresh_insert") 
@@ -5457,17 +5126,8 @@ else
           if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access)) {
               $Nm_accent = $this->Ini->Nm_accent_access;
           }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2)) {
-              $Nm_accent = $this->Ini->Nm_accent_db2;
-          }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase)) {
               $Nm_accent = $this->Ini->Nm_accent_ibase;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix)) {
-              $Nm_accent = $this->Ini->Nm_accent_informix;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql)) {
-              $Nm_accent = $this->Ini->Nm_accent_mssql;
           }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql)) {
               $Nm_accent = $this->Ini->Nm_accent_mysql;
@@ -5475,23 +5135,8 @@ else
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres)) {
               $Nm_accent = $this->Ini->Nm_accent_postgres;
           }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle)) {
-              $Nm_accent = $this->Ini->Nm_accent_oracle;
-          }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sqlite)) {
               $Nm_accent = $this->Ini->Nm_accent_sqlite;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase)) {
-              $Nm_accent = $this->Ini->Nm_accent_sybase;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_vfp)) {
-              $Nm_accent = $this->Ini->Nm_accent_vfp;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_odbc)) {
-              $Nm_accent = $this->Ini->Nm_accent_odbc;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress)) {
-              $Nm_accent = $this->Ini->Nm_accent_progress;
           }
       }
       $nm_numeric[] = "idorcamento";$nm_numeric[] = "idcliente";$nm_numeric[] = "valor";$nm_numeric[] = "desconto";$nm_numeric[] = "valor_total";
@@ -5540,18 +5185,6 @@ else
              $nm_aspas  = "'";
              $nm_aspas1 = "'";
          }
-         if (in_array($campo_join, $nm_numeric) && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase) && (strtoupper($condicao) == "II" || strtoupper($condicao) == "QP" || strtoupper($condicao) == "NP"))
-         {
-             $nome      = "CAST ($nome AS VARCHAR)";
-             $nm_aspas  = "'";
-             $nm_aspas1 = "'";
-         }
-         if (in_array($campo_join, $nm_numeric) && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress) && (strtoupper($condicao) == "II" || strtoupper($condicao) == "QP" || strtoupper($condicao) == "NP"))
-         {
-             $nome      = "CAST ($nome AS VARCHAR(255))";
-             $nm_aspas  = "'";
-             $nm_aspas1 = "'";
-         }
       $Nm_datas["data_venda"] = "datetime";
          if (isset($Nm_datas[$campo_join]))
          {
@@ -5594,34 +5227,6 @@ else
           elseif ($Nm_datas[$campo_join] == "time" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
           {
               $nome = "to_char (" . $nome . ", 'hh24:mi:ss')";
-          }
-          elseif ($Nm_datas[$campo_join] == "date" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          {
-              $nome = "convert(char(10)," . $nome . ",121)";
-          }
-          elseif (($Nm_datas[$campo_join] == "datetime" || $Nm_datas[$campo_join] == "timestamp") && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          {
-              $nome = "convert(char(19)," . $nome . ",121)";
-          }
-          elseif (($Nm_datas[$campo_join] == "times" || $Nm_datas[$campo_join] == "datetime" || $Nm_datas[$campo_join] == "timestamp") && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $nome  = "TO_DATE(TO_CHAR(" . $nome . ", 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss')";
-          }
-          elseif ($Nm_datas[$campo_join] == "datetime" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $nome = "EXTEND(" . $nome . ", YEAR TO FRACTION)";
-          }
-          elseif ($Nm_datas[$campo_join] == "date" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $nome = "EXTEND(" . $nome . ", YEAR TO DAY)";
-          }
-          elseif ($Nm_datas[$campo_join] == "datetime" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress))
-          {
-              $nome = "to_char (" . $nome . ", 'YYYY-MM-DD hh24:mi:ss')";
-          }
-          elseif ($Nm_datas[$campo_join] == "date" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress))
-          {
-              $nome = "to_char (" . $nome . ", 'YYYY-MM-DD')";
           }
       }
          $comando .= (!empty($comando) ? " or " : "");
@@ -5992,6 +5597,18 @@ if (parent && parent.scAjaxDetailValue)
                 break;
             case "exit":
                 return array("sc_b_sai_t.sc-unique-btn-2", "sc_b_sai_t.sc-unique-btn-4", "sc_b_sai_t.sc-unique-btn-6", "sc_b_sai_t.sc-unique-btn-8", "sc_b_sai_t.sc-unique-btn-3", "sc_b_sai_t.sc-unique-btn-7");
+                break;
+            case "first":
+                return array("sc_b_ini_b.sc-unique-btn-9");
+                break;
+            case "back":
+                return array("sc_b_ret_b.sc-unique-btn-10");
+                break;
+            case "forward":
+                return array("sc_b_avc_b.sc-unique-btn-11");
+                break;
+            case "last":
+                return array("sc_b_fim_b.sc-unique-btn-12");
                 break;
         }
 

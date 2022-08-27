@@ -1,7 +1,7 @@
 index.php
 petshop
 grid_funcao
-NAO
+SIM
 cons
 grid_funcao
 LigMd5

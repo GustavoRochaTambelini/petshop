@@ -563,7 +563,7 @@ class form_cliente_apl
       $this->arr_buttons['btn_voltar']['fontawesomeicon']            = "fas fa-arrow-left";
 
 
-      $_SESSION['scriptcase']['error_icon']['form_cliente']  = "<img src=\"" . $this->Ini->path_icones . "/scriptcase__NM__btn__NM__scriptcase9_Rhino__NM__nm_scriptcase9_Rhino_error.png\" style=\"border-width: 0px\" align=\"top\">&nbsp;";
+      $_SESSION['scriptcase']['error_icon']['form_cliente']  = "<img src=\"" . $this->Ini->path_icones . "/scriptcase__NM__icnMensagemAlerta.png\" style=\"border-width: 0px\" align=\"top\">&nbsp;";
       $_SESSION['scriptcase']['error_close']['form_cliente'] = "<td>" . nmButtonOutput($this->arr_buttons, "berrm_clse", "document.getElementById('id_error_display_fixed').style.display = 'none'; document.getElementById('id_error_message_fixed').innerHTML = ''; return false", "document.getElementById('id_error_display_fixed').style.display = 'none'; document.getElementById('id_error_message_fixed').innerHTML = ''; return false", "", "", "", "", "", "", "", $this->Ini->path_botoes, "", "", "", "", "") . "</td>";
 
       $this->Embutida_proc = isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['embutida_proc']) ? $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['embutida_proc'] : $this->Embutida_proc;
@@ -3084,14 +3084,6 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
           {
               $this->data_nascimento_hora = substr($this->data_nascimento_hora, 0, -4);
           }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $this->data_nascimento_hora = substr($this->data_nascimento_hora, 0, -4);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
-          {
-              $this->data_nascimento_hora = substr($this->data_nascimento_hora, 0, -4);
-          }
       } 
       if ($this->data_nascimento == "" && $use_null)  
       { 
@@ -3883,7 +3875,7 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_cidade_idci
           $this->numero = 0;
           $this->sc_force_zero[] = 'numero';
       } 
-      $nm_bases_lob_geral = array_merge($this->Ini->nm_bases_oracle, $this->Ini->nm_bases_ibase, $this->Ini->nm_bases_informix, $this->Ini->nm_bases_mysql, $this->Ini->nm_bases_access, $this->Ini->nm_bases_sqlite, array('pdo_ibm'), array('pdo_sqlsrv'));
+      $nm_bases_lob_geral = array_merge($this->Ini->nm_bases_ibase, $this->Ini->nm_bases_mysql, $this->Ini->nm_bases_access, $this->Ini->nm_bases_sqlite);
       if ($this->nmgp_opcao == "alterar" || $this->nmgp_opcao == "incluir") 
       {
           $this->cpf_cnpj_before_qstr = $this->cpf_cnpj;
@@ -3988,21 +3980,6 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_cidade_idci
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente ";
               $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente "); 
           }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente ";
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente ";
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente ";
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente "); 
-          }  
           else  
           {
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente ";
@@ -4037,21 +4014,6 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_cidade_idci
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
                   $SC_fields_update[] = "cidade_idcidade = $this->cidade_idcidade, cpf_cnpj = '$this->cpf_cnpj', nome_fantasia = '$this->nome_fantasia', razao_social = '$this->razao_social', data_nascimento = #$this->data_nascimento#, logradouro = '$this->logradouro', numero = $this->numero, bairro = '$this->bairro', email = '$this->email', indicacao = '$this->indicacao', cep = '$this->cep'"; 
               } 
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              { 
-                  $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "cidade_idcidade = $this->cidade_idcidade, cpf_cnpj = '$this->cpf_cnpj', nome_fantasia = '$this->nome_fantasia', razao_social = '$this->razao_social', data_nascimento = " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", logradouro = '$this->logradouro', numero = $this->numero, bairro = '$this->bairro', email = '$this->email', indicacao = '$this->indicacao', cep = '$this->cep'"; 
-              } 
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              { 
-                  $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "cidade_idcidade = $this->cidade_idcidade, cpf_cnpj = '$this->cpf_cnpj', nome_fantasia = '$this->nome_fantasia', razao_social = '$this->razao_social', data_nascimento = " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", logradouro = '$this->logradouro', numero = $this->numero, bairro = '$this->bairro', email = '$this->email', indicacao = '$this->indicacao', cep = '$this->cep'"; 
-              } 
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              { 
-                  $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "cidade_idcidade = $this->cidade_idcidade, cpf_cnpj = '$this->cpf_cnpj', nome_fantasia = '$this->nome_fantasia', razao_social = '$this->razao_social', data_nascimento = EXTEND('$this->data_nascimento', YEAR TO DAY), logradouro = '$this->logradouro', numero = $this->numero, bairro = '$this->bairro', email = '$this->email', indicacao = '$this->indicacao', cep = '$this->cep'"; 
-              } 
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
@@ -4072,18 +4034,6 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_cidade_idci
               {
                   $comando .= " WHERE idcliente = $this->idcliente ";  
               }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-                  $comando .= " WHERE idcliente = $this->idcliente ";  
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $comando .= " WHERE idcliente = $this->idcliente ";  
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                  $comando .= " WHERE idcliente = $this->idcliente ";  
-              }  
               else  
               {
                   $comando .= " WHERE idcliente = $this->idcliente ";  
@@ -4092,13 +4042,6 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_cidade_idci
               $comando = str_replace("'null'", "null", $comando) ; 
               $comando = str_replace("#null#", "null", $comando) ; 
               $comando = str_replace($this->Ini->date_delim . "null" . $this->Ini->date_delim1, "null", $comando) ; 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                $comando = str_replace("EXTEND('', YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND('', YEAR TO DAY)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO DAY)", "null", $comando) ; 
-              }  
               $useUpdateProcedure = false;
               if (!empty($SC_fields_update) || $useUpdateProcedure)
               { 
@@ -4183,9 +4126,6 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_cidade_idci
               elseif (isset($this->cliente_telefone)) { $this->nm_limpa_alfa($this->cliente_telefone); }
 
               $this->nm_formatar_campos();
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-              }
 
               $aOldRefresh               = $this->nmgp_refresh_fields;
               $this->nmgp_refresh_fields = array_diff(array('idcliente', 'cpf_cnpj', 'nome_fantasia', 'razao_social', 'data_nascimento', 'email', 'indicacao', 'cep', 'logradouro', 'numero', 'bairro', 'cidade_idcidade', 'cliente_telefone', 'cliente_dependente', 'cliente_pet'), $aDoNotUpdate);
@@ -4239,31 +4179,11 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_cidade_idci
               { 
                   $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep) VALUES ($this->cidade_idcidade, '$this->cpf_cnpj', '$this->nome_fantasia', '$this->razao_social', #$this->data_nascimento#, '$this->logradouro', $this->numero, '$this->bairro', '$this->email', '$this->indicacao', '$this->cep')"; 
               }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              { 
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep) VALUES (" . $NM_seq_auto . "$this->cidade_idcidade, '$this->cpf_cnpj', '$this->nome_fantasia', '$this->razao_social', " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", '$this->logradouro', $this->numero, '$this->bairro', '$this->email', '$this->indicacao', '$this->cep')"; 
-              }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-              { 
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep) VALUES (" . $NM_seq_auto . "$this->cidade_idcidade, '$this->cpf_cnpj', '$this->nome_fantasia', '$this->razao_social', " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", '$this->logradouro', $this->numero, '$this->bairro', '$this->email', '$this->indicacao', '$this->cep')"; 
-              }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep) VALUES (" . $NM_seq_auto . "$this->cidade_idcidade, '$this->cpf_cnpj', '$this->nome_fantasia', '$this->razao_social', " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", '$this->logradouro', $this->numero, '$this->bairro', '$this->email', '$this->indicacao', '$this->cep')"; 
-              }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep) VALUES (" . $NM_seq_auto . "$this->cidade_idcidade, '$this->cpf_cnpj', '$this->nome_fantasia', '$this->razao_social', EXTEND('$this->data_nascimento', YEAR TO DAY), '$this->logradouro', $this->numero, '$this->bairro', '$this->email', '$this->indicacao', '$this->cep')"; 
-              }
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
               {
                   $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep) VALUES (" . $NM_seq_auto . "$this->cidade_idcidade, '$this->cpf_cnpj', '$this->nome_fantasia', '$this->razao_social', " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", '$this->logradouro', $this->numero, '$this->bairro', '$this->email', '$this->indicacao', '$this->cep')"; 
               }
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sqlite))
-              {
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep) VALUES (" . $NM_seq_auto . "$this->cidade_idcidade, '$this->cpf_cnpj', '$this->nome_fantasia', '$this->razao_social', " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", '$this->logradouro', $this->numero, '$this->bairro', '$this->email', '$this->indicacao', '$this->cep')"; 
-              }
-              elseif ($this->Ini->nm_tpbanco == 'pdo_ibm')
               {
                   $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep) VALUES (" . $NM_seq_auto . "$this->cidade_idcidade, '$this->cpf_cnpj', '$this->nome_fantasia', '$this->razao_social', " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", '$this->logradouro', $this->numero, '$this->bairro', '$this->email', '$this->indicacao', '$this->cep')"; 
               }
@@ -4275,13 +4195,6 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_cidade_idci
               $comando = str_replace("'null'", "null", $comando) ; 
               $comando = str_replace("#null#", "null", $comando) ; 
               $comando = str_replace($this->Ini->date_delim . "null" . $this->Ini->date_delim1, "null", $comando) ; 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                $comando = str_replace("EXTEND('', YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND('', YEAR TO DAY)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO DAY)", "null", $comando) ; 
-              }  
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = $comando; 
               $rs = $this->Db->Execute($comando); 
               if ($rs === false)  
@@ -4307,7 +4220,7 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_cidade_idci
               }  
               if ('refresh_insert' != $this->nmgp_opcao)
               {
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql) || in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access) || in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase)) 
+              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access)) 
               { 
                   $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select @@identity"; 
                   $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
@@ -4327,47 +4240,6 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_cidade_idci
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
               { 
                   $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select last_insert_id()"; 
-                  $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
-                  if ($rsy === false && !$rsy->EOF)  
-                  { 
-                      $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dbas'], $this->Db->ErrorMsg()); 
-                      exit; 
-                  } 
-                  $this->idcliente = $rsy->fields[0];
-                  $rsy->Close(); 
-              } 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              { 
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "SELECT dbinfo('sqlca.sqlerrd1') FROM " . $this->Ini->nm_tabela; 
-                  $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
-                  if ($rsy === false && !$rsy->EOF)  
-                  { 
-                      $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dbas'], $this->Db->ErrorMsg()); 
-                      exit; 
-                  } 
-                  $this->idcliente = $rsy->fields[0];
-                  $rsy->Close(); 
-              } 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              { 
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select .currval from dual"; 
-                  $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
-                  if ($rsy === false && !$rsy->EOF)  
-                  { 
-                      $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dbas'], $this->Db->ErrorMsg()); 
-                      exit; 
-                  } 
-                  $this->idcliente = $rsy->fields[0];
-                  $rsy->Close(); 
-              } 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
-              { 
-                  $str_tabela = "SYSIBM.SYSDUMMY1"; 
-                  if($this->Ini->nm_con_use_schema == "N") 
-                  { 
-                          $str_tabela = "SYSDUMMY1"; 
-                  } 
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "SELECT IDENTITY_VAL_LOCAL() FROM " . $str_tabela; 
                   $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
                   if ($rsy === false && !$rsy->EOF)  
                   { 
@@ -4507,21 +4379,6 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_cidade_idci
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente"; 
               $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente "); 
           }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente"; 
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente"; 
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente"; 
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente "); 
-          }  
           else  
           {
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente"; 
@@ -4548,21 +4405,6 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_cidade_idci
           { 
               $rs1->Close(); 
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
-              {
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente "; 
-                  $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente "); 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente "; 
-                  $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente "); 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente "; 
-                  $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente "); 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
               {
                   $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente "; 
                   $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where idcliente = $this->idcliente "); 
@@ -4677,43 +4519,12 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_cidade_idci
           { 
               $GLOBALS["NM_ERRO_IBASE"] = 1;  
           } 
-          if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-          { 
-              $nmgp_select = "SELECT idcliente, cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, str_replace (convert(char(10),data_nascimento,102), '.', '-') + ' ' + convert(char(8),data_nascimento,20), logradouro, numero, bairro, email, indicacao, cep from " . $this->Ini->nm_tabela ; 
-          } 
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          { 
-              $nmgp_select = "SELECT idcliente, cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, convert(char(23),data_nascimento,121), logradouro, numero, bairro, email, indicacao, cep from " . $this->Ini->nm_tabela ; 
-          } 
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          { 
-              $nmgp_select = "SELECT idcliente, cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep from " . $this->Ini->nm_tabela ; 
-          } 
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          { 
-              $nmgp_select = "SELECT idcliente, cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, EXTEND(data_nascimento, YEAR TO DAY), logradouro, numero, bairro, email, indicacao, cep from " . $this->Ini->nm_tabela ; 
-          } 
-          else 
-          { 
-              $nmgp_select = "SELECT idcliente, cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep from " . $this->Ini->nm_tabela ; 
-          } 
+          $nmgp_select = "SELECT idcliente, cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep from " . $this->Ini->nm_tabela ; 
           $aWhere = array();
           $aWhere[] = $sc_where_filter;
           if ($this->nmgp_opcao == "igual" || (($_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['run_iframe'] == "F" || $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['run_iframe'] == "R") && ($this->sc_evento == "insert" || $this->sc_evento == "update")) )
           { 
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
-              {
-                  $aWhere[] = "idcliente = $this->idcliente"; 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-                  $aWhere[] = "idcliente = $this->idcliente"; 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $aWhere[] = "idcliente = $this->idcliente"; 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
               {
                   $aWhere[] = "idcliente = $this->idcliente"; 
               }  
@@ -5865,17 +5676,8 @@ else
           if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access)) {
               $Nm_accent = $this->Ini->Nm_accent_access;
           }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2)) {
-              $Nm_accent = $this->Ini->Nm_accent_db2;
-          }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase)) {
               $Nm_accent = $this->Ini->Nm_accent_ibase;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix)) {
-              $Nm_accent = $this->Ini->Nm_accent_informix;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql)) {
-              $Nm_accent = $this->Ini->Nm_accent_mssql;
           }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql)) {
               $Nm_accent = $this->Ini->Nm_accent_mysql;
@@ -5883,23 +5685,8 @@ else
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres)) {
               $Nm_accent = $this->Ini->Nm_accent_postgres;
           }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle)) {
-              $Nm_accent = $this->Ini->Nm_accent_oracle;
-          }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sqlite)) {
               $Nm_accent = $this->Ini->Nm_accent_sqlite;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase)) {
-              $Nm_accent = $this->Ini->Nm_accent_sybase;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_vfp)) {
-              $Nm_accent = $this->Ini->Nm_accent_vfp;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_odbc)) {
-              $Nm_accent = $this->Ini->Nm_accent_odbc;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress)) {
-              $Nm_accent = $this->Ini->Nm_accent_progress;
           }
       }
       $nm_numeric[] = "idcliente";$nm_numeric[] = "cidade_idcidade";$nm_numeric[] = "numero";
@@ -5948,18 +5735,6 @@ else
              $nm_aspas  = "'";
              $nm_aspas1 = "'";
          }
-         if (in_array($campo_join, $nm_numeric) && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase) && (strtoupper($condicao) == "II" || strtoupper($condicao) == "QP" || strtoupper($condicao) == "NP"))
-         {
-             $nome      = "CAST ($nome AS VARCHAR)";
-             $nm_aspas  = "'";
-             $nm_aspas1 = "'";
-         }
-         if (in_array($campo_join, $nm_numeric) && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress) && (strtoupper($condicao) == "II" || strtoupper($condicao) == "QP" || strtoupper($condicao) == "NP"))
-         {
-             $nome      = "CAST ($nome AS VARCHAR(255))";
-             $nm_aspas  = "'";
-             $nm_aspas1 = "'";
-         }
       $Nm_datas["data_nascimento"] = "date";
          if (isset($Nm_datas[$campo_join]))
          {
@@ -6002,34 +5777,6 @@ else
           elseif ($Nm_datas[$campo_join] == "time" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
           {
               $nome = "to_char (" . $nome . ", 'hh24:mi:ss')";
-          }
-          elseif ($Nm_datas[$campo_join] == "date" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          {
-              $nome = "convert(char(10)," . $nome . ",121)";
-          }
-          elseif (($Nm_datas[$campo_join] == "datetime" || $Nm_datas[$campo_join] == "timestamp") && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          {
-              $nome = "convert(char(19)," . $nome . ",121)";
-          }
-          elseif (($Nm_datas[$campo_join] == "times" || $Nm_datas[$campo_join] == "datetime" || $Nm_datas[$campo_join] == "timestamp") && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $nome  = "TO_DATE(TO_CHAR(" . $nome . ", 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss')";
-          }
-          elseif ($Nm_datas[$campo_join] == "datetime" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $nome = "EXTEND(" . $nome . ", YEAR TO FRACTION)";
-          }
-          elseif ($Nm_datas[$campo_join] == "date" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $nome = "EXTEND(" . $nome . ", YEAR TO DAY)";
-          }
-          elseif ($Nm_datas[$campo_join] == "datetime" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress))
-          {
-              $nome = "to_char (" . $nome . ", 'YYYY-MM-DD hh24:mi:ss')";
-          }
-          elseif ($Nm_datas[$campo_join] == "date" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress))
-          {
-              $nome = "to_char (" . $nome . ", 'YYYY-MM-DD')";
           }
       }
          $comando .= (!empty($comando) ? " or " : "");

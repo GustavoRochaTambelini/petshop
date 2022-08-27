@@ -1,7 +1,7 @@
 form_conta_corrente_detalhe_mob.php
 petshop
 form_conta_corrente_detalhe_mob
-NAO
+SIM
 form
 form_conta_corrente_detalhe
 LigMd5

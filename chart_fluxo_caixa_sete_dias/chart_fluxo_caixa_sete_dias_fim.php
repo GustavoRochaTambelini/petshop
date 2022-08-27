@@ -88,6 +88,9 @@
        {
            unset($_SESSION['sc_session'][$script_case_init]['chart_fluxo_caixa_sete_dias']['sc_modal']);
            $saida_final = "self.parent.tb_remove()";
+            if ($_SESSION['scriptcase']['proc_mobile']) {
+                $saida_final = 'parent.closeAllModalPanes();';
+            }
        }
        else
        {

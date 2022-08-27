@@ -2019,10 +2019,30 @@ if ($_SESSION['sc_session'][$this->Ini->sc_page]['chart_fluxo_caixa_sete_dias'][
   });
  }
  function scShowExportFileScreen() {
+<?php
+   if ($_SESSION['scriptcase']['proc_mobile']) {
+?>
+   $('#sc-id-combination-content').toggleModalPane(true);
+<?php
+   } else {
+?>
    tb_show('', "?#TB_inline&height=210&width=550&inlineId=sc-id-combination-table&modal=true");
+<?php
+   }
+?>
  }
  function scHideCombinationTable() {
+<?php
+   if ($_SESSION['scriptcase']['proc_mobile']) {
+?>
+  history.back();
+<?php
+   } else {
+?>
   tb_remove();
+<?php
+   }
+?>
  }
  function scHideCombinationTableDiv() {
   $("#sc-id-combination-table").hide();

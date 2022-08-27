@@ -1,7 +1,7 @@
 form_recebimento_pdv_mob.php
 petshop
 form_recebimento_pdv_mob
-NAO
+SIM
 form
 form_recebimento_pdv
 LigMd5

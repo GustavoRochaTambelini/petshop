@@ -3584,11 +3584,13 @@ foreach ($this->Ini->sc_lig_iframe as $tmp_i => $tmp_v)
     scAjaxSetFields(false);
     scAjaxSetVariables();
     document.F2.idcliente.value = scAjaxGetKeyValue("idcliente");
+    scAjaxSetSummary();
     scAjaxShowDebug();
     scAjaxSetLabel(true);
     scAjaxSetReadonly(true);
     scAjaxSetMaster();
     scAjaxSetNavStatus("t");
+    scAjaxSetNavStatus("b");
     scAjaxSetDisplay(true);
     if (scMasterDetailIframe && scMasterDetailIframe["nmsc_iframe_liga_grid_contas_pagar_nao_pago_fornecedor"] && "nmsc_iframe_liga_grid_contas_pagar_nao_pago_fornecedor" != scMasterDetailIframe["nmsc_iframe_liga_grid_contas_pagar_nao_pago_fornecedor"]) {
         scMoveMasterDetail(scMasterDetailIframe["nmsc_iframe_liga_grid_contas_pagar_nao_pago_fornecedor"]);

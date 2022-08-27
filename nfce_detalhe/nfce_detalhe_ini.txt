@@ -1,7 +1,7 @@
 index.php
 petshop
 nfce_detalhe
-NAO
+SIM
 form
 nfce_detalhe
 LigMd5

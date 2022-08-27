@@ -290,25 +290,9 @@ class grid_pagamento_parcial_xml
       $this->nm_field_dinamico = array();
       $this->nm_order_dinamico = array();
       $nmgp_select_count = "SELECT count(*) AS countTest from " . $this->Ini->nm_tabela; 
-      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-      { 
-          $nmgp_select = "SELECT idforma_pagamento, str_replace (convert(char(10),data,102), '.', '-') + ' ' + convert(char(8),data,20), valor, juros, observacao from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
+      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
       { 
           $nmgp_select = "SELECT idforma_pagamento, data, valor, juros, observacao from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-       $nmgp_select = "SELECT idforma_pagamento, convert(char(23),data,121), valor, juros, observacao from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-      { 
-          $nmgp_select = "SELECT idforma_pagamento, data, valor, juros, observacao from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-      { 
-          $nmgp_select = "SELECT idforma_pagamento, EXTEND(data, YEAR TO FRACTION), valor, juros, LOTOFILE(observacao, '" . $this->Ini->root . $this->Ini->path_imag_temp . "/sc_blob_informix', 'client') as observacao from " . $this->Ini->nm_tabela; 
       } 
       else 
       { 
@@ -366,19 +350,7 @@ class grid_pagamento_parcial_xml
          $this->juros = $rs->fields[3] ;  
          $this->juros =  str_replace(",", ".", $this->juros);
          $this->juros = (string)$this->juros;
-          if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          { 
-              $this->observacao = "";  
-              if (is_file($rs_grid->fields[4])) 
-              { 
-                  $this->observacao = file_get_contents($rs_grid->fields[4]);  
-              } 
-          } 
-         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
-         { 
-             $this->observacao = $this->Db->BlobDecode($rs->fields[4]) ;  
-         } 
-         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
+         if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
          { 
              $this->observacao = $this->Db->BlobDecode($rs->fields[4]) ;  
          } 

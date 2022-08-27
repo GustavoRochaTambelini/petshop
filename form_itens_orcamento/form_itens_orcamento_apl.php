@@ -557,7 +557,7 @@ class form_itens_orcamento_apl
 
 
 
-      $_SESSION['scriptcase']['error_icon']['form_itens_orcamento']  = "<img src=\"" . $this->Ini->path_icones . "/scriptcase__NM__btn__NM__scriptcase9_Rhino__NM__nm_scriptcase9_Rhino_error.png\" style=\"border-width: 0px\" align=\"top\">&nbsp;";
+      $_SESSION['scriptcase']['error_icon']['form_itens_orcamento']  = "<img src=\"" . $this->Ini->path_icones . "/scriptcase__NM__icnMensagemAlerta.png\" style=\"border-width: 0px\" align=\"top\">&nbsp;";
       $_SESSION['scriptcase']['error_close']['form_itens_orcamento'] = "<td>" . nmButtonOutput($this->arr_buttons, "berrm_clse", "document.getElementById('id_error_display_fixed').style.display = 'none'; document.getElementById('id_error_message_fixed').innerHTML = ''; return false", "document.getElementById('id_error_display_fixed').style.display = 'none'; document.getElementById('id_error_message_fixed').innerHTML = ''; return false", "", "", "", "", "", "", "", $this->Ini->path_botoes, "", "", "", "", "") . "</td>";
 
       $this->Embutida_proc = isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_itens_orcamento']['embutida_proc']) ? $_SESSION['sc_session'][$this->Ini->sc_page]['form_itens_orcamento']['embutida_proc'] : $this->Embutida_proc;
@@ -3421,7 +3421,7 @@ else
           $this->valor_total_ = 0;
           $this->sc_force_zero[] = 'valor_total_';
       } 
-      $nm_bases_lob_geral = array_merge($this->Ini->nm_bases_oracle, $this->Ini->nm_bases_ibase, $this->Ini->nm_bases_informix, $this->Ini->nm_bases_mysql, $this->Ini->nm_bases_access, $this->Ini->nm_bases_sqlite, array('pdo_ibm'), array('pdo_sqlsrv'));
+      $nm_bases_lob_geral = array_merge($this->Ini->nm_bases_ibase, $this->Ini->nm_bases_mysql, $this->Ini->nm_bases_access, $this->Ini->nm_bases_sqlite);
       if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_itens_orcamento']['decimal_db'] == ",") 
       {
           $this->nm_troca_decimal(".", ",");
@@ -3466,21 +3466,6 @@ else
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ ";
               $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ "); 
           }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ ";
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ ";
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ ";
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ "); 
-          }  
           else  
           {
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ ";
@@ -3511,21 +3496,6 @@ else
               $rs1->Close(); 
               $aDoNotUpdate = array();
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
-              { 
-                  $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "quantidade = $this->quantidade_"; 
-              } 
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              { 
-                  $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "quantidade = $this->quantidade_"; 
-              } 
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              { 
-                  $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "quantidade = $this->quantidade_"; 
-              } 
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
                   $SC_fields_update[] = "quantidade = $this->quantidade_"; 
@@ -3574,18 +3544,6 @@ else
               {
                   $comando .= " WHERE iditens_orcamento = $this->iditens_orcamento_ ";  
               }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-                  $comando .= " WHERE iditens_orcamento = $this->iditens_orcamento_ ";  
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $comando .= " WHERE iditens_orcamento = $this->iditens_orcamento_ ";  
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                  $comando .= " WHERE iditens_orcamento = $this->iditens_orcamento_ ";  
-              }  
               else  
               {
                   $comando .= " WHERE iditens_orcamento = $this->iditens_orcamento_ ";  
@@ -3594,13 +3552,6 @@ else
               $comando = str_replace("'null'", "null", $comando) ; 
               $comando = str_replace("#null#", "null", $comando) ; 
               $comando = str_replace($this->Ini->date_delim . "null" . $this->Ini->date_delim1, "null", $comando) ; 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                $comando = str_replace("EXTEND('', YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND('', YEAR TO DAY)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO DAY)", "null", $comando) ; 
-              }  
               $useUpdateProcedure = false;
               if (!empty($SC_fields_update) || $useUpdateProcedure)
               { 
@@ -3661,9 +3612,6 @@ else
               $this->nm_proc_onload_record($this->nmgp_refresh_row);
 
               $this->nm_formatar_campos();
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-              }
 
               $aOldRefresh               = $this->nmgp_refresh_fields;
               $this->nmgp_refresh_fields = array_diff(array('idproduto_', 'descricao_', 'valor_unitario_', 'quantidade_', 'valor_total_', 'iditens_orcamento_'), $aDoNotUpdate);
@@ -3725,31 +3673,11 @@ else
               { 
                   $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (idorcamento, idproduto, descricao, valor_unitario, quantidade, unidade, valor_total) VALUES ($this->idorcamento_, $this->idproduto_, '$this->descricao_', $this->valor_unitario_, $this->quantidade_, '$this->unidade_', $this->valor_total_)"; 
               }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              { 
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idorcamento, idproduto, descricao, valor_unitario, quantidade, unidade, valor_total) VALUES (" . $NM_seq_auto . "$this->idorcamento_, $this->idproduto_, '$this->descricao_', $this->valor_unitario_, $this->quantidade_, '$this->unidade_', $this->valor_total_)"; 
-              }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-              { 
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idorcamento, idproduto, descricao, valor_unitario, quantidade, unidade, valor_total) VALUES (" . $NM_seq_auto . "$this->idorcamento_, $this->idproduto_, '$this->descricao_', $this->valor_unitario_, $this->quantidade_, '$this->unidade_', $this->valor_total_)"; 
-              }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idorcamento, idproduto, descricao, valor_unitario, quantidade, unidade, valor_total) VALUES (" . $NM_seq_auto . "$this->idorcamento_, $this->idproduto_, '$this->descricao_', $this->valor_unitario_, $this->quantidade_, '$this->unidade_', $this->valor_total_)"; 
-              }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idorcamento, idproduto, descricao, valor_unitario, quantidade, unidade, valor_total) VALUES (" . $NM_seq_auto . "$this->idorcamento_, $this->idproduto_, '$this->descricao_', $this->valor_unitario_, $this->quantidade_, '$this->unidade_', $this->valor_total_)"; 
-              }
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
               {
                   $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idorcamento, idproduto, descricao, valor_unitario, quantidade, unidade, valor_total) VALUES (" . $NM_seq_auto . "$this->idorcamento_, $this->idproduto_, '$this->descricao_', $this->valor_unitario_, $this->quantidade_, '$this->unidade_', $this->valor_total_)"; 
               }
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sqlite))
-              {
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idorcamento, idproduto, descricao, valor_unitario, quantidade, unidade, valor_total) VALUES (" . $NM_seq_auto . "$this->idorcamento_, $this->idproduto_, '$this->descricao_', $this->valor_unitario_, $this->quantidade_, '$this->unidade_', $this->valor_total_)"; 
-              }
-              elseif ($this->Ini->nm_tpbanco == 'pdo_ibm')
               {
                   $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idorcamento, idproduto, descricao, valor_unitario, quantidade, unidade, valor_total) VALUES (" . $NM_seq_auto . "$this->idorcamento_, $this->idproduto_, '$this->descricao_', $this->valor_unitario_, $this->quantidade_, '$this->unidade_', $this->valor_total_)"; 
               }
@@ -3761,13 +3689,6 @@ else
               $comando = str_replace("'null'", "null", $comando) ; 
               $comando = str_replace("#null#", "null", $comando) ; 
               $comando = str_replace($this->Ini->date_delim . "null" . $this->Ini->date_delim1, "null", $comando) ; 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                $comando = str_replace("EXTEND('', YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND('', YEAR TO DAY)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO DAY)", "null", $comando) ; 
-              }  
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = $comando; 
               $rs = $this->Db->Execute($comando); 
               if ($rs === false)  
@@ -3793,7 +3714,7 @@ else
               }  
               if ('refresh_insert' != $this->nmgp_opcao)
               {
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql) || in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access) || in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase)) 
+              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access)) 
               { 
                   $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select @@identity"; 
                   $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
@@ -3813,47 +3734,6 @@ else
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
               { 
                   $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select last_insert_id()"; 
-                  $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
-                  if ($rsy === false && !$rsy->EOF)  
-                  { 
-                      $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dbas'], $this->Db->ErrorMsg()); 
-                      exit; 
-                  } 
-                  $this->iditens_orcamento_ = $rsy->fields[0];
-                  $rsy->Close(); 
-              } 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              { 
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "SELECT dbinfo('sqlca.sqlerrd1') FROM " . $this->Ini->nm_tabela; 
-                  $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
-                  if ($rsy === false && !$rsy->EOF)  
-                  { 
-                      $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dbas'], $this->Db->ErrorMsg()); 
-                      exit; 
-                  } 
-                  $this->iditens_orcamento_ = $rsy->fields[0];
-                  $rsy->Close(); 
-              } 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              { 
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select .currval from dual"; 
-                  $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
-                  if ($rsy === false && !$rsy->EOF)  
-                  { 
-                      $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dbas'], $this->Db->ErrorMsg()); 
-                      exit; 
-                  } 
-                  $this->iditens_orcamento_ = $rsy->fields[0];
-                  $rsy->Close(); 
-              } 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
-              { 
-                  $str_tabela = "SYSIBM.SYSDUMMY1"; 
-                  if($this->Ini->nm_con_use_schema == "N") 
-                  { 
-                          $str_tabela = "SYSDUMMY1"; 
-                  } 
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "SELECT IDENTITY_VAL_LOCAL() FROM " . $str_tabela; 
                   $rsy = $this->Db->Execute($_SESSION['scriptcase']['sc_sql_ult_comando']); 
                   if ($rsy === false && !$rsy->EOF)  
                   { 
@@ -4168,21 +4048,6 @@ else
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_"; 
               $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ "); 
           }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_"; 
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_"; 
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_"; 
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ "); 
-          }  
           else  
           {
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_"; 
@@ -4209,21 +4074,6 @@ else
           { 
               $rs1->Close(); 
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
-              {
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ "; 
-                  $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ "); 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ "; 
-                  $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ "); 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ "; 
-                  $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ "); 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
               {
                   $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ "; 
                   $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where iditens_orcamento = $this->iditens_orcamento_ "); 
@@ -4444,18 +4294,6 @@ $_SESSION['scriptcase']['form_itens_orcamento']['contr_erro'] = 'off';
               {
                   $Key_Where = "iditens_orcamento < $this->iditens_orcamento_ "; 
               }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-                  $Key_Where = "iditens_orcamento < $this->iditens_orcamento_ "; 
-              }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $Key_Where = "iditens_orcamento < $this->iditens_orcamento_ "; 
-              }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                  $Key_Where = "iditens_orcamento < $this->iditens_orcamento_ "; 
-              }
               else  
               {
                   $Key_Where = "iditens_orcamento < $this->iditens_orcamento_ "; 
@@ -4570,26 +4408,7 @@ $_SESSION['scriptcase']['form_itens_orcamento']['contr_erro'] = 'off';
       { 
           $sc_order_by = " order by " . $_SESSION['sc_session'][$this->Ini->sc_page]['form_itens_orcamento']['ordem_cmp'] . $_SESSION['sc_session'][$this->Ini->sc_page]['form_itens_orcamento']['ordem_ord']; 
       } 
-      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-      { 
-          $nmgp_select = "SELECT iditens_orcamento, idorcamento, idproduto, descricao, valor_unitario, quantidade, unidade, valor_total from " . $this->Ini->nm_tabela . $sc_where . $sc_order_by; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-          $nmgp_select = "SELECT iditens_orcamento, idorcamento, idproduto, descricao, valor_unitario, quantidade, unidade, valor_total from " . $this->Ini->nm_tabela . $sc_where . $sc_order_by; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-      { 
-          $nmgp_select = "SELECT iditens_orcamento, idorcamento, idproduto, descricao, valor_unitario, quantidade, unidade, valor_total from " . $this->Ini->nm_tabela . $sc_where . $sc_order_by; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-      { 
-          $nmgp_select = "SELECT iditens_orcamento, idorcamento, idproduto, descricao, valor_unitario, quantidade, unidade, valor_total from " . $this->Ini->nm_tabela . $sc_where . $sc_order_by; 
-      } 
-      else 
-      { 
-          $nmgp_select = "SELECT iditens_orcamento, idorcamento, idproduto, descricao, valor_unitario, quantidade, unidade, valor_total from " . $this->Ini->nm_tabela . $sc_where . $sc_order_by; 
-      } 
+      $nmgp_select = "SELECT iditens_orcamento, idorcamento, idproduto, descricao, valor_unitario, quantidade, unidade, valor_total from " . $this->Ini->nm_tabela . $sc_where . $sc_order_by; 
       if ($this->nmgp_opcao != "novo") 
       { 
       if (isset($this->NM_ajax_opcao) && 'backup_line' == $this->NM_ajax_opcao)
@@ -4611,17 +4430,7 @@ $_SESSION['scriptcase']['form_itens_orcamento']['contr_erro'] = 'off';
           } 
           else 
           { 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql) || in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres) || in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle) || in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase) || in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
-              { 
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "SelectLimit($nmgp_select, $this->sc_max_reg, " . $_SESSION['sc_session'][$this->Ini->sc_page]['form_itens_orcamento']['reg_start'] . ")" ; 
-                  $rs = $this->Db->SelectLimit($nmgp_select, $this->sc_max_reg, $_SESSION['sc_session'][$this->Ini->sc_page]['form_itens_orcamento']['reg_start']) ; 
-              } 
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              { 
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "SelectLimit($nmgp_select, $this->sc_max_reg, " . $_SESSION['sc_session'][$this->Ini->sc_page]['form_itens_orcamento']['reg_start'] . ")" ; 
-                  $rs = $this->Db->SelectLimit($nmgp_select, $this->sc_max_reg, $_SESSION['sc_session'][$this->Ini->sc_page]['form_itens_orcamento']['reg_start']) ; 
-              } 
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
+              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql) || in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres) || in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
               { 
                   $_SESSION['scriptcase']['sc_sql_ult_comando'] = "SelectLimit($nmgp_select, $this->sc_max_reg, " . $_SESSION['sc_session'][$this->Ini->sc_page]['form_itens_orcamento']['reg_start'] . ")" ; 
                   $rs = $this->Db->SelectLimit($nmgp_select, $this->sc_max_reg, $_SESSION['sc_session'][$this->Ini->sc_page]['form_itens_orcamento']['reg_start']) ; 
@@ -5642,17 +5451,8 @@ else
           if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access)) {
               $Nm_accent = $this->Ini->Nm_accent_access;
           }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2)) {
-              $Nm_accent = $this->Ini->Nm_accent_db2;
-          }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase)) {
               $Nm_accent = $this->Ini->Nm_accent_ibase;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix)) {
-              $Nm_accent = $this->Ini->Nm_accent_informix;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql)) {
-              $Nm_accent = $this->Ini->Nm_accent_mssql;
           }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql)) {
               $Nm_accent = $this->Ini->Nm_accent_mysql;
@@ -5660,23 +5460,8 @@ else
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres)) {
               $Nm_accent = $this->Ini->Nm_accent_postgres;
           }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle)) {
-              $Nm_accent = $this->Ini->Nm_accent_oracle;
-          }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sqlite)) {
               $Nm_accent = $this->Ini->Nm_accent_sqlite;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase)) {
-              $Nm_accent = $this->Ini->Nm_accent_sybase;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_vfp)) {
-              $Nm_accent = $this->Ini->Nm_accent_vfp;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_odbc)) {
-              $Nm_accent = $this->Ini->Nm_accent_odbc;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress)) {
-              $Nm_accent = $this->Ini->Nm_accent_progress;
           }
       }
       $nm_numeric[] = "iditens_orcamento";$nm_numeric[] = "idorcamento";$nm_numeric[] = "idproduto";$nm_numeric[] = "valor_unitario";$nm_numeric[] = "quantidade";$nm_numeric[] = "valor_total";
@@ -5722,18 +5507,6 @@ else
          if (in_array($campo_join, $nm_esp_postgres) && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
          {
              $nome      = "CAST ($nome AS TEXT)";
-             $nm_aspas  = "'";
-             $nm_aspas1 = "'";
-         }
-         if (in_array($campo_join, $nm_numeric) && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase) && (strtoupper($condicao) == "II" || strtoupper($condicao) == "QP" || strtoupper($condicao) == "NP"))
-         {
-             $nome      = "CAST ($nome AS VARCHAR)";
-             $nm_aspas  = "'";
-             $nm_aspas1 = "'";
-         }
-         if (in_array($campo_join, $nm_numeric) && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress) && (strtoupper($condicao) == "II" || strtoupper($condicao) == "QP" || strtoupper($condicao) == "NP"))
-         {
-             $nome      = "CAST ($nome AS VARCHAR(255))";
              $nm_aspas  = "'";
              $nm_aspas1 = "'";
          }

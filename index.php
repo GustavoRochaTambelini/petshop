@@ -1,5 +1,5 @@
 <?php
-	$str_apl = 'menu_principal';
+	$str_apl = 'app_Login';
 	if(is_file("_lib/friendly_url/" . $str_apl . '_ini.txt'))
 	{
 		$str_apl = file_get_contents("_lib/friendly_url/" . $str_apl . '_ini.txt');

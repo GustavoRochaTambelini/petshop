@@ -1,7 +1,7 @@
 index.php
 petshop
 form_pet_raca
-NAO
+SIM
 form
 form_pet_raca
 LigMd5

@@ -33,7 +33,28 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
 }
 
 ?>
- <link rel="stylesheet" href="<?php echo $this->Ini->path_prod ?>/third/jquery_plugin/thickbox/thickbox.css" type="text/css" media="screen" />
+            <meta name="viewport" content="minimal-ui, width=300, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+            <meta name="mobile-web-app-capable" content="yes">
+            <meta name="apple-mobile-web-app-capable" content="yes">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <link rel="apple-touch-icon"   sizes="57x57" href="">
+            <link rel="apple-touch-icon"   sizes="60x60" href="">
+            <link rel="apple-touch-icon"   sizes="72x72" href="">
+            <link rel="apple-touch-icon"   sizes="76x76" href="">
+            <link rel="apple-touch-icon" sizes="114x114" href="">
+            <link rel="apple-touch-icon" sizes="120x120" href="">
+            <link rel="apple-touch-icon" sizes="144x144" href="">
+            <link rel="apple-touch-icon" sizes="152x152" href="">
+            <link rel="apple-touch-icon" sizes="180x180" href="">
+            <link rel="icon" type="image/png" sizes="192x192" href="">
+            <link rel="icon" type="image/png"   sizes="32x32" href="">
+            <link rel="icon" type="image/png"   sizes="96x96" href="">
+            <link rel="icon" type="image/png"   sizes="16x16" href="">
+            <meta name="msapplication-TileColor" content="___">
+            <meta name="msapplication-TileImage" content="">
+            <meta name="theme-color" content="___">
+            <meta name="apple-mobile-web-app-status-bar-style" content="___">
+            <link rel="shortcut icon" href=""> <link rel="stylesheet" href="<?php echo $this->Ini->path_prod ?>/third/jquery_plugin/thickbox/thickbox.css" type="text/css" media="screen" />
  <SCRIPT type="text/javascript">
   var sc_pathToTB = '<?php echo $this->Ini->path_prod ?>/third/jquery_plugin/thickbox/';
   var sc_tbLangClose = "<?php echo html_entity_decode($this->Ini->Nm_lang["lang_tb_close"], ENT_COMPAT, $_SESSION["scriptcase"]["charset"]) ?>";
@@ -55,7 +76,34 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
   var sc_css_status_pwd_text = '<?php echo $this->Ini->Css_status_pwd_text; ?>';
  </SCRIPT>
         <SCRIPT type="text/javascript" src="../_lib/lib/js/jquery-3.6.0.min.js"></SCRIPT>
- <SCRIPT type="text/javascript" src="<?php echo $this->Ini->path_prod; ?>/third/jquery/js/jquery-ui.js"></SCRIPT>
+            <?php
+               if ($_SESSION['scriptcase']['display_mobile'] && $_SESSION['scriptcase']['device_mobile']) {
+                   $forced_mobile = (isset($_SESSION['scriptcase']['force_mobile']) && $_SESSION['scriptcase']['force_mobile']) ? 'true' : 'false';
+                   $sc_app_data   = json_encode([
+                       'forceMobile' => $forced_mobile,
+                       'appType' => 'form',
+                       'improvements' => true,
+                       'displayOptionsButton' => false,
+                       'displayScrollUp' => true,
+                       'scrollUpPosition' => 'R',
+                       'toolbarOrientation' => 'H',
+                       'mobilePanes' => 'true',
+                       'navigationBarButtons' => unserialize('a:3:{i:0;s:2:"NP";i:1;s:2:"FL";i:2;s:2:"RC";}'),
+                       'mobileSimpleToolbar' => true,
+                       'bottomToolbarFixed' => true
+                   ]); ?>
+            <input type="hidden" id="sc-mobile-app-data" value='<?php echo $sc_app_data; ?>' />
+            <script type="text/javascript" src="../_lib/lib/js/nm_modal_panes.jquery.js"></script>
+            <script type="text/javascript" src="../_lib/lib/js/nm_form_mobile.js"></script>
+            <link rel='stylesheet' href='../_lib/lib/css/nm_form_mobile.css' type='text/css'/>
+            <script>
+                $(document).ready(function(){
+
+                    bootstrapMobile();
+
+                });
+            </script>
+            <?php } ?> <SCRIPT type="text/javascript" src="<?php echo $this->Ini->path_prod; ?>/third/jquery/js/jquery-ui.js"></SCRIPT>
  <link rel="stylesheet" href="<?php echo $this->Ini->path_prod ?>/third/jquery/css/smoothness/jquery-ui.css" type="text/css" media="screen" />
 <style type="text/css">
 .ui-datepicker { z-index: 6 !important }
@@ -293,6 +341,16 @@ function nav_desliga_img()
   sImg += '_off';
  }
  sImg += sExt;
+}
+function summary_atualiza(reg_ini, reg_qtd, reg_tot)
+{
+    nm_sumario = "[<?php echo substr($this->Ini->Nm_lang['lang_othr_smry_info'], strpos($this->Ini->Nm_lang['lang_othr_smry_info'], "?final?")) ?>]";
+    nm_sumario = nm_sumario.replace("?final?", reg_qtd);
+    nm_sumario = nm_sumario.replace("?total?", reg_tot);
+    if (reg_qtd < 1) {
+        nm_sumario = "";
+    }
+    if (document.getElementById("sc_b_summary_b")) document.getElementById("sc_b_summary_b").innerHTML = nm_sumario;
 }
 <?php
 
@@ -770,10 +828,6 @@ if (($this->Embutida_form || !$this->Embutida_call || $this->Grid_editavel || $t
     $NM_btn = false;
 if (($this->Embutida_form || !$this->Embutida_call || $this->Grid_editavel || $this->Embutida_multi || ($this->Embutida_call && 'on' == $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['embutida_liga_form_btn_nav'])) && $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['run_iframe'] != "F" && $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['run_iframe'] != "R")
 {
-?> 
-     </td> 
-     <td nowrap align="center" valign="middle" width="33%" class="scFormToolbarPadding"> 
-<?php 
     if ($opcao_botoes != "novo") {
         $sCondStyle = ($this->nmgp_botoes['new'] == "on") ? '' : 'display: none;';
 ?>
@@ -850,10 +904,6 @@ if (($this->Embutida_form || !$this->Embutida_call || $this->Grid_editavel || $t
 <?php
         $NM_btn = true;
     }
-?> 
-     </td> 
-     <td nowrap align="right" valign="middle" width="33%" class="scFormToolbarPadding"> 
-<?php 
     if ('' != $this->url_webhelp) {
         $sCondStyle = '';
 ?>

@@ -1,7 +1,7 @@
 nfce_form_mob.php
 petshop
 nfce_form_mob
-NAO
+SIM
 form
 nfce_form
 LigMd5

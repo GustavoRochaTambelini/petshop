@@ -267,23 +267,7 @@ class grid_produto_xml
       $this->nm_field_dinamico = array();
       $this->nm_order_dinamico = array();
       $nmgp_select_count = "SELECT count(*) AS countTest from " . $this->Ini->nm_tabela; 
-      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-      { 
-          $nmgp_select = "SELECT produto.idproduto as produto_idproduto, produto.referencia as produto_referencia, produto.descricao as produto_descricao, produto.codigo_de_barras as produto_codigo_de_barras, produto.custo as produto_custo, produto.valor as produto_valor, estoque.valor as estoque_valor, produto.tipo as produto_tipo from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
-      { 
-          $nmgp_select = "SELECT produto.idproduto as produto_idproduto, produto.referencia as produto_referencia, produto.descricao as produto_descricao, produto.codigo_de_barras as produto_codigo_de_barras, produto.custo as produto_custo, produto.valor as produto_valor, estoque.valor as estoque_valor, produto.tipo as produto_tipo from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-       $nmgp_select = "SELECT produto.idproduto as produto_idproduto, produto.referencia as produto_referencia, produto.descricao as produto_descricao, produto.codigo_de_barras as produto_codigo_de_barras, produto.custo as produto_custo, produto.valor as produto_valor, estoque.valor as estoque_valor, produto.tipo as produto_tipo from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-      { 
-          $nmgp_select = "SELECT produto.idproduto as produto_idproduto, produto.referencia as produto_referencia, produto.descricao as produto_descricao, produto.codigo_de_barras as produto_codigo_de_barras, produto.custo as produto_custo, produto.valor as produto_valor, estoque.valor as estoque_valor, produto.tipo as produto_tipo from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
+      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
       { 
           $nmgp_select = "SELECT produto.idproduto as produto_idproduto, produto.referencia as produto_referencia, produto.descricao as produto_descricao, produto.codigo_de_barras as produto_codigo_de_barras, produto.custo as produto_custo, produto.valor as produto_valor, estoque.valor as estoque_valor, produto.tipo as produto_tipo from " . $this->Ini->nm_tabela; 
       } 

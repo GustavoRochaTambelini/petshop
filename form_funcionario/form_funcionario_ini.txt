@@ -1,7 +1,7 @@
 index.php
 petshop
 form_funcionario
-NAO
+SIM
 form
 form_funcionario
 LigMd5

@@ -283,25 +283,9 @@ class grid_contas_pagar_pagos_fornecedor_rtf
       $this->nm_field_dinamico = array();
       $this->nm_order_dinamico = array();
       $nmgp_select_count = "SELECT count(*) AS countTest from " . $this->Ini->nm_tabela; 
-      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
+      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
       { 
           $nmgp_select = "SELECT idcontas_pagar, data_emissao, data_vencimanto, valor_pago, juros, idforma_pagamento, nota_fiscal, observacao, idcliente, idforma_pagamento_prevista from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
-      { 
-          $nmgp_select = "SELECT idcontas_pagar, data_emissao, data_vencimanto, valor_pago, juros, idforma_pagamento, nota_fiscal, observacao, idcliente, idforma_pagamento_prevista from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-       $nmgp_select = "SELECT idcontas_pagar, data_emissao, data_vencimanto, valor_pago, juros, idforma_pagamento, nota_fiscal, observacao, idcliente, idforma_pagamento_prevista from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-      { 
-          $nmgp_select = "SELECT idcontas_pagar, TO_DATE(TO_CHAR(data_emissao, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), TO_DATE(TO_CHAR(data_vencimanto, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), valor_pago, juros, idforma_pagamento, nota_fiscal, observacao, idcliente, idforma_pagamento_prevista from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-      { 
-          $nmgp_select = "SELECT idcontas_pagar, data_emissao, data_vencimanto, valor_pago, juros, idforma_pagamento, nota_fiscal, LOTOFILE(observacao, '" . $this->Ini->root . $this->Ini->path_imag_temp . "/sc_blob_informix', 'client') as observacao, idcliente, idforma_pagamento_prevista from " . $this->Ini->nm_tabela; 
       } 
       else 
       { 
@@ -352,19 +336,7 @@ class grid_contas_pagar_pagos_fornecedor_rtf
          $this->idforma_pagamento = (string)$this->idforma_pagamento;
          $this->nota_fiscal = $rs->fields[6] ;  
          $this->nota_fiscal = (string)$this->nota_fiscal;
-          if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          { 
-              $this->observacao = "";  
-              if (is_file($rs_grid->fields[7])) 
-              { 
-                  $this->observacao = file_get_contents($rs_grid->fields[7]);  
-              } 
-          } 
-         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
-         { 
-             $this->observacao = $this->Db->BlobDecode($rs->fields[7]) ;  
-         } 
-         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
+         if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
          { 
              $this->observacao = $this->Db->BlobDecode($rs->fields[7]) ;  
          } 

@@ -334,23 +334,7 @@ class grid_contas_pagar_nao_pago_fornecedor_csv
       $this->nm_field_dinamico = array();
       $this->nm_order_dinamico = array();
       $nmgp_select_count = "SELECT count(*) AS countTest from " . $this->Ini->nm_tabela; 
-      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-      { 
-          $nmgp_select = "SELECT data_emissao, data_vencimanto, valor_a_pagar, valor_pago, idforma_pagamento_prevista, idcliente, idforma_pagamento, idcontas_pagar from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
-      { 
-          $nmgp_select = "SELECT data_emissao, data_vencimanto, valor_a_pagar, valor_pago, idforma_pagamento_prevista, idcliente, idforma_pagamento, idcontas_pagar from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-       $nmgp_select = "SELECT data_emissao, data_vencimanto, valor_a_pagar, valor_pago, idforma_pagamento_prevista, idcliente, idforma_pagamento, idcontas_pagar from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-      { 
-          $nmgp_select = "SELECT TO_DATE(TO_CHAR(data_emissao, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), TO_DATE(TO_CHAR(data_vencimanto, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), valor_a_pagar, valor_pago, idforma_pagamento_prevista, idcliente, idforma_pagamento, idcontas_pagar from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
+      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
       { 
           $nmgp_select = "SELECT data_emissao, data_vencimanto, valor_a_pagar, valor_pago, idforma_pagamento_prevista, idcliente, idforma_pagamento, idcontas_pagar from " . $this->Ini->nm_tabela; 
       } 

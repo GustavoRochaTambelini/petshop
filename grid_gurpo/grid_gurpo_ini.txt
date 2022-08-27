@@ -1,7 +1,7 @@
 index.php
 petshop
 grid_gurpo
-NAO
+SIM
 cons
 grid_gurpo
 LigMd5

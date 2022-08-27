@@ -309,6 +309,7 @@ class dashboard_ini {
     var $Nm_lang_conf_region;
     var $display_as_mobile;
     var $force_db_utf8 = true;
+    var $unauthorized;
 
     function init()
     {
@@ -344,12 +345,12 @@ class dashboard_ini {
         $this->nm_grupo_versao = "1";
         $this->nm_autor        = "gustavo";
         $this->nm_versao_sc    = "v9";
-        $this->nm_tp_lic_sc    = "demo";
+        $this->nm_tp_lic_sc    = "sb_micro_bronze";
         $this->nm_dt_criacao   = "20220824";
         $this->nm_hr_criacao   = "225859";
         $this->nm_autor_alt    = "admin";
         $this->nm_dt_ult_alt   = "20220827";
-        $this->nm_hr_ult_alt   = "094042";
+        $this->nm_hr_ult_alt   = "154301";
         list($NM_usec, $NM_sec) = explode(" ", microtime());
         $this->nm_timestamp  = (float) $NM_sec;
 
@@ -617,18 +618,10 @@ class dashboard_ini {
             $_SESSION['sc_session'][$this->sc_page]['SC_Check_Perfil'] = true;
         }
         $this->nm_bases_access     = array("access", "ado_access", "ace_access");
-        $this->nm_bases_db2        = array("db2", "db2_odbc", "odbc_db2", "odbc_db2v6", "pdo_db2_odbc", "pdo_ibm");
         $this->nm_bases_ibase      = array("ibase", "firebird", "pdo_firebird", "borland_ibase");
-        $this->nm_bases_informix   = array("informix", "informix72", "pdo_informix");
-        $this->nm_bases_mssql      = array("mssql", "ado_mssql", "adooledb_mssql", "odbc_mssql", "mssqlnative", "pdo_sqlsrv", "pdo_dblib", "azure_mssql", "azure_ado_mssql", "azure_adooledb_mssql", "azure_odbc_mssql", "azure_mssqlnative", "azure_pdo_sqlsrv", "azure_pdo_dblib", "googlecloud_mssql", "googlecloud_ado_mssql", "googlecloud_adooledb_mssql", "googlecloud_odbc_mssql", "googlecloud_mssqlnative", "googlecloud_pdo_sqlsrv", "googlecloud_pdo_dblib", "amazonrds_mssql", "amazonrds_ado_mssql", "amazonrds_adooledb_mssql", "amazonrds_odbc_mssql", "amazonrds_mssqlnative", "amazonrds_pdo_sqlsrv", "amazonrds_pdo_dblib");
         $this->nm_bases_mysql      = array("mysql", "mysqlt", "mysqli", "maxsql", "pdo_mysql", "azure_mysql", "azure_mysqlt", "azure_mysqli", "azure_maxsql", "azure_pdo_mysql", "googlecloud_mysql", "googlecloud_mysqlt", "googlecloud_mysqli", "googlecloud_maxsql", "googlecloud_pdo_mysql", "amazonrds_mysql", "amazonrds_mysqlt", "amazonrds_mysqli", "amazonrds_maxsql", "amazonrds_pdo_mysql");
         $this->nm_bases_postgres   = array("postgres", "postgres64", "postgres7", "pdo_pgsql", "azure_postgres", "azure_postgres64", "azure_postgres7", "azure_pdo_pgsql", "googlecloud_postgres", "googlecloud_postgres64", "googlecloud_postgres7", "googlecloud_pdo_pgsql", "amazonrds_postgres", "amazonrds_postgres64", "amazonrds_postgres7", "amazonrds_pdo_pgsql");
-        $this->nm_bases_oracle     = array("oci8", "oci805", "oci8po", "odbc_oracle", "oracle", "pdo_oracle", "oraclecloud_oci8", "oraclecloud_oci805", "oraclecloud_oci8po", "oraclecloud_odbc_oracle", "oraclecloud_oracle", "oraclecloud_pdo_oracle", "amazonrds_oci8", "amazonrds_oci805", "amazonrds_oci8po", "amazonrds_odbc_oracle", "amazonrds_oracle", "amazonrds_pdo_oracle");
         $this->nm_bases_sqlite     = array("sqlite", "sqlite3", "pdosqlite");
-        $this->nm_bases_sybase     = array("sybase", "pdo_sybase_odbc", "pdo_sybase_dblib");
-        $this->nm_bases_vfp        = array("vfp");
-        $this->nm_bases_odbc       = array("odbc");
-        $this->nm_bases_progress   = array("progress", "pdo_progress_odbc");
         $this->prep_conect();
         $this->conectDB();
     } // init
@@ -885,11 +878,6 @@ class dashboard_ini {
           } 
           exit ;
       }
-
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_db2) && $this->force_db_utf8) {
-          putenv('DB2CODEPAGE=1208');
-      }
-
       if (isset($_SESSION['scriptcase']['glo_db_master_usr']) && !empty($_SESSION['scriptcase']['glo_db_master_usr']))
       {
           $this->nm_usuario = $_SESSION['scriptcase']['glo_db_master_usr']; 
@@ -941,30 +929,6 @@ class dashboard_ini {
           {
               ibase_timefmt('%Y-%m-%d %H:%M:%S');
           } 
-      } 
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sybase))
-      {
-          $this->Db->fetchMode = ADODB_FETCH_BOTH;
-          $this->Db->Execute("set dateformat ymd");
-          $this->Db->Execute("set quoted_identifier ON");
-      } 
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_db2))
-      {
-          $this->Db->fetchMode = ADODB_FETCH_NUM;
-      } 
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql))
-      {
-          $this->Db->Execute("set dateformat ymd");
-      } 
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle))
-      {
-          $this->Db->Execute("alter session set nls_date_format         = 'yyyy-mm-dd hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_timestamp_format    = 'yyyy-mm-dd hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_timestamp_tz_format = 'yyyy-mm-dd hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_time_format         = 'hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_time_tz_format      = 'hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_numeric_characters  = '.,'");
-          $_SESSION['sc_session'][$this->sc_page]['dashboard']['decimal_db'] = "."; 
       } 
   }
 
@@ -1119,6 +1083,7 @@ class dashboard_control {
     function control()
     {
         $this->init();
+        $this->checkSecurity();
         if (isset($_GET['blank']) && 'Y' == $_GET['blank'])
         {
             $this->displayBlankPage();
@@ -1219,6 +1184,19 @@ class dashboard_control {
             'chart_detail'    => true,
         );
     } // init
+
+    function checkSecurity()
+    {
+        if (isset($_SESSION['nm_session']['user']['sec']['flag']) && $_SESSION['nm_session']['user']['sec']['flag'] == "N")
+        {
+            $_SESSION['scriptcase']['sc_apl_seg']['dashboard'] = "on";
+        }
+
+        if (!isset($_SESSION['scriptcase']['dashboard']['session_timeout']['redir']) && (!isset($_SESSION['scriptcase']['sc_apl_seg']['dashboard']) || $_SESSION['scriptcase']['sc_apl_seg']['dashboard'] != "on"))
+        {
+            $this->displayAccessError();
+        }
+    } // checkSecurity
 
     function displayBlankPage()
     {
@@ -1834,14 +1812,6 @@ scIframeSCInit["<?php echo $sIframe; ?>"] = "<?php echo $iSCInit; ?>";
         {
             $sSql = "SELECT SUM(valor a receber), Data vencimento FROM receber_proximos_sete_dias GROUP BY Data vencimento ORDER BY Data vencimento DESC";
         }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-        {
-            $sSql = "SELECT SUM(\"valor a receber\"), \"Data vencimento\" FROM receber_proximos_sete_dias GROUP BY \"Data vencimento\" ORDER BY \"Data vencimento\" DESC";
-        }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-        {
-            $sSql = "SELECT SUM(\"valor a receber\"), \"Data vencimento\" FROM receber_proximos_sete_dias GROUP BY \"Data vencimento\" ORDER BY \"Data vencimento\" DESC";
-        }
         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
         {
             $sSql = "SELECT SUM(\"valor a receber\"), \"Data vencimento\" FROM receber_proximos_sete_dias GROUP BY 2 ORDER BY \"Data vencimento\" DESC";
@@ -1857,18 +1827,6 @@ scIframeSCInit["<?php echo $sIframe; ?>"] = "<?php echo $iSCInit; ?>";
         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
         {
             $sSql = "SELECT SUM(\"valor a receber\"), \"Data vencimento\" FROM receber_proximos_sete_dias GROUP BY 2 ORDER BY \"Data vencimento\" DESC";
-        }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
-        {
-            $sSql = "SELECT SUM(valor a receber), Data vencimento FROM receber_proximos_sete_dias GROUP BY Data vencimento ORDER BY Data vencimento DESC";
-        }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-        {
-            $sSql = "SELECT SUM(valor a receber), Data vencimento FROM receber_proximos_sete_dias GROUP BY Data vencimento ORDER BY Data vencimento DESC";
-        }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-        {
-            $sSql = "SELECT SUM(valor a receber), Data vencimento FROM receber_proximos_sete_dias GROUP BY 2 ORDER BY Data vencimento DESC";
         }
         else 
         {
@@ -2022,14 +1980,6 @@ IDXHTML;
         {
             $sSql = "SELECT SUM(valor a receber), Data vencimento FROM pagar_proximos_sete_dias GROUP BY Data vencimento ORDER BY Data vencimento DESC";
         }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-        {
-            $sSql = "SELECT SUM(\"valor a receber\"), \"Data vencimento\" FROM pagar_proximos_sete_dias GROUP BY \"Data vencimento\" ORDER BY \"Data vencimento\" DESC";
-        }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-        {
-            $sSql = "SELECT SUM(\"valor a receber\"), \"Data vencimento\" FROM pagar_proximos_sete_dias GROUP BY \"Data vencimento\" ORDER BY \"Data vencimento\" DESC";
-        }
         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
         {
             $sSql = "SELECT SUM(\"valor a receber\"), \"Data vencimento\" FROM pagar_proximos_sete_dias GROUP BY 2 ORDER BY \"Data vencimento\" DESC";
@@ -2045,18 +1995,6 @@ IDXHTML;
         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
         {
             $sSql = "SELECT SUM(\"valor a receber\"), \"Data vencimento\" FROM pagar_proximos_sete_dias GROUP BY 2 ORDER BY \"Data vencimento\" DESC";
-        }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
-        {
-            $sSql = "SELECT SUM(valor a receber), Data vencimento FROM pagar_proximos_sete_dias GROUP BY Data vencimento ORDER BY Data vencimento DESC";
-        }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-        {
-            $sSql = "SELECT SUM(valor a receber), Data vencimento FROM pagar_proximos_sete_dias GROUP BY Data vencimento ORDER BY Data vencimento DESC";
-        }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-        {
-            $sSql = "SELECT SUM(valor a receber), Data vencimento FROM pagar_proximos_sete_dias GROUP BY 2 ORDER BY Data vencimento DESC";
         }
         else 
         {
@@ -2210,14 +2148,6 @@ IDXHTML;
         {
             $sSql = "SELECT SUM(valor a receber), Data vencimento FROM recebimentos_atraso GROUP BY Data vencimento ORDER BY Data vencimento DESC";
         }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-        {
-            $sSql = "SELECT SUM(\"valor a receber\"), \"Data vencimento\" FROM recebimentos_atraso GROUP BY \"Data vencimento\" ORDER BY \"Data vencimento\" DESC";
-        }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-        {
-            $sSql = "SELECT SUM(\"valor a receber\"), \"Data vencimento\" FROM recebimentos_atraso GROUP BY \"Data vencimento\" ORDER BY \"Data vencimento\" DESC";
-        }
         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
         {
             $sSql = "SELECT SUM(\"valor a receber\"), \"Data vencimento\" FROM recebimentos_atraso GROUP BY 2 ORDER BY \"Data vencimento\" DESC";
@@ -2233,18 +2163,6 @@ IDXHTML;
         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
         {
             $sSql = "SELECT SUM(\"valor a receber\"), \"Data vencimento\" FROM recebimentos_atraso GROUP BY 2 ORDER BY \"Data vencimento\" DESC";
-        }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
-        {
-            $sSql = "SELECT SUM(valor a receber), Data vencimento FROM recebimentos_atraso GROUP BY Data vencimento ORDER BY Data vencimento DESC";
-        }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-        {
-            $sSql = "SELECT SUM(valor a receber), Data vencimento FROM recebimentos_atraso GROUP BY Data vencimento ORDER BY Data vencimento DESC";
-        }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-        {
-            $sSql = "SELECT SUM(valor a receber), Data vencimento FROM recebimentos_atraso GROUP BY 2 ORDER BY Data vencimento DESC";
         }
         else 
         {
@@ -2398,14 +2316,6 @@ IDXHTML;
         {
             $sSql = "SELECT SUM(valor a receber), Data vencimento FROM pagamentos_atraso GROUP BY Data vencimento ORDER BY Data vencimento DESC";
         }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-        {
-            $sSql = "SELECT SUM(\"valor a receber\"), \"Data vencimento\" FROM pagamentos_atraso GROUP BY \"Data vencimento\" ORDER BY \"Data vencimento\" DESC";
-        }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-        {
-            $sSql = "SELECT SUM(\"valor a receber\"), \"Data vencimento\" FROM pagamentos_atraso GROUP BY \"Data vencimento\" ORDER BY \"Data vencimento\" DESC";
-        }
         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
         {
             $sSql = "SELECT SUM(\"valor a receber\"), \"Data vencimento\" FROM pagamentos_atraso GROUP BY 2 ORDER BY \"Data vencimento\" DESC";
@@ -2421,18 +2331,6 @@ IDXHTML;
         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
         {
             $sSql = "SELECT SUM(\"valor a receber\"), \"Data vencimento\" FROM pagamentos_atraso GROUP BY 2 ORDER BY \"Data vencimento\" DESC";
-        }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
-        {
-            $sSql = "SELECT SUM(valor a receber), Data vencimento FROM pagamentos_atraso GROUP BY Data vencimento ORDER BY Data vencimento DESC";
-        }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-        {
-            $sSql = "SELECT SUM(valor a receber), Data vencimento FROM pagamentos_atraso GROUP BY Data vencimento ORDER BY Data vencimento DESC";
-        }
-        elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-        {
-            $sSql = "SELECT SUM(valor a receber), Data vencimento FROM pagamentos_atraso GROUP BY 2 ORDER BY Data vencimento DESC";
         }
         else 
         {

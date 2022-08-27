@@ -1,7 +1,7 @@
 index.php
 petshop
 form_pagamento_parcial
-NAO
+SIM
 form
 form_pagamento_parcial
 LigMd5

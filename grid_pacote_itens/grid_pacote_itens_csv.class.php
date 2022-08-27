@@ -271,23 +271,7 @@ class grid_pacote_itens_csv
       $this->nm_field_dinamico = array();
       $this->nm_order_dinamico = array();
       $nmgp_select_count = "SELECT count(*) AS countTest from " . $this->Ini->nm_tabela; 
-      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-      { 
-          $nmgp_select = "SELECT pacote_itens.idproduto as pacote_itens_idproduto, pacote_itens.quantidade_produto as cmp_maior_30_1, pacote_itens.idpacote_itens as pacote_itens_idpacote_itens from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
-      { 
-          $nmgp_select = "SELECT pacote_itens.idproduto as pacote_itens_idproduto, pacote_itens.quantidade_produto as cmp_maior_30_1, pacote_itens.idpacote_itens as pacote_itens_idpacote_itens from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-       $nmgp_select = "SELECT pacote_itens.idproduto as pacote_itens_idproduto, pacote_itens.quantidade_produto as cmp_maior_30_1, pacote_itens.idpacote_itens as pacote_itens_idpacote_itens from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-      { 
-          $nmgp_select = "SELECT pacote_itens.idproduto as pacote_itens_idproduto, pacote_itens.quantidade_produto as cmp_maior_30_1, pacote_itens.idpacote_itens as pacote_itens_idpacote_itens from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
+      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
       { 
           $nmgp_select = "SELECT pacote_itens.idproduto as pacote_itens_idproduto, pacote_itens.quantidade_produto as cmp_maior_30_1, pacote_itens.idpacote_itens as pacote_itens_idpacote_itens from " . $this->Ini->nm_tabela; 
       } 

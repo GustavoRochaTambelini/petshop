@@ -1,7 +1,7 @@
 index.php
 petshop
 grid_caixa_diario
-NAO
+SIM
 cons
 grid_caixa_diario
 LigMd5

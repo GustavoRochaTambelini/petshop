@@ -1,7 +1,7 @@
 index.php
 petshop
 chart_fluxo_caixa_sete_dias
-NAO
+SIM
 cons
 chart_fluxo_caixa_sete_dias
 LigMd5

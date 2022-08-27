@@ -275,25 +275,9 @@ class grid_caixa_diario_rtf
       $this->nm_field_dinamico = array();
       $this->nm_order_dinamico = array();
       $nmgp_select_count = "SELECT count(*) AS countTest from " . $this->Ini->nm_tabela; 
-      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
+      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
       { 
           $nmgp_select = "SELECT data, idcliente, observacao, entrada, saida, idforma_pagamento, idcaixa_diario, idconta_corrente from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
-      { 
-          $nmgp_select = "SELECT data, idcliente, observacao, entrada, saida, idforma_pagamento, idcaixa_diario, idconta_corrente from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-       $nmgp_select = "SELECT data, idcliente, observacao, entrada, saida, idforma_pagamento, idcaixa_diario, idconta_corrente from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-      { 
-          $nmgp_select = "SELECT TO_DATE(TO_CHAR(data, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), idcliente, observacao, entrada, saida, idforma_pagamento, idcaixa_diario, idconta_corrente from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-      { 
-          $nmgp_select = "SELECT data, idcliente, LOTOFILE(observacao, '" . $this->Ini->root . $this->Ini->path_imag_temp . "/sc_blob_informix', 'client') as observacao, entrada, saida, idforma_pagamento, idcaixa_diario, idconta_corrente from " . $this->Ini->nm_tabela; 
       } 
       else 
       { 
@@ -333,19 +317,7 @@ class grid_caixa_diario_rtf
          $this->data = $rs->fields[0] ;  
          $this->idcliente = $rs->fields[1] ;  
          $this->idcliente = (string)$this->idcliente;
-          if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          { 
-              $this->observacao = "";  
-              if (is_file($rs_grid->fields[2])) 
-              { 
-                  $this->observacao = file_get_contents($rs_grid->fields[2]);  
-              } 
-          } 
-         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
-         { 
-             $this->observacao = $this->Db->BlobDecode($rs->fields[2]) ;  
-         } 
-         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
+         if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
          { 
              $this->observacao = $this->Db->BlobDecode($rs->fields[2]) ;  
          } 

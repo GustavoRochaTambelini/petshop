@@ -265,25 +265,9 @@ class grid_pet_cliente_rtf
       $this->nm_field_dinamico = array();
       $this->nm_order_dinamico = array();
       $nmgp_select_count = "SELECT count(*) AS countTest from " . $this->Ini->nm_tabela; 
-      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-      { 
-          $nmgp_select = "SELECT idpet, foto_pet, nome, idpet_raca, sexo, str_replace (convert(char(10),data_nascimento,102), '.', '-') + ' ' + convert(char(8),data_nascimento,20), idcliente from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
+      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
       { 
           $nmgp_select = "SELECT idpet, foto_pet, nome, idpet_raca, sexo, data_nascimento, idcliente from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-       $nmgp_select = "SELECT idpet, foto_pet, nome, idpet_raca, sexo, convert(char(23),data_nascimento,121), idcliente from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-      { 
-          $nmgp_select = "SELECT idpet, foto_pet, nome, idpet_raca, sexo, data_nascimento, idcliente from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-      { 
-          $nmgp_select = "SELECT idpet, LOTOFILE(foto_pet, '" . $this->Ini->root . $this->Ini->path_imag_temp . "/sc_blob_informix', 'client') as foto_pet, nome, idpet_raca, sexo, EXTEND(data_nascimento, YEAR TO DAY), idcliente from " . $this->Ini->nm_tabela; 
       } 
       else 
       { 
@@ -322,19 +306,7 @@ class grid_pet_cliente_rtf
          $this->Texto_tag .= "<tr>\r\n";
          $this->idpet = $rs->fields[0] ;  
          $this->idpet = (string)$this->idpet;
-          if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          { 
-              $this->foto_pet = "";  
-              if (is_file($rs_grid->fields[1])) 
-              { 
-                  $this->foto_pet = file_get_contents($rs_grid->fields[1]);  
-              } 
-          } 
-         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
-         { 
-             $this->foto_pet = $this->Db->BlobDecode($rs->fields[1]) ;  
-         } 
-         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
+         if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
          { 
              $this->foto_pet = $this->Db->BlobDecode($rs->fields[1]) ;  
          } 

@@ -1,7 +1,7 @@
 index.php
 petshop
 grid_contas_receber_recebidos_cliente
-NAO
+SIM
 cons
 grid_contas_receber_recebidos_cliente
 LigMd5

@@ -327,23 +327,7 @@ class grid_contas_receber_1_xls
       $this->nm_field_dinamico = array();
       $this->nm_order_dinamico = array();
       $nmgp_select_count = "SELECT count(*) AS countTest from " . $this->Ini->nm_tabela; 
-      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-      { 
-          $nmgp_select = "SELECT numero_conta, idforma_pagamento_prevista, idforma_pagamento, data_vencimento, valor_a_receber, valor_recebido, pago, idcontas_receber, idcliente, idgrupos_receitas, idtipos_receitas from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
-      { 
-          $nmgp_select = "SELECT numero_conta, idforma_pagamento_prevista, idforma_pagamento, data_vencimento, valor_a_receber, valor_recebido, pago, idcontas_receber, idcliente, idgrupos_receitas, idtipos_receitas from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-       $nmgp_select = "SELECT numero_conta, idforma_pagamento_prevista, idforma_pagamento, data_vencimento, valor_a_receber, valor_recebido, pago, idcontas_receber, idcliente, idgrupos_receitas, idtipos_receitas from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-      { 
-          $nmgp_select = "SELECT numero_conta, idforma_pagamento_prevista, idforma_pagamento, TO_DATE(TO_CHAR(data_vencimento, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), valor_a_receber, valor_recebido, pago, idcontas_receber, idcliente, idgrupos_receitas, idtipos_receitas from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
+      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
       { 
           $nmgp_select = "SELECT numero_conta, idforma_pagamento_prevista, idforma_pagamento, data_vencimento, valor_a_receber, valor_recebido, pago, idcontas_receber, idcliente, idgrupos_receitas, idtipos_receitas from " . $this->Ini->nm_tabela; 
       } 

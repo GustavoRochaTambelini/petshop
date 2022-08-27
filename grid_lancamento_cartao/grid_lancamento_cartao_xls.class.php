@@ -323,25 +323,9 @@ class grid_lancamento_cartao_xls
       $this->nm_field_dinamico = array();
       $this->nm_order_dinamico = array();
       $nmgp_select_count = "SELECT count(*) AS countTest from " . $this->Ini->nm_tabela; 
-      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-      { 
-          $nmgp_select = "SELECT str_replace (convert(char(10),data,102), '.', '-') + ' ' + convert(char(8),data,20), idforma_pagamento, quantidade_parcelas, numero_parcela, valor_venda, taxa_cartao, valor_da_taxa_cartao, valor_liquido_cartao, taxa_antecipacao, valor_liquido_antecipacao, valor_antecipacao, dia_recebimento, str_replace (convert(char(10),data_prevista_recebimento,102), '.', '-') + ' ' + convert(char(8),data_prevista_recebimento,20), observacao, status, idlancamento_cartao, idcontas_receber from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
+      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
       { 
           $nmgp_select = "SELECT data, idforma_pagamento, quantidade_parcelas, numero_parcela, valor_venda, taxa_cartao, valor_da_taxa_cartao, valor_liquido_cartao, taxa_antecipacao, valor_liquido_antecipacao, valor_antecipacao, dia_recebimento, data_prevista_recebimento, observacao, status, idlancamento_cartao, idcontas_receber from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-       $nmgp_select = "SELECT convert(char(23),data,121), idforma_pagamento, quantidade_parcelas, numero_parcela, valor_venda, taxa_cartao, valor_da_taxa_cartao, valor_liquido_cartao, taxa_antecipacao, valor_liquido_antecipacao, valor_antecipacao, dia_recebimento, convert(char(23),data_prevista_recebimento,121), observacao, status, idlancamento_cartao, idcontas_receber from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-      { 
-          $nmgp_select = "SELECT data, idforma_pagamento, quantidade_parcelas, numero_parcela, valor_venda, taxa_cartao, valor_da_taxa_cartao, valor_liquido_cartao, taxa_antecipacao, valor_liquido_antecipacao, valor_antecipacao, dia_recebimento, data_prevista_recebimento, observacao, status, idlancamento_cartao, idcontas_receber from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-      { 
-          $nmgp_select = "SELECT EXTEND(data, YEAR TO DAY), idforma_pagamento, quantidade_parcelas, numero_parcela, valor_venda, taxa_cartao, valor_da_taxa_cartao, valor_liquido_cartao, taxa_antecipacao, valor_liquido_antecipacao, valor_antecipacao, dia_recebimento, EXTEND(data_prevista_recebimento, YEAR TO DAY), LOTOFILE(observacao, '" . $this->Ini->root . $this->Ini->path_imag_temp . "/sc_blob_informix', 'client') as observacao, status, idlancamento_cartao, idcontas_receber from " . $this->Ini->nm_tabela; 
       } 
       else 
       { 
@@ -405,19 +389,7 @@ class grid_lancamento_cartao_xls
          $this->dia_recebimento = $rs->fields[11] ;  
          $this->dia_recebimento = (string)$this->dia_recebimento;
          $this->data_prevista_recebimento = $rs->fields[12] ;  
-          if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          { 
-              $this->observacao = "";  
-              if (is_file($rs_grid->fields[13])) 
-              { 
-                  $this->observacao = file_get_contents($rs_grid->fields[13]);  
-              } 
-          } 
-         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
-         { 
-             $this->observacao = $this->Db->BlobDecode($rs->fields[13]) ;  
-         } 
-         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
+         if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
          { 
              $this->observacao = $this->Db->BlobDecode($rs->fields[13]) ;  
          } 

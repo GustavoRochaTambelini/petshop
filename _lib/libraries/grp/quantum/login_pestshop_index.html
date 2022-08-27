@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en"
+	class=" svg localstorage sessionstorage websqldatabase svgfilters bgpositionshorthand multiplebgs preserve3d inlinesvg csscalc supports svgclippaths svgforeignobject smil no-touchevents fontface svgasimg no-forcetouch matchmedia cssanimations bgpositionxy bgrepeatround bgrepeatspace bgsizecover borderradius no-flexboxtweener csstransforms csstransforms3d csstransitions">
+
+<head>
+	<!--SC_PAGE_CHARSET-->
+	<!--SC_JS_LIB-->
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<script type="text/javascript">
+						
+			function scHideUserField(fieldName)
+			{
+				if(fieldName == 'new_user')
+				{
+					$('#id-new_user-1').hide();
+				}
+				
+				else if(fieldName == 'retrieve_pswd')
+				{
+					$('#id-retrieve_pswd-1').hide();					
+				}
+				
+				else if(fieldName == 'remember_me')
+				{
+					$('#id_sc_field_remember_me_1').hide();	
+					$('#txtremember').hide();
+				}
+			}
+			
+			
+			function scShowUserField(fieldName)
+			{
+				if(fieldName == 'new_user')
+				{
+					$('#id-new_user-1').show();
+				}
+				
+				else if(fieldName == 'retrieve_pswd')
+				{
+					$('#id-retrieve_pswd-1').show();
+				}
+				
+				else if(fieldName == 'remember_me')
+				{
+					$('#id_sc_field_remember_me_1').show();
+					$('#txtremember').show();
+				}	
+			}
+			
+		</script>
+	
+	
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>
+		<!--SC_PAGE_TITLE-->
+	</title>
+
+	<link href="../_lib/libraries/grp/quantum/assets/css" rel="stylesheet">
+
+	<link rel="stylesheet" href="../_lib/libraries/grp/quantum/assets/bootstrap.css">
+	<link rel="stylesheet" href="../_lib/libraries/grp/quantum/assets/metisMenu.css">
+	<link rel="stylesheet" href="../_lib/libraries/grp/quantum/assets/index.css">
+	<link rel="stylesheet" href="../_lib/libraries/grp/quantum/assets/jquery.mCustomScrollbar.css">
+
+	<link rel="stylesheet" href="../_lib/libraries/grp/quantum/assets/line-awesome.min.css">
+
+	<link rel="stylesheet" href="../_lib/libraries/grp/quantum/assets/dripicons.min.css">
+
+	<link rel="stylesheet" href="../_lib/libraries/grp/quantum/assets/material-design-iconic-font.min.css">
+
+	<link rel="stylesheet" href="../_lib/libraries/grp/quantum/assets/main.bundle.css">
+
+	<link rel="stylesheet" href="../_lib/libraries/grp/quantum/assets/main.css">
+
+	<link rel="stylesheet" href="../_lib/libraries/grp/quantum/assets/default.css">
+
+	<link rel="stylesheet" href="../_lib/libraries/grp/quantum/assets/theme-a.css">
+
+	<link rel="stylesheet" type="text/css" href="teste.css" />
+	<script type="text/javascript" src="teste.js"></script>
+</head>
+
+<body class="  pace-done">
+	<div class="pace  pace-inactive">
+		<div class="pace-progress" data-progress-text="100%" data-progress="99"
+			style="transform: translate3d(100%, 0px, 0px);">
+			<div class="pace-progress-inner"></div>
+		</div>
+		<div class="pace-activity"></div>
+	</div>
+	<div class="container">
+		<form class="sign-in-form" {SC_FORM_ATTR}>
+			<!--SC_FORM_HIDDEN-->
+			<div class="card">
+				<div class="card-body">
+					<a href="#"
+						class="brand text-center d-block m-b-20">
+						<img src="../_lib/libraries/grp/quantum/assets/logo_petshop.png" alt="K9 Logo">
+					</a>
+					<h5 class="sign-in-heading text-center m-b-20">Acesso do usuário</h5>
+					<div class="form-group">
+						<label for="Login" class="sr-only">
+							<!--SC_FIELD_LABEL_Login-->
+						</label>
+						<input type="text" class="form-control {SC_FIELD_CLASS}" placeholder="Usuário" required="" {SC_FIELD_INFO_login}>
+						
+						<kpm-button style="position: relative !important; z-index: 3 !important;"
+							class="_1mUok1yqu_fHkbNOXVoU6l kpm_input-field-button kpm_gray-key-icon">
+							<div class="_12GLdmNfqjBzgAQBymfRrk"
+								style="position: absolute !important; width: 20px !important; height: 24px !important; top: -29.5px !important; left: 324px !important;">
+								<svg class="_1jZ1QRhwRIXZDO2Rgp_qon" viewBox="25 25 50 50"
+									xmlnsXlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"
+									style="inset: 0px -2px !important;"></svg></div><svg width="12" height="24"
+								viewBox="0 0 8 16" version="1.1" xmlns="http://www.w3.org/2000/svg"
+								xmlnsXlink="http://www.w3.org/1999/xlink"
+								class="_2WQbmZpFI_2_k72D9o87Hq kpm_reset _2p2h7gYS-bpObPoQxR7lvo"
+								style="position: absolute !important; width: 12px !important; height: 24px !important; top: -29.5px !important; left: 324px !important;"></svg>
+						</kpm-button>
+					</div>
+
+					<div class="form-group">
+						
+						<label for="pswd" class="sr-only">Senha</label>
+						
+                         <!--SC_FIELD_INI_pswd-->
+						<input type="password" class="form-control {SC_FIELD_CLASS}" placeholder="Senha" required="" {SC_FIELD_INFO_pswd}>
+                         <!--SC_FIELD_END_pswd--> 
+						
+<!-- 						<kpm-button style="position: relative !important; z-index: 3 !important;"
+							class="_1mUok1yqu_fHkbNOXVoU6l kpm_input-field-button kpm_gray-key-icon">
+							<div class="_12GLdmNfqjBzgAQBymfRrk"
+								style="position: absolute !important; width: 20px !important; height: 24px !important; top: -29.5px !important; left: 324px !important;">
+								<svg class="_1jZ1QRhwRIXZDO2Rgp_qon" viewBox="25 25 50 50"
+									xmlnsXlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"
+									style="inset: 0px -2px !important;"></svg></div><svg width="12" height="24"
+								viewBox="0 0 8 16" version="1.1" xmlns="http://www.w3.org/2000/svg"
+								xmlnsXlink="http://www.w3.org/1999/xlink"
+								class="_2WQbmZpFI_2_k72D9o87Hq kpm_reset _2p2h7gYS-bpObPoQxR7lvo"
+								style="position: absolute !important; width: 12px !important; height: 24px !important; top: -29.5px !important; left: 324px !important;"></svg>
+						</kpm-button> -->
+					</div>
+					{SC_FIELD_INFO_remember_me}<br/>
+					
+					
+					<!--SC_CAPTCHA-->
+					<!--SC_REQUIRED_MSG-->
+					<div class="submit">
+						<input type="button" class="button btn btn-primary btn-rounded btn-floating btn-lg btn-block" value="Acessar" {SC_FORM_SUBMIT_CALL}/>
+					</div>
+					
+					
+					 <br/><br/>
+					{SC_FIELD_INFO_new_user}
+					{SC_FIELD_INFO_retrieve_pswd}
+				</div>
+
+			</div>
+		</form>
+	</div>
+
+
+	<script src="../_lib/libraries/grp/quantum/assets/modernizr.custom.js.baixados"></script>
+	<script src="../_lib/libraries/grp/quantum/assets/jquery.min.js.baixados"></script>
+	<script src="../_lib/libraries/grp/quantum/assets/bootstrap.bundle.min.js.baixados"></script>
+	<script src="../_lib/libraries/grp/quantum/assets/js.storage.js.baixados"></script>
+	<script src="../_lib/libraries/grp/quantum/assets/js.cookie.js.baixados"></script>
+	<script src="../_lib/libraries/grp/quantum/assets/pace.js.baixados"></script>
+	<script src="../_lib/libraries/grp/quantum/assets/metisMenu.js.baixados"></script>
+	<script src="../_lib/libraries/grp/quantum/assets/index.js.baixados"></script>
+	<script src="../_lib/libraries/grp/quantum/assets/jquery.mCustomScrollbar.concat.min.js.baixados"></script>
+
+	<script src="../_lib/libraries/grp/quantum/assets/app.js.baixados"></script>
+
+
+
+
+</body>
+
+</html>

@@ -1,7 +1,7 @@
 nfce_abertura_mob.php
 petshop
 nfce_abertura_mob
-NAO
+SIM
 contr
 nfce_abertura
 LigMd5

@@ -130,18 +130,10 @@ class chart_fluxo_caixa_sete_dias_ini
    var $sc_tem_trans_banco;
    var $nm_bases_all;
    var $nm_bases_access;
-   var $nm_bases_db2;
    var $nm_bases_ibase;
-   var $nm_bases_informix;
-   var $nm_bases_mssql;
    var $nm_bases_mysql;
    var $nm_bases_postgres;
-   var $nm_bases_oracle;
    var $nm_bases_sqlite;
-   var $nm_bases_sybase;
-   var $nm_bases_vfp;
-   var $nm_bases_odbc;
-   var $nm_bases_progress;
    var $sc_page;
    var $sc_lig_md5 = array();
    var $sc_lig_target = array();
@@ -227,17 +219,17 @@ class chart_fluxo_caixa_sete_dias_ini
       $this->nm_script_by    = "netmake";
       $this->nm_script_type  = "PHP";
       $this->nm_versao_sc    = "v9"; 
-      $this->nm_tp_lic_sc    = "demo"; 
+      $this->nm_tp_lic_sc    = "sb_micro_bronze"; 
       $this->nm_dt_criacao   = "20220826"; 
       $this->nm_hr_criacao   = "093652"; 
       $this->nm_autor_alt    = "admin"; 
-      $this->nm_dt_ult_alt   = "20220826"; 
-      $this->nm_hr_ult_alt   = "100430"; 
+      $this->nm_dt_ult_alt   = "20220827"; 
+      $this->nm_hr_ult_alt   = "154301"; 
       $this->Apl_paginacao   = "PARCIAL"; 
       $temp_bug_list         = explode(" ", microtime()); 
       list($NM_usec, $NM_sec) = $temp_bug_list; 
       $this->nm_timestamp    = (float) $NM_sec; 
-      $this->nm_app_version  = "1.0";
+      $this->nm_app_version  = "1.0.0";
       $this->nm_tp_variance  = "P";
 // 
 // 
@@ -885,33 +877,17 @@ class chart_fluxo_caixa_sete_dias_ini
           exit;
       }
       $this->nm_bases_access     = array("access", "ado_access", "ace_access");
-      $this->nm_bases_db2        = array("db2", "db2_odbc", "odbc_db2", "odbc_db2v6", "pdo_db2_odbc", "pdo_ibm");
       $this->nm_bases_ibase      = array("ibase", "firebird", "pdo_firebird", "borland_ibase");
-      $this->nm_bases_informix   = array("informix", "informix72", "pdo_informix");
-      $this->nm_bases_mssql      = array("mssql", "ado_mssql", "adooledb_mssql", "odbc_mssql", "mssqlnative", "pdo_sqlsrv", "pdo_dblib", "azure_mssql", "azure_ado_mssql", "azure_adooledb_mssql", "azure_odbc_mssql", "azure_mssqlnative", "azure_pdo_sqlsrv", "azure_pdo_dblib", "googlecloud_mssql", "googlecloud_ado_mssql", "googlecloud_adooledb_mssql", "googlecloud_odbc_mssql", "googlecloud_mssqlnative", "googlecloud_pdo_sqlsrv", "googlecloud_pdo_dblib", "amazonrds_mssql", "amazonrds_ado_mssql", "amazonrds_adooledb_mssql", "amazonrds_odbc_mssql", "amazonrds_mssqlnative", "amazonrds_pdo_sqlsrv", "amazonrds_pdo_dblib");
       $this->nm_bases_mysql      = array("mysql", "mysqlt", "mysqli", "maxsql", "pdo_mysql", "azure_mysql", "azure_mysqlt", "azure_mysqli", "azure_maxsql", "azure_pdo_mysql", "googlecloud_mysql", "googlecloud_mysqlt", "googlecloud_mysqli", "googlecloud_maxsql", "googlecloud_pdo_mysql", "amazonrds_mysql", "amazonrds_mysqlt", "amazonrds_mysqli", "amazonrds_maxsql", "amazonrds_pdo_mysql");
       $this->nm_bases_postgres   = array("postgres", "postgres64", "postgres7", "pdo_pgsql", "azure_postgres", "azure_postgres64", "azure_postgres7", "azure_pdo_pgsql", "googlecloud_postgres", "googlecloud_postgres64", "googlecloud_postgres7", "googlecloud_pdo_pgsql", "amazonrds_postgres", "amazonrds_postgres64", "amazonrds_postgres7", "amazonrds_pdo_pgsql");
-      $this->nm_bases_oracle     = array("oci8", "oci805", "oci8po", "odbc_oracle", "oracle", "pdo_oracle", "oraclecloud_oci8", "oraclecloud_oci805", "oraclecloud_oci8po", "oraclecloud_odbc_oracle", "oraclecloud_oracle", "oraclecloud_pdo_oracle", "amazonrds_oci8", "amazonrds_oci805", "amazonrds_oci8po", "amazonrds_odbc_oracle", "amazonrds_oracle", "amazonrds_pdo_oracle");
       $this->sqlite_version      = "old";
       $this->nm_bases_sqlite     = array("sqlite", "sqlite3", "pdosqlite");
-      $this->nm_bases_sybase     = array("sybase", "pdo_sybase_odbc", "pdo_sybase_dblib");
-      $this->nm_bases_vfp        = array("vfp");
-      $this->nm_bases_odbc       = array("odbc");
-      $this->nm_bases_progress     = array("pdo_progress_odbc", "progress");
-      $this->nm_bases_all        = array_merge($this->nm_bases_access, $this->nm_bases_db2, $this->nm_bases_ibase, $this->nm_bases_informix, $this->nm_bases_mssql, $this->nm_bases_mysql, $this->nm_bases_postgres, $this->nm_bases_oracle, $this->nm_bases_sqlite, $this->nm_bases_sybase, $this->nm_bases_vfp, $this->nm_bases_odbc, $this->nm_bases_progress);
+      $this->nm_bases_all        = array_merge($this->nm_bases_access, $this->nm_bases_ibase, $this->nm_bases_mysql, $this->nm_bases_postgres, $this->nm_bases_sqlite);
       $this->Nm_accent_access    = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_db2       = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
       $this->Nm_accent_ibase     = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_informix  = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_mssql     = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
       $this->Nm_accent_mysql     = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
       $this->Nm_accent_postgres  = array('cmp_i'=>"unaccent(",'cmp_f'=>")",'cmp_apos'=>"",'arg_i'=>"' || unaccent('",'arg_f'=>"') || '",'arg_apos'=>"");
-      $this->Nm_accent_oracle    = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
       $this->Nm_accent_sqlite    = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_sybase    = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_vfp       = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_odbc      = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $this->Nm_accent_progress  = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
       $this->nm_font_ttf = array("ar", "ja", "pl", "ru", "sk", "thai", "zh_cn", "zh_hk", "cz", "el", "ko", "mk");
       $this->nm_ttf_arab = array("ar");
       $this->nm_ttf_jap  = array("ja");
@@ -920,8 +896,7 @@ class chart_fluxo_caixa_sete_dias_ini
       $this->nm_ttf_chi  = array("zh_cn", "zh_hk", "ko");
       $_SESSION['sc_session'][$this->sc_page]['chart_fluxo_caixa_sete_dias']['seq_dir'] = 0; 
       $_SESSION['sc_session'][$this->sc_page]['chart_fluxo_caixa_sete_dias']['sub_dir'] = array(); 
-      $_SESSION['scriptcase']['nm_bases_security']  = "enc_nm_enc_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";
-$_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 108, 101, 61, 34, 102, 111, 110, 116, 45, 102, 97, 109, 105, 108, 121, 58, 32, 84, 97, 104, 111, 109, 97, 44, 32, 65, 114, 105, 97, 108, 44, 32, 115, 97, 110, 115, 45, 115, 101, 114, 105, 102, 59, 32, 102, 111, 110, 116, 45, 115, 105, 122, 101, 58, 32, 49, 51, 112, 120, 59, 32, 102, 111, 110, 116, 45, 119, 101, 105, 103, 104, 116, 58, 32, 98, 111, 108, 100, 59, 32, 116, 101, 120, 116, 45, 97, 108, 105, 103, 110, 58, 32, 99, 101, 110, 116, 101, 114, 34, 62, 84, 104, 105, 115, 32, 97, 112, 112, 108, 105, 99, 97, 116, 105, 111, 110, 32, 119, 97, 115, 32, 100, 101, 118, 101, 108, 111, 112, 101, 100, 32, 97, 110, 100, 32, 112, 117, 98, 108, 105, 115, 104, 101, 100, 32, 117, 115, 105, 110, 103, 32, 97, 32, 116, 114, 105, 97, 108, 32, 118, 101, 114, 115, 105, 111, 110, 32, 111, 102, 32, 83, 99, 114, 105, 112, 116, 67, 97, 115, 101, 32, 97, 110, 100, 32, 105, 116, 115, 32, 116, 114, 105, 97, 108, 32, 112, 101, 114, 105, 111, 100, 32, 104, 97, 115, 32, 101, 120, 112, 105, 114, 101, 100, 46, 60, 47, 100, 105, 118, 62);
+      $_SESSION['scriptcase']['nm_bases_security']  = "enc_nm_enc_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";
       $this->prep_conect();
       $this->conectDB();
       if (!in_array(strtolower($this->nm_tpbanco), $this->nm_bases_all))
@@ -1131,30 +1106,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
       {
           $this->nm_arr_db_extra_args['mysql_ssl_cipher'] = $_SESSION['scriptcase']['glo_mysql_ssl_cipher']; 
       }
-      if (isset($_SESSION['scriptcase']['glo_db2_autocommit']))
-      {
-          $this->nm_con_db2['db2_autocommit'] = $_SESSION['scriptcase']['glo_db2_autocommit']; 
-      }
-      if (isset($_SESSION['scriptcase']['glo_db2_i5_lib']))
-      {
-          $this->nm_con_db2['db2_i5_lib'] = $_SESSION['scriptcase']['glo_db2_i5_lib']; 
-      }
-      if (isset($_SESSION['scriptcase']['glo_db2_i5_naming']))
-      {
-          $this->nm_con_db2['db2_i5_naming'] = $_SESSION['scriptcase']['glo_db2_i5_naming']; 
-      }
-      if (isset($_SESSION['scriptcase']['glo_db2_i5_commit']))
-      {
-          $this->nm_con_db2['db2_i5_commit'] = $_SESSION['scriptcase']['glo_db2_i5_commit']; 
-      }
-      if (isset($_SESSION['scriptcase']['glo_db2_i5_query_optimize']))
-      {
-          $this->nm_con_db2['db2_i5_query_optimize'] = $_SESSION['scriptcase']['glo_db2_i5_query_optimize']; 
-      }
-      if (isset($_SESSION['scriptcase']['oracle_type']))
-      {
-          $this->nm_arr_db_extra_args['oracle_type'] = $_SESSION['scriptcase']['oracle_type']; 
-      }
       if (isset($_SESSION['scriptcase']['glo_use_persistent']))
       {
           $this->nm_con_persistente = $_SESSION['scriptcase']['glo_use_persistent']; 
@@ -1165,11 +1116,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
       }
       $this->date_delim  = "'";
       $this->date_delim1 = "'";
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sybase))
-      {
-          $this->date_delim  = "";
-          $this->date_delim1 = "";
-      }
       if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_access))
       {
           $this->date_delim  = "#";
@@ -1357,30 +1303,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
           {
               if (isset($ibase_version->fields[0]) && substr($ibase_version->fields[0], 0, 1) > 2) {$this->Ibase_version = "new";}
           }
-      } 
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sybase))
-      {
-          $this->Db->fetchMode = ADODB_FETCH_BOTH;
-          $this->Db->Execute("set dateformat ymd");
-          $this->Db->Execute("set quoted_identifier ON");
-      } 
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_db2))
-      {
-          $this->Db->fetchMode = ADODB_FETCH_NUM;
-      } 
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql))
-      {
-          $this->Db->Execute("set dateformat ymd");
-      } 
-      if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle))
-      {
-          $this->Db->Execute("alter session set nls_date_format         = 'yyyy-mm-dd hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_timestamp_format    = 'yyyy-mm-dd hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_timestamp_tz_format = 'yyyy-mm-dd hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_time_format         = 'hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_time_tz_format      = 'hh24:mi:ss'");
-          $this->Db->Execute("alter session set nls_numeric_characters  = '.,'");
-          $_SESSION['sc_session'][$this->sc_page]['chart_fluxo_caixa_sete_dias']['decimal_db'] = "."; 
       } 
       if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_postgres))
       {
@@ -1882,17 +1804,8 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "extract(hour from " . $cmp_sql . ") = '" . $val . "'";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "TO_CHAR(" . $cmp_sql . ",'HH24') = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DATEPART(hour, " . $cmp_sql . ") = '" . $val . "'";
-           }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_access)) {
                return "hour(" . $cmp_sql . ") = " . $val;
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "to_char(extend(" . $cmp_sql . ", hour to second), '%H') = " . $val;
            }
            else {
                return "hour(" . $cmp_sql . ") = " . $delimit . $val . $delimit1;
@@ -1911,17 +1824,8 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "extract(minute from " . $cmp_sql . ") = '" . $val . "'";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "TO_CHAR(" . $cmp_sql . ",'MI') = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DATEPART(minute, " . $cmp_sql . ") = '" . $val . "'";
-           }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_access)) {
                return "minute(" . $cmp_sql . ") = " . $val;
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "to_char(extend(" . $cmp_sql . ", hour to second), '%M') = " . $val;
            }
            else {
                return "minute(" . $cmp_sql . ") = " . $delimit . $val . $delimit1;
@@ -1940,17 +1844,8 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "extract(second from " . $cmp_sql . ") = '" . $val . "'";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "TO_CHAR(" . $cmp_sql . ",'SS') = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DATEPART(second, " . $cmp_sql . ") = '" . $val . "'";
-           }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_access)) {
                return "second(" . $cmp_sql . ") = " . $val;
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "to_char(extend(" . $cmp_sql . ", hour to second), '%S') = " . $val;
            }
            else {
                return "second(" . $cmp_sql . ") = " . $delimit . $val . $delimit1;
@@ -1969,20 +1864,8 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "extract(day from " . $cmp_sql . ") = '" . $val . "'";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "TO_CHAR(" . $cmp_sql . ",'DD') = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DATEPART(day, " . $cmp_sql . ") = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DATEPART(day, " . $cmp_sql . ") = '" . $val . "'";
-           }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_access)) {
                return "day(" . $cmp_sql . ") = " . $val;
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_progress)) {
-               return "DAYOFMONTH(" . $cmp_sql . ") = " . $val;
            }
            else {
                return "day(" . $cmp_sql . ") = " . $delimit . $val . $delimit1;
@@ -2000,12 +1883,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "extract(month from " . $cmp_sql . ") = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "TO_CHAR(" . $cmp_sql . ",'MM') = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DATEPART(month, " . $cmp_sql . ") = '" . $val . "'";
            }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_access)) {
                return "month(" . $cmp_sql . ") = " . $val;
@@ -2026,12 +1903,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "extract(year from " . $cmp_sql . ") = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "TO_CHAR(" . $cmp_sql . ",'YYYY') = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DATEPART(year, " . $cmp_sql . ") = '" . $val . "'";
            }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_access)) {
                return "year(" . $cmp_sql . ") = " . $val;
@@ -2057,18 +1928,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "extract(week from " . $cmp_sql . ") = '" . $val . "'";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "TO_CHAR(" . $cmp_sql . ",'WW') = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DATEPART(wk, " . $cmp_sql . ") = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sybase)) {
-               return "CONVERT(VARCHAR(2), DATEPART(wk, " . $cmp_sql . ")) = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "CAST(1 + (((CAST(" . $cmp_sql . " AS DATE) - MDY(1, 1, YEAR(" . $cmp_sql . "))) +  WEEKDAY(MDY(1, 1, YEAR(" . $cmp_sql . ")))) / 7) as INT) = '" . $val . "'";
-           }
            else {
                return "week( " . $cmp_sql . ") = " . $delimit . $val . $delimit1;
            }
@@ -2089,21 +1948,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "extract(weekday from " . $cmp_sql . ") = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "TO_CHAR(" . $cmp_sql . ",'D') = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DATEPART(dw, " . $cmp_sql . ") = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sybase)) {
-               return "CONVERT(CHAR(1), DATEPART(dw, " . $cmp_sql . ")) = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_db2)) {
-               return "DAYOFWEEK(" . $cmp_sql . ") = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_progress)) {
-               return "DAYOFWEEK( " . $cmp_sql . ") = " . $delimit . $val . $delimit1;
            }
            else {
                return "WEEKDAY( " . $cmp_sql . ") = " . $delimit . $val . $delimit1;
@@ -2126,18 +1970,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "((EXTRACT(MONTH FROM " . $cmp_sql . ") - 1) / 6 + 1) = " . $val;
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "SUBSTR(((TO_CHAR (" . $cmp_sql . ", 'MM') - 1) / 6 + 1), 1, 1) = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "CAST(((DatePART (MONTH, " . $cmp_sql . ") - 1) / 6 + 1) AS NCHAR (1)) = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "CAST(CAST(((MONTH(" . $cmp_sql . ") - 1) / 6 + 1) AS float) as integer) = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_progress)) {
-               return "CAST(((MONTH(" . $cmp_sql . ") - 1) / 6 + 1) AS INT (1)) = '" . $val . "'";
-           }
            else {
                return "CAST(((MONTH(" . $cmp_sql . ") - 1) / 6 + 1) AS NCHAR (1)) = '" . $val . "'";
            }
@@ -2158,18 +1990,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "((EXTRACT(MONTH FROM " . $cmp_sql . ") - 1) / 4 + 1) = " . $val;
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "SUBSTR(((TO_CHAR (" . $cmp_sql . ", 'MM') - 1) / 4 + 1), 1, 1) = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "CAST(((DatePART (MONTH, " . $cmp_sql . ") - 1) / 4 + 1) AS NCHAR (1)) = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "CAST(CAST(((MONTH(" . $cmp_sql . ") - 1) / 4 + 1) AS float) as integer) = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_progress)) {
-               return "CAST(((MONTH(" . $cmp_sql . ") - 1) / 4 + 1) AS INT (1)) = '" . $val . "'";
            }
            else {
                return "CAST(((MONTH(" . $cmp_sql . ") - 1) / 4 + 1) AS NCHAR (1)) = '" . $val . "'";
@@ -2192,21 +2012,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "((EXTRACT(MONTH FROM " . $cmp_sql . ") - 1) / 3 + 1) = " . $val;
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "TO_CHAR (" . $cmp_sql . ", 'Q') = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DatePART (QUARTER, " . $cmp_sql . ") = " . $val;
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_db2)) {
-               return "QUARTER(" . $cmp_sql . ") = " . $val;
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "QUARTER(" . $cmp_sql . ") = " . $val;
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_progress)) {
-               return "QUARTER(" . $cmp_sql . ") = " . $val;
-           }
            else {
                return "CAST(((MONTH(" . $cmp_sql . ") - 1) / 3 + 1) AS NCHAR (1)) = '" . $val . "'";
            }
@@ -2228,18 +2033,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "((EXTRACT(MONTH FROM " . $cmp_sql . ") - 1) / 2 + 1) = " . $val;
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "SUBSTR(((TO_CHAR (" . $cmp_sql . ", 'MM') - 1) / 2 + 1), 1, 1) = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "CAST(((DatePART (MONTH, " . $cmp_sql . ") - 1) / 2 + 1) AS NCHAR (1)) = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "CAST(CAST(((MONTH(" . $cmp_sql . ") - 1) / 2 + 1) AS float) as integer) = '" . $val . "'";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_progress)) {
-               return "CAST(((MONTH(" . $cmp_sql . ") - 1) / 2 + 1) AS INT (1)) = '" . $val . "'";
-           }
            else {
                return "CAST(((MONTH(" . $cmp_sql . ") - 1) / 2 + 1) AS NCHAR (1)) = '" . $val . "'";
            }
@@ -2260,17 +2053,8 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "extract(hour from " . $cmp_sql . ") *sc# extract(hour from SC." . $cmp_sql . ")";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "TO_CHAR(" . $cmp_sql . ",'HH24') *sc# TO_CHAR(SC." . $cmp_sql . ",'HH24')";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DATEPART(hour, " . $cmp_sql . ") *sc# DATEPART(hour, SC." . $cmp_sql . ")";
-           }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_access)) {
                return "hour(" . $cmp_sql . ") *sc# hour(SC." . $cmp_sql . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "to_char(extend(" . $cmp_sql . ", hour to second), '%H') *sc# to_char(extend(SC." . $cmp_sql . ", hour to second), '%H')";
            }
            else {
                return "hour(" . $cmp_sql . ") *sc# hour(SC." . $cmp_sql . ")";
@@ -2289,17 +2073,8 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "extract(minute from " . $cmp_sql . ") *sc# extract(minute from SC." . $cmp_sql . ")";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "TO_CHAR(" . $cmp_sql . ",'MI') *sc# TO_CHAR(SC." . $cmp_sql . ",'MI')";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DATEPART(minute, " . $cmp_sql . ") *sc# DATEPART(minute, SC." . $cmp_sql . ")";
-           }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_access)) {
                return "minute(" . $cmp_sql . ") *sc# minute(SC." . $cmp_sql . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "to_char(extend(" . $cmp_sql . ", hour to second), '%M') *sc# to_char(extend(SC." . $cmp_sql . ", hour to second), '%M')";
            }
            else {
                return "minute(" . $cmp_sql . ") *sc# minute(SC." . $cmp_sql . ")";
@@ -2318,17 +2093,8 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "extract(second from " . $cmp_sql . ") *sc# extract(second from SC." . $cmp_sql . ")";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "TO_CHAR(" . $cmp_sql . ",'SS') *sc# TO_CHAR(SC." . $cmp_sql . ",'SS')";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DATEPART(second, " . $cmp_sql . ") *sc# DATEPART(second, SC." . $cmp_sql . ")";
-           }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_access)) {
                return "second(" . $cmp_sql . ") *sc# second(SC." . $cmp_sql . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "to_char(extend(" . $cmp_sql . ", hour to second), '%S') *sc# to_char(extend(SC." . $cmp_sql . ", hour to second), '%S')";
            }
            else {
                return "second(" . $cmp_sql . ") *sc# second(SC." . $cmp_sql . ")";
@@ -2347,17 +2113,8 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "extract(day from " . $cmp_sql . ") *sc# extract(day from SC." . $cmp_sql . ")";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "TO_CHAR(" . $cmp_sql . ",'DD') *sc# TO_CHAR(SC." . $cmp_sql . ",'DD')";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DATEPART(day, " . $cmp_sql . ") *sc# DATEPART(day, SC." . $cmp_sql . ")";
-           }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_access)) {
                return "day(" . $cmp_sql . ") *sc# day(SC." . $cmp_sql . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_progress)) {
-               return "DAYOFMONTH(" . $cmp_sql . ") *sc# DAYOFMONTH(SC." . $cmp_sql . ")";
            }
            else {
                return "day(" . $cmp_sql . ") *sc# day(SC." . $cmp_sql . ")";
@@ -2375,12 +2132,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "extract(month from " . $cmp_sql . ") *sc# extract(month from SC." . $cmp_sql . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "TO_CHAR(" . $cmp_sql . ",'MM') *sc# TO_CHAR(SC." . $cmp_sql . ",'MM')";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DATEPART(month, " . $cmp_sql . ") *sc# DATEPART(month, SC." . $cmp_sql . ")";
            }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_access)) {
                return "month(" . $cmp_sql . ") *sc# month(SC." . $cmp_sql . ")";
@@ -2401,12 +2152,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "extract(year from " . $cmp_sql . ") *sc# extract(year from SC." . $cmp_sql . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "TO_CHAR(" . $cmp_sql . ",'YYYY') *sc# TO_CHAR(SC." . $cmp_sql . ",'YYYY')";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DATEPART(year, " . $cmp_sql . ") *sc# DATEPART(year, SC." . $cmp_sql . ")";
            }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_access)) {
                return "year(" . $cmp_sql . ") *sc# year(SC." . $cmp_sql . ")";
@@ -2432,18 +2177,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "extract(week from " . $cmp_sql . ") *sc# extract(week from SC." . $cmp_sql . ")";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "TO_CHAR(" . $cmp_sql . ",'WW') *sc# TO_CHAR(SC." . $cmp_sql . ",'WW')";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DATEPART(wk, " . $cmp_sql . ") *sc# DATEPART(wk, SC." . $cmp_sql . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sybase)) {
-               return "CONVERT(VARCHAR(2), DATEPART(wk, " . $cmp_sql . ")) *sc# CONVERT(VARCHAR(2), DATEPART(wk, SC." . $cmp_sql . "))";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "CAST(1 + (((CAST(" . $cmp_sql . " AS DATE) - MDY(1, 1, YEAR(" . $cmp_sql . "))) +  WEEKDAY(MDY(1, 1, YEAR(" . $cmp_sql . ")))) / 7) as INT) *sc# CAST(1 + (((CAST(" . $cmp_sql . " AS DATE) - MDY(1, 1, YEAR(" . $cmp_sql . "))) +  WEEKDAY(MDY(1, 1, YEAR(" . $cmp_sql . ")))) / 7) as INT)";
-           }
            else {
                return "week(" . $cmp_sql . ") *sc# week(SC." . $cmp_sql . ")";
            }
@@ -2464,21 +2197,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "extract(weekday from " . $cmp_sql . ") *sc# extract(weekday from SC." . $cmp_sql . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "TO_CHAR(" . $cmp_sql . ",'D') *sc# TO_CHAR(SC." . $cmp_sql . ",'D')";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DATEPART(dw, " . $cmp_sql . ") *sc# DATEPART(dw, SC." . $cmp_sql . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sybase)) {
-               return "CONVERT(CHAR(1), DATEPART(dw, " . $cmp_sql . ")) *sc# CONVERT(CHAR(1), DATEPART(dw, SC." . $cmp_sql . "))";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_db2)) {
-               return "DAYOFWEEK(" . $cmp_sql . ") *sc# DAYOFWEEK(SC." . $cmp_sql . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_progress)) {
-               return "DAYOFWEEK(" . $cmp_sql . ") *sc# DAYOFWEEK(SC." . $cmp_sql . ")";
            }
            else {
                return "WEEKDAY(" . $cmp_sql . ") *sc# WEEKDAY(SC." . $cmp_sql . ")";
@@ -2501,18 +2219,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "((EXTRACT(MONTH FROM " . $cmp_sql . ") - 1) / 6 + 1) *sc# ((EXTRACT(MONTH FROM SC." . $cmp_sql . ") - 1) / 6 + 1)";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "SUBSTR(((TO_CHAR (" . $cmp_sql . ", 'MM') - 1) / 6 + 1), 1, 1) *sc# SUBSTR(((TO_CHAR (SC." . $cmp_sql . ", 'MM') - 1) / 6 + 1), 1, 1)";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "CAST(((DatePART (MONTH, " . $cmp_sql . ") - 1) / 6 + 1) AS NCHAR (1)) *sc# CAST(((DatePART (MONTH, SC." . $cmp_sql . ") - 1) / 6 + 1) AS NCHAR (1))";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "CAST(CAST(((MONTH(" . $cmp_sql . ") - 1) / 6 + 1) AS float) as integer) *sc# CAST(CAST(((MONTH(SC." . $cmp_sql . ") - 1) / 6 + 1) AS float) as integer)";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_progress)) {
-               return "CAST(((MONTH(" . $cmp_sql . ") - 1) / 6 + 1) AS INT (1)) *sc# CAST(((MONTH(SC." . $cmp_sql . ") - 1) / 6 + 1) AS INT (1))";
-           }
            else {
                return "CAST(((MONTH(" . $cmp_sql . ") - 1) / 6 + 1) AS NCHAR (1)) *sc# CAST(((MONTH(SC." . $cmp_sql . ") - 1) / 6 + 1) AS NCHAR (1))";
            }
@@ -2533,18 +2239,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "((EXTRACT(MONTH FROM " . $cmp_sql . ") - 1) / 4 + 1) *sc# ((EXTRACT(MONTH FROM SC." . $cmp_sql . ") - 1) / 4 + 1)";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "SUBSTR(((TO_CHAR (" . $cmp_sql . ", 'MM') - 1) / 4 + 1), 1, 1) *sc# SUBSTR(((TO_CHAR (SC." . $cmp_sql . ", 'MM') - 1) / 4 + 1), 1, 1)";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "CAST(((DatePART (MONTH, " . $cmp_sql . ") - 1) / 4 + 1) AS NCHAR (1)) *sc# CAST(((DatePART (MONTH, SC." . $cmp_sql . ") - 1) / 4 + 1) AS NCHAR (1))";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "CAST(CAST(((MONTH(" . $cmp_sql . ") - 1) / 4 + 1) AS float) as integer) *sc# CAST(CAST(((MONTH(SC." . $cmp_sql . ") - 1) / 4 + 1) AS float) as integer)";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_progress)) {
-               return "CAST(((MONTH(" . $cmp_sql . ") - 1) / 4 + 1) AS INT (1)) *sc# CAST(((MONTH(SC." . $cmp_sql . ") - 1) / 4 + 1) AS INT (1))";
            }
            else {
                return "CAST(((MONTH(" . $cmp_sql . ") - 1) / 4 + 1) AS NCHAR (1)) *sc# CAST(((MONTH(SC." . $cmp_sql . ") - 1) / 4 + 1) AS NCHAR (1))";
@@ -2567,21 +2261,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "((EXTRACT(MONTH FROM " . $cmp_sql . ") - 1) / 3 + 1) *sc# ((EXTRACT(MONTH FROM SC." . $cmp_sql . ") - 1) / 3 + 1)";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "TO_CHAR (" . $cmp_sql . ", 'Q') *sc# TO_CHAR (SC." . $cmp_sql . ", 'Q')";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DatePART (QUARTER, " . $cmp_sql . ") *sc# DatePART (QUARTER, SC." . $cmp_sql . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "QUARTER(" . $cmp_sql . ") *sc# QUARTER(SC." . $cmp_sql . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_db2)) {
-               return "QUARTER(" . $cmp_sql . ") *sc# QUARTER(SC." . $cmp_sql . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_progress)) {
-               return "QUARTER(" . $cmp_sql . ") *sc# QUARTER(SC." . $cmp_sql . ")";
-           }
            else {
                return "CAST(((MONTH(" . $cmp_sql . ") - 1) / 3 + 1) AS NCHAR (1)) *sc# CAST(((MONTH(SC." . $cmp_sql . ") - 1) / 3 + 1) AS NCHAR (1))";
            }
@@ -2603,18 +2282,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "((EXTRACT(MONTH FROM " . $cmp_sql . ") - 1) / 2 + 1) *sc# ((EXTRACT(MONTH FROM SC." . $cmp_sql . ") - 1) / 2 + 1)";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "SUBSTR(((TO_CHAR (" . $cmp_sql . ", 'MM') - 1) / 2 + 1), 1, 1) *sc# SUBSTR(((TO_CHAR (SC." . $cmp_sql . ", 'MM') - 1) / 2 + 1), 1, 1)";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "CAST(((DatePART (MONTH, " . $cmp_sql . ") - 1) / 2 + 1) AS NCHAR (1)) *sc# CAST(((DatePART (MONTH, SC." . $cmp_sql . ") - 1) / 2 + 1) AS NCHAR (1))";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "CAST(CAST(((MONTH(" . $cmp_sql . ") - 1) / 2 + 1) AS float) as integer) *sc# CAST(CAST(((MONTH(SC." . $cmp_sql . ") - 1) / 2 + 1) AS float) as integer)";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_progress)) {
-               return "CAST(((MONTH(" . $cmp_sql . ") - 1) / 2 + 1) AS INT (1)) *sc# CAST(((MONTH(SC." . $cmp_sql . ") - 1) / 2 + 1) AS INT (1))";
-           }
            else {
                return "CAST(((MONTH(" . $cmp_sql . ") - 1) / 2 + 1) AS NCHAR (1)) *sc# CAST(((MONTH(SC." . $cmp_sql . ") - 1) / 2 + 1) AS NCHAR (1))";
            }
@@ -2631,21 +2298,9 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            return "";
        }
        $sql = $sql_def;
-       if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql))
-       {
-           $sql = "convert(char(23)," . $sql_def . ",121)";
-       }
-       if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle))
-       {
-           $sql = "TO_DATE(TO_CHAR(" . $sql_def . ", 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss')";
-       }
        if ($format != 'YYYYMMDDHHIISS' && in_array(strtolower($this->nm_tpbanco), $this->nm_bases_postgres))
        {
            $sql = "to_char(" . $sql_def . ", 'YYYY-MM-DD HH24:MI:SS')";
-       }
-       if ($format != 'YYYYMMDDHHIISS' && in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix))
-       {
-           $sql = "EXTEND(" . $sql_def . ", YEAR TO SECOND)";
        }
        if (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_access))
        {
@@ -3024,14 +2679,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            {
                return "YEAR(" . $sql_def . ")";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql))
-           {
-               return "YEAR(" . $sql_def . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle))
-           {
-               return "To_Char(" . $sql_def . ",'YYYY')";
-           }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sqlite))
            {
                return "strftime('%Y'," . $sql_def . ")";
@@ -3058,14 +2705,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mysql))
            {
                return "MONTH(" . $sql_def . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql))
-           {
-               return "MONTH(" . $sql_def . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle))
-           {
-               return "To_Char(" . $sql_def . ",'MM')";
            }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sqlite))
            {
@@ -3094,14 +2733,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            {
                return "DAY(" . $sql_def . ")";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql))
-           {
-               return "DAY(" . $sql_def . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle))
-           {
-               return "To_Char(" . $sql_def . ",'DD')";
-           }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sqlite))
            {
                return "strftime('%d'," . $sql_def . ")";
@@ -3113,10 +2744,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase))
            {
                return "(extract(day from " . $sql_def . "))";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_progress))
-           {
-               return "DAYOFMONTH(" . $sql_def . ")";
            }
            else
            {
@@ -3133,14 +2760,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            {
                return "hour(" . $sql_def . ")";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql))
-           {
-               return "DATEPART(hour, " . $sql_def . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle))
-           {
-               return "To_Char(" . $sql_def . ",'HH24')";
-           }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sqlite))
            {
                return "strftime('%H'," . $sql_def . ")";
@@ -3152,9 +2771,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase))
            {
                return "(extract(hour FROM " . $sql_def . "))";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "to_char(extend(" . $sql_def . ", hour to second), '%H')";
            }
            else
            {
@@ -3171,14 +2787,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            {
                return "minute(" . $sql_def . ")";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql))
-           {
-               return "DATEPART(minute, " . $sql_def . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle))
-           {
-               return "To_Char(" . $sql_def . ",'MI')";
-           }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sqlite))
            {
                return "strftime('%M'," . $sql_def . ")";
@@ -3190,9 +2798,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase))
            {
                return "(extract(minute FROM " . $sql_def . "))";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "to_char(extend(" . $sql_def . ", hour to second), '%M')";
            }
            else
            {
@@ -3209,14 +2814,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            {
                return "second(" . $sql_def . ")";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql))
-           {
-               return "DATEPART(second, " . $sql_def . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle))
-           {
-               return "To_Char(" . $sql_def . ",'SS')";
-           }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sqlite))
            {
                return "strftime('%S'," . $sql_def . ")";
@@ -3228,9 +2825,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase))
            {
                return "(extract(second FROM " . $sql_def . "))";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "to_char(extend(" . $sql_def . ", hour to second), '%S')";
            }
            else
            {
@@ -3247,18 +2841,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            {
                return "WEEK(" . $sql_def . ")";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql))
-           {
-               return "DATEPART(wk, " . $sql_def . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sybase))
-           {
-               return "CONVERT(VARCHAR(2), DATEPART(wk, " . $sql_def . "))";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle))
-           {
-               return "To_Char(" . $sql_def . ",'WW')";
-           }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sqlite))
            {
                return "strftime('%W'," . $sql_def . ")";
@@ -3270,10 +2852,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase))
            {
                return "(extract(week FROM " . $sql_def . "))";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix))
-           {
-               return "CAST(1 + (((CAST(" . $sql_def . " AS DATE) - MDY(1, 1, YEAR(" . $sql_def . "))) +  WEEKDAY(MDY(1, 1, YEAR(" . $sql_def . ")))) / 7) as INT)";
            }
            else
            {
@@ -3290,18 +2868,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            {
                return "WEEKDAY(" . $sql_def . ")";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql))
-           {
-               return "DATEPART(dw, " . $sql_def . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sybase))
-           {
-               return "CONVERT(CHAR(1), DATEPART(dw, " . $sql_def . "))";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle))
-           {
-               return "To_Char(" . $sql_def . ",'D')";
-           }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sqlite))
            {
                return "strftime('%w'," . $sql_def . ")";
@@ -3313,12 +2879,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase))
            {
                return "(extract(weekday FROM " . $sql_def . "))";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_db2)) {
-               return "DAYOFWEEK(" . $sql_def . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_progress)) {
-               return "DAYOFWEEK(" . $sql_def . ")";
            }
            else
            {
@@ -3342,18 +2902,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "((EXTRACT(MONTH FROM " . $sql_def . ") - 1) / 6 + 1)";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "SUBSTR(((TO_CHAR (" . $sql_def . ", 'MM') - 1) / 6 + 1), 1, 1)";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "CAST(((DatePART (MONTH, " . $sql_def . ") - 1) / 6 + 1) AS NCHAR (1))";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "CAST(CAST(((MONTH(" . $sql_def . ") - 1) / 6 + 1) AS float) as integer)";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_progress)) {
-               return "CAST(((MONTH(" . $sql_def . ") - 1) / 6 + 1) AS INT (1))";
-           }
            else {
                return "CAST(((MONTH(" . $sql_def . ") - 1) / 6 + 1) AS NCHAR (1))";
            }
@@ -3374,18 +2922,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "((EXTRACT(MONTH FROM " . $sql_def . ") - 1) / 4 + 1)";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "SUBSTR(((TO_CHAR (" . $sql_def . ", 'MM') - 1) / 4 + 1), 1, 1)";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "CAST(((DatePART (MONTH, " . $sql_def . ") - 1) / 4 + 1) AS NCHAR (1))";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "CAST(CAST(((MONTH(" . $sql_def . ") - 1) / 4 + 1) AS float) as integer)";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_progress)) {
-               return "CAST(((MONTH(" . $sql_def . ") - 1) / 4 + 1) AS INT (1))";
            }
            else {
                return "CAST(((MONTH(" . $sql_def . ") - 1) / 4 + 1) AS NCHAR (1))";
@@ -3408,21 +2944,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "((EXTRACT(MONTH FROM " . $sql_def . ") - 1) / 3 + 1)";
            }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "TO_CHAR (" . $sql_def . ", 'Q')";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "DatePART (QUARTER, " . $sql_def . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "QUARTER(" . $sql_def . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_db2)) {
-               return "QUARTER(" . $sql_def . ")";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_progress)) {
-               return "QUARTER(" . $sql_def . ")";
-           }
            else {
                return "CAST(((MONTH(" . $sql_def . ") - 1) / 3 + 1) AS NCHAR (1))";
            }
@@ -3443,18 +2964,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
            }
            elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase)) {
                return "((EXTRACT(MONTH FROM " . $sql_def . ") - 1) / 2 + 1)";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle)) {
-               return "SUBSTR(((TO_CHAR (" . $sql_def . ", 'MM') - 1) / 2 + 1), 1, 1)";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql)) {
-               return "CAST(((DatePART (MONTH, " . $sql_def . ") - 1) / 2 + 1) AS NCHAR (1))";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix)) {
-               return "CAST(CAST(((MONTH(" . $sql_def . ") - 1) / 2 + 1) AS float) as integer)";
-           }
-           elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_progress)) {
-               return "CAST(((MONTH(" . $sql_def . ") - 1) / 2 + 1) AS INT (1))";
            }
            else {
                return "CAST(((MONTH(" . $sql_def . ") - 1) / 2 + 1) AS NCHAR (1))";
@@ -3486,18 +2995,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
        {
            $cmd = "select WEEK(" . $sql_def . ")";
        }
-       elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_mssql))
-       {
-           $cmd = "select DATEPART(wk, " . $sql_def . ")";
-       }
-       elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sybase))
-       {
-           $cmd = "select CONVERT(VARCHAR(2), DATEPART(wk, " . $sql_def . "))";
-       }
-       elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_oracle))
-       {
-           $cmd = "select To_Char(TO_DATE(" . $sql_def . ",'YYYY-MM-DD'),'WW') from dual";
-       }
        elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_sqlite))
        {
            $cmd = "select strftime('%W'," . $sql_def . ")";
@@ -3509,18 +3006,6 @@ $_SESSION['scriptcase']['nmamp'] = array(60, 100, 105, 118, 32, 115, 116, 121, 1
        elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_ibase))
        {
            $cmd = "select extract(week FROM cast(" . $sql_def . " as date)) from RDB\$DATABASE";
-       }
-       elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_db2))
-       {
-           $cmd = "select week(" . $sql_def . ") FROM SYSIBM.SYSDUMMY1";
-       }
-       elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_informix))
-       {
-           $cmd = "select CAST(1 + (((CAST(to_date(" . $sql_def . ",'%Y-%m-%d') AS DATE) - MDY(1, 1, YEAR(to_date(" . $sql_def . ",'%Y-%m-%d')))) +  WEEKDAY(MDY(1, 1, YEAR(to_date(" . $sql_def . ",'%Y-%m-%d'))))) / 7) as INT) from SYSTABLES";
-       }
-       elseif (in_array(strtolower($this->nm_tpbanco), $this->nm_bases_progress))
-       {
-           $cmd = "select week(" . $sql_def . ") FROM SYSPROGRESS.SYSCALCTABLE";
        }
        else
        {
@@ -3646,11 +3131,7 @@ class chart_fluxo_caixa_sete_dias_apl
           $_SESSION['sc_session'][$script_case_init]['chart_fluxo_caixa_sete_dias']['embutida_form_full'] = false;
           $_SESSION['sc_session'][$script_case_init]['chart_fluxo_caixa_sete_dias']['embutida_pai'] = "";
       } 
-      $_SESSION['scriptcase']['sc_ctl_ajax'] = 'full';
-      if ($this->NM_ajax_flag || $NM_run_iframe == 1)
-      {
-          $_SESSION['scriptcase']['sc_ctl_ajax'] = 'part';
-      }
+      $_SESSION['scriptcase']['sc_ctl_ajax'] = 'part';
       if (!$this->Ini || isset($_SESSION['sc_session'][$script_case_init]['chart_fluxo_caixa_sete_dias']['embutida_ibase'])) 
       { 
           $this->Ini = new chart_fluxo_caixa_sete_dias_ini(); 
@@ -5764,6 +5245,42 @@ function chartExportDownload() {
 </form>
 <form name="form_chart_export_view" method="get" target="_blank" style="display: none">
 </form>
+
+SCEOT;
+        if ($_SESSION['scriptcase']['proc_mobile']) {
+            echo <<<SCEOT
+<style>
+div#sc-id-combination-content {
+    padding-top: 0 !important;
+}
+.sc-chart-mobile-export-buttons .scButton_default, .sc-chart-mobile-export-buttons .scButton_danger {
+    margin: 10px;
+    flex-display: column;
+    text-align: center;
+}
+</style>
+<table style="border-collapse: collapse; border-width: 0; width: 100%">
+	<tr>
+		<td style="padding: 0; text-align: center">
+			<table class="scExportTable" align="center">
+				<tr>
+					<td class="scExportTitle" style="height: 25px">$typeUpper</td>
+				</tr>
+				<tr>
+				    <td class="scExportLine sc-chart-mobile-export-buttons" style="display: flex; flex-direction: column; max-width: 100vw; padding: 3px 5px 0">
+                        $viewButton
+                        $downloadButton
+                        $backButton
+                    </td>
+                </tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+SCEOT;
+        } else {
+            echo <<<SCEOT
 <table style="border-collapse: collapse; border-width: 0; height: 98%; width: 100%">
 	<tr>
 		<td style="padding: 0; text-align: center; vertical-align: middle">
@@ -5785,6 +5302,9 @@ function chartExportDownload() {
 		</td>
 	</tr>
 </table>
+
+SCEOT;
+        }
 
 SCEOT;
 	} // outputCombinationHtml
@@ -7629,6 +7149,33 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['chart_fluxo_caixa_sete_dias'][$pat
    {
        $_SESSION['sc_session'][$script_case_init]['chart_fluxo_caixa_sete_dias']['b_sair'] = true;
    }
+   $STR_lang    = (isset($_SESSION['scriptcase']['str_lang']) && !empty($_SESSION['scriptcase']['str_lang'])) ? $_SESSION['scriptcase']['str_lang'] : "pt_br";
+   if (isset($_SESSION['scriptcase']['chart_fluxo_caixa_sete_dias']['session_timeout']['lang'])) {
+       $STR_lang = $_SESSION['scriptcase']['chart_fluxo_caixa_sete_dias']['session_timeout']['lang'];
+   }
+   $STR_schema_all = (isset($_SESSION['scriptcase']['str_schema_all']) && !empty($_SESSION['scriptcase']['str_schema_all'])) ? $_SESSION['scriptcase']['str_schema_all'] : "Sc8_BlueWood/Sc8_BlueWood";
+   $NM_arq_lang = "../_lib/lang/" . $STR_lang . ".lang.php";
+   $Nm_lang = array();
+   if (is_file($NM_arq_lang))
+   {
+       $Lixo = file($NM_arq_lang);
+       foreach ($Lixo as $Cada_lin) 
+       {
+           if (strpos($Cada_lin, "array()") === false && (trim($Cada_lin) != "<?php")  && (trim($Cada_lin) != "?" . ">"))
+           {
+               eval (str_replace("\$this->", "\$", $Cada_lin));
+           }
+       }
+   }
+   $_SESSION['scriptcase']['charset'] = "UTF-8";
+   ini_set('default_charset', $_SESSION['scriptcase']['charset']);
+   foreach ($Nm_lang as $ind => $dados)
+   {
+      if ($_SESSION['scriptcase']['charset'] != "UTF-8" && NM_is_utf8($dados))
+      {
+          $Nm_lang[$ind] = sc_convert_encoding($dados, $_SESSION['scriptcase']['charset'], "UTF-8");
+      }
+   }
    if (isset($_SESSION['scriptcase']['sc_outra_jan']) && $_SESSION['scriptcase']['sc_outra_jan'] == 'chart_fluxo_caixa_sete_dias')
    {
        $_SESSION['sc_session'][$script_case_init]['chart_fluxo_caixa_sete_dias']['sc_outra_jan'] = true;
@@ -7813,6 +7360,98 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['chart_fluxo_caixa_sete_dias'][$pat
            $_SESSION['scriptcase']['sc_url_saida'][$script_case_init] = $salva_url_saida;
        } 
        $GLOBALS["NM_ERRO_IBASE"] = 0;  
+       if (isset($_SESSION['nm_session']['user']['sec']['flag']) && $_SESSION['nm_session']['user']['sec']['flag'] == "N") 
+       { 
+           $_SESSION['scriptcase']['sc_apl_seg']['chart_fluxo_caixa_sete_dias'] = "on";
+       } 
+       if (isset($_GET['SC_Link_View']) && !empty($_GET['SC_Link_View']) && is_numeric($_GET['SC_Link_View']))
+       { 
+           $_SESSION['scriptcase']['sc_apl_seg']['chart_fluxo_caixa_sete_dias'] = "on";
+       } 
+       if (!$_SESSION['sc_session'][$script_case_init]['chart_fluxo_caixa_sete_dias']['opc_psq'] && !isset($_SESSION['scriptcase']['chart_fluxo_caixa_sete_dias']['session_timeout']['redir'])) 
+       { 
+          if (!isset($_SESSION['scriptcase']['sc_apl_seg']['chart_fluxo_caixa_sete_dias']) || $_SESSION['scriptcase']['sc_apl_seg']['chart_fluxo_caixa_sete_dias'] != "on")
+          { 
+              $NM_Mens_Erro = $Nm_lang['lang_errm_unth_user'];
+              $nm_botao_ok = ($_SESSION['sc_session'][$script_case_init]['chart_fluxo_caixa_sete_dias']['iframe_menu']) ? false : true;
+              if (isset($_SESSION['scriptcase']['sc_aba_iframe']))
+              {
+                  foreach ($_SESSION['scriptcase']['sc_aba_iframe'] as $aba => $apls_aba)
+                  {
+                      if (in_array("chart_fluxo_caixa_sete_dias", $apls_aba))
+                      {
+                          $nm_botao_ok = false;
+                           break;
+                      }
+                  }
+              }
+              if ((isset($_SESSION['sc_session'][$script_case_init]['chart_fluxo_caixa_sete_dias']['embutida']) && $_SESSION['sc_session'][$script_case_init]['chart_fluxo_caixa_sete_dias']['embutida']) || (isset($_SESSION['sc_session'][$script_case_init]['chart_fluxo_caixa_sete_dias']['embutida_form']) && $_SESSION['sc_session'][$script_case_init]['chart_fluxo_caixa_sete_dias']['embutida_form']))
+              {
+                   $nm_botao_ok = false;
+              }
+?>
+             <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+            "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+              <HTML>
+               <HEAD>
+                <TITLE></TITLE>
+               <META http-equiv="Content-Type" content="text/html; charset=<?php echo $_SESSION['scriptcase']['charset_html'] ?>" />
+<?php
+if ($_SESSION['scriptcase']['proc_mobile'])
+{
+?>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<?php
+}
+?>
+                <META http-equiv="Expires" content="Fri, Jan 01 1900 00:00:00 GMT"/>                <META http-equiv="Pragma" content="no-cache"/>
+                <link rel="shortcut icon" href="../_lib/img/scriptcase__NM__ico__NM__favicon.ico">
+                <link rel="stylesheet" type="text/css" href="../_lib/css/<?php echo $STR_schema_all ?>_grid.css" /> 
+                <link rel="stylesheet" type="text/css" href="../_lib/css/<?php echo $STR_schema_all ?>_grid<?php echo $_SESSION['scriptcase']['reg_conf']['css_dir'] ?>.css" /> 
+               </HEAD>
+               <body class="scGridPage">
+                <table align="center"><tr><td style="padding: 0"><div class="scGridBorder">
+                <table class="scGridTabela" width='100%' cellspacing=0 cellpadding=0><tr class="scGridFieldOdd"><td class="scGridFieldOddFont" style="padding: 15px 30px; text-align: center">
+                 <?php echo $NM_Mens_Erro; ?>
+<?php
+              if ($nm_botao_ok)
+              {
+?>
+                <br />
+                <form name="Fseg" method="post" 
+                                    action="<?php echo $nm_url_saida; ?>" 
+                                    target="_self"> 
+                 <input type="hidden" name="script_case_init" value="<?php echo NM_encode_input($script_case_init) ?>"/> 
+                 <input type="submit" name="sc_sai_seg" value="OK"> 
+                </form> 
+<?php
+              }
+?>
+                </td></tr></table>
+                </div></td></tr></table>
+<?php
+              if (isset($_SESSION['scriptcase']['nm_sc_retorno']) && !empty($_SESSION['scriptcase']['nm_sc_retorno']))
+              {
+?>
+<br /><br /><br />
+<table align="center" style="width: 450px"><tr><td style="padding: 0"><div class="scGridBorder">
+ <table style="width: 100%" class="scGridTabela">
+  <tr class="scGridFieldOdd">
+   <td class="scGridFieldOddFont" style="padding: 15px 30px">
+    <?php echo $Nm_lang['lang_errm_unth_hwto']; ?>
+   </td>
+  </tr>
+ </table>
+</div></td></tr></table>
+<?php
+              }
+?>
+               </body>
+              </HTML>
+<?php
+              exit;
+          } 
+       } 
        if (isset($_SESSION['sc_session'][$script_case_init]['chart_fluxo_caixa_sete_dias']['sc_outra_jan']) && $_SESSION['sc_session'][$script_case_init]['chart_fluxo_caixa_sete_dias']['sc_outra_jan'])
        {
            $nm_apl_dependente = 0;

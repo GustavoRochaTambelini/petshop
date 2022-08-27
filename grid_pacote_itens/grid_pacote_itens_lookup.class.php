@@ -63,11 +63,7 @@ class grid_pacote_itens_lookup
           $save_conteudo1 = ""; 
           return ; 
       } 
-      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-      { 
-          $nm_comando = "SELECT  quantidade_realizada_produto_pacote + '/' + quantidade_total_produto_pacote FROM quantidade_produto_pacote_view where idpacote_itens= $pacote_itens_idpacote_itens" ; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
+      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
       { 
           $nm_comando = "SELECT  concat(quantidade_realizada_produto_pacote,'/', quantidade_total_produto_pacote) FROM quantidade_produto_pacote_view where idpacote_itens= $pacote_itens_idpacote_itens" ; 
       } 
@@ -78,14 +74,6 @@ class grid_pacote_itens_lookup
       elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
       { 
           $nm_comando = "SELECT  quantidade_realizada_produto_pacote||'/'||quantidade_total_produto_pacote FROM quantidade_produto_pacote_view where idpacote_itens= $pacote_itens_idpacote_itens" ; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-          $nm_comando = "SELECT  convert(char,quantidade_realizada_produto_pacote) + '/' + quantidade_total_produto_pacote FROM quantidade_produto_pacote_view where idpacote_itens= $pacote_itens_idpacote_itens" ; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
-      { 
-          $nm_comando = "SELECT  char(quantidade_realizada_produto_pacote)||'/'||quantidade_total_produto_pacote FROM quantidade_produto_pacote_view where idpacote_itens= $pacote_itens_idpacote_itens" ; 
       } 
       else 
       { 

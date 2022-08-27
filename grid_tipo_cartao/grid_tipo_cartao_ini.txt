@@ -1,7 +1,7 @@
 index.php
 petshop
 grid_tipo_cartao
-NAO
+SIM
 cons
 grid_tipo_cartao
 LigMd5

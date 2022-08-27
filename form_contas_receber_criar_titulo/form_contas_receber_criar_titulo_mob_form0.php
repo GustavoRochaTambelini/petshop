@@ -33,7 +33,28 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
 }
 
 ?>
- <link rel="stylesheet" href="<?php echo $this->Ini->path_prod ?>/third/jquery_plugin/thickbox/thickbox.css" type="text/css" media="screen" />
+            <meta name="viewport" content="minimal-ui, width=300, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+            <meta name="mobile-web-app-capable" content="yes">
+            <meta name="apple-mobile-web-app-capable" content="yes">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <link rel="apple-touch-icon"   sizes="57x57" href="">
+            <link rel="apple-touch-icon"   sizes="60x60" href="">
+            <link rel="apple-touch-icon"   sizes="72x72" href="">
+            <link rel="apple-touch-icon"   sizes="76x76" href="">
+            <link rel="apple-touch-icon" sizes="114x114" href="">
+            <link rel="apple-touch-icon" sizes="120x120" href="">
+            <link rel="apple-touch-icon" sizes="144x144" href="">
+            <link rel="apple-touch-icon" sizes="152x152" href="">
+            <link rel="apple-touch-icon" sizes="180x180" href="">
+            <link rel="icon" type="image/png" sizes="192x192" href="">
+            <link rel="icon" type="image/png"   sizes="32x32" href="">
+            <link rel="icon" type="image/png"   sizes="96x96" href="">
+            <link rel="icon" type="image/png"   sizes="16x16" href="">
+            <meta name="msapplication-TileColor" content="___">
+            <meta name="msapplication-TileImage" content="">
+            <meta name="theme-color" content="___">
+            <meta name="apple-mobile-web-app-status-bar-style" content="___">
+            <link rel="shortcut icon" href=""> <link rel="stylesheet" href="<?php echo $this->Ini->path_prod ?>/third/jquery_plugin/thickbox/thickbox.css" type="text/css" media="screen" />
  <SCRIPT type="text/javascript">
   var sc_pathToTB = '<?php echo $this->Ini->path_prod ?>/third/jquery_plugin/thickbox/';
   var sc_tbLangClose = "<?php echo html_entity_decode($this->Ini->Nm_lang["lang_tb_close"], ENT_COMPAT, $_SESSION["scriptcase"]["charset"]) ?>";
@@ -55,7 +76,34 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
   var sc_css_status_pwd_text = '<?php echo $this->Ini->Css_status_pwd_text; ?>';
  </SCRIPT>
         <SCRIPT type="text/javascript" src="../_lib/lib/js/jquery-3.6.0.min.js"></SCRIPT>
- <SCRIPT type="text/javascript" src="<?php echo $this->Ini->path_prod; ?>/third/jquery/js/jquery-ui.js"></SCRIPT>
+            <?php
+               if ($_SESSION['scriptcase']['display_mobile'] && $_SESSION['scriptcase']['device_mobile']) {
+                   $forced_mobile = (isset($_SESSION['scriptcase']['force_mobile']) && $_SESSION['scriptcase']['force_mobile']) ? 'true' : 'false';
+                   $sc_app_data   = json_encode([
+                       'forceMobile' => $forced_mobile,
+                       'appType' => 'form',
+                       'improvements' => true,
+                       'displayOptionsButton' => false,
+                       'displayScrollUp' => true,
+                       'scrollUpPosition' => 'R',
+                       'toolbarOrientation' => 'H',
+                       'mobilePanes' => 'true',
+                       'navigationBarButtons' => unserialize('a:3:{i:0;s:2:"NP";i:1;s:2:"FL";i:2;s:2:"RC";}'),
+                       'mobileSimpleToolbar' => true,
+                       'bottomToolbarFixed' => true
+                   ]); ?>
+            <input type="hidden" id="sc-mobile-app-data" value='<?php echo $sc_app_data; ?>' />
+            <script type="text/javascript" src="../_lib/lib/js/nm_modal_panes.jquery.js"></script>
+            <script type="text/javascript" src="../_lib/lib/js/nm_form_mobile.js"></script>
+            <link rel='stylesheet' href='../_lib/lib/css/nm_form_mobile.css' type='text/css'/>
+            <script>
+                $(document).ready(function(){
+
+                    bootstrapMobile();
+
+                });
+            </script>
+            <?php } ?> <SCRIPT type="text/javascript" src="<?php echo $this->Ini->path_prod; ?>/third/jquery/js/jquery-ui.js"></SCRIPT>
  <link rel="stylesheet" href="<?php echo $this->Ini->path_prod ?>/third/jquery/css/smoothness/jquery-ui.css" type="text/css" media="screen" />
 <style type="text/css">
 .ui-datepicker { z-index: 6 !important }
@@ -323,6 +371,16 @@ function nav_desliga_img()
   sImg += '_off';
  }
  sImg += sExt;
+}
+function summary_atualiza(reg_ini, reg_qtd, reg_tot)
+{
+    nm_sumario = "[<?php echo substr($this->Ini->Nm_lang['lang_othr_smry_info'], strpos($this->Ini->Nm_lang['lang_othr_smry_info'], "?final?")) ?>]";
+    nm_sumario = nm_sumario.replace("?final?", reg_qtd);
+    nm_sumario = nm_sumario.replace("?total?", reg_tot);
+    if (reg_qtd < 1) {
+        nm_sumario = "";
+    }
+    if (document.getElementById("sc_b_summary_b")) document.getElementById("sc_b_summary_b").innerHTML = nm_sumario;
 }
 
  function reload() {
@@ -827,10 +885,6 @@ if (($this->Embutida_form || !$this->Embutida_call || $this->Grid_editavel || $t
     $NM_btn = false;
 if (($this->Embutida_form || !$this->Embutida_call || $this->Grid_editavel || $this->Embutida_multi || ($this->Embutida_call && 'on' == $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['embutida_liga_form_btn_nav'])) && $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['run_iframe'] != "F" && $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['run_iframe'] != "R")
 {
-?> 
-     </td> 
-     <td nowrap align="center" valign="middle" width="33%" class="scFormToolbarPadding"> 
-<?php 
     if ($opcao_botoes == "novo") {
         $sCondStyle = ($this->nmgp_botoes['Salvar'] == "on") ? '' : 'display: none;';
 ?>
@@ -888,10 +942,6 @@ if (($this->Embutida_form || !$this->Embutida_call || $this->Grid_editavel || $t
 <?php
         $NM_btn = true;
     }
-?> 
-     </td> 
-     <td nowrap align="right" valign="middle" width="33%" class="scFormToolbarPadding"> 
-<?php 
     if ('' != $this->url_webhelp) {
         $sCondStyle = '';
 ?>
@@ -1236,11 +1286,7 @@ else
           $sc_field_4_val_str .= "'$Tmp_val_cmp'";
        }
    }
-   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-   {
-       $nm_comando = "SELECT idcliente, cpf_cnpj + ' - ' + nome_fantasia  FROM cliente  ORDER BY cpf_cnpj, nome_fantasia";
-   }
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
+   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
    {
        $nm_comando = "SELECT idcliente, concat(cpf_cnpj, ' - ', nome_fantasia)  FROM cliente  ORDER BY cpf_cnpj, nome_fantasia";
    }
@@ -1249,14 +1295,6 @@ else
        $nm_comando = "SELECT idcliente, cpf_cnpj&' - '&nome_fantasia  FROM cliente  ORDER BY cpf_cnpj, nome_fantasia";
    }
    elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
-   {
-       $nm_comando = "SELECT idcliente, cpf_cnpj||' - '||nome_fantasia  FROM cliente  ORDER BY cpf_cnpj, nome_fantasia";
-   }
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-   {
-       $nm_comando = "SELECT idcliente, cpf_cnpj + ' - ' + nome_fantasia  FROM cliente  ORDER BY cpf_cnpj, nome_fantasia";
-   }
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
    {
        $nm_comando = "SELECT idcliente, cpf_cnpj||' - '||nome_fantasia  FROM cliente  ORDER BY cpf_cnpj, nome_fantasia";
    }
@@ -3283,6 +3321,128 @@ $observacoes_val = str_replace('<br />', '__SC_BREAK_LINE__', nl2br($observacoes
 <tr id="sc-id-required-row"><td class="scFormPageText">
 <span class="scFormRequiredOddColor">* <?php echo $this->Ini->Nm_lang['lang_othr_reqr']; ?></span>
 </td></tr> 
+<tr><td>
+<?php
+$this->displayBottomToolbar();
+?>
+<?php
+if (($this->Embutida_form || !$this->Embutida_call || $this->Grid_editavel || $this->Embutida_multi || ($this->Embutida_call && 'on' == $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['embutida_liga_form_btn_nav'])) && $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['run_iframe'] != "F" && $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['run_iframe'] != "R")
+{
+?>
+    <table style="border-collapse: collapse; border-width: 0px; width: 100%"><tr><td class="scFormToolbar sc-toolbar-bottom" style="padding: 0px; spacing: 0px">
+    <table style="border-collapse: collapse; border-width: 0px; width: 100%">
+    <tr> 
+     <td nowrap align="left" valign="middle" width="33%" class="scFormToolbarPadding"> 
+<?php
+}
+    $NM_btn = false;
+if (($this->Embutida_form || !$this->Embutida_call || $this->Grid_editavel || $this->Embutida_multi || ($this->Embutida_call && 'on' == $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['embutida_liga_form_btn_nav'])) && $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['run_iframe'] != "F" && $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['run_iframe'] != "R")
+{
+if ($opcao_botoes != "novo" && $this->nmgp_botoes['summary'] == "on")
+{
+?> 
+     <span nowrap id="sc_b_summary_b" class="scFormToolbarPadding"></span> 
+<?php 
+}
+    if ($opcao_botoes != "novo") {
+        $sCondStyle = ($this->nmgp_botoes['first'] == "on") ? '' : 'display: none;';
+?>
+<?php
+        $buttonMacroDisabled = 'sc-unique-btn-11';
+        $buttonMacroLabel = "";
+
+        if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_disabled']['first']) && 'on' == $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_disabled']['first']) {
+            $buttonMacroDisabled .= ' disabled';
+        }
+        if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_label']['first']) && '' != $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_label']['first']) {
+            $buttonMacroLabel = $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_label']['first'];
+        }
+?>
+<?php echo nmButtonOutput($this->arr_buttons, "binicio", "scBtnFn_sys_format_ini()", "scBtnFn_sys_format_ini()", "sc_b_ini_b", "", "" . $buttonMacroLabel . "", "" . $sCondStyle . "", "", "", "", $this->Ini->path_botoes, "", "__NM_HINT__ (Ctrl + Shift + &#8592;)", "" . $buttonMacroDisabled . "", "", "");?>
+ 
+<?php
+        $NM_btn = true;
+    }
+    if ($opcao_botoes != "novo") {
+        $sCondStyle = ($this->nmgp_botoes['back'] == "on") ? '' : 'display: none;';
+?>
+<?php
+        $buttonMacroDisabled = 'sc-unique-btn-12';
+        $buttonMacroLabel = "";
+
+        if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_disabled']['back']) && 'on' == $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_disabled']['back']) {
+            $buttonMacroDisabled .= ' disabled';
+        }
+        if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_label']['back']) && '' != $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_label']['back']) {
+            $buttonMacroLabel = $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_label']['back'];
+        }
+?>
+<?php echo nmButtonOutput($this->arr_buttons, "bretorna", "scBtnFn_sys_format_ret()", "scBtnFn_sys_format_ret()", "sc_b_ret_b", "", "" . $buttonMacroLabel . "", "" . $sCondStyle . "", "", "", "", $this->Ini->path_botoes, "", "__NM_HINT__ (Ctrl + &#8592;)", "" . $buttonMacroDisabled . "", "", "");?>
+ 
+<?php
+        $NM_btn = true;
+    }
+    if ($opcao_botoes != "novo") {
+        $sCondStyle = ($this->nmgp_botoes['forward'] == "on") ? '' : 'display: none;';
+?>
+<?php
+        $buttonMacroDisabled = 'sc-unique-btn-13';
+        $buttonMacroLabel = "";
+
+        if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_disabled']['forward']) && 'on' == $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_disabled']['forward']) {
+            $buttonMacroDisabled .= ' disabled';
+        }
+        if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_label']['forward']) && '' != $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_label']['forward']) {
+            $buttonMacroLabel = $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_label']['forward'];
+        }
+?>
+<?php echo nmButtonOutput($this->arr_buttons, "bavanca", "scBtnFn_sys_format_ava()", "scBtnFn_sys_format_ava()", "sc_b_avc_b", "", "" . $buttonMacroLabel . "", "" . $sCondStyle . "", "", "", "", $this->Ini->path_botoes, "", "__NM_HINT__ (Ctrl + &#8594;)", "" . $buttonMacroDisabled . "", "", "");?>
+ 
+<?php
+        $NM_btn = true;
+    }
+    if ($opcao_botoes != "novo") {
+        $sCondStyle = ($this->nmgp_botoes['last'] == "on") ? '' : 'display: none;';
+?>
+<?php
+        $buttonMacroDisabled = 'sc-unique-btn-14';
+        $buttonMacroLabel = "";
+
+        if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_disabled']['last']) && 'on' == $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_disabled']['last']) {
+            $buttonMacroDisabled .= ' disabled';
+        }
+        if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_label']['last']) && '' != $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_label']['last']) {
+            $buttonMacroLabel = $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['btn_label']['last'];
+        }
+?>
+<?php echo nmButtonOutput($this->arr_buttons, "bfinal", "scBtnFn_sys_format_fim()", "scBtnFn_sys_format_fim()", "sc_b_fim_b", "", "" . $buttonMacroLabel . "", "" . $sCondStyle . "", "", "", "", $this->Ini->path_botoes, "", "__NM_HINT__ (Ctrl + Shift + &#8594;)", "" . $buttonMacroDisabled . "", "", "");?>
+ 
+<?php
+        $NM_btn = true;
+    }
+}
+if (($this->Embutida_form || !$this->Embutida_call || $this->Grid_editavel || $this->Embutida_multi || ($this->Embutida_call && 'on' == $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['embutida_liga_form_btn_nav'])) && $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['run_iframe'] != "F" && $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['run_iframe'] != "R")
+{
+?>
+   </td></tr> 
+   </table> 
+   </td></tr></table> 
+<?php
+}
+?>
+<?php
+if (!$NM_btn && isset($NM_ult_sep))
+{
+    echo "    <script language=\"javascript\">";
+    echo "      document.getElementById('" .  $NM_ult_sep . "').style.display='none';";
+    echo "    </script>";
+}
+unset($NM_ult_sep);
+?>
+<?php if ('novo' != $this->nmgp_opcao || $this->Embutida_form) { ?><script>nav_atualiza(Nav_permite_ret, Nav_permite_ava, 'b');</script><?php } ?>
+<?php if (('novo' != $this->nmgp_opcao || $this->Embutida_form) && !$this->nmgp_form_empty && $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['run_iframe'] != "R" && $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['run_iframe'] != "F") { if ('parcial' == $this->form_paginacao) {?><script>summary_atualiza(<?php echo ($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['reg_start'] + 1). ", " . $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['reg_qtd'] . ", " . ($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['total'] + 1)?>);</script><?php }} ?>
+<?php if (('novo' != $this->nmgp_opcao || $this->Embutida_form) && !$this->nmgp_form_empty && $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['run_iframe'] != "R" && $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo_mob']['run_iframe'] != "F") { if ('total' == $this->form_paginacao) {?><script>summary_atualiza(1, <?php echo $this->sc_max_reg . ", " . $this->sc_max_reg?>);</script><?php }} ?>
+</td></tr> 
 </table> 
 </div> 
 </td> 
@@ -3470,7 +3630,7 @@ scAjax_displayEmptyForm();
 		        return;
 		    }
 			sc_btn_Salvar()
-			 return;
+			toggleToolbar(event, true); return;
 		}
 	}
 	function scBtnFn_sys_format_inc() {
@@ -3479,28 +3639,28 @@ scAjax_displayEmptyForm();
 		        return;
 		    }
 			nm_move ('novo');
-			 return;
+			toggleToolbar(event, true); return;
 		}
 		if ($("#sc_b_ins_t.sc-unique-btn-2").length && $("#sc_b_ins_t.sc-unique-btn-2").is(":visible")) {
 		    if ($("#sc_b_ins_t.sc-unique-btn-2").hasClass("disabled")) {
 		        return;
 		    }
 			nm_atualiza ('incluir');
-			 return;
+			toggleToolbar(event, true); return;
 		}
 		if ($("#sc_b_new_t.sc-unique-btn-6").length && $("#sc_b_new_t.sc-unique-btn-6").is(":visible")) {
 		    if ($("#sc_b_new_t.sc-unique-btn-6").hasClass("disabled")) {
 		        return;
 		    }
 			nm_move ('novo');
-			 return;
+			toggleToolbar(event, true); return;
 		}
 		if ($("#sc_b_ins_t.sc-unique-btn-7").length && $("#sc_b_ins_t.sc-unique-btn-7").is(":visible")) {
 		    if ($("#sc_b_ins_t.sc-unique-btn-7").hasClass("disabled")) {
 		        return;
 		    }
 			nm_atualiza ('incluir');
-			 return;
+			toggleToolbar(event, true); return;
 		}
 	}
 	function scBtnFn_sys_format_hlp() {
@@ -3509,7 +3669,7 @@ scAjax_displayEmptyForm();
 		        return;
 		    }
 			window.open('<?php echo $this->url_webhelp; ?>', '', 'resizable, scrollbars'); 
-			 return;
+			toggleToolbar(event, true); return;
 		}
 	}
 	function scBtnFn_sys_format_sai() {
@@ -3518,42 +3678,78 @@ scAjax_displayEmptyForm();
 		        return;
 		    }
 			scFormClose_F6('<?php echo $nm_url_saida; ?>'); return false;
-			 return;
+			toggleToolbar(event, true); return;
 		}
 		if ($("#sc_b_sai_t.sc-unique-btn-4").length && $("#sc_b_sai_t.sc-unique-btn-4").is(":visible")) {
 		    if ($("#sc_b_sai_t.sc-unique-btn-4").hasClass("disabled")) {
 		        return;
 		    }
 			scFormClose_F6('<?php echo $nm_url_saida; ?>'); return false;
-			 return;
+			toggleToolbar(event, true); return;
 		}
 		if ($("#sc_b_sai_t.sc-unique-btn-5").length && $("#sc_b_sai_t.sc-unique-btn-5").is(":visible")) {
 		    if ($("#sc_b_sai_t.sc-unique-btn-5").hasClass("disabled")) {
 		        return;
 		    }
 			scFormClose_F6('<?php echo $nm_url_saida; ?>'); return false;
-			 return;
+			toggleToolbar(event, true); return;
 		}
 		if ($("#sc_b_sai_t.sc-unique-btn-8").length && $("#sc_b_sai_t.sc-unique-btn-8").is(":visible")) {
 		    if ($("#sc_b_sai_t.sc-unique-btn-8").hasClass("disabled")) {
 		        return;
 		    }
 			scFormClose_F6('<?php echo $nm_url_saida; ?>'); return false;
-			 return;
+			toggleToolbar(event, true); return;
 		}
 		if ($("#sc_b_sai_t.sc-unique-btn-9").length && $("#sc_b_sai_t.sc-unique-btn-9").is(":visible")) {
 		    if ($("#sc_b_sai_t.sc-unique-btn-9").hasClass("disabled")) {
 		        return;
 		    }
 			scFormClose_F6('<?php echo $nm_url_saida; ?>'); return false;
-			 return;
+			toggleToolbar(event, true); return;
 		}
 		if ($("#sc_b_sai_t.sc-unique-btn-10").length && $("#sc_b_sai_t.sc-unique-btn-10").is(":visible")) {
 		    if ($("#sc_b_sai_t.sc-unique-btn-10").hasClass("disabled")) {
 		        return;
 		    }
 			scFormClose_F6('<?php echo $nm_url_saida; ?>'); return false;
-			 return;
+			toggleToolbar(event, true); return;
+		}
+	}
+	function scBtnFn_sys_format_ini() {
+		if ($("#sc_b_ini_b.sc-unique-btn-11").length && $("#sc_b_ini_b.sc-unique-btn-11").is(":visible")) {
+		    if ($("#sc_b_ini_b.sc-unique-btn-11").hasClass("disabled")) {
+		        return;
+		    }
+			nm_move ('inicio');
+			toggleToolbar(event, true); return;
+		}
+	}
+	function scBtnFn_sys_format_ret() {
+		if ($("#sc_b_ret_b.sc-unique-btn-12").length && $("#sc_b_ret_b.sc-unique-btn-12").is(":visible")) {
+		    if ($("#sc_b_ret_b.sc-unique-btn-12").hasClass("disabled")) {
+		        return;
+		    }
+			nm_move ('retorna');
+			toggleToolbar(event, true); return;
+		}
+	}
+	function scBtnFn_sys_format_ava() {
+		if ($("#sc_b_avc_b.sc-unique-btn-13").length && $("#sc_b_avc_b.sc-unique-btn-13").is(":visible")) {
+		    if ($("#sc_b_avc_b.sc-unique-btn-13").hasClass("disabled")) {
+		        return;
+		    }
+			nm_move ('avanca');
+			toggleToolbar(event, true); return;
+		}
+	}
+	function scBtnFn_sys_format_fim() {
+		if ($("#sc_b_fim_b.sc-unique-btn-14").length && $("#sc_b_fim_b.sc-unique-btn-14").is(":visible")) {
+		    if ($("#sc_b_fim_b.sc-unique-btn-14").hasClass("disabled")) {
+		        return;
+		    }
+			nm_move ('final');
+			toggleToolbar(event, true); return;
 		}
 	}
 </script>

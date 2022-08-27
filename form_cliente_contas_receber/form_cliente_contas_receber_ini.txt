@@ -1,7 +1,7 @@
 index.php
 petshop
 form_cliente_contas_receber
-NAO
+SIM
 form
 form_cliente_contas_receber
 LigMd5

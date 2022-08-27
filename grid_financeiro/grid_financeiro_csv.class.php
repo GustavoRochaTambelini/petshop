@@ -322,25 +322,9 @@ class grid_financeiro_csv
       $this->nm_field_dinamico = array();
       $this->nm_order_dinamico = array();
       $nmgp_select_count = "SELECT count(*) AS countTest from " . $this->Ini->nm_tabela; 
-      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-      { 
-          $nmgp_select = "SELECT idfinanceiro, idorcamento, idcompra_venda, forma_pagamento, valor, str_replace (convert(char(10),data_vencimento,102), '.', '-') + ' ' + convert(char(8),data_vencimento,20) from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
+      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
       { 
           $nmgp_select = "SELECT idfinanceiro, idorcamento, idcompra_venda, forma_pagamento, valor, data_vencimento from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-       $nmgp_select = "SELECT idfinanceiro, idorcamento, idcompra_venda, forma_pagamento, valor, convert(char(23),data_vencimento,121) from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-      { 
-          $nmgp_select = "SELECT idfinanceiro, idorcamento, idcompra_venda, forma_pagamento, valor, data_vencimento from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-      { 
-          $nmgp_select = "SELECT idfinanceiro, idorcamento, idcompra_venda, forma_pagamento, valor, EXTEND(data_vencimento, YEAR TO DAY) from " . $this->Ini->nm_tabela; 
       } 
       else 
       { 

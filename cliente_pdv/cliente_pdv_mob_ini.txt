@@ -1,7 +1,7 @@
 cliente_pdv_mob.php
 petshop
 cliente_pdv_mob
-NAO
+SIM
 contr
 cliente_pdv
 LigMd5

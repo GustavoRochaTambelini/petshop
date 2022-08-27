@@ -1,7 +1,7 @@
 index.php
 petshop
 form_tipo_cartao
-NAO
+SIM
 form
 form_tipo_cartao
 LigMd5

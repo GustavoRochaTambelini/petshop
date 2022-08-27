@@ -404,7 +404,6 @@ class grid_cliente_grid
    { 
        $_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['opcao'] = "muda_qt_linhas";
    } 
-   $this->sc_where_Max = "f" . "u" . "ll";
 
    if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['dashboard_info']['under_dashboard']) && $_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['dashboard_info']['under_dashboard'] && !$_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['dashboard_info']['maximized']) {
        $tmpDashboardApp = $_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['dashboard_info']['dashboard_app'];
@@ -750,23 +749,7 @@ class grid_cliente_grid
        $this->nm_grid_ini++;
    }  
 //----- 
-   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-   { 
-       $nmgp_select = "SELECT idcliente, cpf_cnpj, nome_fantasia, razao_social, email, logradouro, numero, bairro, cidade_idcidade from " . $this->Ini->nm_tabela; 
-   } 
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
-   { 
-       $nmgp_select = "SELECT idcliente, cpf_cnpj, nome_fantasia, razao_social, email, logradouro, numero, bairro, cidade_idcidade from " . $this->Ini->nm_tabela; 
-   } 
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-   { 
-       $nmgp_select = "SELECT idcliente, cpf_cnpj, nome_fantasia, razao_social, email, logradouro, numero, bairro, cidade_idcidade from " . $this->Ini->nm_tabela; 
-   } 
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-   { 
-       $nmgp_select = "SELECT idcliente, cpf_cnpj, nome_fantasia, razao_social, email, logradouro, numero, bairro, cidade_idcidade from " . $this->Ini->nm_tabela; 
-   } 
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
+   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
    { 
        $nmgp_select = "SELECT idcliente, cpf_cnpj, nome_fantasia, razao_social, email, logradouro, numero, bairro, cidade_idcidade from " . $this->Ini->nm_tabela; 
    } 
@@ -837,7 +820,6 @@ class grid_cliente_grid
        $_SESSION['scriptcase']['sc_sql_ult_comando'] = "SelectLimit($nmgp_select, " . ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['qt_reg_grid'] + 2) . ", $this->nmgp_reg_start)" ; 
        $this->rs_grid = $this->Db->SelectLimit($nmgp_select, $_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['qt_reg_grid'] + 2, $this->nmgp_reg_start) ; 
    }  
-   $this->sc_where_Min = "s" . "c_c" . "tl" . "_aj" . "ax";
    if ($this->rs_grid === false && !$this->rs_grid->EOF && $GLOBALS["NM_ERRO_IBASE"] != 1) 
    { 
        $this->Erro->mensagem(__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dber'], $this->Db->ErrorMsg()); 
@@ -944,10 +926,10 @@ class grid_cliente_grid
                     <link rel="icon" type="image/png"   sizes="32x32" href="">
                     <link rel="icon" type="image/png"   sizes="96x96" href="">
                     <link rel="icon" type="image/png"   sizes="16x16" href="">
-                    <meta name="msapplication-TileColor" content="#727cf5">
+                    <meta name="msapplication-TileColor" content="">
                     <meta name="msapplication-TileImage" content="">
-                    <meta name="theme-color" content="#727cf5">
-                    <meta name="apple-mobile-web-app-status-bar-style" content="#727cf5">
+                    <meta name="theme-color" content="">
+                    <meta name="apple-mobile-web-app-status-bar-style" content="">
                     <link rel="shortcut icon" href=""><?php
            }
 ?>
@@ -1040,10 +1022,10 @@ $nm_saida->saida("                        <link rel=\"icon\" type=\"image/png\" 
 $nm_saida->saida("                        <link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"\">\r\n");
 $nm_saida->saida("                        <link rel=\"icon\" type=\"image/png\" sizes=\"96x96\" href=\"\">\r\n");
 $nm_saida->saida("                        <link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"\">\r\n");
-$nm_saida->saida("                        <meta name=\"msapplication-TileColor\" content=\"#727cf5\" >\r\n");
+$nm_saida->saida("                        <meta name=\"msapplication-TileColor\" content=\"\" >\r\n");
 $nm_saida->saida("                        <meta name=\"msapplication-TileImage\" content=\"\">\r\n");
-$nm_saida->saida("                        <meta name=\"theme-color\" content=\"#727cf5\">\r\n");
-$nm_saida->saida("                        <meta name=\"apple-mobile-web-app-status-bar-style\" content=\"#727cf5\">\r\n");
+$nm_saida->saida("                        <meta name=\"theme-color\" content=\"\">\r\n");
+$nm_saida->saida("                        <meta name=\"apple-mobile-web-app-status-bar-style\" content=\"\">\r\n");
 $nm_saida->saida("                        <link rel=\"shortcut icon\" href=\"\">\r\n");
        }
        if (!$_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['doc_word'])
@@ -1126,6 +1108,31 @@ $nm_saida->saida("                        <link rel=\"shortcut icon\" href=\"\">
            $nm_saida->saida("     var sc_ajaxBordW = '" . $this->Ini->Border_w_ajax . "';\r\n");
            $nm_saida->saida("   </script>\r\n");
            $nm_saida->saida("   <script type=\"text/javascript\" src=\"../_lib/lib/js/jquery-3.6.0.min.js\"></script>\r\n");
+           if ($_SESSION['scriptcase']['proc_mobile'] && !$_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['embutida']) {  
+               $forced_mobile = (isset($_SESSION['scriptcase']['force_mobile']) && $_SESSION['scriptcase']['force_mobile']) ? 'true' : 'false';
+               $sc_app_data   = json_encode([ 
+                   'forceMobile' => $forced_mobile, 
+                   'appType' => 'grid', 
+                   'improvements' => true, 
+                   'displayOptionsButton' => false, 
+                   'displayScrollUp' => true, 
+                   'bottomToolbarFixed' => true, 
+                   'mobileSimpleToolbar' => true, 
+                   'scrollUpPosition' => 'R', 
+                   'toolbarOrientation' => 'H', 
+                   'mobilePanes' => 'true', 
+                   'navigationBarButtons' => unserialize('a:5:{i:0;s:14:"sys_format_ini";i:1;s:14:"sys_format_ret";i:2;s:15:"sys_format_rows";i:3;s:14:"sys_format_ava";i:4;s:14:"sys_format_fim";}'), 
+                   'langs' => [ 
+                       'lang_refined_search' => html_entity_decode($this->Ini->Nm_lang['lang_refined_search'], ENT_COMPAT, $_SESSION['scriptcase']['charset']), 
+                       'lang_summary_search_button' => html_entity_decode($this->Ini->Nm_lang['lang_summary_search_button'], ENT_COMPAT, $_SESSION['scriptcase']['charset']), 
+                       'lang_details_button' => html_entity_decode($this->Ini->Nm_lang['lang_details_button'], ENT_COMPAT, $_SESSION['scriptcase']['charset']), 
+                   ], 
+               ]); ?> 
+        <input type="hidden" id="sc-mobile-app-data" value='<?php echo $sc_app_data; ?>' />
+        <script type="text/javascript" src="../_lib/lib/js/nm_modal_panes.jquery.js"></script>
+        <script type="text/javascript" src="../_lib/lib/js/nm_mobile.js"></script>
+        <link rel='stylesheet' href='../_lib/lib/css/nm_mobile.css' type='text/css'/>
+          <?php }
            $nm_saida->saida("   <link rel=\"stylesheet\" type=\"text/css\" href=\"../_lib/css/" . $this->Ini->str_schema_all . "_sweetalert.css\" />\r\n");
            $nm_saida->saida("   <script type=\"text/javascript\" src=\"" . $this->Ini->path_prod . "/third/sweetalert/sweetalert2.all.min.js\"></script>\r\n");
            $nm_saida->saida("   <script type=\"text/javascript\" src=\"" . $this->Ini->path_prod . "/third/sweetalert/polyfill.min.js\"></script>\r\n");
@@ -1300,6 +1307,13 @@ $nm_saida->saida("                        <link rel=\"shortcut icon\" href=\"\">
            $nm_saida->saida("   <link rel=\"stylesheet\" type=\"text/css\" href=\"../_lib/css/" . $this->Ini->str_schema_all . "_form" . $_SESSION['scriptcase']['reg_conf']['css_dir'] . ".css\" /> \r\n");
            $nm_saida->saida("   <link rel=\"stylesheet\" type=\"text/css\" href=\"../_lib/css/" . $this->Ini->str_schema_all . "_appdiv.css\" /> \r\n");
            $nm_saida->saida("   <link rel=\"stylesheet\" type=\"text/css\" href=\"../_lib/css/" . $this->Ini->str_schema_all . "_appdiv" . $_SESSION['scriptcase']['reg_conf']['css_dir'] . ".css\" /> \r\n");
+           if ($_SESSION['scriptcase']['proc_mobile'] && !$_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['embutida']) { 
+           $nm_saida->saida("            <script>\r\n");
+           $nm_saida->saida("                $(document).ready(function(){\r\n");
+           $nm_saida->saida("                    bootstrapMobile();\r\n");
+           $nm_saida->saida("                });\r\n");
+           $nm_saida->saida("            </script>\r\n");
+           }
            $nm_saida->saida("   <style type=\"text/css\"> \r\n");
            $nm_saida->saida("     .scGridLabelFont a img[src\$='" . $this->Ini->Label_sort_desc . "'], \r\n");
            $nm_saida->saida("     .scGridLabelFont a img[src\$='" . $this->Ini->Label_sort_asc . "'], \r\n");
@@ -2091,6 +2105,170 @@ $nm_saida->saida("}\r\n");
 // 
 //----- 
  function cabecalho_normal()
+ {
+   global
+          $nm_saida;
+   if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['dashboard_info']['under_dashboard'] && $_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['dashboard_info']['compact_mode'] && !$_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['dashboard_info']['maximized'])
+   {
+       return; 
+   }
+   if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['opc_liga']['cab']))
+   {
+       return; 
+   }
+   $nm_cab_filtro   = ""; 
+   $nm_cab_filtrobr = ""; 
+   $Str_date = strtolower($_SESSION['scriptcase']['reg_conf']['date_format']);
+   $Lim   = strlen($Str_date);
+   $Ult   = "";
+   $Arr_D = array();
+   for ($I = 0; $I < $Lim; $I++)
+   {
+       $Char = substr($Str_date, $I, 1);
+       if ($Char != $Ult)
+       {
+           $Arr_D[] = $Char;
+       }
+       $Ult = $Char;
+   }
+   $Prim = true;
+   $Str  = "";
+   foreach ($Arr_D as $Cada_d)
+   {
+       $Str .= (!$Prim) ? $_SESSION['scriptcase']['reg_conf']['date_sep'] : "";
+       $Str .= $Cada_d;
+       $Prim = false;
+   }
+   $Str = str_replace("a", "Y", $Str);
+   $Str = str_replace("y", "Y", $Str);
+   $nm_data_fixa = date($Str); 
+   $this->sc_proc_grid = false; 
+   $HTTP_REFERER = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : ""; 
+   $this->sc_where_orig   = $_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['where_orig'];
+   $this->sc_where_atual  = $_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['where_pesq'];
+   $this->sc_where_filtro = $_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['where_pesq_filtro'];
+   if (!empty($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['cond_pesq']))
+   {  
+       $pos       = 0;
+       $trab_pos  = false;
+       $pos_tmp   = true; 
+       $tmp       = $_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['cond_pesq'];
+       while ($pos_tmp)
+       {
+          $pos = strpos($tmp, "##*@@", $pos);
+          if ($pos !== false)
+          {
+              $trab_pos = $pos;
+              $pos += 4;
+          }
+          else
+          {
+              $pos_tmp = false;
+          }
+       }
+       $nm_cond_filtro_or  = (substr($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['cond_pesq'], $trab_pos + 5) == "or")  ? " " . trim($this->Ini->Nm_lang['lang_srch_orr_cond']) . " " : "";
+       $nm_cond_filtro_and = (substr($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['cond_pesq'], $trab_pos + 5) == "and") ? " " . trim($this->Ini->Nm_lang['lang_srch_and_cond']) . " " : "";
+       $nm_cab_filtro   = substr($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['cond_pesq'], 0, $trab_pos);
+       $nm_cab_filtrobr = str_replace("##*@@", ", " . $nm_cond_filtro_or . $nm_cond_filtro_and . "<br />", $nm_cab_filtro);
+       $pos       = 0;
+       $trab_pos  = false;
+       $pos_tmp   = true; 
+       $tmp       = $nm_cab_filtro;
+       while ($pos_tmp)
+       {
+          $pos = strpos($tmp, "##*@@", $pos);
+          if ($pos !== false)
+          {
+              $trab_pos = $pos;
+              $pos += 4;
+          }
+          else
+          {
+              $pos_tmp = false;
+          }
+       }
+       if ($trab_pos === false)
+       {
+       }
+       else  
+       {  
+          $nm_cab_filtro = substr($nm_cab_filtro, 0, $trab_pos) . " " .  $nm_cond_filtro_or . $nm_cond_filtro_and . substr($nm_cab_filtro, $trab_pos + 5);
+          $nm_cab_filtro = str_replace("##*@@", ", " . $nm_cond_filtro_or . $nm_cond_filtro_and, $nm_cab_filtro);
+       }   
+   }   
+   $this->nm_data->SetaData(date("Y/m/d H:i:s"), "YYYY/MM/DD HH:II:SS"); 
+   $nm_saida->saida(" <TR id=\"sc_grid_head\">\r\n");
+   if (!isset($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['sv_dt_head']))
+   { 
+       $_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['sv_dt_head'] = array();
+       $_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['sv_dt_head']['fix'] = $nm_data_fixa;
+       $nm_refresch_cab_rod = true;
+   } 
+   else 
+   { 
+       $nm_refresch_cab_rod = false;
+   } 
+   foreach ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['sv_dt_head'] as $ind => $val)
+   {
+       $tmp_var = "sc_data_cab" . $ind;
+       if ($$tmp_var != $val)
+       {
+           $nm_refresch_cab_rod = true;
+           break;
+       }
+   }
+   if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['sv_dt_head']['fix'] != $nm_data_fixa)
+   {
+       $nm_refresch_cab_rod = true;
+   }
+   if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['ajax_nav'] && $nm_refresch_cab_rod)
+   { 
+       $_SESSION['scriptcase']['saida_html'] = "";
+   } 
+      $_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['sv_dt_head']['fix'] = $nm_data_fixa;
+   if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['opcao'] != "pdf")
+   { 
+       $nm_saida->saida("  <TD class=\"" . $this->css_scGridTabelaTd . " " . $this->css_scGridPage . "\" colspan=3 style=\"vertical-align: top\">\r\n");
+   } 
+   else 
+   { 
+     if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['proc_pdf']) 
+     { 
+         $this->NM_calc_span();
+           $nm_saida->saida("   <TD colspan=\"" . $this->NM_colspan . "\" class=\"" . $this->css_scGridTabelaTd . "\" style=\"vertical-align: top\">\r\n");
+     } 
+     else if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['proc_pdf_vert']) 
+     {
+         if($this->Tem_tab_vert)
+         {
+           $nm_saida->saida("   <TD colspan=\"2\" class=\"" . $this->css_scGridTabelaTd . "\" style=\"vertical-align: top\">\r\n");
+         }
+         else{
+           $nm_saida->saida("   <TD class=\"" . $this->css_scGridTabelaTd . "\" style=\"vertical-align: top\">\r\n");
+         }
+     }
+     else{
+           $nm_saida->saida("  <TD class=\"" . $this->css_scGridTabelaTd . "\" style=\"vertical-align: top\">\r\n");
+     }
+   } 
+   $nm_saida->saida("<style>\r\n");
+   $nm_saida->saida("    .scMenuTHeaderFont img, .scGridHeaderFont img , .scFormHeaderFont img , .scTabHeaderFont img , .scContainerHeaderFont img , .scFilterHeaderFont img { height:23px;}\r\n");
+   $nm_saida->saida("</style>\r\n");
+   $nm_saida->saida("<div class=\"" . $this->css_scGridHeader . "\" style=\"height: 54px; padding: 17px 15px; box-sizing: border-box;margin: -1px 0px 0px 0px;width: 100%;\">\r\n");
+   $nm_saida->saida("    <div class=\"" . $this->css_scGridHeaderFont . "\" style=\"float: left; text-transform: uppercase;\">CADASTRO DE CLIENTES</div>\r\n");
+   $nm_saida->saida("    <div class=\"" . $this->css_scGridHeaderFont . "\" style=\"float: right;\">" . $nm_data_fixa . "</div>\r\n");
+   $nm_saida->saida("</div>\r\n");
+   $nm_saida->saida("  </TD>\r\n");
+   if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['ajax_nav'] && $nm_refresch_cab_rod)
+   { 
+       $this->Ini->Arr_result['setValue'][] = array('field' => 'sc_grid_head', 'value' => NM_charset_to_utf8($_SESSION['scriptcase']['saida_html']));
+       $_SESSION['scriptcase']['saida_html'] = "";
+   } 
+   $nm_saida->saida(" </TR>\r\n");
+ }
+// 
+//----- 
+ function cabecalho_mobile()
  {
    global
           $nm_saida;
@@ -3095,7 +3273,6 @@ if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['proc_pdf']) {
    }
    $this->Ini->cor_link_dados = $this->css_scGridFieldEvenLink;
    $this->NM_flag_antigo = FALSE;
-   $this->sc_where_Min = $_SESSION['scriptcase'][$this->sc_where_Min];
    $nm_prog_barr = 0;
    $PB_tot       = "/" . $this->count_ger;;
    $nm_houve_quebra = "N";
@@ -3289,7 +3466,6 @@ if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['proc_pdf']) {
           } 
           $this->rs_grid->MoveNext();
           $this->sc_proc_grid = false;
-          if ($this->sc_where_Min != $this->sc_where_Max) { $this->rs_grid->Close(); }
           $nm_quant_linhas++ ;
           if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['embutida'] || $_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['opcao'] == "pdf" || $this->Ini->Apl_paginacao == "FULL")
           { 
@@ -4434,19 +4610,6 @@ if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['proc_pdf']) {
       $nm_saida->saida("        <table id=\"sc_grid_toobar_bot_table\" class=\"" . $this->css_scGridToolbar . "\" style=\"padding: 0px; border-spacing: 0px; border-width: 0px; vertical-align: top;\" width=\"100%\" valign=\"top\">\r\n");
       $nm_saida->saida("         <tr class=\"" . $this->css_scGridToolbarPadd . "_tr\"> \r\n");
       $nm_saida->saida("          <td class=\"" . $this->css_scGridToolbarPadd . "\" nowrap valign=\"middle\" align=\"left\" width=\"33%\"> \r\n");
-          if (empty($this->nm_grid_sem_reg) && $this->nmgp_botoes['qtline'] == "on" && $this->Ini->Apl_paginacao != "FULL")
-          {
-              $nm_saida->saida("          <span class=\"" . $this->css_css_toolbar_obj . "\" style=\"border: 0px;vertical-align: middle;\">" . $this->Ini->Nm_lang['lang_btns_rows'] . "</span>\r\n");
-              $nm_saida->saida("          <select class=\"" . $this->css_css_toolbar_obj . "\" style=\"vertical-align: middle;\" id=\"quant_linhas_f0_bot\" name=\"nmgp_quant_linhas\" onchange=\"sc_ind = document.getElementById('quant_linhas_f0_bot').selectedIndex; nm_gp_submit_ajax('muda_qt_linhas', document.getElementById('quant_linhas_f0_bot').options[sc_ind].value);\"> \r\n");
-              $obj_sel = ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['qt_lin_grid'] == '10') ? " selected" : "";
-              $nm_saida->saida("           <option value=\"10\" " . $obj_sel . ">10</option>\r\n");
-              $obj_sel = ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['qt_lin_grid'] == '20') ? " selected" : "";
-              $nm_saida->saida("           <option value=\"20\" " . $obj_sel . ">20</option>\r\n");
-              $obj_sel = ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['qt_lin_grid'] == '50') ? " selected" : "";
-              $nm_saida->saida("           <option value=\"50\" " . $obj_sel . ">50</option>\r\n");
-              $nm_saida->saida("          </select>\r\n");
-              $NM_btn = true;
-          }
           if ($this->nmgp_botoes['first'] == "on" && empty($this->nm_grid_sem_reg) && $this->Ini->Apl_paginacao != "FULL" && !isset($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['opc_liga']['nav']))
           {
               $this->nm_btn_exist['first'][] = "first_bot";
@@ -4477,83 +4640,6 @@ if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['proc_pdf']) {
               }
                   $NM_btn = true;
           }
-          if (empty($this->nm_grid_sem_reg) && $this->nmgp_botoes['navpage'] == "on" && !isset($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['opc_liga']['nav']) && $this->Ini->Apl_paginacao != "FULL" && $_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['qt_lin_grid'] != "all")
-          {
-              $Reg_Page  = $_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['qt_lin_grid'];
-              $Max_link   = 5;
-              $Mid_link   = ceil($Max_link / 2);
-              $Corr_link  = (($Max_link % 2) == 0) ? 0 : 1;
-              $Qtd_Pages  = ceil($this->count_ger / $Reg_Page);
-              $Page_Atu   = ceil($this->nmgp_reg_final / $Reg_Page);
-              $Link_ini   = 1;
-              if ($Page_Atu > $Max_link)
-              {
-                  $Link_ini = $Page_Atu - $Mid_link + $Corr_link;
-              }
-              elseif ($Page_Atu > $Mid_link)
-              {
-                  $Link_ini = $Page_Atu - $Mid_link + $Corr_link;
-              }
-              if (($Qtd_Pages - $Link_ini) < $Max_link)
-              {
-                  $Link_ini = ($Qtd_Pages - $Max_link) + 1;
-              }
-              if ($Link_ini < 1)
-              {
-                  $Link_ini = 1;
-              }
-              for ($x = 0; $x < $Max_link && $Link_ini <= $Qtd_Pages; $x++)
-              {
-                  $rec = (($Link_ini - 1) * $Reg_Page) + 1;
-                  if ($Link_ini == $Page_Atu)
-                  {
-                      $nm_saida->saida("            <span class=\"scGridToolbarNavOpen\" style=\"vertical-align: middle;\">" . $Link_ini . "</span>\r\n");
-                  }
-                  else
-                  {
-                      $nm_saida->saida("            <a class=\"scGridToolbarNav\" style=\"vertical-align: middle;\" href=\"javascript: nm_gp_submit_rec(" . $rec . ");\">" . $Link_ini . "</a>\r\n");
-                  }
-                  $Link_ini++;
-                  if (($x + 1) < $Max_link && $Link_ini <= $Qtd_Pages && '' != $this->Ini->Str_toolbarnav_separator && @is_file($this->Ini->root . $this->Ini->path_img_global . $this->Ini->Str_toolbarnav_separator))
-                  {
-                      $nm_saida->saida("            <img src=\"" . $this->Ini->path_img_global . $this->Ini->Str_toolbarnav_separator . "\" align=\"absmiddle\" style=\"vertical-align: middle;\">\r\n");
-                  }
-              }
-              $NM_btn = true;
-          }
-          if ($this->nmgp_botoes['forward'] == "on" && empty($this->nm_grid_sem_reg) && $this->Ini->Apl_paginacao != "FULL" && !isset($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['opc_liga']['nav']))
-          {
-              $this->nm_btn_exist['forward'][] = "forward_bot";
-              $Cod_Btn = nmButtonOutput($this->arr_buttons, "bcons_avanca", "nm_gp_submit_rec('" . $this->Rec_fim . "');", "nm_gp_submit_rec('" . $this->Rec_fim . "');", "forward_bot", "", "", "", "absmiddle", "", "0px", $this->Ini->path_botoes, "", "__NM_HINT__ (Ctrl + &#8594;)", "", "", "", "only_text", "text_right", "", "", "", "", "", "", "");
-              $nm_saida->saida("           $Cod_Btn \r\n");
-              $NM_btn = true;
-          }
-          if ($this->nmgp_botoes['last'] == "on" && empty($this->nm_grid_sem_reg) && $this->Ini->Apl_paginacao != "FULL" && !isset($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['opc_liga']['nav']))
-          {
-              $this->nm_btn_exist['last'][] = "last_bot";
-              $Cod_Btn = nmButtonOutput($this->arr_buttons, "bcons_final", "nm_gp_submit_rec('fim');", "nm_gp_submit_rec('fim');", "last_bot", "", "", "", "absmiddle", "", "0px", $this->Ini->path_botoes, "", "__NM_HINT__ (Ctrl + Shift + &#8594;)", "", "", "", "only_text", "text_right", "", "", "", "", "", "", "");
-              $nm_saida->saida("           $Cod_Btn \r\n");
-              $NM_btn = true;
-          }
-        if (!$this->Ini->SC_Link_View && $this->nmgp_botoes['new'] == "on" && $this->nmgp_botoes['insert'] == "on" && !$this->grid_emb_form)
-        {
-           if ($this->grid_emb_form_full)
-           {
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['lig_iframe_modal'] = "nmsc_iframe_liga_grid_cliente";
-           }
-           $Sc_parent = ($this->grid_emb_form_full) ? "S" : "";
-           if (isset($this->Ini->sc_lig_md5["form_cliente"]) && $this->Ini->sc_lig_md5["form_cliente"] == "S") {
-               $Parms_Lig  = "NM_cancel_insert_new*scin1*scoutNM_cancel_return_new*scin1*scoutnmgp_opcao*scinnovo*scoutNM_btn_insert*scinS*scoutNM_btn_new*scinS*scoutNM_btn_update*scinS*scoutNM_btn_delete*scinS*scoutNM_btn_navega*scinN*scout";
-               $Md5_Lig    = "@SC_par@" . NM_encode_input($this->Ini->sc_page) . "@SC_par@grid_cliente@SC_par@" . md5($Parms_Lig);
-               $_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['Lig_Md5'][md5($Parms_Lig)] = $Parms_Lig;
-           } else {
-               $Md5_Lig  = "NM_cancel_insert_new*scin1*scoutNM_cancel_return_new*scin1*scoutnmgp_opcao*scinnovo*scoutNM_btn_insert*scinS*scoutNM_btn_new*scinS*scoutNM_btn_update*scinS*scoutNM_btn_delete*scinS*scoutNM_btn_navega*scinN*scout";
-           }
-         $this->nm_btn_exist['new'][] = "sc_b_new_bot";
-         $Cod_Btn = nmButtonOutput($this->arr_buttons, "bnovo", "nm_gp_submit1('" .  $this->Ini->link_form_cliente . "', '$this->nm_location', '$Md5_Lig', '_self', 'form_cliente'); return false;;", "nm_gp_submit1('" .  $this->Ini->link_form_cliente . "', '$this->nm_location', '$Md5_Lig', '_self', 'form_cliente'); return false;;", "sc_b_new_bot", "", "", "", "absmiddle", "", "0px", $this->Ini->path_botoes, "", "", "", "", "", "only_text", "text_right", "", "", "", "", "", "", "");
-         $nm_saida->saida("           $Cod_Btn \r\n");
-         $NM_btn = true;
-        }
           if ($this->nmgp_botoes['rows'] == "on" && empty($this->nm_grid_sem_reg))
           {
               $nm_sumario = "[" . $this->Ini->Nm_lang['lang_othr_smry_info'] . "]";
@@ -4568,6 +4654,20 @@ if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['proc_pdf']) {
               }
               $nm_sumario = str_replace("?total?", "<span class='sm_counter_total'>".$this->count_ger."</span>", $nm_sumario);
               $nm_saida->saida("           <span class=\"summary_indicator " . $this->css_css_toolbar_obj . "\" style=\"border:0px;\"><span class='sm_counter'>" . $nm_sumario . "</span></span>\r\n");
+              $NM_btn = true;
+          }
+          if ($this->nmgp_botoes['forward'] == "on" && empty($this->nm_grid_sem_reg) && $this->Ini->Apl_paginacao != "FULL" && !isset($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['opc_liga']['nav']))
+          {
+              $this->nm_btn_exist['forward'][] = "forward_bot";
+              $Cod_Btn = nmButtonOutput($this->arr_buttons, "bcons_avanca", "nm_gp_submit_rec('" . $this->Rec_fim . "');", "nm_gp_submit_rec('" . $this->Rec_fim . "');", "forward_bot", "", "", "", "absmiddle", "", "0px", $this->Ini->path_botoes, "", "__NM_HINT__ (Ctrl + &#8594;)", "", "", "", "only_text", "text_right", "", "", "", "", "", "", "");
+              $nm_saida->saida("           $Cod_Btn \r\n");
+              $NM_btn = true;
+          }
+          if ($this->nmgp_botoes['last'] == "on" && empty($this->nm_grid_sem_reg) && $this->Ini->Apl_paginacao != "FULL" && !isset($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['opc_liga']['nav']))
+          {
+              $this->nm_btn_exist['last'][] = "last_bot";
+              $Cod_Btn = nmButtonOutput($this->arr_buttons, "bcons_final", "nm_gp_submit_rec('fim');", "nm_gp_submit_rec('fim');", "last_bot", "", "", "", "absmiddle", "", "0px", $this->Ini->path_botoes, "", "__NM_HINT__ (Ctrl + Shift + &#8594;)", "", "", "", "only_text", "text_right", "", "", "", "", "", "", "");
+              $nm_saida->saida("           $Cod_Btn \r\n");
               $NM_btn = true;
           }
           if (is_file("grid_cliente_help.txt") && !$this->grid_emb_form)
@@ -4904,8 +5004,6 @@ if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_cliente']['proc_pdf']) {
    } 
  function check_btns()
  {
-     $sv = $this->NM_css_ajx_embed;
-     if (!isset($this->Ini->$sv) || empty($this->Ini->$sv) || strlen($this->Ini->$sv) != $_SESSION[$this->NM_css_val_embed]) {exit;}
  }
  function nm_fim_grid($flag_apaga_pdf_log = TRUE)
  {

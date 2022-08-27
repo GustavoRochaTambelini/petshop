@@ -63,11 +63,7 @@ class grid_contas_pagar_nao_pago_fornecedor_lookup
           $save_conteudo1 = ""; 
           return ; 
       } 
-      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-      { 
-          $nm_comando = "SELECT cpf_cnpj + ' - ' + nome_fantasia  FROM cliente where idcliente = $idcliente order by cpf_cnpj, nome_fantasia" ; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
+      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
       { 
           $nm_comando = "SELECT concat(cpf_cnpj, ' - ', nome_fantasia)  FROM cliente where idcliente = $idcliente order by cpf_cnpj, nome_fantasia" ; 
       } 
@@ -76,14 +72,6 @@ class grid_contas_pagar_nao_pago_fornecedor_lookup
           $nm_comando = "SELECT cpf_cnpj&' - '&nome_fantasia  FROM cliente where idcliente = $idcliente order by cpf_cnpj, nome_fantasia" ; 
       } 
       elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
-      { 
-          $nm_comando = "SELECT cpf_cnpj||' - '||nome_fantasia  FROM cliente where idcliente = $idcliente order by cpf_cnpj, nome_fantasia" ; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-          $nm_comando = "SELECT cpf_cnpj + ' - ' + nome_fantasia  FROM cliente where idcliente = $idcliente order by cpf_cnpj, nome_fantasia" ; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
       { 
           $nm_comando = "SELECT cpf_cnpj||' - '||nome_fantasia  FROM cliente where idcliente = $idcliente order by cpf_cnpj, nome_fantasia" ; 
       } 

@@ -1,7 +1,7 @@
 index.php
 petshop
 grid_recebimento_parcial
-NAO
+SIM
 cons
 grid_recebimento_parcial
 LigMd5

@@ -1,7 +1,7 @@
 index.php
 petshop
 grid_grupo_contas
-NAO
+SIM
 cons
 grid_grupo_contas
 LigMd5

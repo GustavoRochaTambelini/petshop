@@ -315,25 +315,9 @@ class itens_captura_xls
       $this->nm_field_dinamico = array();
       $this->nm_order_dinamico = array();
       $nmgp_select_count = "SELECT count(*) AS countTest from " . $this->Ini->nm_tabela; 
-      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
+      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
       { 
           $nmgp_select = "SELECT codigo_barras, descricao, und_comercial, valor_venda, imagem, item_id from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
-      { 
-          $nmgp_select = "SELECT codigo_barras, descricao, und_comercial, valor_venda, imagem, item_id from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-       $nmgp_select = "SELECT codigo_barras, descricao, und_comercial, valor_venda, imagem, item_id from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-      { 
-          $nmgp_select = "SELECT codigo_barras, descricao, und_comercial, valor_venda, imagem, item_id from " . $this->Ini->nm_tabela; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-      { 
-          $nmgp_select = "SELECT codigo_barras, descricao, und_comercial, valor_venda, LOTOFILE(imagem, '" . $this->Ini->root . $this->Ini->path_imag_temp . "/sc_blob_informix', 'client') as imagem, item_id from " . $this->Ini->nm_tabela; 
       } 
       else 
       { 
@@ -372,19 +356,7 @@ class itens_captura_xls
          $this->valor_venda = $rs->fields[3] ;  
          $this->valor_venda =  str_replace(",", ".", $this->valor_venda);
          $this->valor_venda = (string)$this->valor_venda;
-          if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          { 
-              $this->imagem = "";  
-              if (is_file($rs_grid->fields[4])) 
-              { 
-                  $this->imagem = file_get_contents($rs_grid->fields[4]);  
-              } 
-          } 
-         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
-         { 
-             $this->imagem = $this->Db->BlobDecode($rs->fields[4]) ;  
-         } 
-         elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
+         if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
          { 
              $this->imagem = $this->Db->BlobDecode($rs->fields[4]) ;  
          } 

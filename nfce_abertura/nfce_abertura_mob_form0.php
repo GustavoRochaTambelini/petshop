@@ -33,7 +33,28 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
 }
 
 ?>
- <link rel="stylesheet" href="<?php echo $this->Ini->path_prod ?>/third/jquery_plugin/thickbox/thickbox.css" type="text/css" media="screen" />
+            <meta name="viewport" content="minimal-ui, width=300, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+            <meta name="mobile-web-app-capable" content="yes">
+            <meta name="apple-mobile-web-app-capable" content="yes">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <link rel="apple-touch-icon"   sizes="57x57" href="">
+            <link rel="apple-touch-icon"   sizes="60x60" href="">
+            <link rel="apple-touch-icon"   sizes="72x72" href="">
+            <link rel="apple-touch-icon"   sizes="76x76" href="">
+            <link rel="apple-touch-icon" sizes="114x114" href="">
+            <link rel="apple-touch-icon" sizes="120x120" href="">
+            <link rel="apple-touch-icon" sizes="144x144" href="">
+            <link rel="apple-touch-icon" sizes="152x152" href="">
+            <link rel="apple-touch-icon" sizes="180x180" href="">
+            <link rel="icon" type="image/png" sizes="192x192" href="">
+            <link rel="icon" type="image/png"   sizes="32x32" href="">
+            <link rel="icon" type="image/png"   sizes="96x96" href="">
+            <link rel="icon" type="image/png"   sizes="16x16" href="">
+            <meta name="msapplication-TileColor" content="___">
+            <meta name="msapplication-TileImage" content="">
+            <meta name="theme-color" content="___">
+            <meta name="apple-mobile-web-app-status-bar-style" content="___">
+            <link rel="shortcut icon" href=""> <link rel="stylesheet" href="<?php echo $this->Ini->path_prod ?>/third/jquery_plugin/thickbox/thickbox.css" type="text/css" media="screen" />
  <SCRIPT type="text/javascript">
   var sc_pathToTB = '<?php echo $this->Ini->path_prod ?>/third/jquery_plugin/thickbox/';
   var sc_tbLangClose = "<?php echo html_entity_decode($this->Ini->Nm_lang["lang_tb_close"], ENT_COMPAT, $_SESSION["scriptcase"]["charset"]) ?>";
@@ -55,7 +76,34 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
   var sc_css_status_pwd_text = '<?php echo $this->Ini->Css_status_pwd_text; ?>';
  </SCRIPT>
         <SCRIPT type="text/javascript" src="../_lib/lib/js/jquery-3.6.0.min.js"></SCRIPT>
- <SCRIPT type="text/javascript" src="<?php echo $this->Ini->path_prod; ?>/third/jquery/js/jquery-ui.js"></SCRIPT>
+            <?php
+               if ($_SESSION['scriptcase']['display_mobile'] && $_SESSION['scriptcase']['device_mobile']) {
+                   $forced_mobile = (isset($_SESSION['scriptcase']['force_mobile']) && $_SESSION['scriptcase']['force_mobile']) ? 'true' : 'false';
+                   $sc_app_data   = json_encode([
+                       'forceMobile' => $forced_mobile,
+                       'appType' => 'form',
+                       'improvements' => true,
+                       'displayOptionsButton' => false,
+                       'displayScrollUp' => true,
+                       'scrollUpPosition' => 'R',
+                       'toolbarOrientation' => 'H',
+                       'mobilePanes' => 'true',
+                       'navigationBarButtons' => unserialize('a:0:{}'),
+                       'mobileSimpleToolbar' => false,
+                       'bottomToolbarFixed' => true
+                   ]); ?>
+            <input type="hidden" id="sc-mobile-app-data" value='<?php echo $sc_app_data; ?>' />
+            <script type="text/javascript" src="../_lib/lib/js/nm_modal_panes.jquery.js"></script>
+            <script type="text/javascript" src="../_lib/lib/js/nm_form_mobile.js"></script>
+            <link rel='stylesheet' href='../_lib/lib/css/nm_form_mobile.css' type='text/css'/>
+            <script>
+                $(document).ready(function(){
+
+                    bootstrapMobile();
+
+                });
+            </script>
+            <?php } ?> <SCRIPT type="text/javascript" src="<?php echo $this->Ini->path_prod; ?>/third/jquery/js/jquery-ui.js"></SCRIPT>
  <link rel="stylesheet" href="<?php echo $this->Ini->path_prod ?>/third/jquery/css/smoothness/jquery-ui.css" type="text/css" media="screen" />
  <link rel="stylesheet" type="text/css" href="<?php echo $this->Ini->path_link ?>_lib/css/<?php echo $this->Ini->str_schema_all ?>_sweetalert.css" />
  <SCRIPT type="text/javascript" src="<?php echo $this->Ini->path_prod; ?>/third/sweetalert/sweetalert2.all.min.js"></SCRIPT>
@@ -1599,8 +1647,6 @@ $this->displayBottomToolbar();
 <?php
     $NM_btn = false;
 ?>
-     </td> 
-     <td nowrap align="center" valign="middle" width="33%" class="scFormToolbarPadding"> 
 <?php
         $sCondStyle = ($this->nmgp_botoes['ok'] == "on") ? '' : 'display: none;';
 ?>
@@ -1686,9 +1732,7 @@ $this->displayBottomToolbar();
         $NM_btn = true;
     }
 ?>
-            </td> 
-     <td nowrap align="right" valign="middle" width="33%" class="scFormToolbarPadding"> 
-   </td></tr> 
+          </td></tr> 
    </table> 
    </td></tr></table> 
 <?php
@@ -1896,14 +1940,14 @@ scAjax_displayEmptyForm();
 		        return;
 		    }
 			nm_atualiza('alterar');
-			 return;
+			toggleToolbar(event, true); return;
 		}
 		if ($("#sub_form_b.sc-unique-btn-4").length && $("#sub_form_b.sc-unique-btn-4").is(":visible")) {
 		    if ($("#sub_form_b.sc-unique-btn-4").hasClass("disabled")) {
 		        return;
 		    }
 			nm_atualiza('alterar');
-			 return;
+			toggleToolbar(event, true); return;
 		}
 	}
 	function scBtnFn_sys_format_hlp() {
@@ -1912,7 +1956,7 @@ scAjax_displayEmptyForm();
 		        return;
 		    }
 			window.open('<?php echo $this->url_webhelp; ?>', '', 'resizable, scrollbars'); 
-			 return;
+			toggleToolbar(event, true); return;
 		}
 	}
 	function scBtnFn_sys_format_sai() {
@@ -1921,28 +1965,28 @@ scAjax_displayEmptyForm();
 		        return;
 		    }
 			nm_saida_glo(); return false;
-			 return;
+			toggleToolbar(event, true); return;
 		}
 		if ($("#Bsair_b.sc-unique-btn-3").length && $("#Bsair_b.sc-unique-btn-3").is(":visible")) {
 		    if ($("#Bsair_b.sc-unique-btn-3").hasClass("disabled")) {
 		        return;
 		    }
 			nm_saida_glo(); return false;
-			 return;
+			toggleToolbar(event, true); return;
 		}
 		if ($("#Bsair_b.sc-unique-btn-5").length && $("#Bsair_b.sc-unique-btn-5").is(":visible")) {
 		    if ($("#Bsair_b.sc-unique-btn-5").hasClass("disabled")) {
 		        return;
 		    }
 			nm_saida_glo(); return false;
-			 return;
+			toggleToolbar(event, true); return;
 		}
 		if ($("#Bsair_b.sc-unique-btn-6").length && $("#Bsair_b.sc-unique-btn-6").is(":visible")) {
 		    if ($("#Bsair_b.sc-unique-btn-6").hasClass("disabled")) {
 		        return;
 		    }
 			nm_saida_glo(); return false;
-			 return;
+			toggleToolbar(event, true); return;
 		}
 	}
 </script>

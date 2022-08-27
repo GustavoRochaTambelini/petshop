@@ -3842,11 +3842,13 @@ foreach ($this->Ini->sc_lig_iframe as $tmp_i => $tmp_v)
     scAjaxSetFields(false);
     scAjaxSetVariables();
     document.F2.idpet.value = scAjaxGetKeyValue("idpet");
+    scAjaxSetSummary();
     scAjaxShowDebug();
     scAjaxSetLabel(true);
     scAjaxSetReadonly(true);
     scAjaxSetMaster();
     scAjaxSetNavStatus("t");
+    scAjaxSetNavStatus("b");
     scAjaxSetDisplay(true);
     if (scMasterDetailIframe && scMasterDetailIframe["nmsc_iframe_liga_form_obs_pet_mob"] && "nmsc_iframe_liga_form_obs_pet_mob" != scMasterDetailIframe["nmsc_iframe_liga_form_obs_pet_mob"]) {
         scMoveMasterDetail(scMasterDetailIframe["nmsc_iframe_liga_form_obs_pet_mob"]);

@@ -419,7 +419,6 @@ class grid_contas_pagar_nao_pago_fornecedor_grid
    { 
        $_SESSION['sc_session'][$this->Ini->sc_page]['grid_contas_pagar_nao_pago_fornecedor']['opcao'] = "muda_qt_linhas";
    } 
-   $this->sc_where_Max = "f" . "u" . "ll";
 
    if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['grid_contas_pagar_nao_pago_fornecedor']['dashboard_info']['under_dashboard']) && $_SESSION['sc_session'][$this->Ini->sc_page]['grid_contas_pagar_nao_pago_fornecedor']['dashboard_info']['under_dashboard'] && !$_SESSION['sc_session'][$this->Ini->sc_page]['grid_contas_pagar_nao_pago_fornecedor']['dashboard_info']['maximized']) {
        $tmpDashboardApp = $_SESSION['sc_session'][$this->Ini->sc_page]['grid_contas_pagar_nao_pago_fornecedor']['dashboard_info']['dashboard_app'];
@@ -766,23 +765,7 @@ class grid_contas_pagar_nao_pago_fornecedor_grid
        $this->nm_grid_ini++;
    }  
 //----- 
-   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-   { 
-       $nmgp_select = "SELECT data_emissao, data_vencimanto, valor_a_pagar, valor_pago, idforma_pagamento_prevista, idcliente, idforma_pagamento, idcontas_pagar from " . $this->Ini->nm_tabela; 
-   } 
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
-   { 
-       $nmgp_select = "SELECT data_emissao, data_vencimanto, valor_a_pagar, valor_pago, idforma_pagamento_prevista, idcliente, idforma_pagamento, idcontas_pagar from " . $this->Ini->nm_tabela; 
-   } 
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-   { 
-       $nmgp_select = "SELECT data_emissao, data_vencimanto, valor_a_pagar, valor_pago, idforma_pagamento_prevista, idcliente, idforma_pagamento, idcontas_pagar from " . $this->Ini->nm_tabela; 
-   } 
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-   { 
-       $nmgp_select = "SELECT TO_DATE(TO_CHAR(data_emissao, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), TO_DATE(TO_CHAR(data_vencimanto, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), valor_a_pagar, valor_pago, idforma_pagamento_prevista, idcliente, idforma_pagamento, idcontas_pagar from " . $this->Ini->nm_tabela; 
-   } 
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
+   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
    { 
        $nmgp_select = "SELECT data_emissao, data_vencimanto, valor_a_pagar, valor_pago, idforma_pagamento_prevista, idcliente, idforma_pagamento, idcontas_pagar from " . $this->Ini->nm_tabela; 
    } 
@@ -853,7 +836,6 @@ class grid_contas_pagar_nao_pago_fornecedor_grid
        $_SESSION['scriptcase']['sc_sql_ult_comando'] = "SelectLimit($nmgp_select, " . ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_contas_pagar_nao_pago_fornecedor']['qt_reg_grid'] + 2) . ", $this->nmgp_reg_start)" ; 
        $this->rs_grid = $this->Db->SelectLimit($nmgp_select, $_SESSION['sc_session'][$this->Ini->sc_page]['grid_contas_pagar_nao_pago_fornecedor']['qt_reg_grid'] + 2, $this->nmgp_reg_start) ; 
    }  
-   $this->sc_where_Min = "s" . "c_c" . "tl" . "_aj" . "ax";
    if ($this->rs_grid === false && !$this->rs_grid->EOF && $GLOBALS["NM_ERRO_IBASE"] != 1) 
    { 
        $this->Erro->mensagem(__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dber'], $this->Db->ErrorMsg()); 
@@ -1154,6 +1136,31 @@ $nm_saida->saida("                        <link rel=\"shortcut icon\" href=\"\">
            $nm_saida->saida("     var sc_ajaxBordW = '" . $this->Ini->Border_w_ajax . "';\r\n");
            $nm_saida->saida("   </script>\r\n");
            $nm_saida->saida("   <script type=\"text/javascript\" src=\"../_lib/lib/js/jquery-3.6.0.min.js\"></script>\r\n");
+           if ($_SESSION['scriptcase']['proc_mobile'] && !$_SESSION['sc_session'][$this->Ini->sc_page]['grid_contas_pagar_nao_pago_fornecedor']['embutida']) {  
+               $forced_mobile = (isset($_SESSION['scriptcase']['force_mobile']) && $_SESSION['scriptcase']['force_mobile']) ? 'true' : 'false';
+               $sc_app_data   = json_encode([ 
+                   'forceMobile' => $forced_mobile, 
+                   'appType' => 'grid', 
+                   'improvements' => true, 
+                   'displayOptionsButton' => false, 
+                   'displayScrollUp' => true, 
+                   'bottomToolbarFixed' => true, 
+                   'mobileSimpleToolbar' => true, 
+                   'scrollUpPosition' => 'R', 
+                   'toolbarOrientation' => 'H', 
+                   'mobilePanes' => 'true', 
+                   'navigationBarButtons' => unserialize('a:5:{i:0;s:14:"sys_format_ini";i:1;s:14:"sys_format_ret";i:2;s:15:"sys_format_rows";i:3;s:14:"sys_format_ava";i:4;s:14:"sys_format_fim";}'), 
+                   'langs' => [ 
+                       'lang_refined_search' => html_entity_decode($this->Ini->Nm_lang['lang_refined_search'], ENT_COMPAT, $_SESSION['scriptcase']['charset']), 
+                       'lang_summary_search_button' => html_entity_decode($this->Ini->Nm_lang['lang_summary_search_button'], ENT_COMPAT, $_SESSION['scriptcase']['charset']), 
+                       'lang_details_button' => html_entity_decode($this->Ini->Nm_lang['lang_details_button'], ENT_COMPAT, $_SESSION['scriptcase']['charset']), 
+                   ], 
+               ]); ?> 
+        <input type="hidden" id="sc-mobile-app-data" value='<?php echo $sc_app_data; ?>' />
+        <script type="text/javascript" src="../_lib/lib/js/nm_modal_panes.jquery.js"></script>
+        <script type="text/javascript" src="../_lib/lib/js/nm_mobile.js"></script>
+        <link rel='stylesheet' href='../_lib/lib/css/nm_mobile.css' type='text/css'/>
+          <?php }
            $nm_saida->saida("   <link rel=\"stylesheet\" type=\"text/css\" href=\"../_lib/css/" . $this->Ini->str_schema_all . "_sweetalert.css\" />\r\n");
            $nm_saida->saida("   <script type=\"text/javascript\" src=\"" . $this->Ini->path_prod . "/third/sweetalert/sweetalert2.all.min.js\"></script>\r\n");
            $nm_saida->saida("   <script type=\"text/javascript\" src=\"" . $this->Ini->path_prod . "/third/sweetalert/polyfill.min.js\"></script>\r\n");
@@ -1328,6 +1335,13 @@ $nm_saida->saida("                        <link rel=\"shortcut icon\" href=\"\">
            $nm_saida->saida("   <link rel=\"stylesheet\" type=\"text/css\" href=\"../_lib/css/" . $this->Ini->str_schema_all . "_form" . $_SESSION['scriptcase']['reg_conf']['css_dir'] . ".css\" /> \r\n");
            $nm_saida->saida("   <link rel=\"stylesheet\" type=\"text/css\" href=\"../_lib/css/" . $this->Ini->str_schema_all . "_appdiv.css\" /> \r\n");
            $nm_saida->saida("   <link rel=\"stylesheet\" type=\"text/css\" href=\"../_lib/css/" . $this->Ini->str_schema_all . "_appdiv" . $_SESSION['scriptcase']['reg_conf']['css_dir'] . ".css\" /> \r\n");
+           if ($_SESSION['scriptcase']['proc_mobile'] && !$_SESSION['sc_session'][$this->Ini->sc_page]['grid_contas_pagar_nao_pago_fornecedor']['embutida']) { 
+           $nm_saida->saida("            <script>\r\n");
+           $nm_saida->saida("                $(document).ready(function(){\r\n");
+           $nm_saida->saida("                    bootstrapMobile();\r\n");
+           $nm_saida->saida("                });\r\n");
+           $nm_saida->saida("            </script>\r\n");
+           }
            $nm_saida->saida("   <style type=\"text/css\"> \r\n");
            $nm_saida->saida("     .scGridLabelFont a img[src\$='" . $this->Ini->Label_sort_desc . "'], \r\n");
            $nm_saida->saida("     .scGridLabelFont a img[src\$='" . $this->Ini->Label_sort_asc . "'], \r\n");
@@ -2947,7 +2961,6 @@ if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_contas_pagar_nao_pago_for
    }
    $this->Ini->cor_link_dados = $this->css_scGridFieldEvenLink;
    $this->NM_flag_antigo = FALSE;
-   $this->sc_where_Min = $_SESSION['scriptcase'][$this->sc_where_Min];
    $nm_prog_barr = 0;
    $PB_tot       = "/" . $this->count_ger;;
    $nm_houve_quebra = "N";
@@ -3192,7 +3205,6 @@ if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_contas_pagar_nao_pago_for
           } 
           $this->rs_grid->MoveNext();
           $this->sc_proc_grid = false;
-          if ($this->sc_where_Min != $this->sc_where_Max) { $this->rs_grid->Close(); }
           $nm_quant_linhas++ ;
           if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_contas_pagar_nao_pago_fornecedor']['embutida'] || $_SESSION['sc_session'][$this->Ini->sc_page]['grid_contas_pagar_nao_pago_fornecedor']['opcao'] == "pdf" || $this->Ini->Apl_paginacao == "FULL")
           { 
@@ -4972,8 +4984,6 @@ if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_contas_pagar_nao_pago_for
    } 
  function check_btns()
  {
-     $sv = $this->NM_css_ajx_embed;
-     if (!isset($this->Ini->$sv) || empty($this->Ini->$sv) || strlen($this->Ini->$sv) != $_SESSION[$this->NM_css_val_embed]) {exit;}
  }
  function nm_fim_grid($flag_apaga_pdf_log = TRUE)
  {

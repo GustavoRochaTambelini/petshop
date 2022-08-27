@@ -158,11 +158,7 @@ WHERE idpacote_cliente = '$idpacote_cliente'" ;
           $save_conteudo1 = ""; 
           return ; 
       } 
-      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-      { 
-          $nm_comando = "SELECT qunatidade_realizada + '/' + quantidade_total  FROM pacote_cliente where idpacote_cliente = $idpacote_cliente order by qunatidade_realizada" ; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
+      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
       { 
           $nm_comando = "SELECT concat(qunatidade_realizada, '/', quantidade_total)  FROM pacote_cliente where idpacote_cliente = $idpacote_cliente order by qunatidade_realizada" ; 
       } 
@@ -173,14 +169,6 @@ WHERE idpacote_cliente = '$idpacote_cliente'" ;
       elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
       { 
           $nm_comando = "SELECT qunatidade_realizada||'/'||quantidade_total  FROM pacote_cliente where idpacote_cliente = $idpacote_cliente order by qunatidade_realizada" ; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-          $nm_comando = "SELECT convert(char,qunatidade_realizada) + '/' + quantidade_total  FROM pacote_cliente where idpacote_cliente = $idpacote_cliente order by qunatidade_realizada" ; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
-      { 
-          $nm_comando = "SELECT char(qunatidade_realizada)||'/'||quantidade_total  FROM pacote_cliente where idpacote_cliente = $idpacote_cliente order by qunatidade_realizada" ; 
       } 
       else 
       { 

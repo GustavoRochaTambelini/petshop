@@ -88,6 +88,9 @@
        {
            unset($_SESSION['sc_session'][$script_case_init]['grid_lancamento_cartao']['sc_modal']);
            $saida_final = "self.parent.tb_remove()";
+            if ($_SESSION['scriptcase']['proc_mobile']) {
+                $saida_final = 'parent.closeAllModalPanes();';
+            }
        }
        else
        {

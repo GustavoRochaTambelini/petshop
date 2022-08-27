@@ -1,7 +1,7 @@
 index.php
 petshop
 grid_pacote_cliente
-NAO
+SIM
 cons
 grid_pacote_cliente
 LigMd5

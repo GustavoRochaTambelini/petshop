@@ -1,7 +1,7 @@
 index.php
 petshop
 grid_lancamento_cartao
-NAO
+SIM
 cons
 grid_lancamento_cartao
 LigMd5

@@ -1,7 +1,7 @@
 form_bandeira_cartao_mob.php
 petshop
 form_bandeira_cartao_mob
-NAO
+SIM
 form
 form_bandeira_cartao
 LigMd5

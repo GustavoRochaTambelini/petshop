@@ -92,6 +92,7 @@ class form_contas_pagar_mob_apl
    var $nmgp_opcao;
    var $nmgp_opc_ant;
    var $sc_evento;
+   var $sc_insert_on;
    var $nmgp_clone;
    var $nmgp_return_img = array();
    var $nmgp_dados_form = array();
@@ -744,11 +745,11 @@ class form_contas_pagar_mob_apl
       $this->nmgp_botoes['insert'] = "off";
       $this->nmgp_botoes['update'] = "on";
       $this->nmgp_botoes['delete'] = "off";
-      $this->nmgp_botoes['first'] = "off";
-      $this->nmgp_botoes['back'] = "off";
-      $this->nmgp_botoes['forward'] = "off";
-      $this->nmgp_botoes['last'] = "off";
-      $this->nmgp_botoes['summary'] = "off";
+      $this->nmgp_botoes['first'] = "on";
+      $this->nmgp_botoes['back'] = "on";
+      $this->nmgp_botoes['forward'] = "on";
+      $this->nmgp_botoes['last'] = "on";
+      $this->nmgp_botoes['summary'] = "on";
       $this->nmgp_botoes['navpage'] = "off";
       $this->nmgp_botoes['goto'] = "off";
       $this->nmgp_botoes['qtline'] = "off";
@@ -1131,6 +1132,7 @@ class form_contas_pagar_mob_apl
       }
       $this->NM_case_insensitive = false;
       $this->sc_evento = $this->nmgp_opcao;
+      $this->sc_insert_on = false;
             if ('ajax_check_file' == $this->nmgp_opcao ){
                  ob_start(); 
                  include_once("../_lib/lib/php/nm_api.php"); 
@@ -3193,10 +3195,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
           $nm_separa_data = strpos($this->field_config['data_vencimanto']['date_format'], ";") ;
           $this->field_config['data_vencimanto']['date_format'] = substr($this->field_config['data_vencimanto']['date_format'], 0, $nm_separa_data) ;
           nm_conv_data($this->data_vencimanto, $this->field_config['data_vencimanto']['date_format']) ; 
-          if ('pdo_sqlsrv' == strtolower($this->Ini->nm_tpbanco) || 'pdo_dblib' == strtolower($this->Ini->nm_tpbanco))
-          {
-              $this->data_vencimanto = str_replace('-', '', $this->data_vencimanto);
-          }
           $this->field_config['data_vencimanto']['date_format'] = substr($guarda_format_hora, $nm_separa_data + 1) ;
           nm_conv_hora($this->data_vencimanto_hora, $this->field_config['data_vencimanto']['date_format']) ; 
           if ($this->data_vencimanto_hora == "" )  
@@ -3219,18 +3217,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
           {
               $this->data_vencimanto_hora = substr($this->data_vencimanto_hora, 0, -4);
           }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $this->data_vencimanto_hora = substr($this->data_vencimanto_hora, 0, -4);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
-          {
-              $this->data_vencimanto_hora = substr($this->data_vencimanto_hora, 0, -4);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $this->data_vencimanto_hora = substr($this->data_vencimanto_hora, 0, -4);
-          }
           if ($this->data_vencimanto != "")  
           { 
               $this->data_vencimanto .= " " . $this->data_vencimanto_hora ; 
@@ -3247,10 +3233,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
           $nm_separa_data = strpos($this->field_config['data_pagamento']['date_format'], ";") ;
           $this->field_config['data_pagamento']['date_format'] = substr($this->field_config['data_pagamento']['date_format'], 0, $nm_separa_data) ;
           nm_conv_data($this->data_pagamento, $this->field_config['data_pagamento']['date_format']) ; 
-          if ('pdo_sqlsrv' == strtolower($this->Ini->nm_tpbanco) || 'pdo_dblib' == strtolower($this->Ini->nm_tpbanco))
-          {
-              $this->data_pagamento = str_replace('-', '', $this->data_pagamento);
-          }
           $this->field_config['data_pagamento']['date_format'] = substr($guarda_format_hora, $nm_separa_data + 1) ;
           nm_conv_hora($this->data_pagamento_hora, $this->field_config['data_pagamento']['date_format']) ; 
           if ($this->data_pagamento_hora == "" )  
@@ -3270,18 +3252,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
               $this->data_pagamento_hora = substr($this->data_pagamento_hora, 0, -4);
           }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
-          {
-              $this->data_pagamento_hora = substr($this->data_pagamento_hora, 0, -4);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $this->data_pagamento_hora = substr($this->data_pagamento_hora, 0, -4);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
-          {
-              $this->data_pagamento_hora = substr($this->data_pagamento_hora, 0, -4);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
           {
               $this->data_pagamento_hora = substr($this->data_pagamento_hora, 0, -4);
           }
@@ -3475,11 +3445,7 @@ else
    $unformatted_value_sc_field_0 = $this->sc_field_0;
    $unformatted_value_juros = $this->juros;
 
-   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-   {
-       $nm_comando = "SELECT idcliente, cpf_cnpj + ' - ' + nome_fantasia  FROM cliente  ORDER BY cpf_cnpj, nome_fantasia";
-   }
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
+   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
    {
        $nm_comando = "SELECT idcliente, concat(cpf_cnpj, ' - ', nome_fantasia)  FROM cliente  ORDER BY cpf_cnpj, nome_fantasia";
    }
@@ -3488,14 +3454,6 @@ else
        $nm_comando = "SELECT idcliente, cpf_cnpj&' - '&nome_fantasia  FROM cliente  ORDER BY cpf_cnpj, nome_fantasia";
    }
    elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
-   {
-       $nm_comando = "SELECT idcliente, cpf_cnpj||' - '||nome_fantasia  FROM cliente  ORDER BY cpf_cnpj, nome_fantasia";
-   }
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-   {
-       $nm_comando = "SELECT idcliente, cpf_cnpj + ' - ' + nome_fantasia  FROM cliente  ORDER BY cpf_cnpj, nome_fantasia";
-   }
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
    {
        $nm_comando = "SELECT idcliente, cpf_cnpj||' - '||nome_fantasia  FROM cliente  ORDER BY cpf_cnpj, nome_fantasia";
    }
@@ -4034,99 +3992,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
    } 
 //----------- 
 
-   function controle_navegacao()
-   {
-      global $sc_where;
-
-          if (false && !isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['total']))
-          {
-               $sc_where_pos = " WHERE ((idcontas_pagar < $this->idcontas_pagar))";
-               if ('' != $sc_where)
-               {
-                   if ('where ' == strtolower(substr(trim($sc_where), 0, 6)))
-                   {
-                       $sc_where = substr(trim($sc_where), 6);
-                   }
-                   if ('and ' == strtolower(substr(trim($sc_where), 0, 4)))
-                   {
-                       $sc_where = substr(trim($sc_where), 4);
-                   }
-                   $sc_where_pos .= ' AND (' . $sc_where . ')';
-                   $sc_where = ' WHERE ' . $sc_where;
-               }
-               $nmgp_sel_count = 'SELECT COUNT(*) AS countTest FROM ' . $this->Ini->nm_tabela . $sc_where;
-               $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nmgp_sel_count; 
-               $rsc = $this->Db->Execute($nmgp_sel_count); 
-               if ($rsc === false && !$rsc->EOF)  
-               { 
-                   $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dbas'], $this->Db->ErrorMsg()); 
-                   exit; 
-               }  
-               $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['total'] = $rsc->fields[0];
-               $rsc->Close(); 
-               if ('' != $this->idcontas_pagar)
-               {
-               $nmgp_sel_count = 'SELECT COUNT(*) AS countTest FROM ' . $this->Ini->nm_tabela . $sc_where_pos;
-               $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nmgp_sel_count; 
-               $rsc = $this->Db->Execute($nmgp_sel_count); 
-               if ($rsc === false && !$rsc->EOF)  
-               { 
-                   $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dbas'], $this->Db->ErrorMsg()); 
-                   exit; 
-               }  
-               $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['inicio'] = $rsc->fields[0];
-               if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['inicio'] < 0)
-               {
-                   $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['inicio'] = 0;
-               }
-               $rsc->Close(); 
-               }
-               else
-               {
-                   $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['inicio'] = 0;
-               }
-          }
-          $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['qt_reg_grid'] = 1;
-          if (!isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['inicio']))
-          {
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['inicio'] = 0;
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['final']  = 0;
-          }
-          $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['opcao'] = $this->NM_ajax_info['param']['nmgp_opcao'];
-          if (in_array($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['opcao'], array('incluir', 'alterar', 'excluir')))
-          {
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['opcao'] = '';
-          }
-          if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['opcao'] == 'inicio')
-          {
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['inicio'] = 0;
-          }
-          if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['opcao'] == 'retorna')
-          {
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['inicio'] = $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['inicio'] - $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['qt_reg_grid'];
-              if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['inicio'] < 0)
-              {
-                  $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['inicio'] = 0 ;
-              }
-          }
-          if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['opcao'] == 'avanca' && (!isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['total']) || $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['total'] > $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['final']))
-          {
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['inicio'] = $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['final'];
-          }
-          if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['opcao'] == 'final')
-          {
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['inicio'] = $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['total'] - $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['qt_reg_grid'];
-              if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['inicio'] < 0)
-              {
-                  $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['inicio'] = 0;
-              }
-          }
-          $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['final'] = $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['inicio'] + $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['qt_reg_grid'];
-          $this->Nav_permite_ret = 0 != $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['inicio'];
-          $this->Nav_permite_ava = $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['total'] != $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['final'];
-          $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['opcao'] = '';
-
-   }
 
    function temRegistros($sWhere)
    {
@@ -4190,18 +4055,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
       $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'on';
               /* recebimento_parcial */
       if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
-      {
-          $sc_cmd_dependency = "SELECT COUNT(*) AS countTest FROM recebimento_parcial WHERE idcontas_receber = " . $idcontas_receber ;
-      }
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      {
-          $sc_cmd_dependency = "SELECT COUNT(*) AS countTest FROM recebimento_parcial WHERE idcontas_receber = " . $idcontas_receber ;
-      }
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-      {
-          $sc_cmd_dependency = "SELECT COUNT(*) AS countTest FROM recebimento_parcial WHERE idcontas_receber = " . $idcontas_receber ;
-      }
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
       {
           $sc_cmd_dependency = "SELECT COUNT(*) AS countTest FROM recebimento_parcial WHERE idcontas_receber = " . $idcontas_receber ;
       }
@@ -4364,7 +4217,7 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
           $this->nota_fiscal = 0;
           $this->sc_force_zero[] = 'nota_fiscal';
       } 
-      $nm_bases_lob_geral = array_merge($this->Ini->nm_bases_oracle, $this->Ini->nm_bases_ibase, $this->Ini->nm_bases_informix, $this->Ini->nm_bases_mysql, $this->Ini->nm_bases_access, $this->Ini->nm_bases_sqlite, array('pdo_ibm'), array('pdo_sqlsrv'));
+      $nm_bases_lob_geral = array_merge($this->Ini->nm_bases_ibase, $this->Ini->nm_bases_mysql, $this->Ini->nm_bases_access, $this->Ini->nm_bases_sqlite);
       if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['decimal_db'] == ",") 
       {
           $this->nm_troca_decimal(".", ",");
@@ -4454,21 +4307,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar ";
               $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "); 
           }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar ";
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar ";
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar ";
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "); 
-          }  
           else  
           {
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar ";
@@ -4499,21 +4337,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
               $rs1->Close(); 
               $aDoNotUpdate = array();
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
-              { 
-                  $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento = $this->idforma_pagamento, valor_a_pagar = $this->valor_a_pagar, pago = '$this->pago', juros = $this->juros, data_vencimanto = '$this->data_vencimanto', data_pagamento = '$this->data_pagamento'"; 
-              } 
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              { 
-                  $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento = $this->idforma_pagamento, valor_a_pagar = $this->valor_a_pagar, pago = '$this->pago', juros = $this->juros, data_vencimanto = '$this->data_vencimanto', data_pagamento = '$this->data_pagamento'"; 
-              } 
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              { 
-                  $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento = $this->idforma_pagamento, valor_a_pagar = $this->valor_a_pagar, pago = '$this->pago', juros = $this->juros, data_vencimanto = TO_DATE('$this->data_vencimanto', 'yyyy-mm-dd hh24:mi:ss'), data_pagamento = TO_DATE('$this->data_pagamento', 'yyyy-mm-dd hh24:mi:ss')"; 
-              } 
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
                   $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento = $this->idforma_pagamento, valor_a_pagar = $this->valor_a_pagar, pago = '$this->pago', juros = $this->juros, data_vencimanto = '$this->data_vencimanto', data_pagamento = '$this->data_pagamento'"; 
@@ -4559,36 +4382,15 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
               } 
               if (isset($NM_val_form['data_emissao']) && $NM_val_form['data_emissao'] != $this->nmgp_dados_select['data_emissao']) 
               { 
-                   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-                  { 
-                      $SC_fields_update[] = "data_emissao = TO_DATE('$this->data_emissao', 'yyyy-mm-dd hh24:mi:ss')"; 
-                  } 
-                  else
-                  { 
-                      $SC_fields_update[] = "data_emissao = '$this->data_emissao'"; 
-                  } 
+                  $SC_fields_update[] = "data_emissao = '$this->data_emissao'"; 
               } 
               if (isset($NM_val_form['data_insercao']) && $NM_val_form['data_insercao'] != $this->nmgp_dados_select['data_insercao']) 
               { 
-                   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-                  { 
-                      $SC_fields_update[] = "data_insercao = TO_DATE('$this->data_insercao', 'yyyy-mm-dd hh24:mi:ss')"; 
-                  } 
-                  else
-                  { 
-                      $SC_fields_update[] = "data_insercao = '$this->data_insercao'"; 
-                  } 
+                  $SC_fields_update[] = "data_insercao = '$this->data_insercao'"; 
               } 
               if (isset($NM_val_form['data_alteracao']) && $NM_val_form['data_alteracao'] != $this->nmgp_dados_select['data_alteracao']) 
               { 
-                   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-                  { 
-                      $SC_fields_update[] = "data_alteracao = TO_DATE('$this->data_alteracao', 'yyyy-mm-dd hh24:mi:ss')"; 
-                  } 
-                  else
-                  { 
-                      $SC_fields_update[] = "data_alteracao = '$this->data_alteracao'"; 
-                  } 
+                  $SC_fields_update[] = "data_alteracao = '$this->data_alteracao'"; 
               } 
               if (isset($NM_val_form['nota_fiscal']) && $NM_val_form['nota_fiscal'] != $this->nmgp_dados_select['nota_fiscal']) 
               { 
@@ -4596,18 +4398,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
               } 
               $comando .= implode(",", $SC_fields_update);  
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
-              {
-                  $comando .= " WHERE idcontas_pagar = $this->idcontas_pagar ";  
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-                  $comando .= " WHERE idcontas_pagar = $this->idcontas_pagar ";  
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $comando .= " WHERE idcontas_pagar = $this->idcontas_pagar ";  
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
               {
                   $comando .= " WHERE idcontas_pagar = $this->idcontas_pagar ";  
               }  
@@ -4619,13 +4409,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
               $comando = str_replace("'null'", "null", $comando) ; 
               $comando = str_replace("#null#", "null", $comando) ; 
               $comando = str_replace($this->Ini->date_delim . "null" . $this->Ini->date_delim1, "null", $comando) ; 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                $comando = str_replace("EXTEND('', YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND('', YEAR TO DAY)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO DAY)", "null", $comando) ; 
-              }  
               $useUpdateProcedure = false;
               if (!empty($SC_fields_update) || $useUpdateProcedure)
               { 
@@ -4688,9 +4471,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
               elseif (isset($this->pagamento_parcial)) { $this->nm_limpa_alfa($this->pagamento_parcial); }
 
               $this->nm_formatar_campos();
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-              }
 
               $aOldRefresh               = $this->nmgp_refresh_fields;
               $this->nmgp_refresh_fields = array_diff(array('idcontas_pagar', 'idcliente', 'idforma_pagamento', 'data_vencimanto', 'data_pagamento', 'valor_a_pagar', 'sc_field_0', 'juros', 'pago', 'pagamento_parcial'), $aDoNotUpdate);
@@ -4722,21 +4502,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
           }
           $bInsertOk = true;
           if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "; 
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "; 
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "; 
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
           {
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "; 
               $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "); 
@@ -4796,61 +4561,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
                   } 
                   $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (idcontas_pagar, idcliente, idforma_pagamento_prevista, idforma_pagamento, idtipo_contas, idgrupo_contas, idbaixa_conta_corrente, valor_a_pagar, valor_pago, pago, juros, competencia, data_emissao, data_vencimanto, data_alteracao, data_pagamento, nota_fiscal, observacao $compl_insert) VALUES ($this->idcontas_pagar, $this->idcliente, $this->idforma_pagamento_prevista, $this->idforma_pagamento, $this->idtipo_contas, $this->idgrupo_contas, $this->idbaixa_conta_corrente, $this->valor_a_pagar, $this->valor_pago, '$this->pago', $this->juros, '$this->competencia', '$this->data_emissao', '$this->data_vencimanto', '$this->data_alteracao', '$this->data_pagamento', $this->nota_fiscal, '$this->observacao' $compl_insert_val)"; 
               }
-              elseif ($this->Ini->nm_tpbanco == "pdo_sqlsrv")
-              { 
-                  $compl_insert     = ""; 
-                  $compl_insert_val = ""; 
-                  if ($this->data_insercao != "")
-                  { 
-                       $compl_insert     .= ", data_insercao";
-                       $compl_insert_val .= ", '$this->data_insercao'";
-                  } 
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (idcontas_pagar, idcliente, idforma_pagamento_prevista, idforma_pagamento, idtipo_contas, idgrupo_contas, idbaixa_conta_corrente, valor_a_pagar, valor_pago, pago, juros, competencia, data_emissao, data_vencimanto, data_alteracao, data_pagamento, nota_fiscal, observacao $compl_insert) VALUES ($this->idcontas_pagar, $this->idcliente, $this->idforma_pagamento_prevista, $this->idforma_pagamento, $this->idtipo_contas, $this->idgrupo_contas, $this->idbaixa_conta_corrente, $this->valor_a_pagar, $this->valor_pago, '$this->pago', $this->juros, '$this->competencia', '$this->data_emissao', '$this->data_vencimanto', '$this->data_alteracao', '$this->data_pagamento', $this->nota_fiscal, '' $compl_insert_val)"; 
-              }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              { 
-                  $compl_insert     = ""; 
-                  $compl_insert_val = ""; 
-                  if ($this->data_insercao != "")
-                  { 
-                       $compl_insert     .= ", data_insercao";
-                       $compl_insert_val .= ", '$this->data_insercao'";
-                  } 
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (idcontas_pagar, idcliente, idforma_pagamento_prevista, idforma_pagamento, idtipo_contas, idgrupo_contas, idbaixa_conta_corrente, valor_a_pagar, valor_pago, pago, juros, competencia, data_emissao, data_vencimanto, data_alteracao, data_pagamento, nota_fiscal, observacao $compl_insert) VALUES ($this->idcontas_pagar, $this->idcliente, $this->idforma_pagamento_prevista, $this->idforma_pagamento, $this->idtipo_contas, $this->idgrupo_contas, $this->idbaixa_conta_corrente, $this->valor_a_pagar, $this->valor_pago, '$this->pago', $this->juros, '$this->competencia', '$this->data_emissao', '$this->data_vencimanto', '$this->data_alteracao', '$this->data_pagamento', $this->nota_fiscal, '$this->observacao' $compl_insert_val)"; 
-              }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-              { 
-                  $compl_insert     = ""; 
-                  $compl_insert_val = ""; 
-                  if ($this->data_insercao != "")
-                  { 
-                       $compl_insert     .= ", data_insercao";
-                       $compl_insert_val .= ", '$this->data_insercao'";
-                  } 
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (idcontas_pagar, idcliente, idforma_pagamento_prevista, idforma_pagamento, idtipo_contas, idgrupo_contas, idbaixa_conta_corrente, valor_a_pagar, valor_pago, pago, juros, competencia, data_emissao, data_vencimanto, data_alteracao, data_pagamento, nota_fiscal, observacao $compl_insert) VALUES ($this->idcontas_pagar, $this->idcliente, $this->idforma_pagamento_prevista, $this->idforma_pagamento, $this->idtipo_contas, $this->idgrupo_contas, $this->idbaixa_conta_corrente, $this->valor_a_pagar, $this->valor_pago, '$this->pago', $this->juros, '$this->competencia', '$this->data_emissao', '$this->data_vencimanto', '$this->data_alteracao', '$this->data_pagamento', $this->nota_fiscal, '$this->observacao' $compl_insert_val)"; 
-              }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $compl_insert     = ""; 
-                  $compl_insert_val = ""; 
-                  if ($this->data_insercao != "")
-                  { 
-                       $compl_insert     .= ", data_insercao";
-                       $compl_insert_val .= ", TO_DATE('$this->data_insercao', 'yyyy-mm-dd hh24:mi:ss')";
-                  } 
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idcontas_pagar, idcliente, idforma_pagamento_prevista, idforma_pagamento, idtipo_contas, idgrupo_contas, idbaixa_conta_corrente, valor_a_pagar, valor_pago, pago, juros, competencia, data_emissao, data_vencimanto, data_alteracao, data_pagamento, nota_fiscal, observacao $compl_insert) VALUES (" . $NM_seq_auto . "$this->idcontas_pagar, $this->idcliente, $this->idforma_pagamento_prevista, $this->idforma_pagamento, $this->idtipo_contas, $this->idgrupo_contas, $this->idbaixa_conta_corrente, $this->valor_a_pagar, $this->valor_pago, '$this->pago', $this->juros, '$this->competencia', TO_DATE('$this->data_emissao', 'yyyy-mm-dd hh24:mi:ss'), TO_DATE('$this->data_vencimanto', 'yyyy-mm-dd hh24:mi:ss'), TO_DATE('$this->data_alteracao', 'yyyy-mm-dd hh24:mi:ss'), TO_DATE('$this->data_pagamento', 'yyyy-mm-dd hh24:mi:ss'), $this->nota_fiscal, EMPTY_BLOB() $compl_insert_val)"; 
-              }
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                  $compl_insert     = ""; 
-                  $compl_insert_val = ""; 
-                  if ($this->data_insercao != "")
-                  { 
-                       $compl_insert     .= ", data_insercao";
-                       $compl_insert_val .= ", '$this->data_insercao'";
-                  } 
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idcontas_pagar, idcliente, idforma_pagamento_prevista, idforma_pagamento, idtipo_contas, idgrupo_contas, idbaixa_conta_corrente, valor_a_pagar, valor_pago, pago, juros, competencia, data_emissao, data_vencimanto, data_alteracao, data_pagamento, nota_fiscal, observacao $compl_insert) VALUES (" . $NM_seq_auto . "$this->idcontas_pagar, $this->idcliente, $this->idforma_pagamento_prevista, $this->idforma_pagamento, $this->idtipo_contas, $this->idgrupo_contas, $this->idbaixa_conta_corrente, $this->valor_a_pagar, $this->valor_pago, '$this->pago', $this->juros, '$this->competencia', '$this->data_emissao', '$this->data_vencimanto', '$this->data_alteracao', '$this->data_pagamento', $this->nota_fiscal, null $compl_insert_val)"; 
-              }
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
               {
                   $compl_insert     = ""; 
@@ -4884,17 +4594,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
                   } 
                   $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idcontas_pagar, idcliente, idforma_pagamento_prevista, idforma_pagamento, idtipo_contas, idgrupo_contas, idbaixa_conta_corrente, valor_a_pagar, valor_pago, pago, juros, competencia, data_emissao, data_vencimanto, data_alteracao, data_pagamento, nota_fiscal, observacao $compl_insert) VALUES (" . $NM_seq_auto . "$this->idcontas_pagar, $this->idcliente, $this->idforma_pagamento_prevista, $this->idforma_pagamento, $this->idtipo_contas, $this->idgrupo_contas, $this->idbaixa_conta_corrente, $this->valor_a_pagar, $this->valor_pago, '$this->pago', $this->juros, '$this->competencia', '$this->data_emissao', '$this->data_vencimanto', '$this->data_alteracao', '$this->data_pagamento', $this->nota_fiscal, '' $compl_insert_val)"; 
               }
-              elseif ($this->Ini->nm_tpbanco =='pdo_ibm')
-              {
-                  $compl_insert     = ""; 
-                  $compl_insert_val = ""; 
-                  if ($this->data_insercao != "")
-                  { 
-                       $compl_insert     .= ", data_insercao";
-                       $compl_insert_val .= ", TO_DATE('$this->data_insercao', 'yyyy-mm-dd hh24:mi:ss')";
-                  } 
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idcontas_pagar, idcliente, idforma_pagamento_prevista, idforma_pagamento, idtipo_contas, idgrupo_contas, idbaixa_conta_corrente, valor_a_pagar, valor_pago, pago, juros, competencia, data_emissao, data_vencimanto, data_alteracao, data_pagamento, nota_fiscal, observacao $compl_insert) VALUES (" . $NM_seq_auto . "$this->idcontas_pagar, $this->idcliente, $this->idforma_pagamento_prevista, $this->idforma_pagamento, $this->idtipo_contas, $this->idgrupo_contas, $this->idbaixa_conta_corrente, $this->valor_a_pagar, $this->valor_pago, '$this->pago', $this->juros, '$this->competencia', TO_DATE('$this->data_emissao', 'yyyy-mm-dd hh24:mi:ss'), TO_DATE('$this->data_vencimanto', 'yyyy-mm-dd hh24:mi:ss'), TO_DATE('$this->data_alteracao', 'yyyy-mm-dd hh24:mi:ss'), TO_DATE('$this->data_pagamento', 'yyyy-mm-dd hh24:mi:ss'), $this->nota_fiscal, EMPTY_BLOB() $compl_insert_val)"; 
-              }
               else
               {
                   $compl_insert     = ""; 
@@ -4910,13 +4609,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
               $comando = str_replace("'null'", "null", $comando) ; 
               $comando = str_replace("#null#", "null", $comando) ; 
               $comando = str_replace($this->Ini->date_delim . "null" . $this->Ini->date_delim1, "null", $comando) ; 
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                $comando = str_replace("EXTEND('', YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO FRACTION)", "null", $comando) ; 
-                $comando = str_replace("EXTEND('', YEAR TO DAY)", "null", $comando) ; 
-                $comando = str_replace("EXTEND(null, YEAR TO DAY)", "null", $comando) ; 
-              }  
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = $comando; 
               $rs = $this->Db->Execute($comando); 
               if ($rs === false)  
@@ -4976,6 +4668,7 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
               $this->pago = $this->pago_before_qstr;
               $this->competencia = $this->competencia_before_qstr;
               $this->pagamento_parcial = $this->pagamento_parcial_before_qstr;
+              $this->sc_insert_on = true; 
               if (empty($this->sc_erro_insert)) {
                   $this->record_insert_ok = true;
               } 
@@ -5021,21 +4714,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar"; 
               $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "); 
           }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar"; 
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar"; 
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "); 
-          }  
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar"; 
-              $rs1 = $this->Db->Execute("select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "); 
-          }  
           else  
           {
               $_SESSION['scriptcase']['sc_sql_ult_comando'] = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar"; 
@@ -5066,21 +4744,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
                   $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "; 
                   $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "); 
               }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "; 
-                  $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "); 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "; 
-                  $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "); 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              {
-                  $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "; 
-                  $rs = $this->Db->Execute("DELETE FROM " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "); 
-              }  
               else  
               {
                   $_SESSION['scriptcase']['sc_sql_ult_comando'] = "DELETE FROM " . $this->Ini->nm_tabela . " where idcontas_pagar = $this->idcontas_pagar "; 
@@ -5106,6 +4769,11 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
               }
               $this->nmgp_opcao = "avanca"; 
               $this->nm_flag_iframe = true;
+              $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['reg_start']--; 
+              if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['reg_start'] < 0)
+              {
+                  $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['reg_start'] = 0; 
+              }
 
               $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['db_changed'] = true;
 
@@ -5342,43 +5010,12 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
           { 
               $GLOBALS["NM_ERRO_IBASE"] = 1;  
           } 
-          if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-          { 
-              $nmgp_select = "SELECT idcontas_pagar, idcliente, idforma_pagamento_prevista, idforma_pagamento, idtipo_contas, idgrupo_contas, idbaixa_conta_corrente, valor_a_pagar, valor_pago, pago, juros, competencia, data_emissao, data_vencimanto, data_insercao, data_alteracao, data_pagamento, nota_fiscal, observacao from " . $this->Ini->nm_tabela ; 
-          } 
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          { 
-              $nmgp_select = "SELECT idcontas_pagar, idcliente, idforma_pagamento_prevista, idforma_pagamento, idtipo_contas, idgrupo_contas, idbaixa_conta_corrente, valor_a_pagar, valor_pago, pago, juros, competencia, data_emissao, data_vencimanto, data_insercao, data_alteracao, data_pagamento, nota_fiscal, observacao from " . $this->Ini->nm_tabela ; 
-          } 
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          { 
-              $nmgp_select = "SELECT idcontas_pagar, idcliente, idforma_pagamento_prevista, idforma_pagamento, idtipo_contas, idgrupo_contas, idbaixa_conta_corrente, valor_a_pagar, valor_pago, pago, juros, competencia, TO_DATE(TO_CHAR(data_emissao, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), TO_DATE(TO_CHAR(data_vencimanto, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), TO_DATE(TO_CHAR(data_insercao, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), TO_DATE(TO_CHAR(data_alteracao, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), TO_DATE(TO_CHAR(data_pagamento, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), nota_fiscal, observacao from " . $this->Ini->nm_tabela ; 
-          } 
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          { 
-              $nmgp_select = "SELECT idcontas_pagar, idcliente, idforma_pagamento_prevista, idforma_pagamento, idtipo_contas, idgrupo_contas, idbaixa_conta_corrente, valor_a_pagar, valor_pago, pago, juros, competencia, data_emissao, data_vencimanto, data_insercao, data_alteracao, data_pagamento, nota_fiscal, LOTOFILE(observacao, '" . $this->Ini->root . $this->Ini->path_imag_temp . "/sc_blob_observacao', 'client') from " . $this->Ini->nm_tabela ; 
-          } 
-          else 
-          { 
-              $nmgp_select = "SELECT idcontas_pagar, idcliente, idforma_pagamento_prevista, idforma_pagamento, idtipo_contas, idgrupo_contas, idbaixa_conta_corrente, valor_a_pagar, valor_pago, pago, juros, competencia, data_emissao, data_vencimanto, data_insercao, data_alteracao, data_pagamento, nota_fiscal, observacao from " . $this->Ini->nm_tabela ; 
-          } 
+          $nmgp_select = "SELECT idcontas_pagar, idcliente, idforma_pagamento_prevista, idforma_pagamento, idtipo_contas, idgrupo_contas, idbaixa_conta_corrente, valor_a_pagar, valor_pago, pago, juros, competencia, data_emissao, data_vencimanto, data_insercao, data_alteracao, data_pagamento, nota_fiscal, observacao from " . $this->Ini->nm_tabela ; 
           $aWhere = array();
           $aWhere[] = $sc_where_filter;
           if ($this->nmgp_opcao == "igual" || (($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['run_iframe'] == "F" || $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['run_iframe'] == "R") && ($this->sc_evento == "insert" || $this->sc_evento == "update")) )
           { 
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
-              {
-                  $aWhere[] = "idcontas_pagar = $this->idcontas_pagar"; 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-              {
-                  $aWhere[] = "idcontas_pagar = $this->idcontas_pagar"; 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-              {
-                  $aWhere[] = "idcontas_pagar = $this->idcontas_pagar"; 
-              }  
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
               {
                   $aWhere[] = "idcontas_pagar = $this->idcontas_pagar"; 
               }  
@@ -5420,8 +5057,25 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
                   $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['select'] = ""; 
               } 
           } 
-          $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nmgp_select; 
-          $rs = $this->Db->Execute($nmgp_select) ; 
+          if ($this->nmgp_opcao == "igual") 
+          { 
+              $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nmgp_select; 
+              $rs = $this->Db->Execute($nmgp_select) ; 
+          } 
+          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql) || in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres) || in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
+          { 
+              $_SESSION['scriptcase']['sc_sql_ult_comando'] = "SelectLimit($nmgp_select, 1, " . $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['reg_start'] . ")" ; 
+              $rs = $this->Db->SelectLimit($nmgp_select, 1, $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['reg_start']) ; 
+          } 
+          else  
+          { 
+              $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nmgp_select; 
+              $rs = $this->Db->Execute($nmgp_select) ; 
+              if (!$rs === false && !$rs->EOF) 
+              { 
+                  $rs->Move($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['reg_start']) ;  
+              } 
+          } 
           if ($rs === false && !$rs->EOF && $GLOBALS["NM_ERRO_IBASE"] != 1) 
           { 
               $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dber'], $this->Db->ErrorMsg()); 
@@ -5435,9 +5089,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
           }  
           if ($rs->EOF) 
           { 
-              $this->NM_ajax_info['navSummary']['reg_ini'] = 0; 
-              $this->NM_ajax_info['navSummary']['reg_qtd'] = 0; 
-              $this->NM_ajax_info['navSummary']['reg_tot'] = 0; 
               if (!empty($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['where_filter']))
               {
                   $this->nmgp_form_empty        = true;
@@ -5463,12 +5114,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
               $this->NM_ajax_info['buttonDisplay']['update'] = $this->nmgp_botoes['update'] = "off";
               $this->NM_ajax_info['buttonDisplay']['delete'] = $this->nmgp_botoes['delete'] = "off";
               return; 
-          } 
-          else 
-          { 
-              $this->NM_ajax_info['navSummary']['reg_ini'] = 1; 
-              $this->NM_ajax_info['navSummary']['reg_qtd'] = 1; 
-              $this->NM_ajax_info['navSummary']['reg_tot'] = 1; 
           } 
           if ($rs === false && $GLOBALS["NM_ERRO_IBASE"] == 1) 
           { 
@@ -5558,20 +5203,6 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
               { 
                   $this->observacao = $this->Db->BlobDecode($rs->fields[18]) ; 
               } 
-              elseif ($this->Ini->nm_tpbanco == 'pdo_oracle')
-              { 
-                  $this->observacao = $this->Db->BlobDecode($rs->fields[18]) ; 
-              } 
-              elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-              { 
-                  if(isset($rs->fields[18]) && !empty($rs->fields[18]) && is_file($rs->fields[18])) 
-                  { 
-                     $this->observacao = file_get_contents($rs->fields[18]);
-                  }else 
-                  { 
-                     $this->observacao = ''; 
-                  } 
-              } 
               else
               { 
                   $this->observacao = $rs->fields[18] ; 
@@ -5596,7 +5227,9 @@ $_SESSION['scriptcase']['form_contas_pagar_mob']['contr_erro'] = 'off';
           $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['dados_select'] = $this->nmgp_dados_select;
           if (!$this->NM_ajax_flag || 'backup_line' != $this->NM_ajax_opcao)
           {
-              $this->controle_navegacao();
+              $this->Nav_permite_ret = 0 != $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['reg_start'];
+              $this->Nav_permite_ava = $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['reg_start'] < $qt_geral_reg_form_contas_pagar_mob;
+              $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_mob']['opcao']   = '';
           }
       } 
       if ($this->nmgp_opcao == "novo" || $this->nmgp_opcao == "refresh_insert") 
@@ -6438,11 +6071,7 @@ else
    $unformatted_value_sc_field_0 = $this->sc_field_0;
    $unformatted_value_juros = $this->juros;
 
-   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-   {
-       $nm_comando = "SELECT idcliente, cpf_cnpj + ' - ' + nome_fantasia  FROM cliente  ORDER BY cpf_cnpj, nome_fantasia";
-   }
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
+   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
    {
        $nm_comando = "SELECT idcliente, concat(cpf_cnpj, ' - ', nome_fantasia)  FROM cliente  ORDER BY cpf_cnpj, nome_fantasia";
    }
@@ -6451,14 +6080,6 @@ else
        $nm_comando = "SELECT idcliente, cpf_cnpj&' - '&nome_fantasia  FROM cliente  ORDER BY cpf_cnpj, nome_fantasia";
    }
    elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
-   {
-       $nm_comando = "SELECT idcliente, cpf_cnpj||' - '||nome_fantasia  FROM cliente  ORDER BY cpf_cnpj, nome_fantasia";
-   }
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-   {
-       $nm_comando = "SELECT idcliente, cpf_cnpj + ' - ' + nome_fantasia  FROM cliente  ORDER BY cpf_cnpj, nome_fantasia";
-   }
-   elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
    {
        $nm_comando = "SELECT idcliente, cpf_cnpj||' - '||nome_fantasia  FROM cliente  ORDER BY cpf_cnpj, nome_fantasia";
    }
@@ -6732,17 +6353,8 @@ else
           if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access)) {
               $Nm_accent = $this->Ini->Nm_accent_access;
           }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2)) {
-              $Nm_accent = $this->Ini->Nm_accent_db2;
-          }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase)) {
               $Nm_accent = $this->Ini->Nm_accent_ibase;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix)) {
-              $Nm_accent = $this->Ini->Nm_accent_informix;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql)) {
-              $Nm_accent = $this->Ini->Nm_accent_mssql;
           }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql)) {
               $Nm_accent = $this->Ini->Nm_accent_mysql;
@@ -6750,23 +6362,8 @@ else
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres)) {
               $Nm_accent = $this->Ini->Nm_accent_postgres;
           }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle)) {
-              $Nm_accent = $this->Ini->Nm_accent_oracle;
-          }
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sqlite)) {
               $Nm_accent = $this->Ini->Nm_accent_sqlite;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase)) {
-              $Nm_accent = $this->Ini->Nm_accent_sybase;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_vfp)) {
-              $Nm_accent = $this->Ini->Nm_accent_vfp;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_odbc)) {
-              $Nm_accent = $this->Ini->Nm_accent_odbc;
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress)) {
-              $Nm_accent = $this->Ini->Nm_accent_progress;
           }
       }
       $nm_numeric[] = "idcontas_pagar";$nm_numeric[] = "idcliente";$nm_numeric[] = "idforma_pagamento_prevista";$nm_numeric[] = "idforma_pagamento";$nm_numeric[] = "idtipo_contas";$nm_numeric[] = "idgrupo_contas";$nm_numeric[] = "idbaixa_conta_corrente";$nm_numeric[] = "valor_a_pagar";$nm_numeric[] = "valor_pago";$nm_numeric[] = "juros";$nm_numeric[] = "nota_fiscal";$nm_numeric[] = "";
@@ -6815,18 +6412,6 @@ else
              $nm_aspas  = "'";
              $nm_aspas1 = "'";
          }
-         if (in_array($campo_join, $nm_numeric) && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase) && (strtoupper($condicao) == "II" || strtoupper($condicao) == "QP" || strtoupper($condicao) == "NP"))
-         {
-             $nome      = "CAST ($nome AS VARCHAR)";
-             $nm_aspas  = "'";
-             $nm_aspas1 = "'";
-         }
-         if (in_array($campo_join, $nm_numeric) && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress) && (strtoupper($condicao) == "II" || strtoupper($condicao) == "QP" || strtoupper($condicao) == "NP"))
-         {
-             $nome      = "CAST ($nome AS VARCHAR(255))";
-             $nm_aspas  = "'";
-             $nm_aspas1 = "'";
-         }
       $Nm_datas["data_emissao"] = "timestamp";$Nm_datas["data_vencimanto"] = "timestamp";$Nm_datas["data_insercao"] = "timestamp";$Nm_datas["data_alteracao"] = "timestamp";$Nm_datas["data_pagamento"] = "timestamp";
          if (isset($Nm_datas[$campo_join]))
          {
@@ -6869,34 +6454,6 @@ else
           elseif ($Nm_datas[$campo_join] == "time" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
           {
               $nome = "to_char (" . $nome . ", 'hh24:mi:ss')";
-          }
-          elseif ($Nm_datas[$campo_join] == "date" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          {
-              $nome = "convert(char(10)," . $nome . ",121)";
-          }
-          elseif (($Nm_datas[$campo_join] == "datetime" || $Nm_datas[$campo_join] == "timestamp") && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          {
-              $nome = "convert(char(19)," . $nome . ",121)";
-          }
-          elseif (($Nm_datas[$campo_join] == "times" || $Nm_datas[$campo_join] == "datetime" || $Nm_datas[$campo_join] == "timestamp") && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $nome  = "TO_DATE(TO_CHAR(" . $nome . ", 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss')";
-          }
-          elseif ($Nm_datas[$campo_join] == "datetime" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $nome = "EXTEND(" . $nome . ", YEAR TO FRACTION)";
-          }
-          elseif ($Nm_datas[$campo_join] == "date" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $nome = "EXTEND(" . $nome . ", YEAR TO DAY)";
-          }
-          elseif ($Nm_datas[$campo_join] == "datetime" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress))
-          {
-              $nome = "to_char (" . $nome . ", 'YYYY-MM-DD hh24:mi:ss')";
-          }
-          elseif ($Nm_datas[$campo_join] == "date" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_progress))
-          {
-              $nome = "to_char (" . $nome . ", 'YYYY-MM-DD')";
           }
       }
          $comando .= (!empty($comando) ? " or " : "");
@@ -6964,11 +6521,7 @@ else
        $result = array();
        $campo_orig = $campo;
        $campo  = substr($this->Db->qstr($campo), 1, -1);
-      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-      { 
-          $nm_comando = "SELECT cpf_cnpj + ' - ' + nome_fantasia, idcliente FROM cliente WHERE (#cmp_icpf_cnpj + ' - ' + nome_fantasia#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos)" ; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
+      if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
       { 
           $nm_comando = "SELECT concat(cpf_cnpj,' - ',nome_fantasia), idcliente FROM cliente WHERE (#cmp_iconcat(cpf_cnpj,' - ',nome_fantasia)#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos)" ; 
       } 
@@ -6977,14 +6530,6 @@ else
           $nm_comando = "SELECT cpf_cnpj&' - '&nome_fantasia, idcliente FROM cliente WHERE (#cmp_icpf_cnpj&' - '&nome_fantasia#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos)" ; 
       } 
       elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
-      { 
-          $nm_comando = "SELECT cpf_cnpj||' - '||nome_fantasia, idcliente FROM cliente WHERE (#cmp_icpf_cnpj||' - '||nome_fantasia#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos)" ; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-          $nm_comando = "SELECT cpf_cnpj + ' - ' + nome_fantasia, idcliente FROM cliente WHERE (#cmp_icpf_cnpj + ' - ' + nome_fantasia#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos)" ; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
       { 
           $nm_comando = "SELECT cpf_cnpj||' - '||nome_fantasia, idcliente FROM cliente WHERE (#cmp_icpf_cnpj||' - '||nome_fantasia#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos)" ; 
       } 
@@ -7400,6 +6945,18 @@ if (parent && parent.scAjaxDetailValue)
                 break;
             case "exit":
                 return array("sc_b_sai_t.sc-unique-btn-2", "sc_b_sai_t.sc-unique-btn-4", "sc_b_sai_t.sc-unique-btn-6", "sc_b_sai_t.sc-unique-btn-8", "sc_b_sai_t.sc-unique-btn-3", "sc_b_sai_t.sc-unique-btn-7");
+                break;
+            case "first":
+                return array("sc_b_ini_b.sc-unique-btn-9");
+                break;
+            case "back":
+                return array("sc_b_ret_b.sc-unique-btn-10");
+                break;
+            case "forward":
+                return array("sc_b_avc_b.sc-unique-btn-11");
+                break;
+            case "last":
+                return array("sc_b_fim_b.sc-unique-btn-12");
                 break;
         }
 

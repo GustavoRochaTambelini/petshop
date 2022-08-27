@@ -3622,11 +3622,13 @@ foreach ($this->Ini->sc_lig_iframe as $tmp_i => $tmp_v)
     scAjaxSetFields(false);
     scAjaxSetVariables();
     document.F2.idfuncionario.value = scAjaxGetKeyValue("idfuncionario");
+    scAjaxSetSummary();
     scAjaxShowDebug();
     scAjaxSetLabel(true);
     scAjaxSetReadonly(true);
     scAjaxSetMaster();
     scAjaxSetNavStatus("t");
+    scAjaxSetNavStatus("b");
     scAjaxSetDisplay(true);
     if (scMasterDetailIframe && scMasterDetailIframe["nmsc_iframe_liga_form_funcionario_funcao_mob"] && "nmsc_iframe_liga_form_funcionario_funcao_mob" != scMasterDetailIframe["nmsc_iframe_liga_form_funcionario_funcao_mob"]) {
         scMoveMasterDetail(scMasterDetailIframe["nmsc_iframe_liga_form_funcionario_funcao_mob"]);

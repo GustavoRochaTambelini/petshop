@@ -37,10 +37,6 @@ class chart_fluxo_caixa_sete_dias_total
       { 
           $nm_comando = "select count(*), sum(media) from " . $this->Ini->nm_tabela . " " . $_SESSION['sc_session'][$this->Ini->sc_page]['chart_fluxo_caixa_sete_dias']['where_pesq']; 
       } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-          $nm_comando = "select count(*), sum(media) from " . $this->Ini->nm_tabela . " " . $_SESSION['sc_session'][$this->Ini->sc_page]['chart_fluxo_caixa_sete_dias']['where_pesq']; 
-      } 
       else 
       { 
           $nm_comando = "select count(*), sum(media) from " . $this->Ini->nm_tabela . " " . $_SESSION['sc_session'][$this->Ini->sc_page]['chart_fluxo_caixa_sete_dias']['where_pesq']; 
@@ -68,10 +64,6 @@ class chart_fluxo_caixa_sete_dias_total
       global $$Var_name_gb;
       $tot_data = array() ;  
       if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
-      { 
-          $nm_comando = "select count(*), sum(media) from " . $this->Ini->nm_tabela . " " . $_SESSION['sc_session'][$this->Ini->sc_page]['chart_fluxo_caixa_sete_dias']['where_pesq']; 
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
       { 
           $nm_comando = "select count(*), sum(media) from " . $this->Ini->nm_tabela . " " . $_SESSION['sc_session'][$this->Ini->sc_page]['chart_fluxo_caixa_sete_dias']['where_pesq']; 
       } 
@@ -156,13 +148,9 @@ class chart_fluxo_caixa_sete_dias_total
           foreach ($temp as $cada_parte)
           {
               $temp1 = explode("*sc#", $cada_parte);
-              if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
+              if (!in_array($Str_arg_sql . trim($temp1[0]), $all_group))
               {
-                  $group .= (empty($group)) ? $i_group : "," . $i_group;
-              }
-              elseif (!in_array($Str_arg_sql . trim($temp1[0]), $all_group))
-              {
-                  $group .= (empty($group)) ? $Str_arg_sql . trim($temp1[0]) : "," . $Str_arg_sql . trim($temp1[0]);
+                  $group   .= (empty($group))   ? $Str_arg_sql . trim($temp1[0]) : "," . $Str_arg_sql . trim($temp1[0]);
                   $all_group[] = $Str_arg_sql . trim($temp1[0]);
               }
               $cmps_gb1 .= (empty($cmps_gb1)) ? $Str_arg_sql . trim($temp1[0]) : "," . $Str_arg_sql . trim($temp1[0]);
@@ -220,30 +208,6 @@ class chart_fluxo_caixa_sete_dias_total
       $where_ok = $this->sc_where_atual;
       $cmp_sql_tp_num = array('entradas' => 'N','saidas' => 'N','media' => 'N');
       if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
-      { 
-         $cmd_simp = "select count(*), sum(media)#@#cmps_quebras#@# from " . $this->Ini->nm_tabela . " " . $where_ok;
-         $comando  = "select count(*), sum(SC_metric1)#@#cmps_quebras#@# from (";
-         $comando .= "select media as SC_metric1, " . $cmps_quebras1 . " from " . $this->Ini->nm_tabela . " " .  $where_ok . ") SC_sel1 INNER JOIN (";
-         $comando .= "select " . $cmps_quebras2 . " from " . $this->Ini->nm_tabela . " " .  $where_ok . " group by " . $group . $sc_having . ") SC_sel2 ";
-         $comando .= " ON " . $join;
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-      { 
-         $cmd_simp = "select count(*), sum(media)#@#cmps_quebras#@# from " . $this->Ini->nm_tabela . " " . $where_ok;
-         $comando  = "select count(*), sum(SC_metric1)#@#cmps_quebras#@# from (";
-         $comando .= "select media as SC_metric1, " . $cmps_quebras1 . " from " . $this->Ini->nm_tabela . " " .  $where_ok . ") SC_sel1 INNER JOIN (";
-         $comando .= "select " . $cmps_quebras2 . " from " . $this->Ini->nm_tabela . " " .  $where_ok . " group by " . $group . $sc_having . ") SC_sel2 ";
-         $comando .= " ON " . $join;
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-      { 
-         $cmd_simp = "select count(*), sum(media)#@#cmps_quebras#@# from " . $this->Ini->nm_tabela . " " . $where_ok;
-         $comando  = "select count(*), sum(SC_metric1)#@#cmps_quebras#@# from (";
-         $comando .= "select media as SC_metric1, " . $cmps_quebras1 . " from " . $this->Ini->nm_tabela . " " .  $where_ok . ") SC_sel1 INNER JOIN (";
-         $comando .= "select " . $cmps_quebras2 . " from " . $this->Ini->nm_tabela . " " .  $where_ok . " group by " . $group . $sc_having . ") SC_sel2 ";
-         $comando .= " ON " . $join;
-      } 
-      elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
       { 
          $cmd_simp = "select count(*), sum(media)#@#cmps_quebras#@# from " . $this->Ini->nm_tabela . " " . $where_ok;
          $comando  = "select count(*), sum(SC_metric1)#@#cmps_quebras#@# from (";
@@ -452,18 +416,6 @@ class chart_fluxo_caixa_sete_dias_total
           {
                   $comando = str_replace(array('variance(','stddev('), array('var_pop(','stddev_pop('), $comando);
           }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $comando = str_replace(array('variance(','stddev('), array('sum(','sum('), $comando);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-          {
-              $comando = str_replace(array('variance(','stddev('), array('var_pop(','stddev_pop('), $comando);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $comando = str_replace(array('variance(','stddev('), array('var_pop(','stddev_pop('), $comando);
-          }
       }
       if ($this->Ini->nm_tp_variance == "A")
       {
@@ -490,26 +442,6 @@ class chart_fluxo_caixa_sete_dias_total
           elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
           {
                   $comando = str_replace(array('variance(','stddev('), array('var_samp(','stddev_samp('), $comando);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_oracle))
-          {
-              $comando = str_replace(array('variance(','stddev('), array('var_samp(','stddev_samp('), $comando);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mssql))
-          { 
-              $comando = str_replace(array('varp(','stdevp('), array('var(','stdev('), $comando);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_informix))
-          {
-              $comando = str_replace('stddev(', 'stdev(', $comando);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_db2))
-          {
-              $comando = str_replace(array('variance(','stddev('), array('variance_samp(','stddev_samp('), $comando);
-          }
-          elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sybase))
-          {
-              $comando = str_replace(array('variance(','stddev('), array('var_samp(','stddev_samp('), $comando);
           }
       }
       return $comando;

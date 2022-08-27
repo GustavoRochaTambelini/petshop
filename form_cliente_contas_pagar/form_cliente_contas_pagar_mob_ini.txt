@@ -1,7 +1,7 @@
 form_cliente_contas_pagar_mob.php
 petshop
 form_cliente_contas_pagar_mob
-NAO
+SIM
 form
 form_cliente_contas_pagar
 LigMd5
