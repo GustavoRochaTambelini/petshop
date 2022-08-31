@@ -1,7 +1,0 @@
-index.php
-petshop
-itens_captura
-SIM
-cons
-itens_captura
-LigMd5

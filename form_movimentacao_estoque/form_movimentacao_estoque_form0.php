@@ -1026,19 +1026,19 @@ else
 
    if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
    {
-       $nm_comando = "SELECT idproduto, concat(descricao, ' - ', referencia)  FROM produto  ORDER BY descricao, referencia";
+       $nm_comando = "SELECT idproduto, concat(descricao, ' - ', referencia)  FROM produto  WHERE tipo = 'PRODUTO' ORDER BY descricao, referencia";
    }
    elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
    {
-       $nm_comando = "SELECT idproduto, descricao&' - '&referencia  FROM produto  ORDER BY descricao, referencia";
+       $nm_comando = "SELECT idproduto, descricao&' - '&referencia  FROM produto  WHERE tipo = 'PRODUTO' ORDER BY descricao, referencia";
    }
    elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
    {
-       $nm_comando = "SELECT idproduto, descricao||' - '||referencia  FROM produto  ORDER BY descricao, referencia";
+       $nm_comando = "SELECT idproduto, descricao||' - '||referencia  FROM produto  WHERE tipo = 'PRODUTO' ORDER BY descricao, referencia";
    }
    else
    {
-       $nm_comando = "SELECT idproduto, descricao||' - '||referencia  FROM produto  ORDER BY descricao, referencia";
+       $nm_comando = "SELECT idproduto, descricao||' - '||referencia  FROM produto  WHERE tipo = 'PRODUTO' ORDER BY descricao, referencia";
    }
 
    $this->idmovimentacao_estoque = $old_value_idmovimentacao_estoque;

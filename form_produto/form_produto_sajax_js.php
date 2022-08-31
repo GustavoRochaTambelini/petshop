@@ -3168,6 +3168,43 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
     scAjaxSetFocus();
   } // do_ajax_form_produto_validate_valor_cb
 
+  // ---------- Validate margem_lucro
+  function do_ajax_form_produto_validate_margem_lucro()
+  {
+    var nomeCampo_margem_lucro = "margem_lucro";
+    var var_margem_lucro = scAjaxGetFieldText(nomeCampo_margem_lucro);
+    var var_script_case_init = document.F1.script_case_init.value;
+    x_ajax_form_produto_validate_margem_lucro(var_margem_lucro, var_script_case_init, do_ajax_form_produto_validate_margem_lucro_cb);
+  } // do_ajax_form_produto_validate_margem_lucro
+
+  function do_ajax_form_produto_validate_margem_lucro_cb(sResp)
+  {
+    oResp = scAjaxResponse(sResp);
+    scAjaxRedir();
+    sFieldValid = "margem_lucro";
+    scEventControl_onBlur(sFieldValid);
+    scAjaxUpdateFieldErrors(sFieldValid, "valid");
+    sFieldErrors = scAjaxListFieldErrors(sFieldValid, false);
+    if ("" == sFieldErrors)
+    {
+      var sImgStatus = sc_img_status_ok;
+      scAjaxHideErrorDisplay(sFieldValid);
+    }
+    else
+    {
+      var sImgStatus = sc_img_status_err;
+      scAjaxShowErrorDisplay(sFieldValid, sFieldErrors);
+    }
+    var $oImg = $('#id_sc_status_' + sFieldValid);
+    if (0 < $oImg.length)
+    {
+      $oImg.attr('src', sImgStatus).css('display', '');
+    }
+    scAjaxShowDebug();
+    scAjaxSetMaster();
+    scAjaxSetFocus();
+  } // do_ajax_form_produto_validate_margem_lucro_cb
+
   // ---------- Validate estoque_minimo
   function do_ajax_form_produto_validate_estoque_minimo()
   {
@@ -3426,6 +3463,100 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
     scAjaxSetMaster();
     scAjaxSetFocus();
   } // do_ajax_form_produto_validate_foto_cb
+
+  // ---------- Event onblur custo
+  function do_ajax_form_produto_event_custo_onblur()
+  {
+    var var_valor = scAjaxGetFieldText("valor");
+    var var_custo = scAjaxGetFieldText("custo");
+    var var_margem_lucro = scAjaxGetFieldText("margem_lucro");
+    var var_script_case_init = document.F2.script_case_init.value;
+    scAjaxProcOn(true);
+    x_ajax_form_produto_event_custo_onblur(var_valor, var_custo, var_margem_lucro, var_script_case_init, do_ajax_form_produto_event_custo_onblur_cb);
+  } // do_ajax_form_produto_event_custo_onblur
+
+  function do_ajax_form_produto_event_custo_onblur_cb(sResp)
+  {
+    scAjaxProcOff(true);
+    oResp = scAjaxResponse(sResp);
+    sFieldValid = "custo";
+    scAjaxUpdateFieldErrors(sFieldValid, "onblur");
+    sFieldErrors = scAjaxListFieldErrors(sFieldValid, false);
+    if ("" == sFieldErrors)
+    {
+      scAjaxHideErrorDisplay(sFieldValid);
+    }
+    else
+    {
+      scAjaxShowErrorDisplay(sFieldValid, sFieldErrors);
+    }
+    if (!scAjaxHasError())
+    {
+      scAjaxSetFields();
+      scAjaxSetVariables();
+    }
+    scAjaxShowDebug();
+    scAjaxSetDisplay();
+    scBtnDisabled();
+    scBtnLabel();
+    scAjaxSetLabel();
+    scAjaxSetReadonly();
+    scAjaxSetMaster();
+    scAjaxAlert(do_ajax_form_produto_event_custo_onblur_cb_after_alert);
+  } // do_ajax_form_produto_event_custo_onblur_cb
+  function do_ajax_form_produto_event_custo_onblur_cb_after_alert() {
+    scAjaxMessage();
+    scAjaxJavascript();
+    scAjaxSetFocus();
+    scAjaxRedir();
+  } // do_ajax_form_produto_event_custo_onblur_cb_after_alert
+
+  // ---------- Event onblur valor
+  function do_ajax_form_produto_event_valor_onblur()
+  {
+    var var_valor = scAjaxGetFieldText("valor");
+    var var_custo = scAjaxGetFieldText("custo");
+    var var_margem_lucro = scAjaxGetFieldText("margem_lucro");
+    var var_script_case_init = document.F2.script_case_init.value;
+    scAjaxProcOn(true);
+    x_ajax_form_produto_event_valor_onblur(var_valor, var_custo, var_margem_lucro, var_script_case_init, do_ajax_form_produto_event_valor_onblur_cb);
+  } // do_ajax_form_produto_event_valor_onblur
+
+  function do_ajax_form_produto_event_valor_onblur_cb(sResp)
+  {
+    scAjaxProcOff(true);
+    oResp = scAjaxResponse(sResp);
+    sFieldValid = "valor";
+    scAjaxUpdateFieldErrors(sFieldValid, "onblur");
+    sFieldErrors = scAjaxListFieldErrors(sFieldValid, false);
+    if ("" == sFieldErrors)
+    {
+      scAjaxHideErrorDisplay(sFieldValid);
+    }
+    else
+    {
+      scAjaxShowErrorDisplay(sFieldValid, sFieldErrors);
+    }
+    if (!scAjaxHasError())
+    {
+      scAjaxSetFields();
+      scAjaxSetVariables();
+    }
+    scAjaxShowDebug();
+    scAjaxSetDisplay();
+    scBtnDisabled();
+    scBtnLabel();
+    scAjaxSetLabel();
+    scAjaxSetReadonly();
+    scAjaxSetMaster();
+    scAjaxAlert(do_ajax_form_produto_event_valor_onblur_cb_after_alert);
+  } // do_ajax_form_produto_event_valor_onblur_cb
+  function do_ajax_form_produto_event_valor_onblur_cb_after_alert() {
+    scAjaxMessage();
+    scAjaxJavascript();
+    scAjaxSetFocus();
+    scAjaxRedir();
+  } // do_ajax_form_produto_event_valor_onblur_cb_after_alert
 function scAjaxShowErrorDisplay(sErrorId, sErrorMsg) {
 	if ("table" != sErrorId && !$("id_error_display_" + sErrorId + "_frame").hasClass('scFormToastDivFixed')) {
 		scAjaxShowErrorDisplay_default(sErrorId, sErrorMsg);
@@ -3727,6 +3858,7 @@ function scJs_sweetalert_params(params) {
     var var_descricao = scAjaxGetFieldText("descricao");
     var var_custo = scAjaxGetFieldText("custo");
     var var_valor = scAjaxGetFieldText("valor");
+    var var_margem_lucro = scAjaxGetFieldText("margem_lucro");
     var var_estoque_minimo = scAjaxGetFieldText("estoque_minimo");
     var var_tipo = scAjaxGetFieldSelect("tipo");
     var var_idgrupo = scAjaxGetFieldSelect("idgrupo");
@@ -3746,7 +3878,7 @@ function scJs_sweetalert_params(params) {
     var var_script_case_init = document.F1.script_case_init.value;
     var var_csrf_token = scAjaxGetFieldText("csrf_token");
     scAjaxProcOn();
-    x_ajax_form_produto_submit_form(var_idproduto, var_referencia, var_codigo_de_barras, var_descricao, var_custo, var_valor, var_estoque_minimo, var_tipo, var_idgrupo, var_idsubgrupo, var_idmarca, var_idunidade, var_foto, var_foto_ul_name, var_foto_ul_type, var_foto_limpa, var_nm_form_submit, var_nmgp_url_saida, var_nmgp_opcao, var_nmgp_ancora, var_nmgp_num_form, var_nmgp_parms, var_script_case_init, var_csrf_token, do_ajax_form_produto_submit_form_cb);
+    x_ajax_form_produto_submit_form(var_idproduto, var_referencia, var_codigo_de_barras, var_descricao, var_custo, var_valor, var_margem_lucro, var_estoque_minimo, var_tipo, var_idgrupo, var_idsubgrupo, var_idmarca, var_idunidade, var_foto, var_foto_ul_name, var_foto_ul_type, var_foto_limpa, var_nm_form_submit, var_nmgp_url_saida, var_nmgp_opcao, var_nmgp_ancora, var_nmgp_num_form, var_nmgp_parms, var_script_case_init, var_csrf_token, do_ajax_form_produto_submit_form_cb);
   } // do_ajax_form_produto_submit_form
 
   function do_ajax_form_produto_submit_form_cb(sResp)
@@ -3776,6 +3908,7 @@ function scJs_sweetalert_params(params) {
       scAjaxHideErrorDisplay("descricao");
       scAjaxHideErrorDisplay("custo");
       scAjaxHideErrorDisplay("valor");
+      scAjaxHideErrorDisplay("margem_lucro");
       scAjaxHideErrorDisplay("estoque_minimo");
       scAjaxHideErrorDisplay("tipo");
       scAjaxHideErrorDisplay("idgrupo");
@@ -3858,6 +3991,7 @@ if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_produto']['dashboar
     scAjaxHideErrorDisplay("descricao");
     scAjaxHideErrorDisplay("custo");
     scAjaxHideErrorDisplay("valor");
+    scAjaxHideErrorDisplay("margem_lucro");
     scAjaxHideErrorDisplay("estoque_minimo");
     scAjaxHideErrorDisplay("tipo");
     scAjaxHideErrorDisplay("idgrupo");
@@ -3958,13 +4092,14 @@ if ($this->Embutida_form)
   ajax_field_list[3] = "descricao";
   ajax_field_list[4] = "custo";
   ajax_field_list[5] = "valor";
-  ajax_field_list[6] = "estoque_minimo";
-  ajax_field_list[7] = "tipo";
-  ajax_field_list[8] = "idgrupo";
-  ajax_field_list[9] = "idsubgrupo";
-  ajax_field_list[10] = "idmarca";
-  ajax_field_list[11] = "idunidade";
-  ajax_field_list[12] = "foto";
+  ajax_field_list[6] = "margem_lucro";
+  ajax_field_list[7] = "estoque_minimo";
+  ajax_field_list[8] = "tipo";
+  ajax_field_list[9] = "idgrupo";
+  ajax_field_list[10] = "idsubgrupo";
+  ajax_field_list[11] = "idmarca";
+  ajax_field_list[12] = "idunidade";
+  ajax_field_list[13] = "foto";
 
   var ajax_block_list = new Array();
   ajax_block_list[0] = "0";
@@ -3978,6 +4113,7 @@ if ($this->Embutida_form)
     "descricao": {"label": "DESCRIÇÃO", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "custo": {"label": "CUSTO", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "valor": {"label": "VALOR DE VENDA", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
+    "margem_lucro": {"label": "MARGEM DE LUCRO (%)", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "estoque_minimo": {"label": "ESTOQUE MINIMO", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "tipo": {"label": "TIPO", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "idgrupo": {"label": "GRUPO", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
@@ -4007,6 +4143,7 @@ if ($this->Embutida_form)
     "descricao": new Array(),
     "custo": new Array(),
     "valor": new Array(),
+    "margem_lucro": new Array(),
     "estoque_minimo": new Array(),
     "tipo": new Array(),
     "idgrupo": new Array(),
@@ -4021,6 +4158,7 @@ if ($this->Embutida_form)
   ajax_field_mult["descricao"][1] = "descricao";
   ajax_field_mult["custo"][1] = "custo";
   ajax_field_mult["valor"][1] = "valor";
+  ajax_field_mult["margem_lucro"][1] = "margem_lucro";
   ajax_field_mult["estoque_minimo"][1] = "estoque_minimo";
   ajax_field_mult["tipo"][1] = "tipo";
   ajax_field_mult["idgrupo"][1] = "idgrupo";
@@ -4036,6 +4174,7 @@ if ($this->Embutida_form)
     "descricao": new Array("hidden_field_label_descricao", "hidden_field_data_descricao"),
     "custo": new Array("hidden_field_label_custo", "hidden_field_data_custo"),
     "valor": new Array("hidden_field_label_valor", "hidden_field_data_valor"),
+    "margem_lucro": new Array("hidden_field_label_margem_lucro", "hidden_field_data_margem_lucro"),
     "estoque_minimo": new Array("hidden_field_label_estoque_minimo", "hidden_field_data_estoque_minimo"),
     "tipo": new Array("hidden_field_label_tipo", "hidden_field_data_tipo"),
     "idgrupo": new Array("hidden_field_label_idgrupo", "hidden_field_data_idgrupo"),
@@ -4052,6 +4191,7 @@ if ($this->Embutida_form)
     "descricao": "off",
     "custo": "off",
     "valor": "off",
+    "margem_lucro": "off",
     "estoque_minimo": "off",
     "tipo": "off",
     "idgrupo": "off",
@@ -4156,6 +4296,23 @@ if ($this->Embutida_form)
       return;
     }
     if ("valor" == sIndex)
+    {
+      scAjaxSetFieldText(sIndex, aValue, "", "", true);
+      updateHeaderFooter(sIndex, aValue);
+
+      if ($("#id_sc_field_" + sIndex).length) {
+          $("#id_sc_field_" + sIndex).change();
+      }
+      else if (document.F1.elements[sIndex]) {
+          $(document.F1.elements[sIndex]).change();
+      }
+      else if (document.F1.elements[sFieldName + "[]"]) {
+          $(document.F1.elements[sFieldName + "[]"]).change();
+      }
+
+      return;
+    }
+    if ("margem_lucro" == sIndex)
     {
       scAjaxSetFieldText(sIndex, aValue, "", "", true);
       updateHeaderFooter(sIndex, aValue);

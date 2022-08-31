@@ -1086,7 +1086,7 @@ unset($NM_ult_sep);
 <input type="hidden" name="referencia" value="<?php echo $this->form_encode_input($referencia) . "\">"; ?>
 <?php } else { $sc_hidden_no++; ?>
 
-    <TD class="scFormLabelOdd scUiLabelWidthFix css_referencia_label" id="hidden_field_label_referencia" style="<?php echo $sStyleHidden_referencia; ?>"><span id="id_label_referencia"><?php echo $this->nm_new_label['referencia']; ?></span><?php if (!isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_produto']['php_cmp_required']['referencia']) || $_SESSION['sc_session'][$this->Ini->sc_page]['form_produto']['php_cmp_required']['referencia'] == "on") { ?> <span class="scFormRequiredOdd">*</span> <?php }?></TD>
+    <TD class="scFormLabelOdd scUiLabelWidthFix css_referencia_label" id="hidden_field_label_referencia" style="<?php echo $sStyleHidden_referencia; ?>"><span id="id_label_referencia"><?php echo $this->nm_new_label['referencia']; ?></span></TD>
     <TD class="scFormDataOdd css_referencia_line" id="hidden_field_data_referencia" style="<?php echo $sStyleHidden_referencia; ?>"><table style="border-width: 0px; border-collapse: collapse; width: 100%"><tr><td  class="scFormDataFontOdd css_referencia_line" style="vertical-align: top;padding: 0px">
 <?php if ($bTestReadOnly && $this->nmgp_opcao != "novo" && isset($this->nmgp_cmp_readonly["referencia"]) &&  $this->nmgp_cmp_readonly["referencia"] == "on") { 
 
@@ -1286,6 +1286,50 @@ unset($NM_ult_sep);
    <?php }?>
 
    <?php
+    if (!isset($this->nm_new_label['margem_lucro']))
+    {
+        $this->nm_new_label['margem_lucro'] = "MARGEM DE LUCRO (%)";
+    }
+?>
+<?php
+   $nm_cor_fun_cel  = (isset($nm_cor_fun_cel) && $nm_cor_fun_cel  == $this->Ini->cor_grid_impar ? $this->Ini->cor_grid_par : $this->Ini->cor_grid_impar);
+   $nm_img_fun_cel  = (isset($nm_img_fun_cel) && $nm_img_fun_cel  == $this->Ini->img_fun_imp    ? $this->Ini->img_fun_par  : $this->Ini->img_fun_imp);
+   $margem_lucro = $this->margem_lucro;
+   $sStyleHidden_margem_lucro = '';
+   if (isset($this->nmgp_cmp_hidden['margem_lucro']) && $this->nmgp_cmp_hidden['margem_lucro'] == 'off')
+   {
+       unset($this->nmgp_cmp_hidden['margem_lucro']);
+       $sStyleHidden_margem_lucro = 'display: none;';
+   }
+   $bTestReadOnly = true;
+   $sStyleReadLab_margem_lucro = 'display: none;';
+   $sStyleReadInp_margem_lucro = '';
+   if (/*$this->nmgp_opcao != "novo" && */isset($this->nmgp_cmp_readonly['margem_lucro']) && $this->nmgp_cmp_readonly['margem_lucro'] == 'on')
+   {
+       $bTestReadOnly = false;
+       unset($this->nmgp_cmp_readonly['margem_lucro']);
+       $sStyleReadLab_margem_lucro = '';
+       $sStyleReadInp_margem_lucro = 'display: none;';
+   }
+?>
+<?php if (isset($this->nmgp_cmp_hidden['margem_lucro']) && $this->nmgp_cmp_hidden['margem_lucro'] == 'off') { $sc_hidden_yes++;  ?>
+<input type="hidden" name="margem_lucro" value="<?php echo $this->form_encode_input($margem_lucro) . "\">"; ?>
+<?php } else { $sc_hidden_no++; ?>
+
+    <TD class="scFormLabelOdd scUiLabelWidthFix css_margem_lucro_label" id="hidden_field_label_margem_lucro" style="<?php echo $sStyleHidden_margem_lucro; ?>"><span id="id_label_margem_lucro"><?php echo $this->nm_new_label['margem_lucro']; ?></span></TD>
+    <TD class="scFormDataOdd css_margem_lucro_line" id="hidden_field_data_margem_lucro" style="<?php echo $sStyleHidden_margem_lucro; ?>"><table style="border-width: 0px; border-collapse: collapse; width: 100%"><tr><td  class="scFormDataFontOdd css_margem_lucro_line" style="vertical-align: top;padding: 0px">
+<?php if ($bTestReadOnly && $this->nmgp_opcao != "novo" && isset($this->nmgp_cmp_readonly["margem_lucro"]) &&  $this->nmgp_cmp_readonly["margem_lucro"] == "on") { 
+
+ ?>
+<input type="hidden" name="margem_lucro" value="<?php echo $this->form_encode_input($margem_lucro) . "\">" . $margem_lucro . ""; ?>
+<?php } else { ?>
+<span id="id_read_on_margem_lucro" class="sc-ui-readonly-margem_lucro css_margem_lucro_line" style="<?php echo $sStyleReadLab_margem_lucro; ?>"><?php echo $this->form_format_readonly("margem_lucro", $this->form_encode_input($this->margem_lucro)); ?></span><span id="id_read_off_margem_lucro" class="css_read_off_margem_lucro<?php echo $this->classes_100perc_fields['span_input'] ?>" style="white-space: nowrap;<?php echo $sStyleReadInp_margem_lucro; ?>">
+ <input class="sc-js-input scFormObjectOdd css_margem_lucro_obj<?php echo $this->classes_100perc_fields['input'] ?>" style="" id="id_sc_field_margem_lucro" type=text name="margem_lucro" value="<?php echo $this->form_encode_input($margem_lucro) ?>"
+ <?php if ($this->classes_100perc_fields['keep_field_size']) { echo "size=15"; } ?> alt="{datatype: 'decimal', maxLength: 15, precision: 3, decimalSep: '<?php echo str_replace("'", "\'", $this->field_config['margem_lucro']['symbol_dec']); ?>', thousandsSep: '<?php echo str_replace("'", "\'", $this->field_config['margem_lucro']['symbol_grp']); ?>', thousandsFormat: <?php echo $this->field_config['margem_lucro']['symbol_fmt']; ?>, manualDecimals: false, allowNegative: false, onlyNegative: false, negativePos: <?php echo (4 == $this->field_config['margem_lucro']['format_neg'] ? "'suffix'" : "'prefix'") ?>, alignment: 'left', enterTab: false, enterSubmit: false, autoTab: false, selectOnFocus: true, watermark: '', watermarkClass: 'scFormObjectOddWm', maskChars: '(){}[].,;:-+/ '}" ></span><?php } ?>
+</td></tr><tr><td style="vertical-align: top; padding: 0"><table class="scFormFieldErrorTable" style="display: none" id="id_error_display_margem_lucro_frame"><tr><td class="scFormFieldErrorMessage"><span id="id_error_display_margem_lucro_text"></span></td></tr></table></td></tr></table></TD>
+   <?php }?>
+
+   <?php
     if (!isset($this->nm_new_label['estoque_minimo']))
     {
         $this->nm_new_label['estoque_minimo'] = "ESTOQUE MINIMO";
@@ -1329,6 +1373,16 @@ unset($NM_ult_sep);
 </td></tr><tr><td style="vertical-align: top; padding: 0"><table class="scFormFieldErrorTable" style="display: none" id="id_error_display_estoque_minimo_frame"><tr><td class="scFormFieldErrorMessage"><span id="id_error_display_estoque_minimo_text"></span></td></tr></table></td></tr></table></TD>
    <?php }?>
 
+<?php if ($sc_hidden_yes > 0 && $sc_hidden_no > 0) { ?>
+
+
+    <TD class="scFormDataOdd" colspan="<?php echo $sc_hidden_yes * 2; ?>" >&nbsp;</TD>
+<?php } 
+?> 
+<?php if ($sc_hidden_no > 0) { echo "<tr>"; }; 
+      $sc_hidden_yes = 0; $sc_hidden_no = 0; ?>
+
+
    <?php
    if (!isset($this->nm_new_label['tipo']))
    {
@@ -1387,14 +1441,12 @@ $tipo_look = "";
 </td></tr><tr><td style="vertical-align: top; padding: 0"><table class="scFormFieldErrorTable" style="display: none" id="id_error_display_tipo_frame"><tr><td class="scFormFieldErrorMessage"><span id="id_error_display_tipo_text"></span></td></tr></table></td></tr></table></TD>
    <?php }?>
 
-<?php if ($sc_hidden_yes > 0 && $sc_hidden_no > 0) { ?>
+    <TD class="scFormDataOdd" colspan="6" >&nbsp;</TD>
+<?php if ($sc_hidden_yes > 0) { ?>
 
 
     <TD class="scFormDataOdd" colspan="<?php echo $sc_hidden_yes * 2; ?>" >&nbsp;</TD>
-<?php } 
-?> 
-
-
+<?php } ?>
    </tr>
 <?php $sc_hidden_no = 1; ?>
 </TABLE></div><!-- bloco_f -->
@@ -1467,6 +1519,7 @@ else
    $old_value_idproduto = $this->idproduto;
    $old_value_custo = $this->custo;
    $old_value_valor = $this->valor;
+   $old_value_margem_lucro = $this->margem_lucro;
    $old_value_estoque_minimo = $this->estoque_minimo;
    $this->nm_tira_formatacao();
 
@@ -1474,6 +1527,7 @@ else
    $unformatted_value_idproduto = $this->idproduto;
    $unformatted_value_custo = $this->custo;
    $unformatted_value_valor = $this->valor;
+   $unformatted_value_margem_lucro = $this->margem_lucro;
    $unformatted_value_estoque_minimo = $this->estoque_minimo;
 
    $nm_comando = "SELECT idgrupo, descricao  FROM gurpo  ORDER BY descricao";
@@ -1481,6 +1535,7 @@ else
    $this->idproduto = $old_value_idproduto;
    $this->custo = $old_value_custo;
    $this->valor = $old_value_valor;
+   $this->margem_lucro = $old_value_margem_lucro;
    $this->estoque_minimo = $old_value_estoque_minimo;
 
    $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
@@ -1641,6 +1696,7 @@ else
    $old_value_idproduto = $this->idproduto;
    $old_value_custo = $this->custo;
    $old_value_valor = $this->valor;
+   $old_value_margem_lucro = $this->margem_lucro;
    $old_value_estoque_minimo = $this->estoque_minimo;
    $this->nm_tira_formatacao();
 
@@ -1648,6 +1704,7 @@ else
    $unformatted_value_idproduto = $this->idproduto;
    $unformatted_value_custo = $this->custo;
    $unformatted_value_valor = $this->valor;
+   $unformatted_value_margem_lucro = $this->margem_lucro;
    $unformatted_value_estoque_minimo = $this->estoque_minimo;
 
    $nm_comando = "SELECT idsubgrupo, descricao  FROM subgrupo  ORDER BY descricao";
@@ -1655,6 +1712,7 @@ else
    $this->idproduto = $old_value_idproduto;
    $this->custo = $old_value_custo;
    $this->valor = $old_value_valor;
+   $this->margem_lucro = $old_value_margem_lucro;
    $this->estoque_minimo = $old_value_estoque_minimo;
 
    $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
@@ -1815,6 +1873,7 @@ else
    $old_value_idproduto = $this->idproduto;
    $old_value_custo = $this->custo;
    $old_value_valor = $this->valor;
+   $old_value_margem_lucro = $this->margem_lucro;
    $old_value_estoque_minimo = $this->estoque_minimo;
    $this->nm_tira_formatacao();
 
@@ -1822,6 +1881,7 @@ else
    $unformatted_value_idproduto = $this->idproduto;
    $unformatted_value_custo = $this->custo;
    $unformatted_value_valor = $this->valor;
+   $unformatted_value_margem_lucro = $this->margem_lucro;
    $unformatted_value_estoque_minimo = $this->estoque_minimo;
 
    $nm_comando = "SELECT idmarca, descricao  FROM marca  ORDER BY descricao";
@@ -1829,6 +1889,7 @@ else
    $this->idproduto = $old_value_idproduto;
    $this->custo = $old_value_custo;
    $this->valor = $old_value_valor;
+   $this->margem_lucro = $old_value_margem_lucro;
    $this->estoque_minimo = $old_value_estoque_minimo;
 
    $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
@@ -1989,6 +2050,7 @@ else
    $old_value_idproduto = $this->idproduto;
    $old_value_custo = $this->custo;
    $old_value_valor = $this->valor;
+   $old_value_margem_lucro = $this->margem_lucro;
    $old_value_estoque_minimo = $this->estoque_minimo;
    $this->nm_tira_formatacao();
 
@@ -1996,6 +2058,7 @@ else
    $unformatted_value_idproduto = $this->idproduto;
    $unformatted_value_custo = $this->custo;
    $unformatted_value_valor = $this->valor;
+   $unformatted_value_margem_lucro = $this->margem_lucro;
    $unformatted_value_estoque_minimo = $this->estoque_minimo;
 
    $nm_comando = "SELECT idunidade, descricao  FROM unidade  ORDER BY descricao";
@@ -2003,6 +2066,7 @@ else
    $this->idproduto = $old_value_idproduto;
    $this->custo = $old_value_custo;
    $this->valor = $old_value_valor;
+   $this->margem_lucro = $old_value_margem_lucro;
    $this->estoque_minimo = $old_value_estoque_minimo;
 
    $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;

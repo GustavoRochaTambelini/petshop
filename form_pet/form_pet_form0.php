@@ -1351,7 +1351,7 @@ else
 <input type="hidden" name="nome" value="<?php echo $this->form_encode_input($nome) . "\">"; ?>
 <?php } else { $sc_hidden_no++; ?>
 
-    <TD class="scFormDataOdd css_nome_line" id="hidden_field_data_nome" style="<?php echo $sStyleHidden_nome; ?>vertical-align: top;"> <table style="border-width: 0px; border-collapse: collapse; width: 100%"><tr><td  class="scFormDataFontOdd css_nome_line" style="vertical-align: top;padding: 0px"><span class="scFormLabelOddFormat css_nome_label" style=""><span id="id_label_nome"><?php echo $this->nm_new_label['nome']; ?></span></span><br>
+    <TD class="scFormDataOdd css_nome_line" id="hidden_field_data_nome" style="<?php echo $sStyleHidden_nome; ?>vertical-align: top;"> <table style="border-width: 0px; border-collapse: collapse; width: 100%"><tr><td  class="scFormDataFontOdd css_nome_line" style="vertical-align: top;padding: 0px"><span class="scFormLabelOddFormat css_nome_label" style=""><span id="id_label_nome"><?php echo $this->nm_new_label['nome']; ?></span><?php if (!isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_pet']['php_cmp_required']['nome']) || $_SESSION['sc_session'][$this->Ini->sc_page]['form_pet']['php_cmp_required']['nome'] == "on") { ?> <span class="scFormRequiredOdd">*</span> <?php }?></span><br>
 <?php if ($bTestReadOnly && $this->nmgp_opcao != "novo" && isset($this->nmgp_cmp_readonly["nome"]) &&  $this->nmgp_cmp_readonly["nome"] == "on") { 
 
  ?>
@@ -1787,7 +1787,7 @@ else
 <input type=hidden name="idpet_raca" value="<?php echo $this->form_encode_input($this->idpet_raca) . "\">"; ?>
 <?php } else { $sc_hidden_no++; ?>
 
-    <TD class="scFormDataOdd css_idpet_raca_line" id="hidden_field_data_idpet_raca" style="<?php echo $sStyleHidden_idpet_raca; ?>vertical-align: top;"> <table style="border-width: 0px; border-collapse: collapse; width: 100%"><tr><td  class="scFormDataFontOdd css_idpet_raca_line" style="vertical-align: top;padding: 0px"><span class="scFormLabelOddFormat css_idpet_raca_label" style=""><span id="id_label_idpet_raca"><?php echo $this->nm_new_label['idpet_raca']; ?></span></span><br>
+    <TD class="scFormDataOdd css_idpet_raca_line" id="hidden_field_data_idpet_raca" style="<?php echo $sStyleHidden_idpet_raca; ?>vertical-align: top;"> <table style="border-width: 0px; border-collapse: collapse; width: 100%"><tr><td  class="scFormDataFontOdd css_idpet_raca_line" style="vertical-align: top;padding: 0px"><span class="scFormLabelOddFormat css_idpet_raca_label" style=""><span id="id_label_idpet_raca"><?php echo $this->nm_new_label['idpet_raca']; ?></span><?php if (!isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_pet']['php_cmp_required']['idpet_raca']) || $_SESSION['sc_session'][$this->Ini->sc_page]['form_pet']['php_cmp_required']['idpet_raca'] == "on") { ?> <span class="scFormRequiredOdd">*</span> <?php }?></span><br>
 <?php if ($bTestReadOnly && $this->nmgp_opcao != "novo" && isset($this->nmgp_cmp_readonly["idpet_raca"]) &&  $this->nmgp_cmp_readonly["idpet_raca"] == "on") { 
  
 $nmgp_def_dados = "" ; 
@@ -2299,6 +2299,9 @@ else
    </td></tr></table>
    </tr>
 </TABLE></div><!-- bloco_f -->
+</td></tr>
+<tr id="sc-id-required-row"><td class="scFormPageText">
+<span class="scFormRequiredOddColor">* <?php echo $this->Ini->Nm_lang['lang_othr_reqr']; ?></span>
 </td></tr> 
 </table> 
 </div> 

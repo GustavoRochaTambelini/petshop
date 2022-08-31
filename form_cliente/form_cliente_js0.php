@@ -498,88 +498,6 @@ function sc_rtrim(str, chars) {
         chars = chars || "\\s";
         return str.replace(new RegExp("[" + chars + "]+$", "g"), "");
 }
-var CEP     = 0;
-var RUA     = 1;
-var TIPOEXT = 2;
-var LOGRAD  = 3;
-var BAIRRO  = 4;
-var CIDADE  = 5;
-var UF      = 6;
-var LAT     = 7;
-var LONG    = 8;
-function cep_updateSelect(campo, valor) {
-	var oFormField = $("#id_sc_field_" + campo);
-	oFormField.val(valor);
-	if (oFormField.hasClass("select2-hidden-accessible")) {
-        $("#id_sc_field_" + campo).select2("destroy");
-		var select2Field = campo;
-        scJQSelect2Add("", select2Field);
-	}
-}
-function cep_array(string)
-{
-   return string.split("#;#");
-}
-function cep_cep(num_cep, campos_cep)
-{
-   retorno_cep  = campos_cep;
-   jsrsExecute("form_cliente_cep.php?cep=" + num_cep + "&onchange=s", recebe_cep, "cep", num_cep, false);
-}
-function recebe_cep(string)
-{
-   if (string.substr(0, 3) == "nao")
-   {
-       alert ("<?php echo html_entity_decode($this->Ini->Nm_lang['lang_othr_cepn'], ENT_COMPAT, $_SESSION['scriptcase']['charset']); ?>");
-       return;
-   }
-   if (string.substr(0, 4) == "scep")
-   {
-       alert (string.substr(4));
-       return;
-   }
-   arr_dados  = cep_array(string);
-   retorno_cep += ";";
-   arr_campos = retorno_cep.split(";");
-   ix = 1;
-   var returnValues = {};
-   while (arr_campos[ix] != "")
-   {
-       arr_cada_cmp = arr_campos[ix].split(",");
-       if (arr_cada_cmp[0] == "CEP")    { ind = 0;}
-       if (arr_cada_cmp[0] == "RUA")    { ind = 1;}
-       if (arr_cada_cmp[0] == "TIPOEXT"){ ind = 2;}
-       if (arr_cada_cmp[0] == "LOGRAD") { ind = 3;}
-       if (arr_cada_cmp[0] == "BAIRRO") { ind = 4;}
-       if (arr_cada_cmp[0] == "CIDADE") { ind = 5;}
-       if (arr_cada_cmp[0] == "UF")     { ind = 6;}
-       if (arr_cada_cmp[0] == "LAT")    { ind = 7;}
-       if (arr_cada_cmp[0] == "LONG")   { ind = 8;}
-       dado_saida = arr_dados[ind];
-       xxx = eval("document.F1." + arr_cada_cmp[1] + ".value = " + 'dado_saida');
-       returnValues[ arr_cada_cmp[1] ] = {"type": arr_cada_cmp[0], "value": dado_saida};
-       Obj_Ret_Cep = 'id_read_on_' + arr_cada_cmp[1];
-       if (document.getElementById(Obj_Ret_Cep))
-       {
-           document.getElementById(Obj_Ret_Cep).innerHTML = dado_saida;
-       }
-       Obj_Ret_Cep = 'id_ajax_label_' + arr_cada_cmp[1];
-       if (document.getElementById(Obj_Ret_Cep))
-       {
-           document.getElementById(Obj_Ret_Cep).innerHTML = dado_saida;
-       }
-       Obj_Ret_Cep = 'id_ac_' + arr_cada_cmp[1];
-       if (document.getElementById(Obj_Ret_Cep))
-       {
-           document.getElementById(Obj_Ret_Cep).value = dado_saida;
-       }
-       var fieldObj = $("#id_sc_field_" + arr_cada_cmp[1]);
-       if (fieldObj.length && ("select" == fieldObj[0].type || "select-one" == fieldObj[0].type || "select-multiple" == fieldObj[0].type)) {
-           cep_updateSelect(arr_cada_cmp[1], dado_saida);
-       }
-       ix++;
-   }
-   cepReturnValues(returnValues);
-}
 var hasJsFormOnload = false;
 $(function() {
     $(".sc-tab-click").on("click", function() {
@@ -599,6 +517,14 @@ function sc_exib_ocult_pag(N_pagina)
     document.getElementById('form_cliente_form1').style.height='0px';
     document.getElementById('form_cliente_form1').style.display='none';
     document.getElementById('form_cliente_form1').style.overflow='scroll';
+    document.getElementById('form_cliente_form2').style.width='1px';
+    document.getElementById('form_cliente_form2').style.height='0px';
+    document.getElementById('form_cliente_form2').style.display='none';
+    document.getElementById('form_cliente_form2').style.overflow='scroll';
+    document.getElementById('form_cliente_form3').style.width='1px';
+    document.getElementById('form_cliente_form3').style.height='0px';
+    document.getElementById('form_cliente_form3').style.display='none';
+    document.getElementById('form_cliente_form3').style.overflow='scroll';
 <?php
     if (!$_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['pdf_view']) {
 ?>
@@ -618,11 +544,13 @@ function sc_exib_ocult_pag(N_pagina)
     pag_ativa = N_pagina;
     sc_tab_pag(pag_ativa, 'scTabActive');
     displayChange_page(pag_ativa.substr(17), 'on');
-   if ("form_cliente_form0" == N_pagina) {
+   if ("form_cliente_form1" == N_pagina) {
      scAjaxDetailHeight("form_telefone", $($("#nmsc_iframe_liga_form_telefone")[0].contentWindow.document).innerHeight());
+    }
+   if ("form_cliente_form2" == N_pagina) {
      scAjaxDetailHeight("form_outros_respensaveis", $($("#nmsc_iframe_liga_form_outros_respensaveis")[0].contentWindow.document).innerHeight());
     }
-   if ("form_cliente_form1" == N_pagina) {
+   if ("form_cliente_form3" == N_pagina) {
      scAjaxDetailHeight("form_pet_cliente", $($("#nmsc_iframe_liga_form_pet_cliente")[0].contentWindow.document).innerHeight());
     }
 }

@@ -1064,6 +1064,7 @@ $orderColRule = '';
 
         // label & order
         $divLabelStyle = '; justify-content: left';
+        $label_fieldName .= "&nbsp;<span class=\"scFormRequiredOddMult\">*</span>&nbsp;";
         $fieldSortRule = $this->scGetColumnOrderRule("nome", $orderColName, $orderColOrient, $orderColRule);
         $fieldSortIcon = $this->scGetColumnOrderIcon("nome", $fieldSortRule);
 
@@ -1115,6 +1116,7 @@ $orderColRule = '';
 
         // label & order
         $divLabelStyle = '; justify-content: left';
+        $label_fieldName .= "&nbsp;<span class=\"scFormRequiredOddMult\">*</span>&nbsp;";
         $fieldSortRule = $this->scGetColumnOrderRule("idpet_raca", $orderColName, $orderColOrient, $orderColRule);
         $fieldSortIcon = $this->scGetColumnOrderIcon("idpet_raca", $fieldSortRule);
 
@@ -2447,6 +2449,9 @@ if ($sc_seq_vert < $this->sc_max_reg)
 <tr id="sc-ui-empty-form" style="<?php echo $sEmptyStyle; ?>"><td class="scFormPageText" style="padding: 10px; font-weight: bold">
 <?php echo $this->Ini->Nm_lang['lang_errm_empt'];
 ?>
+</td></tr>
+<tr id="sc-id-required-row"><td class="scFormPageText">
+<span class="scFormRequiredOddColorMult">* <?php echo $this->Ini->Nm_lang['lang_othr_reqr']; ?></span>
 </td></tr> 
 </table> 
 </div> 

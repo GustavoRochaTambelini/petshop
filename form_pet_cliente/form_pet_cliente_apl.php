@@ -2845,6 +2845,24 @@ class form_pet_cliente_apl
         global $teste_validade;
         $hasError = false;
       $this->nome_ = sc_strtoupper($this->nome_); 
+      if ($this->nmgp_opcao != "excluir" && (!isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_pet_cliente']['php_cmp_required']['nome_']) || $_SESSION['sc_session'][$this->Ini->sc_page]['form_pet_cliente']['php_cmp_required']['nome_'] == "on")) 
+      { 
+          if ($this->nome_ == "")  
+          { 
+              $hasError = true;
+              $Campos_Falta[] =  "NOME" ; 
+              if (!isset($Campos_Erros['nome_']))
+              {
+                  $Campos_Erros['nome_'] = array();
+              }
+              $Campos_Erros['nome_'][] = $this->Ini->Nm_lang['lang_errm_ajax_rqrd'];
+                  if (!isset($this->NM_ajax_info['errList']['nome_']) || !is_array($this->NM_ajax_info['errList']['nome_']))
+                  {
+                      $this->NM_ajax_info['errList']['nome_'] = array();
+                  }
+                  $this->NM_ajax_info['errList']['nome_'][] = $this->Ini->Nm_lang['lang_errm_ajax_rqrd'];
+          } 
+      } 
       if ($this->nmgp_opcao != "excluir") 
       { 
           if (NM_utf8_strlen($this->nome_) > 45) 
@@ -2877,21 +2895,36 @@ class form_pet_cliente_apl
     {
         global $teste_validade;
         $hasError = false;
-               if (!empty($this->idpet_raca_) && isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_pet_cliente']['Lookup_idpet_raca_']) && !in_array($this->idpet_raca_, $_SESSION['sc_session'][$this->Ini->sc_page]['form_pet_cliente']['Lookup_idpet_raca_']))
-               {
-                   $hasError = true;
-                   $Campos_Crit .= $this->Ini->Nm_lang['lang_errm_ajax_data'];
-                   if (!isset($Campos_Erros['idpet_raca_']))
-                   {
-                       $Campos_Erros['idpet_raca_'] = array();
-                   }
-                   $Campos_Erros['idpet_raca_'][] = $this->Ini->Nm_lang['lang_errm_ajax_data'];
-                   if (!isset($this->NM_ajax_info['errList']['idpet_raca_']) || !is_array($this->NM_ajax_info['errList']['idpet_raca_']))
-                   {
-                       $this->NM_ajax_info['errList']['idpet_raca_'] = array();
-                   }
-                   $this->NM_ajax_info['errList']['idpet_raca_'][] = $this->Ini->Nm_lang['lang_errm_ajax_data'];
-               }
+      if ($this->idpet_raca_ == "" && $this->nmgp_opcao != "excluir" && (!isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_pet_cliente']['php_cmp_required']['idpet_raca_']) || $_SESSION['sc_session'][$this->Ini->sc_page]['form_pet_cliente']['php_cmp_required']['idpet_raca_'] == "on"))
+      {
+          $hasError = true;
+          $Campos_Falta[] = "RAÇA" ; 
+          if (!isset($Campos_Erros['idpet_raca_']))
+          {
+              $Campos_Erros['idpet_raca_'] = array();
+          }
+          $Campos_Erros['idpet_raca_'][] = $this->Ini->Nm_lang['lang_errm_ajax_rqrd'];
+          if (!isset($this->NM_ajax_info['errList']['idpet_raca_']) || !is_array($this->NM_ajax_info['errList']['idpet_raca_']))
+          {
+              $this->NM_ajax_info['errList']['idpet_raca_'] = array();
+          }
+          $this->NM_ajax_info['errList']['idpet_raca_'][] = $this->Ini->Nm_lang['lang_errm_ajax_rqrd'];
+      }
+          if (!empty($this->idpet_raca_) && isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_pet_cliente']['Lookup_idpet_raca_']) && !in_array($this->idpet_raca_, $_SESSION['sc_session'][$this->Ini->sc_page]['form_pet_cliente']['Lookup_idpet_raca_']))
+          {
+              $hasError = true;
+              $Campos_Crit .= $this->Ini->Nm_lang['lang_errm_ajax_data'];
+              if (!isset($Campos_Erros['idpet_raca_']))
+              {
+                  $Campos_Erros['idpet_raca_'] = array();
+              }
+              $Campos_Erros['idpet_raca_'][] = $this->Ini->Nm_lang['lang_errm_ajax_data'];
+              if (!isset($this->NM_ajax_info['errList']['idpet_raca_']) || !is_array($this->NM_ajax_info['errList']['idpet_raca_']))
+              {
+                  $this->NM_ajax_info['errList']['idpet_raca_'] = array();
+              }
+              $this->NM_ajax_info['errList']['idpet_raca_'][] = $this->Ini->Nm_lang['lang_errm_ajax_data'];
+          }
         if ($hasError) {
             global $sc_seq_vert;
             $fieldName = 'idpet_raca_';

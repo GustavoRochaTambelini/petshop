@@ -649,8 +649,6 @@ if (!isset($this->NM_ajax_info['param']['buffer_output']) || !$this->NM_ajax_inf
 }
 
 ?>
-<script type="text/javascript" src="<?php  echo $this->Ini->path_js . "/nm_rpc.js" ?>"> 
-</script> 
 <div id="idJSSpecChar" style="display: none;"></div>
 <script type="text/javascript">
 function NM_tp_critica(TP)
@@ -664,8 +662,6 @@ function NM_tp_critica(TP)
 <?php
  include_once("form_cliente_js0.php");
 ?>
-<script type="text/javascript" src="<?php  echo $this->Ini->path_js . "/nm_rpc.js" ?>"> 
-</script> 
 <script type="text/javascript"> 
  function setLocale(oSel)
  {
@@ -1024,8 +1020,16 @@ var pag_ativa = "form_cliente_form0";
             'class' => empty($nmgp_num_form) || $nmgp_num_form == "form_cliente_form0" ? "scTabActive" : "scTabInactive",
         ),
         'form_cliente_form1' => array(
-            'title' => "Pet`s",
+            'title' => "Contato",
             'class' => $nmgp_num_form == "form_cliente_form1" ? "scTabActive" : "scTabInactive",
+        ),
+        'form_cliente_form2' => array(
+            'title' => "Outros responsáveis",
+            'class' => $nmgp_num_form == "form_cliente_form2" ? "scTabActive" : "scTabInactive",
+        ),
+        'form_cliente_form3' => array(
+            'title' => "Pet`s",
+            'class' => $nmgp_num_form == "form_cliente_form3" ? "scTabActive" : "scTabInactive",
         ),
     );
     if (!empty($this->Ini->nm_hidden_pages)) {
@@ -1033,8 +1037,14 @@ var pag_ativa = "form_cliente_form0";
             if ('Informações Cliente' == $pageName && 'off' == $pageStatus) {
                 $this->tabCssClass['form_cliente_form0']['class'] = 'scTabInactive';
             }
-            if ('Pet`s' == $pageName && 'off' == $pageStatus) {
+            if ('Contato' == $pageName && 'off' == $pageStatus) {
                 $this->tabCssClass['form_cliente_form1']['class'] = 'scTabInactive';
+            }
+            if ('Outros responsáveis' == $pageName && 'off' == $pageStatus) {
+                $this->tabCssClass['form_cliente_form2']['class'] = 'scTabInactive';
+            }
+            if ('Pet`s' == $pageName && 'off' == $pageStatus) {
+                $this->tabCssClass['form_cliente_form3']['class'] = 'scTabInactive';
             }
         }
         $displayingPage = false;
@@ -1064,6 +1074,18 @@ var pag_ativa = "form_cliente_form0";
     $css_celula = $this->tabCssClass["form_cliente_form1"]['class'];
 ?>
    <li id="id_form_cliente_form1" class="<?php echo $css_celula; ?> sc-form-page sc-tab-click" data-tab-name="form_cliente_form1">
+     Contato
+   </li>
+<?php
+    $css_celula = $this->tabCssClass["form_cliente_form2"]['class'];
+?>
+   <li id="id_form_cliente_form2" class="<?php echo $css_celula; ?> sc-form-page sc-tab-click" data-tab-name="form_cliente_form2">
+     Outros responsáveis
+   </li>
+<?php
+    $css_celula = $this->tabCssClass["form_cliente_form3"]['class'];
+?>
+   <li id="id_form_cliente_form3" class="<?php echo $css_celula; ?> sc-form-page sc-tab-click" data-tab-name="form_cliente_form3">
      Pet`s
    </li>
 </ul>
@@ -1554,9 +1576,7 @@ if ('scButton_' == substr($miniCalendarButton[1], 0, 9)) {
 <?php } else { ?>
 <span id="id_read_on_cep" class="sc-ui-readonly-cep css_cep_line" style="<?php echo $sStyleReadLab_cep; ?>"><?php echo $this->form_format_readonly("cep", $this->form_encode_input($this->cep)); ?></span><span id="id_read_off_cep" class="css_read_off_cep<?php echo $this->classes_100perc_fields['span_input'] ?>" style="white-space: nowrap;<?php echo $sStyleReadInp_cep; ?>">
  <input class="sc-js-input scFormObjectOdd css_cep_obj<?php echo $this->classes_100perc_fields['input'] ?>" style="" id="id_sc_field_cep" type=text name="cep" value="<?php echo $this->form_encode_input($cep) ?>"
- <?php if ($this->classes_100perc_fields['keep_field_size']) { echo "size=45"; } ?> alt="{datatype: 'cep', enterTab: false, enterSubmit: false, autoTab: false, selectOnFocus: true, watermark: '', watermarkClass: 'scFormObjectOddWm', maskChars: '(){}[].,;:-+/ '}" >&nbsp;<?php echo nmButtonOutput($this->arr_buttons, "bzipcode", "tb_show('', '" . $this->Ini->sc_protocolo . $this->Ini->server . $this->Ini->path_link . SC_dir_app_name('form_cliente'). "/form_cliente_cep.php?cep=' + document.F1.cep.value + '&form_origem=F1;CEP,cep&TB_iframe=true&height=350&width=420&modal=true', '')", "tb_show('', '" . $this->Ini->sc_protocolo . $this->Ini->server . $this->Ini->path_link . SC_dir_app_name('form_cliente'). "/form_cliente_cep.php?cep=' + document.F1.cep.value + '&form_origem=F1;CEP,cep&TB_iframe=true&height=350&width=420&modal=true', '')", "cep_cep", "", "", "", "", "", "", $this->Ini->path_botoes, "", "", "", "", "");?>
-
-</span><?php } ?>
+ <?php if ($this->classes_100perc_fields['keep_field_size']) { echo "size=8"; } ?> maxlength=29 alt="{datatype: 'mask', maxLength: 20, allowedChars: '<?php echo $this->allowedCharsCharset("0123456789") ?>', lettersCase: '', maskList: '99999-999', enterTab: false, enterSubmit: false, autoTab: false, selectOnFocus: true, watermark: '', watermarkClass: 'scFormObjectOddWm', maskChars: '(){}[].,;:-+/ '}" ></span><?php } ?>
 </td></tr><tr><td style="vertical-align: top; padding: 0"><table class="scFormFieldErrorTable" style="display: none" id="id_error_display_cep_frame"><tr><td class="scFormFieldErrorMessage"><span id="id_error_display_cep_text"></span></td></tr></table></td></tr></table> </TD>
    <?php }?>
 
@@ -1784,7 +1804,7 @@ else
    $unformatted_value_cep = $this->cep;
    $unformatted_value_numero = $this->numero;
 
-   $nm_comando = "SELECT idcidade, nome  FROM cidade  ORDER BY nome";
+   $nm_comando = "SELECT mun_codigo, mun_nome  FROM tbl_cidades  ORDER BY mun_nome";
 
    $this->idcliente = $old_value_idcliente;
    $this->cpf_cnpj = $old_value_cpf_cnpj;
@@ -1798,9 +1818,6 @@ else
    {
        while (!$rs->EOF) 
        { 
-              $rs->fields[0] = str_replace(',', '.', $rs->fields[0]);
-              $rs->fields[0] = (strpos(strtolower($rs->fields[0]), "e")) ? (float)$rs->fields[0] : $rs->fields[0];
-              $rs->fields[0] = (string)$rs->fields[0];
               $nmgp_def_dados .= $rs->fields[1] . "?#?" ; 
               $nmgp_def_dados .= $rs->fields[0] . "?#?N?@?" ; 
               $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_cidade_idcidade'][] = $rs->fields[0];
@@ -1892,264 +1909,181 @@ else
 </td></tr><tr><td style="vertical-align: top; padding: 0"><table class="scFormFieldErrorTable" style="display: none" id="id_error_display_cidade_idcidade_frame"><tr><td class="scFormFieldErrorMessage"><span id="id_error_display_cidade_idcidade_text"></span></td></tr></table></td></tr></table> </TD>
    <?php }?>
 
-    <TD class="scFormDataOdd" colspan="1" >&nbsp;</TD>
-
-
-
-
-<?php if ($sc_hidden_yes > 0) { ?>
-
-
-    <TD class="scFormDataOdd" colspan="<?php echo $sc_hidden_yes * 1; ?>" >&nbsp;</TD>
-
-
-
-
-<?php } ?>
-<?php $sStyleHidden_bairro_dumb = ('' == $sStyleHidden_bairro) ? 'display: none' : ''; ?>
-    <TD class="scFormDataOdd" id="hidden_field_data_bairro_dumb" style="<?php echo $sStyleHidden_bairro_dumb; ?>"></TD>
-<?php $sStyleHidden_cidade_idcidade_dumb = ('' == $sStyleHidden_cidade_idcidade) ? 'display: none' : ''; ?>
-    <TD class="scFormDataOdd" id="hidden_field_data_cidade_idcidade_dumb" style="<?php echo $sStyleHidden_cidade_idcidade_dumb; ?>"></TD>
-   </tr>
-<?php $sc_hidden_no = 1; ?>
-</TABLE></div><!-- bloco_f -->
-   </td>
-   </tr></table>
-   <a name="bloco_2"></a>
-   <table width="100%" height="100%" cellpadding="0" cellspacing=0><tr valign="top"><td width="100%" height="">
-<div id="div_hidden_bloco_2"><!-- bloco_c -->
-<TABLE align="center" id="hidden_bloco_2" class="scFormTable<?php echo $this->classes_100perc_fields['table'] ?>" width="100%" style="height: 100%;">   <tr>
-
-
-    <TD colspan="3" height="20" class="scFormBlock">
-     <TABLE style="padding: 0px; spacing: 0px; border-width: 0px;" width="100%" height="100%">
-      <TR>
-       <TD align="" valign="" class="scFormBlockFont"><?php if ('' != $this->Ini->Block_img_exp && '' != $this->Ini->Block_img_col && !$this->Ini->Export_img_zip) { echo "<table style=\"border-collapse: collapse; height: 100%; width: 100%\"><tr><td style=\"vertical-align: middle; border-width: 0px; padding: 0px 2px 0px 0px\"><img id=\"SC_blk_pdf2\" src=\"" . $this->Ini->path_icones . "/" . $this->Ini->Block_img_col . "\" style=\"border: 0px; float: left\" class=\"sc-ui-block-control\"></td><td style=\"border-width: 0px; padding: 0px; width: 100%;\" class=\"scFormBlockAlign\">"; } ?>Contato<?php if ('' != $this->Ini->Block_img_exp && '' != $this->Ini->Block_img_col && !$this->Ini->Export_img_zip) { echo "</td></tr></table>"; } ?></TD>
-       
-      </TR>
-     </TABLE>
-    </TD>
-
-
-
-
-   </tr>
-<?php if ($sc_hidden_no > 0) { echo "<tr>"; }; 
-      $sc_hidden_yes = 0; $sc_hidden_no = 0; ?>
-
-
    <?php
-    if (!isset($this->nm_new_label['cliente_telefone']))
-    {
-        $this->nm_new_label['cliente_telefone'] = "cliente_telefone";
-    }
-?>
-<?php
+   if (!isset($this->nm_new_label['uf']))
+   {
+       $this->nm_new_label['uf'] = "UF";
+   }
    $nm_cor_fun_cel  = (isset($nm_cor_fun_cel) && $nm_cor_fun_cel  == $this->Ini->cor_grid_impar ? $this->Ini->cor_grid_par : $this->Ini->cor_grid_impar);
    $nm_img_fun_cel  = (isset($nm_img_fun_cel) && $nm_img_fun_cel  == $this->Ini->img_fun_imp    ? $this->Ini->img_fun_par  : $this->Ini->img_fun_imp);
-   $cliente_telefone = $this->cliente_telefone;
-   $sStyleHidden_cliente_telefone = '';
-   if (isset($this->nmgp_cmp_hidden['cliente_telefone']) && $this->nmgp_cmp_hidden['cliente_telefone'] == 'off')
+   $uf = $this->uf;
+   $sStyleHidden_uf = '';
+   if (isset($this->nmgp_cmp_hidden['uf']) && $this->nmgp_cmp_hidden['uf'] == 'off')
    {
-       unset($this->nmgp_cmp_hidden['cliente_telefone']);
-       $sStyleHidden_cliente_telefone = 'display: none;';
+       unset($this->nmgp_cmp_hidden['uf']);
+       $sStyleHidden_uf = 'display: none;';
    }
    $bTestReadOnly = true;
-   $sStyleReadLab_cliente_telefone = 'display: none;';
-   $sStyleReadInp_cliente_telefone = '';
-   if (/*$this->nmgp_opcao != "novo" && */isset($this->nmgp_cmp_readonly['cliente_telefone']) && $this->nmgp_cmp_readonly['cliente_telefone'] == 'on')
+   $sStyleReadLab_uf = 'display: none;';
+   $sStyleReadInp_uf = '';
+   if (/*$this->nmgp_opcao != "novo" && */isset($this->nmgp_cmp_readonly['uf']) && $this->nmgp_cmp_readonly['uf'] == 'on')
    {
        $bTestReadOnly = false;
-       unset($this->nmgp_cmp_readonly['cliente_telefone']);
-       $sStyleReadLab_cliente_telefone = '';
-       $sStyleReadInp_cliente_telefone = 'display: none;';
+       unset($this->nmgp_cmp_readonly['uf']);
+       $sStyleReadLab_uf = '';
+       $sStyleReadInp_uf = 'display: none;';
    }
 ?>
-<?php if (isset($this->nmgp_cmp_hidden['cliente_telefone']) && $this->nmgp_cmp_hidden['cliente_telefone'] == 'off') { $sc_hidden_yes++;  ?>
-<input type="hidden" name="cliente_telefone" value="<?php echo $this->form_encode_input($cliente_telefone) . "\">"; ?>
+<?php if (isset($this->nmgp_cmp_hidden['uf']) && $this->nmgp_cmp_hidden['uf'] == 'off') { $sc_hidden_yes++; ?>
+<input type=hidden name="uf" value="<?php echo $this->form_encode_input($this->uf) . "\">"; ?>
 <?php } else { $sc_hidden_no++; ?>
 
-    <TD class="scFormDataOdd css_cliente_telefone_line" id="hidden_field_data_cliente_telefone" style="<?php echo $sStyleHidden_cliente_telefone; ?>vertical-align: top;"> <table style="border-width: 0px; border-collapse: collapse; width: 100%"><tr><td width="100%" class="scFormDataFontOdd css_cliente_telefone_line" style="vertical-align: top;padding: 0px">
-<?php
- if (isset($_SESSION['scriptcase']['dashboard_scinit'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['dashboard_info']['dashboard_app'] ][ $this->Ini->sc_lig_target['C_@scinf_cliente_telefone'] ]) && '' != $_SESSION['scriptcase']['dashboard_scinit'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['dashboard_info']['dashboard_app'] ][ $this->Ini->sc_lig_target['C_@scinf_cliente_telefone'] ]) {
-     $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] = $_SESSION['scriptcase']['dashboard_scinit'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['dashboard_info']['dashboard_app'] ][ $this->Ini->sc_lig_target['C_@scinf_cliente_telefone'] ];
- }
- else {
-     $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] = $this->Ini->sc_page;
- }
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] ]['form_telefone']['embutida_proc']  = false;
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] ]['form_telefone']['embutida_form']  = true;
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] ]['form_telefone']['embutida_call']  = true;
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] ]['form_telefone']['embutida_multi'] = false;
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] ]['form_telefone']['embutida_liga_form_insert'] = 'on';
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] ]['form_telefone']['embutida_liga_form_update'] = 'on';
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] ]['form_telefone']['embutida_liga_form_delete'] = 'on';
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] ]['form_telefone']['embutida_liga_form_btn_nav'] = 'off';
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] ]['form_telefone']['embutida_liga_grid_edit'] = 'on';
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] ]['form_telefone']['embutida_liga_grid_edit_link'] = 'on';
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] ]['form_telefone']['embutida_liga_qtd_reg'] = '10';
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] ]['form_telefone']['embutida_liga_tp_pag'] = 'parcial';
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] ]['form_telefone']['embutida_parms'] = "NM_btn_insert*scinS*scoutNM_btn_update*scinS*scoutNM_btn_delete*scinS*scoutNM_btn_navega*scinN*scout";
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] ]['form_telefone']['foreign_key']['idcliente'] = $this->nmgp_dados_form['idcliente'];
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] ]['form_telefone']['where_filter'] = "idcliente = " . $this->nmgp_dados_form['idcliente'] . "";
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] ]['form_telefone']['where_detal']  = "idcliente = " . $this->nmgp_dados_form['idcliente'] . "";
- if ($_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] ]['form_cliente']['total'] < 0)
- {
-     $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init'] ]['form_telefone']['where_filter'] = "1 <> 1";
- }
- $sDetailSrc = ('novo' == $this->nmgp_opcao) ? 'form_cliente_empty.htm' : $this->Ini->link_form_telefone_edit . '?script_case_init=' . $this->form_encode_input($this->Ini->sc_page) . '&script_case_detail=Y';
-if (isset($this->Ini->sc_lig_target['C_@scinf_cliente_telefone']) && 'nmsc_iframe_liga_form_telefone' != $this->Ini->sc_lig_target['C_@scinf_cliente_telefone'])
+    <TD class="scFormDataOdd css_uf_line" id="hidden_field_data_uf" style="<?php echo $sStyleHidden_uf; ?>vertical-align: top;"> <table style="border-width: 0px; border-collapse: collapse; width: 100%"><tr><td  class="scFormDataFontOdd css_uf_line" style="vertical-align: top;padding: 0px"><span class="scFormLabelOddFormat css_uf_label" style=""><span id="id_label_uf"><?php echo $this->nm_new_label['uf']; ?></span></span><br>
+<?php if ($bTestReadOnly && $this->nmgp_opcao != "novo" && isset($this->nmgp_cmp_readonly["uf"]) &&  $this->nmgp_cmp_readonly["uf"] == "on") { 
+ 
+$nmgp_def_dados = "" ; 
+if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_uf']))
 {
-    if ('novo' != $this->nmgp_opcao)
-    {
-        $sDetailSrc .= '&under_dashboard=1&dashboard_app=' . $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['dashboard_info']['dashboard_app'] . '&own_widget=' . $this->Ini->sc_lig_target['C_@scinf_cliente_telefone'] . '&parent_widget=' . $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['dashboard_info']['own_widget'];
-        $sDetailSrc  = $this->addUrlParam($sDetailSrc, 'script_case_init', $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_telefone_script_case_init']);
-    }
-?>
-<script type="text/javascript">
-$(function() {
-    scOpenMasterDetail("<?php echo $this->Ini->sc_lig_target['C_@scinf_cliente_telefone'] ?>", "<?php echo $sDetailSrc; ?>");
-});
-</script>
-<?php
+    $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_uf'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_uf']); 
 }
 else
 {
-?>
-<iframe border="0" id="nmsc_iframe_liga_form_telefone"  marginWidth="0" marginHeight="0" frameborder="0" valign="top" height="100" width="100%" name="nmsc_iframe_liga_form_telefone"  scrolling="auto" src="<?php echo $sDetailSrc; ?>"></iframe>
-<?php
+    $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_uf'] = array(); 
 }
-?>
-</td></tr><tr><td style="vertical-align: top; padding: 0"><table class="scFormFieldErrorTable" style="display: none" id="id_error_display_cliente_telefone_frame"><tr><td class="scFormFieldErrorMessage"><span id="id_error_display_cliente_telefone_text"></span></td></tr></table></td></tr></table> </TD>
-   <?php }?>
-
-    <TD class="scFormDataOdd" colspan="2" >&nbsp;</TD>
-
-
-
-
-<?php if ($sc_hidden_yes > 0) { ?>
-
-
-    <TD class="scFormDataOdd" colspan="<?php echo $sc_hidden_yes * 1; ?>" >&nbsp;</TD>
-
-
-
-
-<?php } ?>
-<?php $sStyleHidden_cliente_telefone_dumb = ('' == $sStyleHidden_cliente_telefone) ? 'display: none' : ''; ?>
-    <TD class="scFormDataOdd" id="hidden_field_data_cliente_telefone_dumb" style="<?php echo $sStyleHidden_cliente_telefone_dumb; ?>"></TD>
-   </tr>
-<?php $sc_hidden_no = 1; ?>
-</TABLE></div><!-- bloco_f -->
-   </td>
-   </tr></table>
-   <a name="bloco_3"></a>
-   <table width="100%" height="100%" cellpadding="0" cellspacing=0><tr valign="top"><td width="100%" height="">
-<div id="div_hidden_bloco_3"><!-- bloco_c -->
-<TABLE align="center" id="hidden_bloco_3" class="scFormTable<?php echo $this->classes_100perc_fields['table'] ?>" width="100%" style="height: 100%;">   <tr>
-
-
-    <TD colspan="1" height="20" class="scFormBlock">
-     <TABLE style="padding: 0px; spacing: 0px; border-width: 0px;" width="100%" height="100%">
-      <TR>
-       <TD align="" valign="" class="scFormBlockFont"><?php if ('' != $this->Ini->Block_img_exp && '' != $this->Ini->Block_img_col && !$this->Ini->Export_img_zip) { echo "<table style=\"border-collapse: collapse; height: 100%; width: 100%\"><tr><td style=\"vertical-align: middle; border-width: 0px; padding: 0px 2px 0px 0px\"><img id=\"SC_blk_pdf3\" src=\"" . $this->Ini->path_icones . "/" . $this->Ini->Block_img_col . "\" style=\"border: 0px; float: left\" class=\"sc-ui-block-control\"></td><td style=\"border-width: 0px; padding: 0px; width: 100%;\" class=\"scFormBlockAlign\">"; } ?>Outros responsáveis <?php if ('' != $this->Ini->Block_img_exp && '' != $this->Ini->Block_img_col && !$this->Ini->Export_img_zip) { echo "</td></tr></table>"; } ?></TD>
-       
-      </TR>
-     </TABLE>
-    </TD>
-
-
-
-
-   </tr>
-<?php if ($sc_hidden_no > 0) { echo "<tr>"; }; 
-      $sc_hidden_yes = 0; $sc_hidden_no = 0; ?>
-
-
-   <?php
-    if (!isset($this->nm_new_label['cliente_dependente']))
-    {
-        $this->nm_new_label['cliente_dependente'] = "cliente_dependente";
-    }
-?>
-<?php
-   $nm_cor_fun_cel  = (isset($nm_cor_fun_cel) && $nm_cor_fun_cel  == $this->Ini->cor_grid_impar ? $this->Ini->cor_grid_par : $this->Ini->cor_grid_impar);
-   $nm_img_fun_cel  = (isset($nm_img_fun_cel) && $nm_img_fun_cel  == $this->Ini->img_fun_imp    ? $this->Ini->img_fun_par  : $this->Ini->img_fun_imp);
-   $cliente_dependente = $this->cliente_dependente;
-   $sStyleHidden_cliente_dependente = '';
-   if (isset($this->nmgp_cmp_hidden['cliente_dependente']) && $this->nmgp_cmp_hidden['cliente_dependente'] == 'off')
+   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
+   { 
+       $GLOBALS["NM_ERRO_IBASE"] = 1;  
+   } 
+   $nm_nao_carga = false;
+   $nmgp_def_dados = "" ; 
+   if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_uf']))
    {
-       unset($this->nmgp_cmp_hidden['cliente_dependente']);
-       $sStyleHidden_cliente_dependente = 'display: none;';
+       $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_uf'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_uf']); 
    }
-   $bTestReadOnly = true;
-   $sStyleReadLab_cliente_dependente = 'display: none;';
-   $sStyleReadInp_cliente_dependente = '';
-   if (/*$this->nmgp_opcao != "novo" && */isset($this->nmgp_cmp_readonly['cliente_dependente']) && $this->nmgp_cmp_readonly['cliente_dependente'] == 'on')
+   else
    {
-       $bTestReadOnly = false;
-       unset($this->nmgp_cmp_readonly['cliente_dependente']);
-       $sStyleReadLab_cliente_dependente = '';
-       $sStyleReadInp_cliente_dependente = 'display: none;';
-   }
-?>
-<?php if (isset($this->nmgp_cmp_hidden['cliente_dependente']) && $this->nmgp_cmp_hidden['cliente_dependente'] == 'off') { $sc_hidden_yes++;  ?>
-<input type="hidden" name="cliente_dependente" value="<?php echo $this->form_encode_input($cliente_dependente) . "\">"; ?>
-<?php } else { $sc_hidden_no++; ?>
-
-    <TD class="scFormDataOdd css_cliente_dependente_line" id="hidden_field_data_cliente_dependente" style="<?php echo $sStyleHidden_cliente_dependente; ?>vertical-align: top;"> <table style="border-width: 0px; border-collapse: collapse; width: 100%"><tr><td width="100%" class="scFormDataFontOdd css_cliente_dependente_line" style="vertical-align: top;padding: 0px">
-<?php
- if (isset($_SESSION['scriptcase']['dashboard_scinit'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['dashboard_info']['dashboard_app'] ][ $this->Ini->sc_lig_target['C_@scinf_cliente_dependente'] ]) && '' != $_SESSION['scriptcase']['dashboard_scinit'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['dashboard_info']['dashboard_app'] ][ $this->Ini->sc_lig_target['C_@scinf_cliente_dependente'] ]) {
-     $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] = $_SESSION['scriptcase']['dashboard_scinit'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['dashboard_info']['dashboard_app'] ][ $this->Ini->sc_lig_target['C_@scinf_cliente_dependente'] ];
- }
- else {
-     $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] = $this->Ini->sc_page;
- }
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] ]['form_outros_respensaveis']['embutida_proc']  = false;
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] ]['form_outros_respensaveis']['embutida_form']  = true;
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] ]['form_outros_respensaveis']['embutida_call']  = true;
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] ]['form_outros_respensaveis']['embutida_multi'] = false;
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] ]['form_outros_respensaveis']['embutida_liga_form_insert'] = 'on';
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] ]['form_outros_respensaveis']['embutida_liga_form_update'] = 'on';
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] ]['form_outros_respensaveis']['embutida_liga_form_delete'] = 'on';
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] ]['form_outros_respensaveis']['embutida_liga_form_btn_nav'] = 'off';
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] ]['form_outros_respensaveis']['embutida_liga_grid_edit'] = 'on';
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] ]['form_outros_respensaveis']['embutida_liga_grid_edit_link'] = 'on';
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] ]['form_outros_respensaveis']['embutida_liga_qtd_reg'] = '10';
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] ]['form_outros_respensaveis']['embutida_liga_tp_pag'] = 'parcial';
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] ]['form_outros_respensaveis']['embutida_parms'] = "NM_btn_insert*scinS*scoutNM_btn_update*scinS*scoutNM_btn_delete*scinS*scoutNM_btn_navega*scinN*scout";
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] ]['form_outros_respensaveis']['foreign_key']['cliente_idcliente'] = $this->nmgp_dados_form['idcliente'];
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] ]['form_outros_respensaveis']['where_filter'] = "cliente_idcliente = " . $this->nmgp_dados_form['idcliente'] . "";
- $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] ]['form_outros_respensaveis']['where_detal']  = "cliente_idcliente = " . $this->nmgp_dados_form['idcliente'] . "";
- if ($_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] ]['form_cliente']['total'] < 0)
- {
-     $_SESSION['sc_session'][ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init'] ]['form_outros_respensaveis']['where_filter'] = "1 <> 1";
- }
- $sDetailSrc = ('novo' == $this->nmgp_opcao) ? 'form_cliente_empty.htm' : $this->Ini->link_form_outros_respensaveis_edit . '?script_case_init=' . $this->form_encode_input($this->Ini->sc_page) . '&script_case_detail=Y';
-if (isset($this->Ini->sc_lig_target['C_@scinf_cliente_dependente']) && 'nmsc_iframe_liga_form_outros_respensaveis' != $this->Ini->sc_lig_target['C_@scinf_cliente_dependente'])
-{
-    if ('novo' != $this->nmgp_opcao)
-    {
-        $sDetailSrc .= '&under_dashboard=1&dashboard_app=' . $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['dashboard_info']['dashboard_app'] . '&own_widget=' . $this->Ini->sc_lig_target['C_@scinf_cliente_dependente'] . '&parent_widget=' . $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['dashboard_info']['own_widget'];
-        $sDetailSrc  = $this->addUrlParam($sDetailSrc, 'script_case_init', $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['form_outros_respensaveis_script_case_init']);
+       $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_uf'] = array(); 
     }
+
+   $old_value_idcliente = $this->idcliente;
+   $old_value_cpf_cnpj = $this->cpf_cnpj;
+   $old_value_data_nascimento = $this->data_nascimento;
+   $old_value_cep = $this->cep;
+   $old_value_numero = $this->numero;
+   $this->nm_tira_formatacao();
+   $this->nm_converte_datas(false);
+
+
+   $unformatted_value_idcliente = $this->idcliente;
+   $unformatted_value_cpf_cnpj = $this->cpf_cnpj;
+   $unformatted_value_data_nascimento = $this->data_nascimento;
+   $unformatted_value_cep = $this->cep;
+   $unformatted_value_numero = $this->numero;
+
+   $nm_comando = "SELECT uf_num, uf_sigla  FROM tbl_ufs  ORDER BY uf_sigla";
+
+   $this->idcliente = $old_value_idcliente;
+   $this->cpf_cnpj = $old_value_cpf_cnpj;
+   $this->data_nascimento = $old_value_data_nascimento;
+   $this->cep = $old_value_cep;
+   $this->numero = $old_value_numero;
+
+   $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
+   $_SESSION['scriptcase']['sc_sql_ult_conexao'] = '';
+   if ($nm_comando != "" && $rs = $this->Db->Execute($nm_comando))
+   {
+       while (!$rs->EOF) 
+       { 
+              $rs->fields[0] = str_replace(',', '.', $rs->fields[0]);
+              $rs->fields[0] = (strpos(strtolower($rs->fields[0]), "e")) ? (float)$rs->fields[0] : $rs->fields[0];
+              $rs->fields[0] = (string)$rs->fields[0];
+              $nmgp_def_dados .= $rs->fields[1] . "?#?" ; 
+              $nmgp_def_dados .= $rs->fields[0] . "?#?N?@?" ; 
+              $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['Lookup_uf'][] = $rs->fields[0];
+              $rs->MoveNext() ; 
+       } 
+       $rs->Close() ; 
+   } 
+   elseif ($GLOBALS["NM_ERRO_IBASE"] != 1 && $nm_comando != "")  
+   {  
+       $this->Erro->mensagem(__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dber'], $this->Db->ErrorMsg()); 
+       exit; 
+   } 
+   $GLOBALS["NM_ERRO_IBASE"] = 0; 
+   $x = 0; 
+   $uf_look = ""; 
+   $todox = str_replace("?#?@?#?", "?#?@ ?#?", trim($nmgp_def_dados)) ; 
+   $todo  = explode("?@?", $todox) ; 
+   while (!empty($todo[$x])) 
+   {
+          $cadaselect = explode("?#?", $todo[$x]) ; 
+          if ($cadaselect[1] == "@ ") {$cadaselect[1]= trim($cadaselect[1]); } ; 
+          if (isset($this->Embutida_ronly) && $this->Embutida_ronly && isset($this->uf_1))
+          {
+              foreach ($this->uf_1 as $tmp_uf)
+              {
+                  if (trim($tmp_uf) === trim($cadaselect[1])) { $uf_look .= $cadaselect[0] . '__SC_BREAK_LINE__'; }
+              }
+          }
+          elseif (trim($this->uf) === trim($cadaselect[1])) { $uf_look .= $cadaselect[0]; } 
+          $x++; 
+   }
+
 ?>
-<script type="text/javascript">
-$(function() {
-    scOpenMasterDetail("<?php echo $this->Ini->sc_lig_target['C_@scinf_cliente_dependente'] ?>", "<?php echo $sDetailSrc; ?>");
-});
-</script>
+<input type="hidden" name="uf" value="<?php echo $this->form_encode_input($uf) . "\">" . $uf_look . ""; ?>
+<?php } else { ?>
 <?php
-}
-else
-{
-?>
-<iframe border="0" id="nmsc_iframe_liga_form_outros_respensaveis"  marginWidth="0" marginHeight="0" frameborder="0" valign="top" height="100" width="100%" name="nmsc_iframe_liga_form_outros_respensaveis"  scrolling="auto" src="<?php echo $sDetailSrc; ?>"></iframe>
-<?php
-}
-?>
-</td></tr><tr><td style="vertical-align: top; padding: 0"><table class="scFormFieldErrorTable" style="display: none" id="id_error_display_cliente_dependente_frame"><tr><td class="scFormFieldErrorMessage"><span id="id_error_display_cliente_dependente_text"></span></td></tr></table></td></tr></table> </TD>
+   $todo = $this->Form_lookup_uf();
+   $x = 0 ; 
+   $uf_look = ""; 
+   while (!empty($todo[$x])) 
+   {
+          $cadaselect = explode("?#?", $todo[$x]) ; 
+          if ($cadaselect[1] == "@ ") {$cadaselect[1]= trim($cadaselect[1]); } ; 
+          if (isset($this->Embutida_ronly) && $this->Embutida_ronly && isset($this->uf_1))
+          {
+              foreach ($this->uf_1 as $tmp_uf)
+              {
+                  if (trim($tmp_uf) === trim($cadaselect[1])) { $uf_look .= $cadaselect[0] . '__SC_BREAK_LINE__'; }
+              }
+          }
+          elseif (trim($this->uf) === trim($cadaselect[1])) { $uf_look .= $cadaselect[0]; } 
+          $x++; 
+   }
+          if (empty($uf_look))
+          {
+              $uf_look = $this->uf;
+          }
+   $x = 0; 
+   echo "<span id=\"id_read_on_uf\" class=\"css_uf_line\" style=\"" .  $sStyleReadLab_uf . "\">" . $this->form_format_readonly("uf", $this->form_encode_input($uf_look)) . "</span><span id=\"id_read_off_uf\" class=\"css_read_off_uf" . $this->classes_100perc_fields['span_input'] . "\" style=\"white-space: nowrap; " . $sStyleReadInp_uf . "\">";
+   echo " <span id=\"idAjaxSelect_uf\" class=\"" . $this->classes_100perc_fields['span_select'] . "\"><select class=\"sc-js-input scFormObjectOdd css_uf_obj" . $this->classes_100perc_fields['input'] . "\" style=\"\" id=\"id_sc_field_uf\" name=\"uf\" size=\"1\" alt=\"{type: 'select', enterTab: false}\">" ; 
+   echo "\r" ; 
+   while (!empty($todo[$x]) && !$nm_nao_carga) 
+   {
+          $cadaselect = explode("?#?", $todo[$x]) ; 
+          if ($cadaselect[1] == "@ ") {$cadaselect[1]= trim($cadaselect[1]); } ; 
+          echo "  <option value=\"$cadaselect[1]\"" ; 
+          if (trim($this->uf) === trim($cadaselect[1])) 
+          {
+              echo " selected" ; 
+          }
+          if (strtoupper($cadaselect[2]) == "S") 
+          {
+              if (empty($this->uf)) 
+              {
+                  echo " selected" ;
+              } 
+           } 
+          echo ">" . str_replace('<', '&lt;',$cadaselect[0]) . "</option>" ; 
+          echo "\r" ; 
+          $x++ ; 
+   }  ; 
+   echo " </select></span>" ; 
+   echo "\r" ; 
+   echo "</span>";
+?> 
+<?php  }?>
+</td></tr><tr><td style="vertical-align: top; padding: 0"><table class="scFormFieldErrorTable" style="display: none" id="id_error_display_uf_frame"><tr><td class="scFormFieldErrorMessage"><span id="id_error_display_uf_text"></span></td></tr></table></td></tr></table> </TD>
    <?php }?>
 
 

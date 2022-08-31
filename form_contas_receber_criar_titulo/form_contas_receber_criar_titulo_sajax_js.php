@@ -3131,43 +3131,6 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
     scAjaxSetFocus();
   } // do_ajax_form_contas_receber_criar_titulo_validate_idforma_pagamento_prevista_cb
 
-  // ---------- Validate idgrupos_receitas
-  function do_ajax_form_contas_receber_criar_titulo_validate_idgrupos_receitas()
-  {
-    var nomeCampo_idgrupos_receitas = "idgrupos_receitas";
-    var var_idgrupos_receitas = scAjaxGetFieldSelect(nomeCampo_idgrupos_receitas);
-    var var_script_case_init = document.F1.script_case_init.value;
-    x_ajax_form_contas_receber_criar_titulo_validate_idgrupos_receitas(var_idgrupos_receitas, var_script_case_init, do_ajax_form_contas_receber_criar_titulo_validate_idgrupos_receitas_cb);
-  } // do_ajax_form_contas_receber_criar_titulo_validate_idgrupos_receitas
-
-  function do_ajax_form_contas_receber_criar_titulo_validate_idgrupos_receitas_cb(sResp)
-  {
-    oResp = scAjaxResponse(sResp);
-    scAjaxRedir();
-    sFieldValid = "idgrupos_receitas";
-    scEventControl_onBlur(sFieldValid);
-    scAjaxUpdateFieldErrors(sFieldValid, "valid");
-    sFieldErrors = scAjaxListFieldErrors(sFieldValid, false);
-    if ("" == sFieldErrors)
-    {
-      var sImgStatus = sc_img_status_ok;
-      scAjaxHideErrorDisplay(sFieldValid);
-    }
-    else
-    {
-      var sImgStatus = sc_img_status_err;
-      scAjaxShowErrorDisplay(sFieldValid, sFieldErrors);
-    }
-    var $oImg = $('#id_sc_status_' + sFieldValid);
-    if (0 < $oImg.length)
-    {
-      $oImg.attr('src', sImgStatus).css('display', '');
-    }
-    scAjaxShowDebug();
-    scAjaxSetMaster();
-    scAjaxSetFocus();
-  } // do_ajax_form_contas_receber_criar_titulo_validate_idgrupos_receitas_cb
-
   // ---------- Validate idtipos_receitas
   function do_ajax_form_contas_receber_criar_titulo_validate_idtipos_receitas()
   {
@@ -3612,28 +3575,6 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
     scAjaxSetFocus();
   } // do_ajax_form_contas_receber_criar_titulo_validate_observacoes_cb
 
-  // ---------- Refresh idgrupos_receitas
-  function do_ajax_form_contas_receber_criar_titulo_refresh_idgrupos_receitas()
-  {
-    var var_idgrupos_receitas = scAjaxGetFieldSelect("idgrupos_receitas");
-    var var_nmgp_refresh_fields = "idtipos_receitas";
-    var var_script_case_init = document.F2.script_case_init.value;
-    scAjaxProcOn(true);
-    x_ajax_form_contas_receber_criar_titulo_refresh_idgrupos_receitas(var_idgrupos_receitas, var_nmgp_refresh_fields, var_script_case_init, do_ajax_form_contas_receber_criar_titulo_refresh_idgrupos_receitas_cb);
-  } // do_ajax_form_contas_receber_criar_titulo_refresh_idgrupos_receitas
-
-  function do_ajax_form_contas_receber_criar_titulo_refresh_idgrupos_receitas_cb(sResp)
-  {
-    scAjaxProcOff(true);
-    oResp = scAjaxResponse(sResp);
-    scAjaxRedir();
-    scAjaxSetFields(false);
-    scAjaxSetVariables();
-    scAjaxShowDebug();
-    scAjaxSetMaster();
-    scAjaxSetFocus();
-  } // do_ajax_form_contas_receber_criar_titulo_refresh_idgrupos_receitas_cb
-
   // ---------- Event onchange pago
   function do_ajax_form_contas_receber_criar_titulo_event_pago_onchange()
   {
@@ -3687,14 +3628,13 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
     var var_idcliente = scAjaxGetFieldSelect("idcliente");
     var var_competencia = scAjaxGetFieldText("competencia");
     var var_valor_a_receber = scAjaxGetFieldText("valor_a_receber");
-    var var_idgrupos_receitas = scAjaxGetFieldSelect("idgrupos_receitas");
     var var_pago = scAjaxGetFieldSelect("pago");
     var var_data_pagamento = scAjaxGetFieldText("data_pagamento");
+    var var_idtipos_receitas = scAjaxGetFieldSelect("idtipos_receitas");
     var var_sc_field_2 = scAjaxGetFieldCheckbox("sc_field_2", ";");
     var var_sc_field_0 = scAjaxGetFieldText("sc_field_0");
     var var_data_vencimento = scAjaxGetFieldText("data_vencimento");
     var var_idforma_pagamento_prevista = scAjaxGetFieldSelect("idforma_pagamento_prevista");
-    var var_idtipos_receitas = scAjaxGetFieldSelect("idtipos_receitas");
     var var_idnota_fiscal = scAjaxGetFieldText("idnota_fiscal");
     var var_data_emissao = scAjaxGetFieldText("data_emissao");
     var var_observacoes = scAjaxGetFieldText("observacoes");
@@ -3703,7 +3643,7 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
     var var_sc_field_4 = scAjaxGetFieldCheckbox("sc_field_4", ";");
     var var_script_case_init = document.F2.script_case_init.value;
     scAjaxProcOn(true);
-    x_ajax_form_contas_receber_criar_titulo_event_scajaxbutton_salvar_onclick(var_idcliente, var_competencia, var_valor_a_receber, var_idgrupos_receitas, var_pago, var_data_pagamento, var_sc_field_2, var_sc_field_0, var_data_vencimento, var_idforma_pagamento_prevista, var_idtipos_receitas, var_idnota_fiscal, var_data_emissao, var_observacoes, var_sc_field_3, var_sc_field_1, var_sc_field_4, var_script_case_init, do_ajax_form_contas_receber_criar_titulo_event_scajaxbutton_salvar_onclick_cb);
+    x_ajax_form_contas_receber_criar_titulo_event_scajaxbutton_salvar_onclick(var_idcliente, var_competencia, var_valor_a_receber, var_pago, var_data_pagamento, var_idtipos_receitas, var_sc_field_2, var_sc_field_0, var_data_vencimento, var_idforma_pagamento_prevista, var_idnota_fiscal, var_data_emissao, var_observacoes, var_sc_field_3, var_sc_field_1, var_sc_field_4, var_script_case_init, do_ajax_form_contas_receber_criar_titulo_event_scajaxbutton_salvar_onclick_cb);
   } // do_ajax_form_contas_receber_criar_titulo_event_scajaxbutton_salvar_onclick
 
   function do_ajax_form_contas_receber_criar_titulo_event_scajaxbutton_salvar_onclick_cb(sResp)
@@ -4041,7 +3981,6 @@ function scJs_sweetalert_params(params) {
     var var_competencia = scAjaxGetFieldText("competencia");
     var var_valor_a_receber = scAjaxGetFieldText("valor_a_receber");
     var var_idforma_pagamento_prevista = scAjaxGetFieldSelect("idforma_pagamento_prevista");
-    var var_idgrupos_receitas = scAjaxGetFieldSelect("idgrupos_receitas");
     var var_idtipos_receitas = scAjaxGetFieldSelect("idtipos_receitas");
     var var_idnota_fiscal = scAjaxGetFieldText("idnota_fiscal");
     var var_data_emissao = scAjaxGetFieldText("data_emissao");
@@ -4063,7 +4002,7 @@ function scJs_sweetalert_params(params) {
     var var_script_case_init = document.F1.script_case_init.value;
     var var_csrf_token = scAjaxGetFieldText("csrf_token");
     scAjaxProcOn();
-    x_ajax_form_contas_receber_criar_titulo_submit_form(var_idcontas_receber, var_idcliente, var_competencia, var_valor_a_receber, var_idforma_pagamento_prevista, var_idgrupos_receitas, var_idtipos_receitas, var_idnota_fiscal, var_data_emissao, var_data_vencimento, var_sc_field_0, var_sc_field_1, var_sc_field_2, var_sc_field_3, var_sc_field_4, var_pago, var_data_pagamento, var_observacoes, var_nm_form_submit, var_nmgp_url_saida, var_nmgp_opcao, var_nmgp_ancora, var_nmgp_num_form, var_nmgp_parms, var_script_case_init, var_csrf_token, do_ajax_form_contas_receber_criar_titulo_submit_form_cb);
+    x_ajax_form_contas_receber_criar_titulo_submit_form(var_idcontas_receber, var_idcliente, var_competencia, var_valor_a_receber, var_idforma_pagamento_prevista, var_idtipos_receitas, var_idnota_fiscal, var_data_emissao, var_data_vencimento, var_sc_field_0, var_sc_field_1, var_sc_field_2, var_sc_field_3, var_sc_field_4, var_pago, var_data_pagamento, var_observacoes, var_nm_form_submit, var_nmgp_url_saida, var_nmgp_opcao, var_nmgp_ancora, var_nmgp_num_form, var_nmgp_parms, var_script_case_init, var_csrf_token, do_ajax_form_contas_receber_criar_titulo_submit_form_cb);
   } // do_ajax_form_contas_receber_criar_titulo_submit_form
 
   function do_ajax_form_contas_receber_criar_titulo_submit_form_cb(sResp)
@@ -4092,7 +4031,6 @@ function scJs_sweetalert_params(params) {
       scAjaxHideErrorDisplay("competencia");
       scAjaxHideErrorDisplay("valor_a_receber");
       scAjaxHideErrorDisplay("idforma_pagamento_prevista");
-      scAjaxHideErrorDisplay("idgrupos_receitas");
       scAjaxHideErrorDisplay("idtipos_receitas");
       scAjaxHideErrorDisplay("idnota_fiscal");
       scAjaxHideErrorDisplay("data_emissao");
@@ -4172,7 +4110,6 @@ if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_cria
     scAjaxHideErrorDisplay("competencia");
     scAjaxHideErrorDisplay("valor_a_receber");
     scAjaxHideErrorDisplay("idforma_pagamento_prevista");
-    scAjaxHideErrorDisplay("idgrupos_receitas");
     scAjaxHideErrorDisplay("idtipos_receitas");
     scAjaxHideErrorDisplay("idnota_fiscal");
     scAjaxHideErrorDisplay("data_emissao");
@@ -4275,19 +4212,18 @@ if ($this->Embutida_form)
   ajax_field_list[2] = "competencia";
   ajax_field_list[3] = "valor_a_receber";
   ajax_field_list[4] = "idforma_pagamento_prevista";
-  ajax_field_list[5] = "idgrupos_receitas";
-  ajax_field_list[6] = "idtipos_receitas";
-  ajax_field_list[7] = "idnota_fiscal";
-  ajax_field_list[8] = "data_emissao";
-  ajax_field_list[9] = "data_vencimento";
-  ajax_field_list[10] = "sc_field_0";
-  ajax_field_list[11] = "sc_field_1";
-  ajax_field_list[12] = "sc_field_2";
-  ajax_field_list[13] = "sc_field_3";
-  ajax_field_list[14] = "sc_field_4";
-  ajax_field_list[15] = "pago";
-  ajax_field_list[16] = "data_pagamento";
-  ajax_field_list[17] = "observacoes";
+  ajax_field_list[5] = "idtipos_receitas";
+  ajax_field_list[6] = "idnota_fiscal";
+  ajax_field_list[7] = "data_emissao";
+  ajax_field_list[8] = "data_vencimento";
+  ajax_field_list[9] = "sc_field_0";
+  ajax_field_list[10] = "sc_field_1";
+  ajax_field_list[11] = "sc_field_2";
+  ajax_field_list[12] = "sc_field_3";
+  ajax_field_list[13] = "sc_field_4";
+  ajax_field_list[14] = "pago";
+  ajax_field_list[15] = "data_pagamento";
+  ajax_field_list[16] = "observacoes";
 
   var ajax_block_list = new Array();
   ajax_block_list[0] = "0";
@@ -4302,7 +4238,6 @@ if ($this->Embutida_form)
     "competencia": {"label": "COMPETÊNCIA", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "valor_a_receber": {"label": "VALOR A RECEBER", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "idforma_pagamento_prevista": {"label": "FORMA DE PAGAMENTO", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
-    "idgrupos_receitas": {"label": "GRUPO DE RECEITAS", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "idtipos_receitas": {"label": "TIPO DE RECEITAS", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "idnota_fiscal": {"label": "NOTA FISCAL VINCULADA", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "data_emissao": {"label": "DATA DE EMISSÃO", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
@@ -4340,7 +4275,6 @@ if ($this->Embutida_form)
     "competencia": new Array(),
     "valor_a_receber": new Array(),
     "idforma_pagamento_prevista": new Array(),
-    "idgrupos_receitas": new Array(),
     "idtipos_receitas": new Array(),
     "idnota_fiscal": new Array(),
     "data_emissao": new Array(),
@@ -4359,7 +4293,6 @@ if ($this->Embutida_form)
   ajax_field_mult["competencia"][1] = "competencia";
   ajax_field_mult["valor_a_receber"][1] = "valor_a_receber";
   ajax_field_mult["idforma_pagamento_prevista"][1] = "idforma_pagamento_prevista";
-  ajax_field_mult["idgrupos_receitas"][1] = "idgrupos_receitas";
   ajax_field_mult["idtipos_receitas"][1] = "idtipos_receitas";
   ajax_field_mult["idnota_fiscal"][1] = "idnota_fiscal";
   ajax_field_mult["data_emissao"][1] = "data_emissao";
@@ -4379,7 +4312,6 @@ if ($this->Embutida_form)
     "competencia": new Array("hidden_field_label_competencia", "hidden_field_data_competencia"),
     "valor_a_receber": new Array("hidden_field_label_valor_a_receber", "hidden_field_data_valor_a_receber"),
     "idforma_pagamento_prevista": new Array("hidden_field_label_idforma_pagamento_prevista", "hidden_field_data_idforma_pagamento_prevista"),
-    "idgrupos_receitas": new Array("hidden_field_label_idgrupos_receitas", "hidden_field_data_idgrupos_receitas"),
     "idtipos_receitas": new Array("hidden_field_label_idtipos_receitas", "hidden_field_data_idtipos_receitas"),
     "idnota_fiscal": new Array("hidden_field_label_idnota_fiscal", "hidden_field_data_idnota_fiscal"),
     "data_emissao": new Array("hidden_field_label_data_emissao", "hidden_field_data_data_emissao"),
@@ -4400,7 +4332,6 @@ if ($this->Embutida_form)
     "competencia": "off",
     "valor_a_receber": "off",
     "idforma_pagamento_prevista": "off",
-    "idgrupos_receitas": "off",
     "idtipos_receitas": "off",
     "idnota_fiscal": "off",
     "data_emissao": "off",
@@ -4493,23 +4424,6 @@ if ($this->Embutida_form)
       return;
     }
     if ("idforma_pagamento_prevista" == sIndex)
-    {
-      scAjaxSetFieldSelect(sIndex, aValue, null);
-      updateHeaderFooter(sIndex, aValue);
-
-      if ($("#id_sc_field_" + sIndex).length) {
-          $("#id_sc_field_" + sIndex).change();
-      }
-      else if (document.F1.elements[sIndex]) {
-          $(document.F1.elements[sIndex]).change();
-      }
-      else if (document.F1.elements[sFieldName + "[]"]) {
-          $(document.F1.elements[sFieldName + "[]"]).change();
-      }
-
-      return;
-    }
-    if ("idgrupos_receitas" == sIndex)
     {
       scAjaxSetFieldSelect(sIndex, aValue, null);
       updateHeaderFooter(sIndex, aValue);

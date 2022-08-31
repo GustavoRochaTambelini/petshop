@@ -297,8 +297,8 @@ class form_cliente_mob_ini
       $this->nm_dt_criacao   = "20220728"; 
       $this->nm_hr_criacao   = "161117"; 
       $this->nm_autor_alt    = "admin"; 
-      $this->nm_dt_ult_alt   = "20220827"; 
-      $this->nm_hr_ult_alt   = "154301"; 
+      $this->nm_dt_ult_alt   = "20220831"; 
+      $this->nm_hr_ult_alt   = "011749"; 
       list($NM_usec, $NM_sec) = explode(" ", microtime()); 
       $this->nm_timestamp    = (float) $NM_sec; 
       $this->nm_app_version  = "1.0.0"; 
@@ -956,7 +956,7 @@ class form_cliente_mob_ini
       $this->Nm_accent_mysql     = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
       $this->Nm_accent_postgres  = array('cmp_i'=>"unaccent(",'cmp_f'=>")",'cmp_apos'=>"",'arg_i'=>"' || unaccent('",'arg_f'=>"') || '",'arg_apos'=>"");
       $this->Nm_accent_sqlite    = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $_SESSION['scriptcase']['nm_bases_security']  = "enc_nm_enc_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";
+      $_SESSION['scriptcase']['nm_bases_security']  = "enc_nm_enc_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";
       $this->prep_conect();
       $this->conectDB();
       if (!in_array(strtolower($this->nm_tpbanco), $this->nm_bases_all))
@@ -1664,6 +1664,11 @@ ob_start();
             $cidade_idcidade = NM_utf8_urldecode($_POST['rsargs'][0]);
             $script_case_init = NM_utf8_urldecode($_POST['rsargs'][1]);
         }
+        if ('ajax_form_cliente_mob_validate_uf' == $_POST['rs'])
+        {
+            $uf = NM_utf8_urldecode($_POST['rsargs'][0]);
+            $script_case_init = NM_utf8_urldecode($_POST['rsargs'][1]);
+        }
         if ('ajax_form_cliente_mob_validate_cliente_telefone' == $_POST['rs'])
         {
             $cliente_telefone = NM_utf8_urldecode($_POST['rsargs'][0]);
@@ -1678,6 +1683,15 @@ ob_start();
         {
             $cliente_pet = NM_utf8_urldecode($_POST['rsargs'][0]);
             $script_case_init = NM_utf8_urldecode($_POST['rsargs'][1]);
+        }
+        if ('ajax_form_cliente_mob_event_cep_onchange' == $_POST['rs'])
+        {
+            $cep = NM_utf8_urldecode($_POST['rsargs'][0]);
+            $logradouro = NM_utf8_urldecode($_POST['rsargs'][1]);
+            $bairro = NM_utf8_urldecode($_POST['rsargs'][2]);
+            $cidade_idcidade = NM_utf8_urldecode($_POST['rsargs'][3]);
+            $uf = NM_utf8_urldecode($_POST['rsargs'][4]);
+            $script_case_init = NM_utf8_urldecode($_POST['rsargs'][5]);
         }
         if ('ajax_form_cliente_mob_event_scajaxbutton_btn_voltar_onclick' == $_POST['rs'])
         {
@@ -1697,14 +1711,15 @@ ob_start();
             $numero = NM_utf8_urldecode($_POST['rsargs'][9]);
             $bairro = NM_utf8_urldecode($_POST['rsargs'][10]);
             $cidade_idcidade = NM_utf8_urldecode($_POST['rsargs'][11]);
-            $nm_form_submit = NM_utf8_urldecode($_POST['rsargs'][12]);
-            $nmgp_url_saida = NM_utf8_urldecode($_POST['rsargs'][13]);
-            $nmgp_opcao = NM_utf8_urldecode($_POST['rsargs'][14]);
-            $nmgp_ancora = NM_utf8_urldecode($_POST['rsargs'][15]);
-            $nmgp_num_form = NM_utf8_urldecode($_POST['rsargs'][16]);
-            $nmgp_parms = NM_utf8_urldecode($_POST['rsargs'][17]);
-            $script_case_init = NM_utf8_urldecode($_POST['rsargs'][18]);
-            $csrf_token = NM_utf8_urldecode($_POST['rsargs'][19]);
+            $uf = NM_utf8_urldecode($_POST['rsargs'][12]);
+            $nm_form_submit = NM_utf8_urldecode($_POST['rsargs'][13]);
+            $nmgp_url_saida = NM_utf8_urldecode($_POST['rsargs'][14]);
+            $nmgp_opcao = NM_utf8_urldecode($_POST['rsargs'][15]);
+            $nmgp_ancora = NM_utf8_urldecode($_POST['rsargs'][16]);
+            $nmgp_num_form = NM_utf8_urldecode($_POST['rsargs'][17]);
+            $nmgp_parms = NM_utf8_urldecode($_POST['rsargs'][18]);
+            $script_case_init = NM_utf8_urldecode($_POST['rsargs'][19]);
+            $csrf_token = NM_utf8_urldecode($_POST['rsargs'][20]);
         }
         if ('ajax_form_cliente_mob_navigate_form' == $_POST['rs'])
         {
@@ -2285,6 +2300,7 @@ ob_start();
 
     $inicial_form_cliente_mob->contr_form_cliente_mob->NM_ajax_info['select_html'] = array();
     $inicial_form_cliente_mob->contr_form_cliente_mob->NM_ajax_info['select_html']['cidade_idcidade'] = "class=\"sc-js-input scFormObjectOdd css_cidade_idcidade_obj{SC_100PERC_CLASS_INPUT}\" style=\"\" id=\"id_sc_field_cidade_idcidade\" name=\"cidade_idcidade\" size=\"1\" alt=\"{type: 'select', enterTab: false}\"";
+    $inicial_form_cliente_mob->contr_form_cliente_mob->NM_ajax_info['select_html']['uf'] = "class=\"sc-js-input scFormObjectOdd css_uf_obj{SC_100PERC_CLASS_INPUT}\" style=\"\" id=\"id_sc_field_uf\" name=\"uf\" size=\"1\" alt=\"{type: 'select', enterTab: false}\"";
 
     if (!defined('SC_SAJAX_LOADED'))
     {
@@ -2310,9 +2326,11 @@ ob_start();
     sajax_export("ajax_form_cliente_mob_validate_numero");
     sajax_export("ajax_form_cliente_mob_validate_bairro");
     sajax_export("ajax_form_cliente_mob_validate_cidade_idcidade");
+    sajax_export("ajax_form_cliente_mob_validate_uf");
     sajax_export("ajax_form_cliente_mob_validate_cliente_telefone");
     sajax_export("ajax_form_cliente_mob_validate_cliente_dependente");
     sajax_export("ajax_form_cliente_mob_validate_cliente_pet");
+    sajax_export("ajax_form_cliente_mob_event_cep_onchange");
     sajax_export("ajax_form_cliente_mob_event_scajaxbutton_btn_voltar_onclick");
     sajax_export("ajax_form_cliente_mob_submit_form");
     sajax_export("ajax_form_cliente_mob_navigate_form");
@@ -2557,6 +2575,25 @@ ob_start();
         exit;
     } // ajax_validate_cidade_idcidade
 
+    function ajax_form_cliente_mob_validate_uf($uf, $script_case_init)
+    {
+        global $inicial_form_cliente_mob;
+        //register_shutdown_function("form_cliente_mob_pack_ajax_response");
+        $inicial_form_cliente_mob->contr_form_cliente_mob->NM_ajax_flag          = true;
+        $inicial_form_cliente_mob->contr_form_cliente_mob->NM_ajax_opcao         = 'validate_uf';
+        $inicial_form_cliente_mob->contr_form_cliente_mob->NM_ajax_info['param'] = array(
+                  'uf' => NM_utf8_urldecode($uf),
+                  'script_case_init' => NM_utf8_urldecode($script_case_init),
+                  'buffer_output' => true,
+                 );
+        if ($inicial_form_cliente_mob->contr_form_cliente_mob->NM_ajax_info['param']['buffer_output'])
+        {
+            ob_start();
+        }
+        $inicial_form_cliente_mob->contr_form_cliente_mob->controle();
+        exit;
+    } // ajax_validate_uf
+
     function ajax_form_cliente_mob_validate_cliente_telefone($cliente_telefone, $script_case_init)
     {
         global $inicial_form_cliente_mob;
@@ -2614,6 +2651,29 @@ ob_start();
         exit;
     } // ajax_validate_cliente_pet
 
+    function ajax_form_cliente_mob_event_cep_onchange($cep, $logradouro, $bairro, $cidade_idcidade, $uf, $script_case_init)
+    {
+        global $inicial_form_cliente_mob;
+        //register_shutdown_function("form_cliente_mob_pack_ajax_response");
+        $inicial_form_cliente_mob->contr_form_cliente_mob->NM_ajax_flag          = true;
+        $inicial_form_cliente_mob->contr_form_cliente_mob->NM_ajax_opcao         = 'event_cep_onchange';
+        $inicial_form_cliente_mob->contr_form_cliente_mob->NM_ajax_info['param'] = array(
+                  'cep' => NM_utf8_urldecode($cep),
+                  'logradouro' => NM_utf8_urldecode($logradouro),
+                  'bairro' => NM_utf8_urldecode($bairro),
+                  'cidade_idcidade' => NM_utf8_urldecode($cidade_idcidade),
+                  'uf' => NM_utf8_urldecode($uf),
+                  'script_case_init' => NM_utf8_urldecode($script_case_init),
+                  'buffer_output' => true,
+                 );
+        if ($inicial_form_cliente_mob->contr_form_cliente_mob->NM_ajax_info['param']['buffer_output'])
+        {
+            ob_start();
+        }
+        $inicial_form_cliente_mob->contr_form_cliente_mob->controle();
+        exit;
+    } // ajax_event_cep_onchange
+
     function ajax_form_cliente_mob_event_scajaxbutton_btn_voltar_onclick($script_case_init)
     {
         global $inicial_form_cliente_mob;
@@ -2632,7 +2692,7 @@ ob_start();
         exit;
     } // ajax_event_scajaxbutton_btn_voltar_onclick
 
-    function ajax_form_cliente_mob_submit_form($idcliente, $cpf_cnpj, $nome_fantasia, $razao_social, $data_nascimento, $email, $indicacao, $cep, $logradouro, $numero, $bairro, $cidade_idcidade, $nm_form_submit, $nmgp_url_saida, $nmgp_opcao, $nmgp_ancora, $nmgp_num_form, $nmgp_parms, $script_case_init, $csrf_token)
+    function ajax_form_cliente_mob_submit_form($idcliente, $cpf_cnpj, $nome_fantasia, $razao_social, $data_nascimento, $email, $indicacao, $cep, $logradouro, $numero, $bairro, $cidade_idcidade, $uf, $nm_form_submit, $nmgp_url_saida, $nmgp_opcao, $nmgp_ancora, $nmgp_num_form, $nmgp_parms, $script_case_init, $csrf_token)
     {
         global $inicial_form_cliente_mob;
         //register_shutdown_function("form_cliente_mob_pack_ajax_response");
@@ -2651,6 +2711,7 @@ ob_start();
                   'numero' => NM_utf8_urldecode($numero),
                   'bairro' => NM_utf8_urldecode($bairro),
                   'cidade_idcidade' => NM_utf8_urldecode($cidade_idcidade),
+                  'uf' => NM_utf8_urldecode($uf),
                   'nm_form_submit' => NM_utf8_urldecode($nm_form_submit),
                   'nmgp_url_saida' => NM_utf8_urldecode($nmgp_url_saida),
                   'nmgp_opcao' => NM_utf8_urldecode($nmgp_opcao),

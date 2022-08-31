@@ -1,7 +1,0 @@
-index.php
-petshop
-nfce_abertura
-SIM
-contr
-nfce_abertura
-LigMd5

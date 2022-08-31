@@ -64,6 +64,8 @@ class form_cliente_mob_apl
    var $email;
    var $indicacao;
    var $cep;
+   var $uf;
+   var $uf_1;
    var $cliente_dependente;
    var $cliente_pet;
    var $cliente_telefone;
@@ -211,6 +213,10 @@ class form_cliente_mob_apl
           if (isset($this->NM_ajax_info['param']['script_case_init']))
           {
               $this->script_case_init = $this->NM_ajax_info['param']['script_case_init'];
+          }
+          if (isset($this->NM_ajax_info['param']['uf']))
+          {
+              $this->uf = $this->NM_ajax_info['param']['uf'];
           }
           if (isset($this->nmgp_refresh_fields))
           {
@@ -1147,6 +1153,7 @@ class form_cliente_mob_apl
       if (isset($this->email)) { $this->nm_limpa_alfa($this->email); }
       if (isset($this->indicacao)) { $this->nm_limpa_alfa($this->indicacao); }
       if (isset($this->cep)) { $this->nm_limpa_alfa($this->cep); }
+      if (isset($this->uf)) { $this->nm_limpa_alfa($this->uf); }
       if (isset($this->cliente_dependente)) { $this->nm_limpa_alfa($this->cliente_dependente); }
       if (isset($this->cliente_pet)) { $this->nm_limpa_alfa($this->cliente_pet); }
       if (isset($this->cliente_telefone)) { $this->nm_limpa_alfa($this->cliente_telefone); }
@@ -1284,6 +1291,10 @@ class form_cliente_mob_apl
           {
               $this->Valida_campos($Campos_Crit, $Campos_Falta, $Campos_Erros, 'cidade_idcidade');
           }
+          if ('validate_uf' == $this->NM_ajax_opcao)
+          {
+              $this->Valida_campos($Campos_Crit, $Campos_Falta, $Campos_Erros, 'uf');
+          }
           if ('validate_cliente_telefone' == $this->NM_ajax_opcao)
           {
               $this->Valida_campos($Campos_Crit, $Campos_Falta, $Campos_Erros, 'cliente_telefone');
@@ -1303,6 +1314,10 @@ class form_cliente_mob_apl
       {
           $this->nm_tira_formatacao();
           $this->nm_converte_datas();
+          if ('event_cep_onchange' == $this->NM_ajax_opcao)
+          {
+              $this->cep_onChange();
+          }
           if ('event_scajaxbutton_btn_voltar_onclick' == $this->NM_ajax_opcao)
           {
               $this->scajaxbutton_btn_voltar_onClick();
@@ -1323,6 +1338,12 @@ class form_cliente_mob_apl
           $nm_sc_sv_opcao = $this->nmgp_opcao; 
           $this->nmgp_opcao = "nada"; 
           $this->nm_acessa_banco();
+    if ('recarga' == $nm_sc_sv_opcao) {
+      $_SESSION['scriptcase']['form_cliente_mob']['contr_erro'] = 'on';
+  
+
+$_SESSION['scriptcase']['form_cliente_mob']['contr_erro'] = 'off'; 
+    }
           if ($this->NM_ajax_flag)
           {
               $this->ajax_return_values();
@@ -1391,6 +1412,10 @@ class form_cliente_mob_apl
       }
       if ($this->NM_ajax_flag && 'navigate_form' == $this->NM_ajax_opcao)
       {
+          $_SESSION['scriptcase']['form_cliente_mob']['contr_erro'] = 'on';
+  
+
+$_SESSION['scriptcase']['form_cliente_mob']['contr_erro'] = 'off'; 
           $this->ajax_return_values();
           $this->ajax_add_parameters();
           form_cliente_mob_pack_ajax_response();
@@ -1849,6 +1874,9 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
            case 'cidade_idcidade':
                return "CIDADE";
                break;
+           case 'uf':
+               return "UF";
+               break;
            case 'cliente_telefone':
                return "cliente_telefone";
                break;
@@ -1930,6 +1958,8 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
         $this->ValidateField_bairro($Campos_Crit, $Campos_Falta, $Campos_Erros);
       if ((!is_array($filtro) && ('' == $filtro || 'cidade_idcidade' == $filtro)) || (is_array($filtro) && in_array('cidade_idcidade', $filtro)))
         $this->ValidateField_cidade_idcidade($Campos_Crit, $Campos_Falta, $Campos_Erros);
+      if ((!is_array($filtro) && ('' == $filtro || 'uf' == $filtro)) || (is_array($filtro) && in_array('uf', $filtro)))
+        $this->ValidateField_uf($Campos_Crit, $Campos_Falta, $Campos_Erros);
       if ((!is_array($filtro) && ('' == $filtro || 'cliente_telefone' == $filtro)) || (is_array($filtro) && in_array('cliente_telefone', $filtro)))
         $this->ValidateField_cliente_telefone($Campos_Crit, $Campos_Falta, $Campos_Erros);
       if ((!is_array($filtro) && ('' == $filtro || 'cliente_dependente' == $filtro)) || (is_array($filtro) && in_array('cliente_dependente', $filtro)))
@@ -2278,26 +2308,64 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
     {
         global $teste_validade;
         $hasError = false;
-      nm_limpa_cep($this->cep) ; 
+      $this->nm_tira_mask($this->cep, "99999-999", "(){}[].,;:-+/ "); 
       if ($this->nmgp_opcao != "excluir") 
       { 
-          if (trim($this->cep) != "")  
+          if (NM_utf8_strlen($this->cep) > 20) 
           { 
-              if (strlen($this->cep) != 8  || (int)$this->cep == 0)
-              { 
-                  $hasError = true;
-                  $Campos_Crit .= "CEP; " ; 
-                  if (!isset($Campos_Erros['cep']))
-                  {
-                      $Campos_Erros['cep'] = array();
-                  }
-                  $Campos_Erros['cep'][] = "" . $this->Ini->Nm_lang['lang_errm_ajax_data'] . "";
-                  if (!isset($this->NM_ajax_info['errList']['cep']) || !is_array($this->NM_ajax_info['errList']['cep']))
-                  {
-                      $this->NM_ajax_info['errList']['cep'] = array();
-                  }
-                  $this->NM_ajax_info['errList']['cep'][] = "" . $this->Ini->Nm_lang['lang_errm_ajax_data'] . "";
-              } 
+              $hasError = true;
+              $Campos_Crit .= "CEP " . $this->Ini->Nm_lang['lang_errm_mxch'] . " 20 " . $this->Ini->Nm_lang['lang_errm_nchr']; 
+              if (!isset($Campos_Erros['cep']))
+              {
+                  $Campos_Erros['cep'] = array();
+              }
+              $Campos_Erros['cep'][] = $this->Ini->Nm_lang['lang_errm_mxch'] . " 20 " . $this->Ini->Nm_lang['lang_errm_nchr'];
+              if (!isset($this->NM_ajax_info['errList']['cep']) || !is_array($this->NM_ajax_info['errList']['cep']))
+              {
+                  $this->NM_ajax_info['errList']['cep'] = array();
+              }
+              $this->NM_ajax_info['errList']['cep'][] = $this->Ini->Nm_lang['lang_errm_mxch'] . " 20 " . $this->Ini->Nm_lang['lang_errm_nchr'];
+          } 
+      } 
+      $Teste_trab = "01234567890123456789";
+      if ($_SESSION['scriptcase']['charset'] != "UTF-8")
+      {
+          $Teste_trab = NM_conv_charset($Teste_trab, $_SESSION['scriptcase']['charset'], "UTF-8");
+      }
+;
+      $Teste_trab = $Teste_trab . chr(10) . chr(13) ; 
+      $Teste_compara = $this->cep ; 
+      if ($this->nmgp_opcao != "excluir") 
+      { 
+          $Teste_critica = 0 ; 
+          for ($x = 0; $x < mb_strlen($this->cep, $_SESSION['scriptcase']['charset']); $x++) 
+          { 
+               for ($y = 0; $y < mb_strlen($Teste_trab, $_SESSION['scriptcase']['charset']); $y++) 
+               { 
+                    if (sc_substr($Teste_compara, $x, 1) == sc_substr($Teste_trab, $y, 1) ) 
+                    { 
+                        break ; 
+                    } 
+               } 
+               if (sc_substr($Teste_compara, $x, 1) != sc_substr($Teste_trab, $y, 1) )  
+               { 
+                  $Teste_critica = 1 ; 
+               } 
+          } 
+          if ($Teste_critica == 1) 
+          { 
+              $hasError = true;
+              $Campos_Crit .= "CEP " . $this->Ini->Nm_lang['lang_errm_ivch']; 
+              if (!isset($Campos_Erros['cep']))
+              {
+                  $Campos_Erros['cep'] = array();
+              }
+              $Campos_Erros['cep'][] = $this->Ini->Nm_lang['lang_errm_ivch'];
+              if (!isset($this->NM_ajax_info['errList']['cep']) || !is_array($this->NM_ajax_info['errList']['cep']))
+              {
+                  $this->NM_ajax_info['errList']['cep'] = array();
+              }
+              $this->NM_ajax_info['errList']['cep'][] = $this->Ini->Nm_lang['lang_errm_ivch'];
           } 
       } 
         if ($hasError) {
@@ -2523,6 +2591,35 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
         }
     } // ValidateField_cidade_idcidade
 
+    function ValidateField_uf(&$Campos_Crit, &$Campos_Falta, &$Campos_Erros)
+    {
+        global $teste_validade;
+        $hasError = false;
+               if (!empty($this->uf) && isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_uf']) && !in_array($this->uf, $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_uf']))
+               {
+                   $hasError = true;
+                   $Campos_Crit .= $this->Ini->Nm_lang['lang_errm_ajax_data'];
+                   if (!isset($Campos_Erros['uf']))
+                   {
+                       $Campos_Erros['uf'] = array();
+                   }
+                   $Campos_Erros['uf'][] = $this->Ini->Nm_lang['lang_errm_ajax_data'];
+                   if (!isset($this->NM_ajax_info['errList']['uf']) || !is_array($this->NM_ajax_info['errList']['uf']))
+                   {
+                       $this->NM_ajax_info['errList']['uf'] = array();
+                   }
+                   $this->NM_ajax_info['errList']['uf'][] = $this->Ini->Nm_lang['lang_errm_ajax_data'];
+               }
+        if ($hasError) {
+            global $sc_seq_vert;
+            $fieldName = 'uf';
+            if (isset($sc_seq_vert) && '' != $sc_seq_vert) {
+                $fieldName .= $sc_seq_vert;
+            }
+            $this->NM_ajax_info['fieldsWithErrors'][] = $fieldName;
+        }
+    } // ValidateField_uf
+
     function ValidateField_cliente_telefone(&$Campos_Crit, &$Campos_Falta, &$Campos_Erros)
     {
         global $teste_validade;
@@ -2618,6 +2715,7 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
     $this->nmgp_dados_form['numero'] = $this->numero;
     $this->nmgp_dados_form['bairro'] = $this->bairro;
     $this->nmgp_dados_form['cidade_idcidade'] = $this->cidade_idcidade;
+    $this->nmgp_dados_form['uf'] = $this->uf;
     $this->nmgp_dados_form['cliente_telefone'] = $this->cliente_telefone;
     $this->nmgp_dados_form['cliente_dependente'] = $this->cliente_dependente;
     $this->nmgp_dados_form['cliente_pet'] = $this->cliente_pet;
@@ -2635,7 +2733,7 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
       $this->Before_unformat['data_nascimento'] = $this->data_nascimento;
       nm_limpa_data($this->data_nascimento, $this->field_config['data_nascimento']['date_sep']) ; 
       $this->Before_unformat['cep'] = $this->cep;
-      nm_limpa_cep($this->cep) ; 
+      $this->nm_tira_mask($this->cep, "99999-999", "(){}[].,;:-+/ "); 
       $this->Before_unformat['numero'] = $this->numero;
       nm_limpa_numero($this->numero, $this->field_config['numero']['symbol_grp']) ; 
    }
@@ -2691,7 +2789,7 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
       }
       if ($Nome_Campo == "cep")
       {
-          nm_limpa_cep($this->cep) ; 
+          $this->nm_tira_mask($this->cep, "99999-999", "(){}[].,;:-+/ "); 
       }
       if ($Nome_Campo == "numero")
       {
@@ -2725,7 +2823,7 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
       }
       if (!empty($this->cep) || (!empty($format_fields) && isset($format_fields['cep'])))
       {
-          nmgp_Form_Cep($this->cep) ; 
+          $this->nm_gera_mask($this->cep, "99999-999"); 
       }
       if ('' !== $this->numero || (!empty($format_fields) && isset($format_fields['numero'])))
       {
@@ -3170,6 +3268,7 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
           $this->ajax_return_values_numero();
           $this->ajax_return_values_bairro();
           $this->ajax_return_values_cidade_idcidade();
+          $this->ajax_return_values_uf();
           $this->ajax_return_values_cliente_telefone();
           $this->ajax_return_values_cliente_dependente();
           $this->ajax_return_values_cliente_pet();
@@ -3357,7 +3456,7 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
           $this->NM_ajax_info['fldList']['cep'] = array(
                        'row'    => '',
                'type'    => 'text',
-               'valList' => array($sTmpValue),
+               'valList' => array($this->form_encode_input($sTmpValue)),
               );
           }
    }
@@ -3453,7 +3552,7 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_
    $unformatted_value_cep = $this->cep;
    $unformatted_value_numero = $this->numero;
 
-   $nm_comando = "SELECT idcidade, nome  FROM cidade  ORDER BY nome";
+   $nm_comando = "SELECT mun_codigo, mun_nome  FROM tbl_cidades  ORDER BY mun_nome";
 
    $this->idcliente = $old_value_idcliente;
    $this->cpf_cnpj = $old_value_cpf_cnpj;
@@ -3467,9 +3566,6 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_
    {
        while (!$rs->EOF) 
        { 
-              $rs->fields[0] = str_replace(',', '.', $rs->fields[0]);
-              $rs->fields[0] = (strpos(strtolower($rs->fields[0]), "e")) ? (float)$rs->fields[0] : $rs->fields[0];
-              $rs->fields[0] = (string)$rs->fields[0];
               $aLookup[] = array(form_cliente_mob_pack_protect_string(NM_charset_to_utf8($rs->fields[0])) => str_replace('<', '&lt;', form_cliente_mob_pack_protect_string(NM_charset_to_utf8($rs->fields[1]))));
               $nmgp_def_dados .= $rs->fields[1] . "?#?" ; 
               $nmgp_def_dados .= $rs->fields[0] . "?#?N?@?" ; 
@@ -3534,6 +3630,131 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_
               $aLabel[$iIndex] = (isset($aLabelTemp[$sValue])) ? $aLabelTemp[$sValue] : $sValue;
           }
           $this->NM_ajax_info['fldList']['cidade_idcidade']['labList'] = $aLabel;
+          }
+   }
+
+          //----- uf
+   function ajax_return_values_uf($bForce = false)
+   {
+          if ('navigate_form' == $this->NM_ajax_opcao || 'backup_line' == $this->NM_ajax_opcao || (isset($this->nmgp_refresh_fields) && in_array("uf", $this->nmgp_refresh_fields)) || $bForce)
+          {
+              $sTmpValue = NM_charset_to_utf8($this->uf);
+              $aLookup = array();
+              $this->_tmp_lookup_uf = $this->uf;
+
+ 
+$nmgp_def_dados = "" ; 
+if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_uf']))
+{
+    $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_uf'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_uf']); 
+}
+else
+{
+    $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_uf'] = array(); 
+}
+   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
+   { 
+       $GLOBALS["NM_ERRO_IBASE"] = 1;  
+   } 
+   $nm_nao_carga = false;
+   $nmgp_def_dados = "" ; 
+
+   $old_value_idcliente = $this->idcliente;
+   $old_value_cpf_cnpj = $this->cpf_cnpj;
+   $old_value_data_nascimento = $this->data_nascimento;
+   $old_value_cep = $this->cep;
+   $old_value_numero = $this->numero;
+   $this->nm_tira_formatacao();
+   $this->nm_converte_datas(false);
+
+
+   $unformatted_value_idcliente = $this->idcliente;
+   $unformatted_value_cpf_cnpj = $this->cpf_cnpj;
+   $unformatted_value_data_nascimento = $this->data_nascimento;
+   $unformatted_value_cep = $this->cep;
+   $unformatted_value_numero = $this->numero;
+
+   $nm_comando = "SELECT uf_num, uf_sigla  FROM tbl_ufs  ORDER BY uf_sigla";
+
+   $this->idcliente = $old_value_idcliente;
+   $this->cpf_cnpj = $old_value_cpf_cnpj;
+   $this->data_nascimento = $old_value_data_nascimento;
+   $this->cep = $old_value_cep;
+   $this->numero = $old_value_numero;
+
+   $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
+   $_SESSION['scriptcase']['sc_sql_ult_conexao'] = '';
+   if ($nm_comando != "" && $rs = $this->Db->Execute($nm_comando))
+   {
+       while (!$rs->EOF) 
+       { 
+              $rs->fields[0] = str_replace(',', '.', $rs->fields[0]);
+              $rs->fields[0] = (strpos(strtolower($rs->fields[0]), "e")) ? (float)$rs->fields[0] : $rs->fields[0];
+              $rs->fields[0] = (string)$rs->fields[0];
+              $aLookup[] = array(form_cliente_mob_pack_protect_string(NM_charset_to_utf8($rs->fields[0])) => str_replace('<', '&lt;', form_cliente_mob_pack_protect_string(NM_charset_to_utf8($rs->fields[1]))));
+              $nmgp_def_dados .= $rs->fields[1] . "?#?" ; 
+              $nmgp_def_dados .= $rs->fields[0] . "?#?N?@?" ; 
+              $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_uf'][] = $rs->fields[0];
+              $rs->MoveNext() ; 
+       } 
+       $rs->Close() ; 
+   } 
+   elseif ($GLOBALS["NM_ERRO_IBASE"] != 1 && $nm_comando != "")  
+   {  
+       $this->Erro->mensagem(__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dber'], $this->Db->ErrorMsg()); 
+       exit; 
+   } 
+   $GLOBALS["NM_ERRO_IBASE"] = 0; 
+          $aLookupOrig = $aLookup;
+          $sSelComp = "name=\"uf\"";
+          if (isset($this->NM_ajax_info['select_html']['uf']) && !empty($this->NM_ajax_info['select_html']['uf']))
+          {
+              $sSelComp = str_replace('{SC_100PERC_CLASS_INPUT}', $this->classes_100perc_fields['input'], $this->NM_ajax_info['select_html']['uf']);
+          }
+          $sLookup = '';
+          if (empty($aLookup))
+          {
+              $aLookup[] = array('' => '');
+          }
+          foreach ($aLookup as $aOption)
+          {
+              foreach ($aOption as $sValue => $sLabel)
+              {
+
+                  if ($this->uf == $sValue)
+                  {
+                      $this->_tmp_lookup_uf = $sLabel;
+                  }
+
+                  $sOpt     = ($sValue !== $sLabel) ? $sValue : $sLabel;
+                  $sLookup .= "<option value=\"" . $sOpt . "\">" . $sLabel . "</option>";
+              }
+          }
+          $aLookup  = $sLookup;
+          $this->NM_ajax_info['fldList']['uf'] = array(
+                       'row'    => '',
+               'type'    => 'select',
+               'valList' => array($sTmpValue),
+               'optList' => $aLookup,
+              );
+          $aLabel     = array();
+          $aLabelTemp = array();
+          foreach ($this->NM_ajax_info['fldList']['uf']['valList'] as $i => $v)
+          {
+              $this->NM_ajax_info['fldList']['uf']['valList'][$i] = form_cliente_mob_pack_protect_string($v);
+          }
+          foreach ($aLookupOrig as $aValData)
+          {
+              if (in_array(key($aValData), $this->NM_ajax_info['fldList']['uf']['valList']))
+              {
+                  $aLabelTemp[key($aValData)] = current($aValData);
+              }
+          }
+          foreach ($this->NM_ajax_info['fldList']['uf']['valList'] as $iIndex => $sValue)
+          {
+              $aLabel[$iIndex] = (isset($aLabelTemp[$sValue])) ? $aLabelTemp[$sValue] : $sValue;
+          }
+          $this->NM_ajax_info['fldList']['uf']['labList'] = $aLabel;
           }
    }
 
@@ -3657,6 +3878,24 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_
    } // ajax_add_parameters
   function nm_proc_onload($bFormat = true)
   {
+      if ($this->sc_evento == "novo" || $this->sc_evento == "incluir" || ($this->nmgp_opcao == "nada" && isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['opc_ant']) && $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['opc_ant'] == "novo") || (isset($GLOBALS['erro_incl']) && 1 == $GLOBALS['erro_incl']))
+      {
+          if (!isset($this->nmgp_cmp_hidden["cliente_dependente"]))
+          {
+              $this->nmgp_cmp_hidden["cliente_dependente"] = "off"; $this->NM_ajax_info['fieldDisplay']['cliente_dependente'] = 'off';
+          }
+          if (!isset($this->nmgp_cmp_hidden["cliente_pet"]))
+          {
+              $this->nmgp_cmp_hidden["cliente_pet"] = "off"; $this->NM_ajax_info['fieldDisplay']['cliente_pet'] = 'off';
+          }
+          if (!isset($this->nmgp_cmp_hidden["cliente_telefone"]))
+          {
+              $this->nmgp_cmp_hidden["cliente_telefone"] = "off"; $this->NM_ajax_info['fieldDisplay']['cliente_telefone'] = 'off';
+          }
+      }
+      else
+      {
+      }
       $this->nm_guardar_campos();
       if ($bFormat) $this->nm_formatar_campos();
   }
@@ -3777,6 +4016,7 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_
       $NM_val_form['numero'] = $this->numero;
       $NM_val_form['bairro'] = $this->bairro;
       $NM_val_form['cidade_idcidade'] = $this->cidade_idcidade;
+      $NM_val_form['uf'] = $this->uf;
       $NM_val_form['cliente_telefone'] = $this->cliente_telefone;
       $NM_val_form['cliente_dependente'] = $this->cliente_dependente;
       $NM_val_form['cliente_pet'] = $this->cliente_pet;
@@ -3858,6 +4098,13 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_
               $this->cep = "null"; 
               $NM_val_null[] = "cep";
           } 
+          $this->uf_before_qstr = $this->uf;
+          $this->uf = substr($this->Db->qstr($this->uf), 1, -1); 
+          if ($this->uf == "" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))  
+          { 
+              $this->uf = "null"; 
+              $NM_val_null[] = "uf";
+          } 
           $this->cliente_dependente_before_qstr = $this->cliente_dependente;
           $this->cliente_dependente = substr($this->Db->qstr($this->cliente_dependente), 1, -1); 
           if ($this->cliente_dependente == "" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))  
@@ -3923,6 +4170,38 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_
               $this->sc_evento = 'update';
           } 
           $aUpdateOk = array();
+              $Cmd_Unique = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where (cpf_cnpj = '" . $this->cpf_cnpj . "') AND (idcliente <> $this->idcliente)";
+              $Cmd_Unique = str_replace("'null'", "null", $Cmd_Unique) ; 
+              $Cmd_Unique = str_replace("#null#", "null", $Cmd_Unique) ; 
+              $Cmd_Unique = str_replace($this->Ini->date_delim . "null" . $this->Ini->date_delim1, "null", $Cmd_Unique) ; 
+              $_SESSION['scriptcase']['sc_sql_ult_comando'] = $Cmd_Unique;
+              $rsUni = $this->Db->Execute($Cmd_Unique);
+              if (false === $rsUni)
+              {
+                  $dbErrorMessage = $this->Db->ErrorMsg();
+                  $dbErrorCode = $this->Db->ErrorNo();
+                  $this->handleDbErrorMessage($dbErrorMessage, $dbErrorCode);
+                  $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_updt'], $dbErrorMessage, true);
+                  if (isset($_SESSION['scriptcase']['erro_handler']) && $_SESSION['scriptcase']['erro_handler']) {
+                      $this->sc_erro_update = $dbErrorMessage;
+                      $this->NM_rollback_db();
+                      if ($this->NM_ajax_flag) {
+                          form_cliente_mob_pack_ajax_response();
+                      }
+                      exit;
+                  }
+              }
+              elseif (0 < $rsUni->fields[0])
+              {
+                  $this->Erro->mensagem (__FILE__, __LINE__, "critica", $this->Ini->Nm_lang['lang_errm_ukey'] . " CPF/CNPJ"); 
+                  $this->nmgp_opcao = "nada"; 
+                  $aUpdateOk[] = 'cpf_cnpj';
+                  $rsUni->Close();
+              }
+              else
+              {
+                  $rsUni->Close();
+              }
           $bUpdateOk = $bUpdateOk && empty($aUpdateOk);
           if ($bUpdateOk)
           { 
@@ -3931,22 +4210,22 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "cidade_idcidade = $this->cidade_idcidade, cpf_cnpj = '$this->cpf_cnpj', nome_fantasia = '$this->nome_fantasia', razao_social = '$this->razao_social', data_nascimento = #$this->data_nascimento#, logradouro = '$this->logradouro', numero = $this->numero, bairro = '$this->bairro', email = '$this->email', indicacao = '$this->indicacao', cep = '$this->cep'"; 
+                  $SC_fields_update[] = "cidade_idcidade = $this->cidade_idcidade, cpf_cnpj = '$this->cpf_cnpj', nome_fantasia = '$this->nome_fantasia', razao_social = '$this->razao_social', data_nascimento = #$this->data_nascimento#, logradouro = '$this->logradouro', numero = $this->numero, bairro = '$this->bairro', email = '$this->email', indicacao = '$this->indicacao', cep = '$this->cep', uf = '$this->uf'"; 
               } 
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "cidade_idcidade = $this->cidade_idcidade, cpf_cnpj = '$this->cpf_cnpj', nome_fantasia = '$this->nome_fantasia', razao_social = '$this->razao_social', data_nascimento = " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", logradouro = '$this->logradouro', numero = $this->numero, bairro = '$this->bairro', email = '$this->email', indicacao = '$this->indicacao', cep = '$this->cep'"; 
+                  $SC_fields_update[] = "cidade_idcidade = $this->cidade_idcidade, cpf_cnpj = '$this->cpf_cnpj', nome_fantasia = '$this->nome_fantasia', razao_social = '$this->razao_social', data_nascimento = " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", logradouro = '$this->logradouro', numero = $this->numero, bairro = '$this->bairro', email = '$this->email', indicacao = '$this->indicacao', cep = '$this->cep', uf = '$this->uf'"; 
               } 
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "cidade_idcidade = $this->cidade_idcidade, cpf_cnpj = '$this->cpf_cnpj', nome_fantasia = '$this->nome_fantasia', razao_social = '$this->razao_social', data_nascimento = " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", logradouro = '$this->logradouro', numero = $this->numero, bairro = '$this->bairro', email = '$this->email', indicacao = '$this->indicacao', cep = '$this->cep'"; 
+                  $SC_fields_update[] = "cidade_idcidade = $this->cidade_idcidade, cpf_cnpj = '$this->cpf_cnpj', nome_fantasia = '$this->nome_fantasia', razao_social = '$this->razao_social', data_nascimento = " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", logradouro = '$this->logradouro', numero = $this->numero, bairro = '$this->bairro', email = '$this->email', indicacao = '$this->indicacao', cep = '$this->cep', uf = '$this->uf'"; 
               } 
               else 
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "cidade_idcidade = $this->cidade_idcidade, cpf_cnpj = '$this->cpf_cnpj', nome_fantasia = '$this->nome_fantasia', razao_social = '$this->razao_social', data_nascimento = " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", logradouro = '$this->logradouro', numero = $this->numero, bairro = '$this->bairro', email = '$this->email', indicacao = '$this->indicacao', cep = '$this->cep'"; 
+                  $SC_fields_update[] = "cidade_idcidade = $this->cidade_idcidade, cpf_cnpj = '$this->cpf_cnpj', nome_fantasia = '$this->nome_fantasia', razao_social = '$this->razao_social', data_nascimento = " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", logradouro = '$this->logradouro', numero = $this->numero, bairro = '$this->bairro', email = '$this->email', indicacao = '$this->indicacao', cep = '$this->cep', uf = '$this->uf'"; 
               } 
               $comando .= implode(",", $SC_fields_update);  
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
@@ -3995,6 +4274,7 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_
               $this->email = $this->email_before_qstr;
               $this->indicacao = $this->indicacao_before_qstr;
               $this->cep = $this->cep_before_qstr;
+              $this->uf = $this->uf_before_qstr;
               $this->cliente_dependente = $this->cliente_dependente_before_qstr;
               $this->cliente_pet = $this->cliente_pet_before_qstr;
               $this->cliente_telefone = $this->cliente_telefone_before_qstr;
@@ -4037,6 +4317,8 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_
               elseif (isset($this->indicacao)) { $this->nm_limpa_alfa($this->indicacao); }
               if     (isset($NM_val_form) && isset($NM_val_form['cep'])) { $this->cep = $NM_val_form['cep']; }
               elseif (isset($this->cep)) { $this->nm_limpa_alfa($this->cep); }
+              if     (isset($NM_val_form) && isset($NM_val_form['uf'])) { $this->uf = $NM_val_form['uf']; }
+              elseif (isset($this->uf)) { $this->nm_limpa_alfa($this->uf); }
               if     (isset($NM_val_form) && isset($NM_val_form['cliente_dependente'])) { $this->cliente_dependente = $NM_val_form['cliente_dependente']; }
               elseif (isset($this->cliente_dependente)) { $this->nm_limpa_alfa($this->cliente_dependente); }
               if     (isset($NM_val_form) && isset($NM_val_form['cliente_pet'])) { $this->cliente_pet = $NM_val_form['cliente_pet']; }
@@ -4047,7 +4329,7 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_
               $this->nm_formatar_campos();
 
               $aOldRefresh               = $this->nmgp_refresh_fields;
-              $this->nmgp_refresh_fields = array_diff(array('idcliente', 'cpf_cnpj', 'nome_fantasia', 'razao_social', 'data_nascimento', 'email', 'indicacao', 'cep', 'logradouro', 'numero', 'bairro', 'cidade_idcidade', 'cliente_telefone', 'cliente_dependente', 'cliente_pet'), $aDoNotUpdate);
+              $this->nmgp_refresh_fields = array_diff(array('idcliente', 'cpf_cnpj', 'nome_fantasia', 'razao_social', 'data_nascimento', 'email', 'indicacao', 'cep', 'logradouro', 'numero', 'bairro', 'cidade_idcidade', 'uf', 'cliente_telefone', 'cliente_dependente', 'cliente_pet'), $aDoNotUpdate);
               $this->ajax_return_values();
               $this->nmgp_refresh_fields = $aOldRefresh;
 
@@ -4077,6 +4359,42 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_
           } 
           $bInsertOk = true;
           $aInsertOk = array(); 
+              $Cmd_Unique = "select count(*) AS countTest from " . $this->Ini->nm_tabela . " where cpf_cnpj = '" . $this->cpf_cnpj . "'";
+              $Cmd_Unique = str_replace("'null'", "null", $Cmd_Unique) ; 
+              $Cmd_Unique = str_replace("#null#", "null", $Cmd_Unique) ; 
+              $Cmd_Unique = str_replace($this->Ini->date_delim . "null" . $this->Ini->date_delim1, "null", $Cmd_Unique) ; 
+              $_SESSION['scriptcase']['sc_sql_ult_comando'] = $Cmd_Unique;
+              $rsUni = $this->Db->Execute($Cmd_Unique);
+              if (false === $rsUni)
+              {
+                  $dbErrorMessage = $this->Db->ErrorMsg();
+                  $dbErrorCode = $this->Db->ErrorNo();
+                  $this->handleDbErrorMessage($dbErrorMessage, $dbErrorCode);
+                  $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_inst'], $dbErrorMessage, true);
+                  if (isset($_SESSION['scriptcase']['erro_handler']) && $_SESSION['scriptcase']['erro_handler'])
+                  {
+                      $this->sc_erro_insert = $dbErrorMessage;
+                      $this->nmgp_opcao     = 'refresh_insert';
+                      $this->NM_rollback_db(); 
+                      if ($this->NM_ajax_flag)
+                      {
+                          form_cliente_mob_pack_ajax_response();
+                          exit;
+                      }
+                  }
+              }
+              elseif (0 < $rsUni->fields[0])
+              {
+                  $this->Erro->mensagem (__FILE__, __LINE__, "critica", $this->Ini->Nm_lang['lang_errm_inst_uniq'] . " CPF/CNPJ"); 
+                  $this->nmgp_opcao = "nada"; 
+                  $GLOBALS["erro_incl"] = 1; 
+                  $aInsertOk[] = 'cpf_cnpj';
+                  $rsUni->Close();
+              }
+              else
+              {
+                  $rsUni->Close();
+              }
           $bInsertOk = $bInsertOk && empty($aInsertOk);
           if (!isset($_POST['nmgp_ins_valid']) || $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['insert_validation'] != $_POST['nmgp_ins_valid'])
           {
@@ -4096,19 +4414,19 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_
           { 
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
               { 
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep) VALUES ($this->cidade_idcidade, '$this->cpf_cnpj', '$this->nome_fantasia', '$this->razao_social', #$this->data_nascimento#, '$this->logradouro', $this->numero, '$this->bairro', '$this->email', '$this->indicacao', '$this->cep')"; 
+                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep, uf) VALUES ($this->cidade_idcidade, '$this->cpf_cnpj', '$this->nome_fantasia', '$this->razao_social', #$this->data_nascimento#, '$this->logradouro', $this->numero, '$this->bairro', '$this->email', '$this->indicacao', '$this->cep', '$this->uf')"; 
               }
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
               {
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep) VALUES (" . $NM_seq_auto . "$this->cidade_idcidade, '$this->cpf_cnpj', '$this->nome_fantasia', '$this->razao_social', " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", '$this->logradouro', $this->numero, '$this->bairro', '$this->email', '$this->indicacao', '$this->cep')"; 
+                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep, uf) VALUES (" . $NM_seq_auto . "$this->cidade_idcidade, '$this->cpf_cnpj', '$this->nome_fantasia', '$this->razao_social', " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", '$this->logradouro', $this->numero, '$this->bairro', '$this->email', '$this->indicacao', '$this->cep', '$this->uf')"; 
               }
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sqlite))
               {
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep) VALUES (" . $NM_seq_auto . "$this->cidade_idcidade, '$this->cpf_cnpj', '$this->nome_fantasia', '$this->razao_social', " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", '$this->logradouro', $this->numero, '$this->bairro', '$this->email', '$this->indicacao', '$this->cep')"; 
+                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep, uf) VALUES (" . $NM_seq_auto . "$this->cidade_idcidade, '$this->cpf_cnpj', '$this->nome_fantasia', '$this->razao_social', " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", '$this->logradouro', $this->numero, '$this->bairro', '$this->email', '$this->indicacao', '$this->cep', '$this->uf')"; 
               }
               else
               {
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep) VALUES (" . $NM_seq_auto . "$this->cidade_idcidade, '$this->cpf_cnpj', '$this->nome_fantasia', '$this->razao_social', " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", '$this->logradouro', $this->numero, '$this->bairro', '$this->email', '$this->indicacao', '$this->cep')"; 
+                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep, uf) VALUES (" . $NM_seq_auto . "$this->cidade_idcidade, '$this->cpf_cnpj', '$this->nome_fantasia', '$this->razao_social', " . $this->Ini->date_delim . $this->data_nascimento . $this->Ini->date_delim1 . ", '$this->logradouro', $this->numero, '$this->bairro', '$this->email', '$this->indicacao', '$this->cep', '$this->uf')"; 
               }
               $comando = str_replace("N'null'", "null", $comando) ; 
               $comando = str_replace("'null'", "null", $comando) ; 
@@ -4212,6 +4530,7 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_
               $this->email = $this->email_before_qstr;
               $this->indicacao = $this->indicacao_before_qstr;
               $this->cep = $this->cep_before_qstr;
+              $this->uf = $this->uf_before_qstr;
               $this->cliente_dependente = $this->cliente_dependente_before_qstr;
               $this->cliente_pet = $this->cliente_pet_before_qstr;
               $this->cliente_telefone = $this->cliente_telefone_before_qstr;
@@ -4233,6 +4552,7 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_
               $this->email = $this->email_before_qstr;
               $this->indicacao = $this->indicacao_before_qstr;
               $this->cep = $this->cep_before_qstr;
+              $this->uf = $this->uf_before_qstr;
               $this->cliente_dependente = $this->cliente_dependente_before_qstr;
               $this->cliente_pet = $this->cliente_pet_before_qstr;
               $this->cliente_telefone = $this->cliente_telefone_before_qstr;
@@ -4444,7 +4764,7 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_
           { 
               $GLOBALS["NM_ERRO_IBASE"] = 1;  
           } 
-          $nmgp_select = "SELECT idcliente, cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep from " . $this->Ini->nm_tabela ; 
+          $nmgp_select = "SELECT idcliente, cidade_idcidade, cpf_cnpj, nome_fantasia, razao_social, data_nascimento, logradouro, numero, bairro, email, indicacao, cep, uf from " . $this->Ini->nm_tabela ; 
           $aWhere = array();
           $aWhere[] = $sc_where_filter;
           if ($this->nmgp_opcao == "igual" || (($_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['run_iframe'] == "F" || $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['run_iframe'] == "R") && ($this->sc_evento == "insert" || $this->sc_evento == "update")) )
@@ -4595,6 +4915,8 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_
               $this->nmgp_dados_select['indicacao'] = $this->indicacao;
               $this->cep = $rs->fields[11] ; 
               $this->nmgp_dados_select['cep'] = $this->cep;
+              $this->uf = $rs->fields[12] ; 
+              $this->nmgp_dados_select['uf'] = $this->uf;
           $GLOBALS["NM_ERRO_IBASE"] = 0; 
               $this->idcliente = (string)$this->idcliente; 
               $this->cidade_idcidade = (string)$this->cidade_idcidade; 
@@ -4645,6 +4967,8 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_
               $this->nmgp_dados_form["indicacao"] = $this->indicacao;
               $this->cep = "";  
               $this->nmgp_dados_form["cep"] = $this->cep;
+              $this->uf = "";  
+              $this->nmgp_dados_form["uf"] = $this->uf;
               $this->cliente_dependente = "";  
               $this->nmgp_dados_form["cliente_dependente"] = $this->cliente_dependente;
               $this->cliente_pet = "";  
@@ -4712,6 +5036,109 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_
         }
 
 //
+function atualiza_cep()
+{
+$_SESSION['scriptcase']['form_cliente_mob']['contr_erro'] = 'on';
+  
+$retorno = $this->busca_cep($this->cep );
+
+if($retorno->logradouro != ''){
+	$this->logradouro  = strtoupper($retorno->logradouro);
+}
+
+if($retorno->bairro != ''){
+	$this->bairro  = strtoupper($retorno->bairro);
+}
+
+if($retorno->ibge != ''){
+	$this->cidade_idcidade  = $retorno->ibge;
+}
+
+$check_sql = "SELECT uf_num"
+   . " FROM tbl_ufs"
+   . " WHERE uf_sigla = '" . $retorno->uf . "'";
+ 
+      $nm_select = $check_sql; 
+      $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_select; 
+      $_SESSION['scriptcase']['sc_sql_ult_conexao'] = ''; 
+      $this->rs = array();
+      if ($SCrx = $this->Db->Execute($nm_select)) 
+      { 
+          $SCy = 0; 
+          $nm_count = $SCrx->FieldCount();
+          while (!$SCrx->EOF)
+          { 
+                 for ($SCx = 0; $SCx < $nm_count; $SCx++)
+                 { 
+                      $this->rs[$SCy] [$SCx] = $SCrx->fields[$SCx];
+                 }
+                 $SCy++; 
+                 $SCrx->MoveNext();
+          } 
+          $SCrx->Close();
+      } 
+      elseif (isset($GLOBALS["NM_ERRO_IBASE"]) && $GLOBALS["NM_ERRO_IBASE"] != 1)  
+      { 
+          $this->rs = false;
+          $this->rs_erro = $this->Db->ErrorMsg();
+      } 
+;
+
+if (isset($this->rs[0][0]))     
+{
+    $this->uf  = $this->rs[0][0];
+}
+		else     
+{
+		    $this->uf  = '';
+}
+$_SESSION['scriptcase']['form_cliente_mob']['contr_erro'] = 'off';
+}
+function cep_onChange()
+{
+$_SESSION['scriptcase']['form_cliente_mob']['contr_erro'] = 'on';
+  
+$original_cep = $this->cep;
+$original_logradouro = $this->logradouro;
+$original_bairro = $this->bairro;
+$original_cidade_idcidade = $this->cidade_idcidade;
+$original_uf = $this->uf;
+
+$this->atualiza_cep();
+
+$modificado_cep = $this->cep;
+$modificado_logradouro = $this->logradouro;
+$modificado_bairro = $this->bairro;
+$modificado_cidade_idcidade = $this->cidade_idcidade;
+$modificado_uf = $this->uf;
+$this->nm_formatar_campos('cep', 'logradouro', 'bairro', 'cidade_idcidade', 'uf');
+if ($original_cep !== $modificado_cep || isset($this->nmgp_cmp_readonly['cep']) || (isset($bFlagRead_cep) && $bFlagRead_cep))
+{
+    $this->ajax_return_values_cep(true);
+}
+if ($original_logradouro !== $modificado_logradouro || isset($this->nmgp_cmp_readonly['logradouro']) || (isset($bFlagRead_logradouro) && $bFlagRead_logradouro))
+{
+    $this->ajax_return_values_logradouro(true);
+}
+if ($original_bairro !== $modificado_bairro || isset($this->nmgp_cmp_readonly['bairro']) || (isset($bFlagRead_bairro) && $bFlagRead_bairro))
+{
+    $this->ajax_return_values_bairro(true);
+}
+if ($original_cidade_idcidade !== $modificado_cidade_idcidade || isset($this->nmgp_cmp_readonly['cidade_idcidade']) || (isset($bFlagRead_cidade_idcidade) && $bFlagRead_cidade_idcidade))
+{
+    $this->ajax_return_values_cidade_idcidade(true);
+}
+if ($original_uf !== $modificado_uf || isset($this->nmgp_cmp_readonly['uf']) || (isset($bFlagRead_uf) && $bFlagRead_uf))
+{
+    $this->ajax_return_values_uf(true);
+}
+$this->NM_ajax_info['event_field'] = 'cep';
+form_cliente_mob_pack_ajax_response();
+exit;
+
+
+$_SESSION['scriptcase']['form_cliente_mob']['contr_erro'] = 'off';
+}
 function scajaxbutton_btn_voltar_onClick()
 {
 $_SESSION['scriptcase']['form_cliente_mob']['contr_erro'] = 'on';
@@ -4726,6 +5153,16 @@ $this->nm_formatar_campos();
 $this->NM_ajax_info['event_field'] = 'scajaxbutton';
 form_cliente_mob_pack_ajax_response();
 exit;
+$_SESSION['scriptcase']['form_cliente_mob']['contr_erro'] = 'off';
+}
+function busca_cep($cep){
+$_SESSION['scriptcase']['form_cliente_mob']['contr_erro'] = 'on';
+  
+		$url = "https://viacep.com.br/ws/$cep/json/";
+		$res = json_decode(file_get_contents($url));
+	
+		return $res;
+	
 $_SESSION['scriptcase']['form_cliente_mob']['contr_erro'] = 'off';
 }
 //
@@ -4826,23 +5263,31 @@ $_SESSION['scriptcase']['form_cliente_mob']['contr_erro'] = 'off';
         $this->initFormPages();
         include_once("form_cliente_mob_form0.php");
         include_once("form_cliente_mob_form1.php");
+        include_once("form_cliente_mob_form2.php");
+        include_once("form_cliente_mob_form3.php");
         $this->hideFormPages();
  }
 
         function initFormPages() {
                 $this->Ini->nm_page_names = array(
                         'Pag1' => '0',
-                        'Pag2' => '1',
+                        'Pag3' => '1',
+                        'Pag4' => '2',
+                        'Pag5' => '3',
                 );
 
                 $this->Ini->nm_page_blocks = array(
                         'Pag1' => array(
                                 0 => 'on',
                                 1 => 'on',
+                        ),
+                        'Pag3' => array(
                                 2 => 'on',
+                        ),
+                        'Pag4' => array(
                                 3 => 'on',
                         ),
-                        'Pag2' => array(
+                        'Pag5' => array(
                                 4 => 'on',
                         ),
                 );
@@ -4850,9 +5295,9 @@ $_SESSION['scriptcase']['form_cliente_mob']['contr_erro'] = 'off';
                 $this->Ini->nm_block_page = array(
                         0 => 'Pag1',
                         1 => 'Pag1',
-                        2 => 'Pag1',
-                        3 => 'Pag1',
-                        4 => 'Pag2',
+                        2 => 'Pag3',
+                        3 => 'Pag4',
+                        4 => 'Pag5',
                 );
 
                 if (!empty($this->Ini->nm_hidden_blocos)) {
@@ -4919,10 +5364,10 @@ $(function() {
     function form_highlight_search_quicksearch(&$result, $field, $value)
     {
         $searchOk = false;
-        if ('SC_all_Cmp' == $this->nmgp_fast_search && in_array($field, array("idcliente", "cpf_cnpj", "nome_fantasia", "razao_social", "data_nascimento", "email", "indicacao", "cep", "logradouro", "numero", "bairro", "cidade_idcidade", "cliente_telefone", "cliente_dependente", "cliente_pet"))) {
+        if ('SC_all_Cmp' == $this->nmgp_fast_search && in_array($field, array("idcliente", "cpf_cnpj", "nome_fantasia", "razao_social", "data_nascimento", "email", "indicacao", "cep", "logradouro", "numero", "bairro", "cidade_idcidade", "uf", "cliente_telefone", "cliente_dependente", "cliente_pet"))) {
             $searchOk = true;
         }
-        elseif ($field == $this->nmgp_fast_search && in_array($field, array("idcliente", "cpf_cnpj", "nome_fantasia", "razao_social", "data_nascimento", "email", "indicacao", "cep", "logradouro", "numero", "bairro", "cidade_idcidade", "cliente_telefone", "cliente_dependente", "cliente_pet"))) {
+        elseif ($field == $this->nmgp_fast_search && in_array($field, array("idcliente", "cpf_cnpj", "nome_fantasia", "razao_social", "data_nascimento", "email", "indicacao", "cep", "logradouro", "numero", "bairro", "cidade_idcidade", "uf", "cliente_telefone", "cliente_dependente", "cliente_pet"))) {
             $searchOk = true;
         }
 
@@ -5433,7 +5878,80 @@ else
    $unformatted_value_cep = $this->cep;
    $unformatted_value_numero = $this->numero;
 
-   $nm_comando = "SELECT idcidade, nome  FROM cidade  ORDER BY nome";
+   $nm_comando = "SELECT mun_codigo, mun_nome  FROM tbl_cidades  ORDER BY mun_nome";
+
+   $this->idcliente = $old_value_idcliente;
+   $this->cpf_cnpj = $old_value_cpf_cnpj;
+   $this->data_nascimento = $old_value_data_nascimento;
+   $this->cep = $old_value_cep;
+   $this->numero = $old_value_numero;
+
+   $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
+   $_SESSION['scriptcase']['sc_sql_ult_conexao'] = '';
+   if ($nm_comando != "" && $rs = $this->Db->Execute($nm_comando))
+   {
+       while (!$rs->EOF) 
+       { 
+              $nmgp_def_dados .= $rs->fields[1] . "?#?" ; 
+              $nmgp_def_dados .= $rs->fields[0] . "?#?N?@?" ; 
+              $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_idcidade'][] = $rs->fields[0];
+              $rs->MoveNext() ; 
+       } 
+       $rs->Close() ; 
+   } 
+   elseif ($GLOBALS["NM_ERRO_IBASE"] != 1 && $nm_comando != "")  
+   {  
+       $this->Erro->mensagem(__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dber'], $this->Db->ErrorMsg()); 
+       exit; 
+   } 
+   $GLOBALS["NM_ERRO_IBASE"] = 0; 
+   $todox = str_replace("?#?@?#?", "?#?@ ?#?", trim($nmgp_def_dados)) ; 
+   $todo  = explode("?@?", $todox) ; 
+   return $todo;
+
+   }
+   function Form_lookup_uf()
+   {
+$nmgp_def_dados = "" ; 
+if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_uf']))
+{
+    $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_uf'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_uf']); 
+}
+else
+{
+    $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_uf'] = array(); 
+}
+   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
+   { 
+       $GLOBALS["NM_ERRO_IBASE"] = 1;  
+   } 
+   $nm_nao_carga = false;
+   $nmgp_def_dados = "" ; 
+   if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_uf']))
+   {
+       $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_uf'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_uf']); 
+   }
+   else
+   {
+       $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_uf'] = array(); 
+    }
+
+   $old_value_idcliente = $this->idcliente;
+   $old_value_cpf_cnpj = $this->cpf_cnpj;
+   $old_value_data_nascimento = $this->data_nascimento;
+   $old_value_cep = $this->cep;
+   $old_value_numero = $this->numero;
+   $this->nm_tira_formatacao();
+   $this->nm_converte_datas(false);
+
+
+   $unformatted_value_idcliente = $this->idcliente;
+   $unformatted_value_cpf_cnpj = $this->cpf_cnpj;
+   $unformatted_value_data_nascimento = $this->data_nascimento;
+   $unformatted_value_cep = $this->cep;
+   $unformatted_value_numero = $this->numero;
+
+   $nm_comando = "SELECT uf_num, uf_sigla  FROM tbl_ufs  ORDER BY uf_sigla";
 
    $this->idcliente = $old_value_idcliente;
    $this->cpf_cnpj = $old_value_cpf_cnpj;
@@ -5452,7 +5970,7 @@ else
               $rs->fields[0] = (string)$rs->fields[0];
               $nmgp_def_dados .= $rs->fields[1] . "?#?" ; 
               $nmgp_def_dados .= $rs->fields[0] . "?#?N?@?" ; 
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_cidade_idcidade'][] = $rs->fields[0];
+              $_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente_mob']['Lookup_uf'][] = $rs->fields[0];
               $rs->MoveNext() ; 
        } 
        $rs->Close() ; 
@@ -5547,6 +6065,14 @@ else
               if (is_array($data_lookup) && !empty($data_lookup)) 
               {
                   $this->SC_monta_condicao($comando, "cidade_idcidade", $arg_search, $data_lookup, "INT", false);
+              }
+          }
+          if ($field == "SC_all_Cmp" || $field == "uf") 
+          {
+              $data_lookup = $this->SC_lookup_uf($arg_search, $data_search);
+              if (is_array($data_lookup) && !empty($data_lookup)) 
+              {
+                  $this->SC_monta_condicao($comando, "uf", $arg_search, $data_lookup, "VARCHAR", false);
               }
           }
       }
@@ -5779,7 +6305,97 @@ else
        $result = array();
        $campo_orig = $campo;
        $campo  = substr($this->Db->qstr($campo), 1, -1);
-       $nm_comando = "SELECT nome, idcidade FROM cidade WHERE (#cmp_inome#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos)" ; 
+       $nm_comando = "SELECT mun_nome, mun_codigo FROM tbl_cidades WHERE (#cmp_imun_nome#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos)" ; 
+       if ($condicao == "ii")
+       {
+           $nm_comando = str_replace("LIKE '%#arg_i" . $campo . "#arg_f%'", "LIKE '#arg_i" . $campo . "#arg_f%'", $nm_comando);
+       }
+       if ($condicao == "np")
+       {
+           $nm_comando = str_replace("LIKE '%#arg_i" . $campo . "#arg_f%'", "NOT LIKE '%#arg_i" . $campo . "#arg_f%'", $nm_comando);
+       }
+       if ($condicao == "df")
+       {
+           $nm_comando = str_replace("LIKE '%#arg_i" . $campo . "#arg_f%'", "<> '#arg_i" . $campo . "#arg_f'", $nm_comando);
+       }
+       if ($condicao == "gt")
+       {
+           $nm_comando = str_replace("LIKE '%#arg_i" . $campo . "#arg_f%'", "> '#arg_i" . $campo . "#arg_f'", $nm_comando);
+       }
+       if ($condicao == "ge")
+       {
+           $nm_comando = str_replace("LIKE '%#arg_i" . $campo . "#arg_f%'", ">= '#arg_i" . $campo . "#arg_f'", $nm_comando);
+       }
+       if ($condicao == "lt")
+       {
+           $nm_comando = str_replace("LIKE '%#arg_i" . $campo . "#arg_f%'", "< '#arg_i" . $campo . "#arg_f'", $nm_comando);
+       }
+       if ($condicao == "le")
+       {
+           $nm_comando = str_replace("LIKE '%#arg_i" . $campo . "#arg_f%'", "<= '#arg_i" . $campo . "#arg_f'", $nm_comando);
+       }
+       $nm_comando = str_replace(array('#cmp_i','#cmp_f','#cmp_apos','#arg_i','#arg_f','#arg_apos'), array('','','','','',''), $nm_comando); 
+       $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando; 
+       $_SESSION['scriptcase']['sc_sql_ult_conexao'] = ''; 
+       if ($rx = $this->Db->Execute($nm_comando)) 
+       { 
+           $campo = $campo_orig;
+           while (!$rx->EOF) 
+           { 
+               $chave = $rx->fields[1];
+               $label = $rx->fields[0];
+               if ($condicao == "eq" && $campo == $label)
+               {
+                   $result[] = $chave;
+               }
+               if ($condicao == "ii" && $campo == substr($label, 0, strlen($campo)))
+               {
+                   $result[] = $chave;
+               }
+               if ($condicao == "qp" && strstr($label, $campo))
+               {
+                   $result[] = $chave;
+               }
+               if ($condicao == "np" && !strstr($label, $campo))
+               {
+                   $result[] = $chave;
+               }
+               if ($condicao == "df" && $campo != $label)
+               {
+                   $result[] = $chave;
+               }
+               if ($condicao == "gt" && $label > $campo )
+               {
+                   $result[] = $chave;
+               }
+               if ($condicao == "ge" && $label >= $campo)
+               {
+                   $result[] = $chave;
+               }
+               if ($condicao == "lt" && $label < $campo)
+               {
+                   $result[] = $chave;
+               }
+               if ($condicao == "le" && $label <= $campo)
+               {
+                   $result[] = $chave;
+               }
+               $rx->MoveNext() ;
+           }  
+           return $result;
+       }  
+       elseif ($GLOBALS["NM_ERRO_IBASE"] != 1)  
+       { 
+           $this->Erro->mensagem(__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dber'], $this->Db->ErrorMsg()); 
+           exit; 
+       } 
+   }
+   function SC_lookup_uf($condicao, $campo)
+   {
+       $result = array();
+       $campo_orig = $campo;
+       $campo  = substr($this->Db->qstr($campo), 1, -1);
+       $nm_comando = "SELECT uf_sigla, uf_num FROM tbl_ufs WHERE (#cmp_iuf_sigla#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos)" ; 
        if ($condicao == "ii")
        {
            $nm_comando = str_replace("LIKE '%#arg_i" . $campo . "#arg_f%'", "LIKE '#arg_i" . $campo . "#arg_f%'", $nm_comando);

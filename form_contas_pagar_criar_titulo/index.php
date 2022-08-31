@@ -295,8 +295,8 @@ class form_contas_pagar_criar_titulo_ini
       $this->nm_dt_criacao   = "20220820"; 
       $this->nm_hr_criacao   = "222214"; 
       $this->nm_autor_alt    = "admin"; 
-      $this->nm_dt_ult_alt   = "20220827"; 
-      $this->nm_hr_ult_alt   = "154301"; 
+      $this->nm_dt_ult_alt   = "20220830"; 
+      $this->nm_hr_ult_alt   = "172608"; 
       list($NM_usec, $NM_sec) = explode(" ", microtime()); 
       $this->nm_timestamp    = (float) $NM_sec; 
       $this->nm_app_version  = "1.0.0"; 
@@ -895,7 +895,7 @@ class form_contas_pagar_criar_titulo_ini
       $this->Nm_accent_mysql     = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
       $this->Nm_accent_postgres  = array('cmp_i'=>"unaccent(",'cmp_f'=>")",'cmp_apos'=>"",'arg_i'=>"' || unaccent('",'arg_f'=>"') || '",'arg_apos'=>"");
       $this->Nm_accent_sqlite    = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $_SESSION['scriptcase']['nm_bases_security']  = "enc_nm_enc_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";
+      $_SESSION['scriptcase']['nm_bases_security']  = "enc_nm_enc_v1DcXGDQB/HIrKHuJeDMNOVIBsH5XCHMBOHQBsH9FaHAvmD5JeDEBeHEXeHEFaVoJeHQJKDQJsZ1vCV5FGHuNOV9FeDWB3VoF7HQBiZkBiDSNOHuX7DMvCDkB/DWXCHMFGHQNmDQBOZ1BYHQF7DMNOVcB/DWBmVEFGHQNwZ1FUZ1rYHuFUHgBeDkB/DWXCHIB/HQJeDuBOZ1zGV5BODMvsV9BUH5B3VoX7HQXOZ1FUD1rwV5FGDEBeHEXeH5X/DoF7HQNmDuBqDSN7HQrqDMrYVcXKDWJeHIrqDcFYZkFUZ1rYHQXGHgNOZSJ3DuFYHMBiHQXOZ9JeZ1BYHuXGDMBYV9FeDuX7HIX7DcNmVIraZ1rYHQraHgBOVkJ3DuFaHMBOHQFYDuBOD1BeD5rqHuvmVcBOH5B7VoBqHQXOZ1BiDSNOHuBOHgvsHArCH5BmZuBOHQXODuBOZ1BYHQJsDMvOZSJqDur/HMB/HQXGZ1FUZ1rYHQFGHgNOVkJqHEXCHIJeHQNwZ9JeZ1zGVWJeDMNOVcXKDWFaHMXGDcNmVIraD1rwV5FGDEBeHEXeH5X/DoF7HQNwDuBqDSvCVWJsDMvOVIB/DWB3VENUDcFYVIJwZ1vOZMBqHgBeHArCDuFYHMB/HQJeDQBOZ1BYHQJsDMzGVIBsDWJeHIBiHQXGZ1FUZ1rYHuB/DMvCHEJqDuXKZuBODcXGZ9JeD1BeD5rqHuvmVcBOH5B7VoBqHQXOZkBiDSNOHQFUHgNOVkJqDWBmZuBOHQXOZ9JeZ1zGVWJwDMzGVIBsDuFqHMB/HQBqZ1FUZ1rYHQJsHgrKDkXKDuJeHIrqHQFYZ9rqZ1BYHQJeDMvmVcB/HEF/HINUDcFYVIJwD1rwV5FGDEBeHEXeH5X/DoF7D9NwZSX7D1BeV5raHuzGVcFKDWFaVENUD9JmZ1X7Z1BeHQX7HgBYDkFeV5FaHMJsD9NwH9X7Z1rwD5XGHuzGVIBODWFaDoXGDcBwZ1FGHANOV5JeDEBOHEFiDWFqDoXGHQXGZSBiZ1N7D5JwHuBYVcFeV5FYVoB/D9JmH9B/D1zGD5FaDEvsDkXKHEB7VoFGD9NwDQJsHIrKV5JeDMvsVcBUDWXKVoraD9BiH9FaHIBeZMBODErKVkXeV5FaDoB/D9NmDQBOZ1rwV5BqHgvsDkFCDWJeDoFGD9XOZ1rqD1rKD5rqDMBYHEJGH5FYVoB/HQXGZ9rqD1BeD5rqHuvmVcBOH5B7VoBqD9XOH9B/D1rwD5BiDEBeHEFiV5FaDoXGD9NmDQB/Z1rwHuNUDMNOVcB/H5FqHIraDcFYZ1FGZ1BeHuJwHgvCHArsDuJeHIBOHQBiDuBqDSBYHuNUDMrYDkB/DWFaHMBiD9BsVIraD1rwV5X7HgBeHErsDWXCVoB/HQXOH9FGHArYD5BqHuNODkBsDWFYHINUHQNmZ1BiDSrYHuFUHgBeVkJ3HEB7ZuJeHQBiZSBiHAveD5NUHgNKDkBOV5FYHMBiHQFYH9B/HANOD5FaDErKVkXeV5FqDoFUDcJeZSX7Z1rwD5NUHuBYVcFKDWFaVoFGDcNwH9FaHArKD5NUDMzGZSXeDWX7DoJeDcXOZSX7D1BeV5BOHuvmVcBODWFaVoX7DcNwH9FaD1rKV5JeDEvsHEBUDWFqVoX7D9XsZ9rqZ1N7V5JeHuvmVcrsDWXCHMBiD9BsVIraD1rwV5X7HgBeHErCDWF/VoBiDcJUZSX7Z1BYHuFaHuBYV9BUH5XCVoX7D9BsZSFaHAvCZMBqHgrKVkJ3HEXCHMBiHQXsDQFGHAvOVWJeDMBOVIFCH5B3VoX7HQJmZ1F7Z1vmD5rqDEBOHArCDWF/DoXGDcJeH9FUZ1rwD5F7HuvmVcBOH5FqVoX7D9BsH9BOZ1BeD5F7DErKVkXeV5FaVoBiD9FYH9X7HABYHuFaHuNOZSrCH5FqDoXGHQJmZ1BiHAvCD5BqHgveDkXKDWrGDoBOHQJeDQBqD1BOV5XGDMvmVcFKV5BmVoBqD9BsZkFGHAvsD5XGDMvCHErCDWXCDoBqHQXOH9X7DSrwV5FaHuzGVIFCDWF/VEFGHQXOZ1X7DSNOHQJwDEBODkFeH5FYVoFGHQJKDQB/HANOHQNUDMzGV9FiDWB3DoXGDcBwZ1X7D1rwHQrqHgNOZSJqH5F/HIFUHQNmDuFaHArYHQF7DMvmVcFKV5BmVoBqD9BsZkFGHAvsZMJeHgvCDkXKDWBmZura";
       $this->prep_conect();
       $this->conectDB();
       if (!in_array(strtolower($this->nm_tpbanco), $this->nm_bases_all))
@@ -1573,11 +1573,6 @@ ob_start();
             $idforma_pagamento_prevista = NM_utf8_urldecode($_POST['rsargs'][0]);
             $script_case_init = NM_utf8_urldecode($_POST['rsargs'][1]);
         }
-        if ('ajax_form_contas_pagar_criar_titulo_validate_idgrupo_contas' == $_POST['rs'])
-        {
-            $idgrupo_contas = NM_utf8_urldecode($_POST['rsargs'][0]);
-            $script_case_init = NM_utf8_urldecode($_POST['rsargs'][1]);
-        }
         if ('ajax_form_contas_pagar_criar_titulo_validate_idtipo_contas' == $_POST['rs'])
         {
             $idtipo_contas = NM_utf8_urldecode($_POST['rsargs'][0]);
@@ -1633,12 +1628,6 @@ ob_start();
             $observacao = NM_utf8_urldecode($_POST['rsargs'][0]);
             $script_case_init = NM_utf8_urldecode($_POST['rsargs'][1]);
         }
-        if ('ajax_form_contas_pagar_criar_titulo_refresh_idgrupo_contas' == $_POST['rs'])
-        {
-            $idgrupo_contas = NM_utf8_urldecode($_POST['rsargs'][0]);
-            $nmgp_refresh_fields = NM_utf8_urldecode($_POST['rsargs'][1]);
-            $script_case_init = NM_utf8_urldecode($_POST['rsargs'][2]);
-        }
         if ('ajax_form_contas_pagar_criar_titulo_event_pago_onchange' == $_POST['rs'])
         {
             $pago = NM_utf8_urldecode($_POST['rsargs'][0]);
@@ -1649,20 +1638,19 @@ ob_start();
             $idcliente = NM_utf8_urldecode($_POST['rsargs'][0]);
             $competencia = NM_utf8_urldecode($_POST['rsargs'][1]);
             $valor_a_pagar = NM_utf8_urldecode($_POST['rsargs'][2]);
-            $idgrupo_contas = NM_utf8_urldecode($_POST['rsargs'][3]);
-            $pago = NM_utf8_urldecode($_POST['rsargs'][4]);
-            $sc_field_0 = NM_utf8_urldecode($_POST['rsargs'][5]);
-            $sc_field_3 = NM_utf8_urldecode($_POST['rsargs'][6]);
-            $data_vencimanto = NM_utf8_urldecode($_POST['rsargs'][7]);
-            $idforma_pagamento_prevista = NM_utf8_urldecode($_POST['rsargs'][8]);
-            $idtipo_contas = NM_utf8_urldecode($_POST['rsargs'][9]);
-            $data_emissao = NM_utf8_urldecode($_POST['rsargs'][10]);
-            $nota_fiscal = NM_utf8_urldecode($_POST['rsargs'][11]);
-            $observacao = NM_utf8_urldecode($_POST['rsargs'][12]);
-            $sc_field_4 = NM_utf8_urldecode($_POST['rsargs'][13]);
-            $sc_field_2 = NM_utf8_urldecode($_POST['rsargs'][14]);
-            $sc_field_1 = NM_utf8_urldecode($_POST['rsargs'][15]);
-            $script_case_init = NM_utf8_urldecode($_POST['rsargs'][16]);
+            $pago = NM_utf8_urldecode($_POST['rsargs'][3]);
+            $sc_field_0 = NM_utf8_urldecode($_POST['rsargs'][4]);
+            $sc_field_3 = NM_utf8_urldecode($_POST['rsargs'][5]);
+            $data_vencimanto = NM_utf8_urldecode($_POST['rsargs'][6]);
+            $idforma_pagamento_prevista = NM_utf8_urldecode($_POST['rsargs'][7]);
+            $idtipo_contas = NM_utf8_urldecode($_POST['rsargs'][8]);
+            $data_emissao = NM_utf8_urldecode($_POST['rsargs'][9]);
+            $nota_fiscal = NM_utf8_urldecode($_POST['rsargs'][10]);
+            $observacao = NM_utf8_urldecode($_POST['rsargs'][11]);
+            $sc_field_4 = NM_utf8_urldecode($_POST['rsargs'][12]);
+            $sc_field_2 = NM_utf8_urldecode($_POST['rsargs'][13]);
+            $sc_field_1 = NM_utf8_urldecode($_POST['rsargs'][14]);
+            $script_case_init = NM_utf8_urldecode($_POST['rsargs'][15]);
         }
         if ('ajax_form_contas_pagar_criar_titulo_submit_form' == $_POST['rs'])
         {
@@ -1671,26 +1659,25 @@ ob_start();
             $competencia = NM_utf8_urldecode($_POST['rsargs'][2]);
             $valor_a_pagar = NM_utf8_urldecode($_POST['rsargs'][3]);
             $idforma_pagamento_prevista = NM_utf8_urldecode($_POST['rsargs'][4]);
-            $idgrupo_contas = NM_utf8_urldecode($_POST['rsargs'][5]);
-            $idtipo_contas = NM_utf8_urldecode($_POST['rsargs'][6]);
-            $nota_fiscal = NM_utf8_urldecode($_POST['rsargs'][7]);
-            $data_emissao = NM_utf8_urldecode($_POST['rsargs'][8]);
-            $data_vencimanto = NM_utf8_urldecode($_POST['rsargs'][9]);
-            $sc_field_3 = NM_utf8_urldecode($_POST['rsargs'][10]);
-            $sc_field_2 = NM_utf8_urldecode($_POST['rsargs'][11]);
-            $sc_field_0 = NM_utf8_urldecode($_POST['rsargs'][12]);
-            $sc_field_4 = NM_utf8_urldecode($_POST['rsargs'][13]);
-            $sc_field_1 = NM_utf8_urldecode($_POST['rsargs'][14]);
-            $pago = NM_utf8_urldecode($_POST['rsargs'][15]);
-            $observacao = NM_utf8_urldecode($_POST['rsargs'][16]);
-            $nm_form_submit = NM_utf8_urldecode($_POST['rsargs'][17]);
-            $nmgp_url_saida = NM_utf8_urldecode($_POST['rsargs'][18]);
-            $nmgp_opcao = NM_utf8_urldecode($_POST['rsargs'][19]);
-            $nmgp_ancora = NM_utf8_urldecode($_POST['rsargs'][20]);
-            $nmgp_num_form = NM_utf8_urldecode($_POST['rsargs'][21]);
-            $nmgp_parms = NM_utf8_urldecode($_POST['rsargs'][22]);
-            $script_case_init = NM_utf8_urldecode($_POST['rsargs'][23]);
-            $csrf_token = NM_utf8_urldecode($_POST['rsargs'][24]);
+            $idtipo_contas = NM_utf8_urldecode($_POST['rsargs'][5]);
+            $nota_fiscal = NM_utf8_urldecode($_POST['rsargs'][6]);
+            $data_emissao = NM_utf8_urldecode($_POST['rsargs'][7]);
+            $data_vencimanto = NM_utf8_urldecode($_POST['rsargs'][8]);
+            $sc_field_3 = NM_utf8_urldecode($_POST['rsargs'][9]);
+            $sc_field_2 = NM_utf8_urldecode($_POST['rsargs'][10]);
+            $sc_field_0 = NM_utf8_urldecode($_POST['rsargs'][11]);
+            $sc_field_4 = NM_utf8_urldecode($_POST['rsargs'][12]);
+            $sc_field_1 = NM_utf8_urldecode($_POST['rsargs'][13]);
+            $pago = NM_utf8_urldecode($_POST['rsargs'][14]);
+            $observacao = NM_utf8_urldecode($_POST['rsargs'][15]);
+            $nm_form_submit = NM_utf8_urldecode($_POST['rsargs'][16]);
+            $nmgp_url_saida = NM_utf8_urldecode($_POST['rsargs'][17]);
+            $nmgp_opcao = NM_utf8_urldecode($_POST['rsargs'][18]);
+            $nmgp_ancora = NM_utf8_urldecode($_POST['rsargs'][19]);
+            $nmgp_num_form = NM_utf8_urldecode($_POST['rsargs'][20]);
+            $nmgp_parms = NM_utf8_urldecode($_POST['rsargs'][21]);
+            $script_case_init = NM_utf8_urldecode($_POST['rsargs'][22]);
+            $csrf_token = NM_utf8_urldecode($_POST['rsargs'][23]);
         }
         if ('ajax_form_contas_pagar_criar_titulo_navigate_form' == $_POST['rs'])
         {
@@ -2272,7 +2259,6 @@ ob_start();
     $inicial_form_contas_pagar_criar_titulo->contr_form_contas_pagar_criar_titulo->NM_ajax_info['select_html'] = array();
     $inicial_form_contas_pagar_criar_titulo->contr_form_contas_pagar_criar_titulo->NM_ajax_info['select_html']['idcliente'] = "class=\"sc-js-input scFormObjectOdd css_idcliente_obj{SC_100PERC_CLASS_INPUT}\" style=\"\" id=\"id_sc_field_idcliente\" name=\"idcliente\" size=\"1\" alt=\"{type: 'select', enterTab: false}\"";
     $inicial_form_contas_pagar_criar_titulo->contr_form_contas_pagar_criar_titulo->NM_ajax_info['select_html']['idforma_pagamento_prevista'] = "class=\"sc-js-input scFormObjectOdd css_idforma_pagamento_prevista_obj{SC_100PERC_CLASS_INPUT}\" style=\"\" id=\"id_sc_field_idforma_pagamento_prevista\" name=\"idforma_pagamento_prevista\" size=\"1\" alt=\"{type: 'select', enterTab: false}\"";
-    $inicial_form_contas_pagar_criar_titulo->contr_form_contas_pagar_criar_titulo->NM_ajax_info['select_html']['idgrupo_contas'] = "class=\"sc-js-input scFormObjectOdd css_idgrupo_contas_obj{SC_100PERC_CLASS_INPUT}\" style=\"\" id=\"id_sc_field_idgrupo_contas\" name=\"idgrupo_contas\" size=\"1\" alt=\"{type: 'select', enterTab: false}\"";
     $inicial_form_contas_pagar_criar_titulo->contr_form_contas_pagar_criar_titulo->NM_ajax_info['select_html']['idtipo_contas'] = "class=\"sc-js-input scFormObjectOdd css_idtipo_contas_obj{SC_100PERC_CLASS_INPUT}\" style=\"\" id=\"id_sc_field_idtipo_contas\" name=\"idtipo_contas\" size=\"1\" alt=\"{type: 'select', enterTab: false}\"";
     $inicial_form_contas_pagar_criar_titulo->contr_form_contas_pagar_criar_titulo->NM_ajax_info['select_html']['sc_field_0'] = " onClick=\"\" ";
     $inicial_form_contas_pagar_criar_titulo->contr_form_contas_pagar_criar_titulo->NM_ajax_info['select_html']['sc_field_4'] = " onClick=\"\" ";
@@ -2296,7 +2282,6 @@ ob_start();
     sajax_export("ajax_form_contas_pagar_criar_titulo_validate_competencia");
     sajax_export("ajax_form_contas_pagar_criar_titulo_validate_valor_a_pagar");
     sajax_export("ajax_form_contas_pagar_criar_titulo_validate_idforma_pagamento_prevista");
-    sajax_export("ajax_form_contas_pagar_criar_titulo_validate_idgrupo_contas");
     sajax_export("ajax_form_contas_pagar_criar_titulo_validate_idtipo_contas");
     sajax_export("ajax_form_contas_pagar_criar_titulo_validate_nota_fiscal");
     sajax_export("ajax_form_contas_pagar_criar_titulo_validate_data_emissao");
@@ -2308,7 +2293,6 @@ ob_start();
     sajax_export("ajax_form_contas_pagar_criar_titulo_validate_sc_field_1");
     sajax_export("ajax_form_contas_pagar_criar_titulo_validate_pago");
     sajax_export("ajax_form_contas_pagar_criar_titulo_validate_observacao");
-    sajax_export("ajax_form_contas_pagar_criar_titulo_refresh_idgrupo_contas");
     sajax_export("ajax_form_contas_pagar_criar_titulo_event_pago_onchange");
     sajax_export("ajax_form_contas_pagar_criar_titulo_event_scajaxbutton_salvar_onclick");
     sajax_export("ajax_form_contas_pagar_criar_titulo_submit_form");
@@ -2420,25 +2404,6 @@ ob_start();
         $inicial_form_contas_pagar_criar_titulo->contr_form_contas_pagar_criar_titulo->controle();
         exit;
     } // ajax_validate_idforma_pagamento_prevista
-
-    function ajax_form_contas_pagar_criar_titulo_validate_idgrupo_contas($idgrupo_contas, $script_case_init)
-    {
-        global $inicial_form_contas_pagar_criar_titulo;
-        //register_shutdown_function("form_contas_pagar_criar_titulo_pack_ajax_response");
-        $inicial_form_contas_pagar_criar_titulo->contr_form_contas_pagar_criar_titulo->NM_ajax_flag          = true;
-        $inicial_form_contas_pagar_criar_titulo->contr_form_contas_pagar_criar_titulo->NM_ajax_opcao         = 'validate_idgrupo_contas';
-        $inicial_form_contas_pagar_criar_titulo->contr_form_contas_pagar_criar_titulo->NM_ajax_info['param'] = array(
-                  'idgrupo_contas' => NM_utf8_urldecode($idgrupo_contas),
-                  'script_case_init' => NM_utf8_urldecode($script_case_init),
-                  'buffer_output' => true,
-                 );
-        if ($inicial_form_contas_pagar_criar_titulo->contr_form_contas_pagar_criar_titulo->NM_ajax_info['param']['buffer_output'])
-        {
-            ob_start();
-        }
-        $inicial_form_contas_pagar_criar_titulo->contr_form_contas_pagar_criar_titulo->controle();
-        exit;
-    } // ajax_validate_idgrupo_contas
 
     function ajax_form_contas_pagar_criar_titulo_validate_idtipo_contas($idtipo_contas, $script_case_init)
     {
@@ -2649,26 +2614,6 @@ ob_start();
         exit;
     } // ajax_validate_observacao
 
-    function ajax_form_contas_pagar_criar_titulo_refresh_idgrupo_contas($idgrupo_contas, $nmgp_refresh_fields, $script_case_init)
-    {
-        global $inicial_form_contas_pagar_criar_titulo;
-        //register_shutdown_function("form_contas_pagar_criar_titulo_pack_ajax_response");
-        $inicial_form_contas_pagar_criar_titulo->contr_form_contas_pagar_criar_titulo->NM_ajax_flag          = true;
-        $inicial_form_contas_pagar_criar_titulo->contr_form_contas_pagar_criar_titulo->NM_ajax_opcao         = 'refresh_idgrupo_contas';
-        $inicial_form_contas_pagar_criar_titulo->contr_form_contas_pagar_criar_titulo->NM_ajax_info['param'] = array(
-                  'idgrupo_contas' => NM_utf8_urldecode($idgrupo_contas),
-                  'nmgp_refresh_fields' => NM_utf8_urldecode($nmgp_refresh_fields),
-                  'script_case_init' => NM_utf8_urldecode($script_case_init),
-                  'buffer_output' => true,
-                 );
-        if ($inicial_form_contas_pagar_criar_titulo->contr_form_contas_pagar_criar_titulo->NM_ajax_info['param']['buffer_output'])
-        {
-            ob_start();
-        }
-        $inicial_form_contas_pagar_criar_titulo->contr_form_contas_pagar_criar_titulo->controle();
-        exit;
-    } // ajax_refresh_idgrupo_contas
-
     function ajax_form_contas_pagar_criar_titulo_event_pago_onchange($pago, $script_case_init)
     {
         global $inicial_form_contas_pagar_criar_titulo;
@@ -2688,7 +2633,7 @@ ob_start();
         exit;
     } // ajax_event_pago_onchange
 
-    function ajax_form_contas_pagar_criar_titulo_event_scajaxbutton_salvar_onclick($idcliente, $competencia, $valor_a_pagar, $idgrupo_contas, $pago, $sc_field_0, $sc_field_3, $data_vencimanto, $idforma_pagamento_prevista, $idtipo_contas, $data_emissao, $nota_fiscal, $observacao, $sc_field_4, $sc_field_2, $sc_field_1, $script_case_init)
+    function ajax_form_contas_pagar_criar_titulo_event_scajaxbutton_salvar_onclick($idcliente, $competencia, $valor_a_pagar, $pago, $sc_field_0, $sc_field_3, $data_vencimanto, $idforma_pagamento_prevista, $idtipo_contas, $data_emissao, $nota_fiscal, $observacao, $sc_field_4, $sc_field_2, $sc_field_1, $script_case_init)
     {
         global $inicial_form_contas_pagar_criar_titulo;
         //register_shutdown_function("form_contas_pagar_criar_titulo_pack_ajax_response");
@@ -2698,7 +2643,6 @@ ob_start();
                   'idcliente' => NM_utf8_urldecode($idcliente),
                   'competencia' => NM_utf8_urldecode($competencia),
                   'valor_a_pagar' => NM_utf8_urldecode($valor_a_pagar),
-                  'idgrupo_contas' => NM_utf8_urldecode($idgrupo_contas),
                   'pago' => NM_utf8_urldecode($pago),
                   'sc_field_0' => NM_utf8_urldecode($sc_field_0),
                   'sc_field_3' => NM_utf8_urldecode($sc_field_3),
@@ -2722,7 +2666,7 @@ ob_start();
         exit;
     } // ajax_event_scajaxbutton_salvar_onclick
 
-    function ajax_form_contas_pagar_criar_titulo_submit_form($idcontas_pagar, $idcliente, $competencia, $valor_a_pagar, $idforma_pagamento_prevista, $idgrupo_contas, $idtipo_contas, $nota_fiscal, $data_emissao, $data_vencimanto, $sc_field_3, $sc_field_2, $sc_field_0, $sc_field_4, $sc_field_1, $pago, $observacao, $nm_form_submit, $nmgp_url_saida, $nmgp_opcao, $nmgp_ancora, $nmgp_num_form, $nmgp_parms, $script_case_init, $csrf_token)
+    function ajax_form_contas_pagar_criar_titulo_submit_form($idcontas_pagar, $idcliente, $competencia, $valor_a_pagar, $idforma_pagamento_prevista, $idtipo_contas, $nota_fiscal, $data_emissao, $data_vencimanto, $sc_field_3, $sc_field_2, $sc_field_0, $sc_field_4, $sc_field_1, $pago, $observacao, $nm_form_submit, $nmgp_url_saida, $nmgp_opcao, $nmgp_ancora, $nmgp_num_form, $nmgp_parms, $script_case_init, $csrf_token)
     {
         global $inicial_form_contas_pagar_criar_titulo;
         //register_shutdown_function("form_contas_pagar_criar_titulo_pack_ajax_response");
@@ -2734,7 +2678,6 @@ ob_start();
                   'competencia' => NM_utf8_urldecode($competencia),
                   'valor_a_pagar' => NM_utf8_urldecode($valor_a_pagar),
                   'idforma_pagamento_prevista' => NM_utf8_urldecode($idforma_pagamento_prevista),
-                  'idgrupo_contas' => NM_utf8_urldecode($idgrupo_contas),
                   'idtipo_contas' => NM_utf8_urldecode($idtipo_contas),
                   'nota_fiscal' => NM_utf8_urldecode($nota_fiscal),
                   'data_emissao' => NM_utf8_urldecode($data_emissao),

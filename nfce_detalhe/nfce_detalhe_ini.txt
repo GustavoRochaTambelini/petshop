@@ -1,7 +1,0 @@
-index.php
-petshop
-nfce_detalhe
-SIM
-form
-nfce_detalhe
-LigMd5

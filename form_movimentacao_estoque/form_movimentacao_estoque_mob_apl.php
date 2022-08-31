@@ -2453,19 +2453,19 @@ else
 
    if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
    {
-       $nm_comando = "SELECT idproduto, concat(descricao, ' - ', referencia)  FROM produto  ORDER BY descricao, referencia";
+       $nm_comando = "SELECT idproduto, concat(descricao, ' - ', referencia)  FROM produto  WHERE tipo = 'PRODUTO' ORDER BY descricao, referencia";
    }
    elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
    {
-       $nm_comando = "SELECT idproduto, descricao&' - '&referencia  FROM produto  ORDER BY descricao, referencia";
+       $nm_comando = "SELECT idproduto, descricao&' - '&referencia  FROM produto  WHERE tipo = 'PRODUTO' ORDER BY descricao, referencia";
    }
    elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
    {
-       $nm_comando = "SELECT idproduto, descricao||' - '||referencia  FROM produto  ORDER BY descricao, referencia";
+       $nm_comando = "SELECT idproduto, descricao||' - '||referencia  FROM produto  WHERE tipo = 'PRODUTO' ORDER BY descricao, referencia";
    }
    else
    {
-       $nm_comando = "SELECT idproduto, descricao||' - '||referencia  FROM produto  ORDER BY descricao, referencia";
+       $nm_comando = "SELECT idproduto, descricao||' - '||referencia  FROM produto  WHERE tipo = 'PRODUTO' ORDER BY descricao, referencia";
    }
 
    $this->idmovimentacao_estoque = $old_value_idmovimentacao_estoque;
@@ -4202,19 +4202,19 @@ else
 
    if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
    {
-       $nm_comando = "SELECT idproduto, concat(descricao, ' - ', referencia)  FROM produto  ORDER BY descricao, referencia";
+       $nm_comando = "SELECT idproduto, concat(descricao, ' - ', referencia)  FROM produto  WHERE tipo = 'PRODUTO' ORDER BY descricao, referencia";
    }
    elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
    {
-       $nm_comando = "SELECT idproduto, descricao&' - '&referencia  FROM produto  ORDER BY descricao, referencia";
+       $nm_comando = "SELECT idproduto, descricao&' - '&referencia  FROM produto  WHERE tipo = 'PRODUTO' ORDER BY descricao, referencia";
    }
    elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
    {
-       $nm_comando = "SELECT idproduto, descricao||' - '||referencia  FROM produto  ORDER BY descricao, referencia";
+       $nm_comando = "SELECT idproduto, descricao||' - '||referencia  FROM produto  WHERE tipo = 'PRODUTO' ORDER BY descricao, referencia";
    }
    else
    {
-       $nm_comando = "SELECT idproduto, descricao||' - '||referencia  FROM produto  ORDER BY descricao, referencia";
+       $nm_comando = "SELECT idproduto, descricao||' - '||referencia  FROM produto  WHERE tipo = 'PRODUTO' ORDER BY descricao, referencia";
    }
 
    $this->idmovimentacao_estoque = $old_value_idmovimentacao_estoque;
@@ -4541,19 +4541,19 @@ else
        $campo  = substr($this->Db->qstr($campo), 1, -1);
       if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
       { 
-          $nm_comando = "SELECT concat(descricao,' - ',referencia), idproduto FROM produto WHERE (#cmp_iconcat(descricao,' - ',referencia)#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos)" ; 
+          $nm_comando = "SELECT concat(descricao,' - ',referencia), idproduto FROM produto WHERE (#cmp_iconcat(descricao,' - ',referencia)#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos) AND (tipo = 'PRODUTO')" ; 
       } 
       elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
       { 
-          $nm_comando = "SELECT descricao&' - '&referencia, idproduto FROM produto WHERE (#cmp_idescricao&' - '&referencia#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos)" ; 
+          $nm_comando = "SELECT descricao&' - '&referencia, idproduto FROM produto WHERE (#cmp_idescricao&' - '&referencia#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos) AND (tipo = 'PRODUTO')" ; 
       } 
       elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_postgres))
       { 
-          $nm_comando = "SELECT descricao||' - '||referencia, idproduto FROM produto WHERE (#cmp_idescricao||' - '||referencia#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos)" ; 
+          $nm_comando = "SELECT descricao||' - '||referencia, idproduto FROM produto WHERE (#cmp_idescricao||' - '||referencia#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos) AND (tipo = 'PRODUTO')" ; 
       } 
       else 
       { 
-          $nm_comando = "SELECT descricao||' - '||referencia, idproduto FROM produto WHERE (#cmp_idescricao||' - '||referencia#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos)" ; 
+          $nm_comando = "SELECT descricao||' - '||referencia, idproduto FROM produto WHERE (#cmp_idescricao||' - '||referencia#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos) AND (tipo = 'PRODUTO')" ; 
       } 
        if ($condicao == "ii")
        {

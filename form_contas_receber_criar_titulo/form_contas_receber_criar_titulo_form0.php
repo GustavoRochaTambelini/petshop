@@ -1425,20 +1425,9 @@ else
  ?>
 <input type="hidden" name="competencia" value="<?php echo $this->form_encode_input($competencia) . "\">" . $competencia . ""; ?>
 <?php } else { ?>
-<span id="id_read_on_competencia" class="sc-ui-readonly-competencia css_competencia_line" style="<?php echo $sStyleReadLab_competencia; ?>"><?php echo $this->form_format_readonly("competencia", $this->form_encode_input($competencia)); ?></span><span id="id_read_off_competencia" class="css_read_off_competencia<?php echo $this->classes_100perc_fields['span_input'] ?>" style="white-space: nowrap;<?php echo $sStyleReadInp_competencia; ?>"><?php
-$tmp_form_data = $this->field_config['competencia']['date_format'];
-$tmp_form_data = str_replace('aaaa', 'yyyy', $tmp_form_data);
-$tmp_form_data = str_replace('dd'  , $this->Ini->Nm_lang['lang_othr_date_days'], $tmp_form_data);
-$tmp_form_data = str_replace('mm'  , $this->Ini->Nm_lang['lang_othr_date_mnth'], $tmp_form_data);
-$tmp_form_data = str_replace('yyyy', $this->Ini->Nm_lang['lang_othr_date_year'], $tmp_form_data);
-$tmp_form_data = str_replace('hh'  , $this->Ini->Nm_lang['lang_othr_date_hour'], $tmp_form_data);
-$tmp_form_data = str_replace('ii'  , $this->Ini->Nm_lang['lang_othr_date_mint'], $tmp_form_data);
-$tmp_form_data = str_replace('ss'  , $this->Ini->Nm_lang['lang_othr_date_scnd'], $tmp_form_data);
-$tmp_form_data = str_replace(';'   , ' '                                       , $tmp_form_data);
-?>
-
+<span id="id_read_on_competencia" class="sc-ui-readonly-competencia css_competencia_line" style="<?php echo $sStyleReadLab_competencia; ?>"><?php echo $this->form_format_readonly("competencia", $this->form_encode_input($this->competencia)); ?></span><span id="id_read_off_competencia" class="css_read_off_competencia<?php echo $this->classes_100perc_fields['span_input'] ?>" style="white-space: nowrap;<?php echo $sStyleReadInp_competencia; ?>">
  <input class="sc-js-input scFormObjectOdd css_competencia_obj<?php echo $this->classes_100perc_fields['input'] ?>" style="" id="id_sc_field_competencia" type=text name="competencia" value="<?php echo $this->form_encode_input($competencia) ?>"
- <?php if ($this->classes_100perc_fields['keep_field_size']) { echo "size=7"; } ?> alt="{datatype: 'date', dateSep: '<?php echo $this->field_config['competencia']['date_sep']; ?>', dateFormat: '<?php echo $this->field_config['competencia']['date_format']; ?>', enterTab: false, enterSubmit: false, autoTab: false, selectOnFocus: true, watermark: '', watermarkClass: 'scFormObjectOddWm', maskChars: '(){}[].,;:-+/ '}" >&nbsp;<span class="scFormDataHelpOdd"><?php echo $tmp_form_data; ?></span></span><?php } ?>
+ <?php if ($this->classes_100perc_fields['keep_field_size']) { echo "size=7"; } ?> maxlength=14 alt="{datatype: 'mask', maxLength: 7, allowedChars: '<?php echo $this->allowedCharsCharset("") ?>', lettersCase: '', maskList: '99/9999', enterTab: false, enterSubmit: false, autoTab: false, selectOnFocus: true, watermark: '', watermarkClass: 'scFormObjectOddWm', maskChars: '(){}[].,;:-+/ '}" ></span><?php } ?>
 </td></tr><tr><td style="vertical-align: top; padding: 0"><table class="scFormFieldErrorTable" style="display: none" id="id_error_display_competencia_frame"><tr><td class="scFormFieldErrorMessage"><span id="id_error_display_competencia_text"></span></td></tr></table></td></tr></table> </TD>
    <?php }?>
 
@@ -1806,45 +1795,45 @@ else
    <?php }?>
 
    <?php
-   if (!isset($this->nm_new_label['idgrupos_receitas']))
+   if (!isset($this->nm_new_label['idtipos_receitas']))
    {
-       $this->nm_new_label['idgrupos_receitas'] = "GRUPO DE RECEITAS";
+       $this->nm_new_label['idtipos_receitas'] = "TIPO DE RECEITAS";
    }
    $nm_cor_fun_cel  = (isset($nm_cor_fun_cel) && $nm_cor_fun_cel  == $this->Ini->cor_grid_impar ? $this->Ini->cor_grid_par : $this->Ini->cor_grid_impar);
    $nm_img_fun_cel  = (isset($nm_img_fun_cel) && $nm_img_fun_cel  == $this->Ini->img_fun_imp    ? $this->Ini->img_fun_par  : $this->Ini->img_fun_imp);
-   $idgrupos_receitas = $this->idgrupos_receitas;
-   $sStyleHidden_idgrupos_receitas = '';
-   if (isset($this->nmgp_cmp_hidden['idgrupos_receitas']) && $this->nmgp_cmp_hidden['idgrupos_receitas'] == 'off')
+   $idtipos_receitas = $this->idtipos_receitas;
+   $sStyleHidden_idtipos_receitas = '';
+   if (isset($this->nmgp_cmp_hidden['idtipos_receitas']) && $this->nmgp_cmp_hidden['idtipos_receitas'] == 'off')
    {
-       unset($this->nmgp_cmp_hidden['idgrupos_receitas']);
-       $sStyleHidden_idgrupos_receitas = 'display: none;';
+       unset($this->nmgp_cmp_hidden['idtipos_receitas']);
+       $sStyleHidden_idtipos_receitas = 'display: none;';
    }
    $bTestReadOnly = true;
-   $sStyleReadLab_idgrupos_receitas = 'display: none;';
-   $sStyleReadInp_idgrupos_receitas = '';
-   if (/*$this->nmgp_opcao != "novo" && */isset($this->nmgp_cmp_readonly['idgrupos_receitas']) && $this->nmgp_cmp_readonly['idgrupos_receitas'] == 'on')
+   $sStyleReadLab_idtipos_receitas = 'display: none;';
+   $sStyleReadInp_idtipos_receitas = '';
+   if (/*$this->nmgp_opcao != "novo" && */isset($this->nmgp_cmp_readonly['idtipos_receitas']) && $this->nmgp_cmp_readonly['idtipos_receitas'] == 'on')
    {
        $bTestReadOnly = false;
-       unset($this->nmgp_cmp_readonly['idgrupos_receitas']);
-       $sStyleReadLab_idgrupos_receitas = '';
-       $sStyleReadInp_idgrupos_receitas = 'display: none;';
+       unset($this->nmgp_cmp_readonly['idtipos_receitas']);
+       $sStyleReadLab_idtipos_receitas = '';
+       $sStyleReadInp_idtipos_receitas = 'display: none;';
    }
 ?>
-<?php if (isset($this->nmgp_cmp_hidden['idgrupos_receitas']) && $this->nmgp_cmp_hidden['idgrupos_receitas'] == 'off') { $sc_hidden_yes++; ?>
-<input type=hidden name="idgrupos_receitas" value="<?php echo $this->form_encode_input($this->idgrupos_receitas) . "\">"; ?>
+<?php if (isset($this->nmgp_cmp_hidden['idtipos_receitas']) && $this->nmgp_cmp_hidden['idtipos_receitas'] == 'off') { $sc_hidden_yes++; ?>
+<input type=hidden name="idtipos_receitas" value="<?php echo $this->form_encode_input($this->idtipos_receitas) . "\">"; ?>
 <?php } else { $sc_hidden_no++; ?>
 
-    <TD class="scFormDataOdd css_idgrupos_receitas_line" id="hidden_field_data_idgrupos_receitas" style="<?php echo $sStyleHidden_idgrupos_receitas; ?>"> <table style="border-width: 0px; border-collapse: collapse; width: 100%"><tr><td  class="scFormDataFontOdd css_idgrupos_receitas_line" style="vertical-align: top;padding: 0px"><span class="scFormLabelOddFormat css_idgrupos_receitas_label" style=""><span id="id_label_idgrupos_receitas"><?php echo $this->nm_new_label['idgrupos_receitas']; ?></span><?php if (!isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['php_cmp_required']['idgrupos_receitas']) || $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['php_cmp_required']['idgrupos_receitas'] == "on") { ?> <span class="scFormRequiredOdd">*</span> <?php }?></span><br>
-<?php if ($bTestReadOnly && $this->nmgp_opcao != "novo" && isset($this->nmgp_cmp_readonly["idgrupos_receitas"]) &&  $this->nmgp_cmp_readonly["idgrupos_receitas"] == "on") { 
+    <TD class="scFormDataOdd css_idtipos_receitas_line" id="hidden_field_data_idtipos_receitas" style="<?php echo $sStyleHidden_idtipos_receitas; ?>"> <table style="border-width: 0px; border-collapse: collapse; width: 100%"><tr><td  class="scFormDataFontOdd css_idtipos_receitas_line" style="vertical-align: top;padding: 0px"><span class="scFormLabelOddFormat css_idtipos_receitas_label" style=""><span id="id_label_idtipos_receitas"><?php echo $this->nm_new_label['idtipos_receitas']; ?></span></span><br>
+<?php if ($bTestReadOnly && $this->nmgp_opcao != "novo" && isset($this->nmgp_cmp_readonly["idtipos_receitas"]) &&  $this->nmgp_cmp_readonly["idtipos_receitas"] == "on") { 
  
 $nmgp_def_dados = "" ; 
-if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas']))
+if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']))
 {
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas']); 
+    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']); 
 }
 else
 {
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas'] = array(); 
+    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array(); 
 }
    if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
    { 
@@ -1852,13 +1841,13 @@ else
    } 
    $nm_nao_carga = false;
    $nmgp_def_dados = "" ; 
-   if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas']))
+   if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']))
    {
-       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas']); 
+       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']); 
    }
    else
    {
-       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas'] = array(); 
+       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array(); 
     }
 
    $old_value_idcontas_receber = $this->idcontas_receber;
@@ -1947,223 +1936,7 @@ else
           $sc_field_4_val_str .= "'$Tmp_val_cmp'";
        }
    }
-   $nm_comando = "SELECT idgrupos_receitas, descricao  FROM grupos_receitas  ORDER BY descricao";
-
-   $this->idcontas_receber = $old_value_idcontas_receber;
-   $this->competencia = $old_value_competencia;
-   $this->valor_a_receber = $old_value_valor_a_receber;
-   $this->idnota_fiscal = $old_value_idnota_fiscal;
-   $this->data_emissao = $old_value_data_emissao;
-   $this->data_vencimento = $old_value_data_vencimento;
-   $this->sc_field_0 = $old_value_sc_field_0;
-   $this->sc_field_1 = $old_value_sc_field_1;
-   $this->data_pagamento = $old_value_data_pagamento;
-
-   $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
-   $_SESSION['scriptcase']['sc_sql_ult_conexao'] = '';
-   if ($nm_comando != "" && $rs = $this->Db->Execute($nm_comando))
-   {
-       while (!$rs->EOF) 
-       { 
-              $rs->fields[0] = str_replace(',', '.', $rs->fields[0]);
-              $rs->fields[0] = (strpos(strtolower($rs->fields[0]), "e")) ? (float)$rs->fields[0] : $rs->fields[0];
-              $rs->fields[0] = (string)$rs->fields[0];
-              $nmgp_def_dados .= $rs->fields[1] . "?#?" ; 
-              $nmgp_def_dados .= $rs->fields[0] . "?#?N?@?" ; 
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas'][] = $rs->fields[0];
-              $rs->MoveNext() ; 
-       } 
-       $rs->Close() ; 
-   } 
-   elseif ($GLOBALS["NM_ERRO_IBASE"] != 1 && $nm_comando != "")  
-   {  
-       $this->Erro->mensagem(__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dber'], $this->Db->ErrorMsg()); 
-       exit; 
-   } 
-   $GLOBALS["NM_ERRO_IBASE"] = 0; 
-   $x = 0; 
-   $idgrupos_receitas_look = ""; 
-   $todox = str_replace("?#?@?#?", "?#?@ ?#?", trim($nmgp_def_dados)) ; 
-   $todo  = explode("?@?", $todox) ; 
-   while (!empty($todo[$x])) 
-   {
-          $cadaselect = explode("?#?", $todo[$x]) ; 
-          if ($cadaselect[1] == "@ ") {$cadaselect[1]= trim($cadaselect[1]); } ; 
-          if (isset($this->Embutida_ronly) && $this->Embutida_ronly && isset($this->idgrupos_receitas_1))
-          {
-              foreach ($this->idgrupos_receitas_1 as $tmp_idgrupos_receitas)
-              {
-                  if (trim($tmp_idgrupos_receitas) === trim($cadaselect[1])) { $idgrupos_receitas_look .= $cadaselect[0] . '__SC_BREAK_LINE__'; }
-              }
-          }
-          elseif (trim($this->idgrupos_receitas) === trim($cadaselect[1])) { $idgrupos_receitas_look .= $cadaselect[0]; } 
-          $x++; 
-   }
-
-?>
-<input type="hidden" name="idgrupos_receitas" value="<?php echo $this->form_encode_input($idgrupos_receitas) . "\">" . $idgrupos_receitas_look . ""; ?>
-<?php } else { ?>
-<?php
-   $todo = $this->Form_lookup_idgrupos_receitas();
-   $x = 0 ; 
-   $idgrupos_receitas_look = ""; 
-   while (!empty($todo[$x])) 
-   {
-          $cadaselect = explode("?#?", $todo[$x]) ; 
-          if ($cadaselect[1] == "@ ") {$cadaselect[1]= trim($cadaselect[1]); } ; 
-          if (isset($this->Embutida_ronly) && $this->Embutida_ronly && isset($this->idgrupos_receitas_1))
-          {
-              foreach ($this->idgrupos_receitas_1 as $tmp_idgrupos_receitas)
-              {
-                  if (trim($tmp_idgrupos_receitas) === trim($cadaselect[1])) { $idgrupos_receitas_look .= $cadaselect[0] . '__SC_BREAK_LINE__'; }
-              }
-          }
-          elseif (trim($this->idgrupos_receitas) === trim($cadaselect[1])) { $idgrupos_receitas_look .= $cadaselect[0]; } 
-          $x++; 
-   }
-          if (empty($idgrupos_receitas_look))
-          {
-              $idgrupos_receitas_look = $this->idgrupos_receitas;
-          }
-   $x = 0; 
-   echo "<span id=\"id_read_on_idgrupos_receitas\" class=\"css_idgrupos_receitas_line\" style=\"" .  $sStyleReadLab_idgrupos_receitas . "\">" . $this->form_format_readonly("idgrupos_receitas", $this->form_encode_input($idgrupos_receitas_look)) . "</span><span id=\"id_read_off_idgrupos_receitas\" class=\"css_read_off_idgrupos_receitas" . $this->classes_100perc_fields['span_input'] . "\" style=\"white-space: nowrap; " . $sStyleReadInp_idgrupos_receitas . "\">";
-   echo " <span id=\"idAjaxSelect_idgrupos_receitas\" class=\"" . $this->classes_100perc_fields['span_select'] . "\"><select class=\"sc-js-input scFormObjectOdd css_idgrupos_receitas_obj" . $this->classes_100perc_fields['input'] . "\" style=\"\" id=\"id_sc_field_idgrupos_receitas\" name=\"idgrupos_receitas\" size=\"1\" alt=\"{type: 'select', enterTab: false}\">" ; 
-   echo "\r" ; 
-   $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas'][] = ''; 
-   echo "  <option value=\"\">" . str_replace("<", "&lt;"," ") . "</option>" ; 
-   while (!empty($todo[$x]) && !$nm_nao_carga) 
-   {
-          $cadaselect = explode("?#?", $todo[$x]) ; 
-          if ($cadaselect[1] == "@ ") {$cadaselect[1]= trim($cadaselect[1]); } ; 
-          echo "  <option value=\"$cadaselect[1]\"" ; 
-          if (trim($this->idgrupos_receitas) === trim($cadaselect[1])) 
-          {
-              echo " selected" ; 
-          }
-          if (strtoupper($cadaselect[2]) == "S") 
-          {
-              if (empty($this->idgrupos_receitas)) 
-              {
-                  echo " selected" ;
-              } 
-           } 
-          echo ">" . str_replace('<', '&lt;',$cadaselect[0]) . "</option>" ; 
-          echo "\r" ; 
-          $x++ ; 
-   }  ; 
-   echo " </select></span>" ; 
-   echo "\r" ; 
-   echo "</span>";
-?> 
-<?php  }?>
-</td></tr><tr><td style="vertical-align: top; padding: 0"><table class="scFormFieldErrorTable" style="display: none" id="id_error_display_idgrupos_receitas_frame"><tr><td class="scFormFieldErrorMessage"><span id="id_error_display_idgrupos_receitas_text"></span></td></tr></table></td></tr></table> </TD>
-   <?php }?>
-
-
-
-
-
-<?php if ($sc_hidden_yes > 0 && $sc_hidden_no > 0) { ?>
-
-
-    <TD class="scFormDataOdd" colspan="<?php echo $sc_hidden_yes * 1; ?>" >&nbsp;</TD>
-
-
-
-
-<?php } 
-?> 
-<?php $sStyleHidden_idforma_pagamento_prevista_dumb = ('' == $sStyleHidden_idforma_pagamento_prevista) ? 'display: none' : ''; ?>
-    <TD class="scFormDataOdd" id="hidden_field_data_idforma_pagamento_prevista_dumb" style="<?php echo $sStyleHidden_idforma_pagamento_prevista_dumb; ?>"></TD>
-<?php $sStyleHidden_idgrupos_receitas_dumb = ('' == $sStyleHidden_idgrupos_receitas) ? 'display: none' : ''; ?>
-    <TD class="scFormDataOdd" id="hidden_field_data_idgrupos_receitas_dumb" style="<?php echo $sStyleHidden_idgrupos_receitas_dumb; ?>"></TD>
-<?php if ($sc_hidden_no > 0) { echo "<tr>"; }; 
-      $sc_hidden_yes = 0; $sc_hidden_no = 0; ?>
-
-
-   <?php
-   if (!isset($this->nm_new_label['idtipos_receitas']))
-   {
-       $this->nm_new_label['idtipos_receitas'] = "TIPO DE RECEITAS";
-   }
-   $nm_cor_fun_cel  = (isset($nm_cor_fun_cel) && $nm_cor_fun_cel  == $this->Ini->cor_grid_impar ? $this->Ini->cor_grid_par : $this->Ini->cor_grid_impar);
-   $nm_img_fun_cel  = (isset($nm_img_fun_cel) && $nm_img_fun_cel  == $this->Ini->img_fun_imp    ? $this->Ini->img_fun_par  : $this->Ini->img_fun_imp);
-   $idtipos_receitas = $this->idtipos_receitas;
-   $sStyleHidden_idtipos_receitas = '';
-   if (isset($this->nmgp_cmp_hidden['idtipos_receitas']) && $this->nmgp_cmp_hidden['idtipos_receitas'] == 'off')
-   {
-       unset($this->nmgp_cmp_hidden['idtipos_receitas']);
-       $sStyleHidden_idtipos_receitas = 'display: none;';
-   }
-   $bTestReadOnly = true;
-   $sStyleReadLab_idtipos_receitas = 'display: none;';
-   $sStyleReadInp_idtipos_receitas = '';
-   if (/*$this->nmgp_opcao != "novo" && */isset($this->nmgp_cmp_readonly['idtipos_receitas']) && $this->nmgp_cmp_readonly['idtipos_receitas'] == 'on')
-   {
-       $bTestReadOnly = false;
-       unset($this->nmgp_cmp_readonly['idtipos_receitas']);
-       $sStyleReadLab_idtipos_receitas = '';
-       $sStyleReadInp_idtipos_receitas = 'display: none;';
-   }
-?>
-<?php if (isset($this->nmgp_cmp_hidden['idtipos_receitas']) && $this->nmgp_cmp_hidden['idtipos_receitas'] == 'off') { $sc_hidden_yes++; ?>
-<input type=hidden name="idtipos_receitas" value="<?php echo $this->form_encode_input($this->idtipos_receitas) . "\">"; ?>
-<?php } else { $sc_hidden_no++; ?>
-
-    <TD class="scFormDataOdd css_idtipos_receitas_line" id="hidden_field_data_idtipos_receitas" style="<?php echo $sStyleHidden_idtipos_receitas; ?>"> <table style="border-width: 0px; border-collapse: collapse; width: 100%"><tr><td  class="scFormDataFontOdd css_idtipos_receitas_line" style="vertical-align: top;padding: 0px"><span class="scFormLabelOddFormat css_idtipos_receitas_label" style=""><span id="id_label_idtipos_receitas"><?php echo $this->nm_new_label['idtipos_receitas']; ?></span></span><br>
-<?php if ($bTestReadOnly && $this->nmgp_opcao != "novo" && isset($this->nmgp_cmp_readonly["idtipos_receitas"]) &&  $this->nmgp_cmp_readonly["idtipos_receitas"] == "on") { 
- 
-$nmgp_def_dados = "" ; 
-if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']))
-{
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']); 
-}
-else
-{
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array(); 
-}
-if ($this->idgrupos_receitas != "")
-{ 
-   $this->nm_clear_val("idgrupos_receitas");
-   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
-   { 
-       $GLOBALS["NM_ERRO_IBASE"] = 1;  
-   } 
-   $nm_nao_carga = false;
-   $nmgp_def_dados = "" ; 
-   if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']))
-   {
-       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']); 
-   }
-   else
-   {
-       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array(); 
-    }
-
-   $old_value_idcontas_receber = $this->idcontas_receber;
-   $old_value_competencia = $this->competencia;
-   $old_value_valor_a_receber = $this->valor_a_receber;
-   $old_value_idnota_fiscal = $this->idnota_fiscal;
-   $old_value_data_emissao = $this->data_emissao;
-   $old_value_data_vencimento = $this->data_vencimento;
-   $old_value_sc_field_0 = $this->sc_field_0;
-   $old_value_sc_field_1 = $this->sc_field_1;
-   $old_value_data_pagamento = $this->data_pagamento;
-   $this->nm_tira_formatacao();
-   $this->nm_converte_datas(false);
-
-
-   $unformatted_value_idcontas_receber = $this->idcontas_receber;
-   $unformatted_value_competencia = $this->competencia;
-   $unformatted_value_valor_a_receber = $this->valor_a_receber;
-   $unformatted_value_idnota_fiscal = $this->idnota_fiscal;
-   $unformatted_value_data_emissao = $this->data_emissao;
-   $unformatted_value_data_vencimento = $this->data_vencimento;
-   $unformatted_value_sc_field_0 = $this->sc_field_0;
-   $unformatted_value_sc_field_1 = $this->sc_field_1;
-   $unformatted_value_data_pagamento = $this->data_pagamento;
-
-   $nm_comando = "SELECT idtipos_receitas, descricao  FROM tipos_receitas  where idgrupos_receita = $this->idgrupos_receitas ORDER BY descricao";
+   $nm_comando = "SELECT idtipos_receitas, descricao  FROM tipos_receitas ORDER BY descricao";
 
    $this->idcontas_receber = $old_value_idcontas_receber;
    $this->competencia = $old_value_competencia;
@@ -2197,7 +1970,6 @@ if ($this->idgrupos_receitas != "")
        exit; 
    } 
    $GLOBALS["NM_ERRO_IBASE"] = 0; 
-} 
    $x = 0; 
    $idtipos_receitas_look = ""; 
    $todox = str_replace("?#?@?#?", "?#?@ ?#?", trim($nmgp_def_dados)) ; 
@@ -2244,7 +2016,7 @@ if ($this->idgrupos_receitas != "")
           }
    $x = 0; 
    echo "<span id=\"id_read_on_idtipos_receitas\" class=\"css_idtipos_receitas_line\" style=\"" .  $sStyleReadLab_idtipos_receitas . "\">" . $this->form_format_readonly("idtipos_receitas", $this->form_encode_input($idtipos_receitas_look)) . "</span><span id=\"id_read_off_idtipos_receitas\" class=\"css_read_off_idtipos_receitas" . $this->classes_100perc_fields['span_input'] . "\" style=\"white-space: nowrap; " . $sStyleReadInp_idtipos_receitas . "\">";
-   echo " <span id=\"idAjaxSelect_idtipos_receitas\" class=\"" . $this->classes_100perc_fields['span_select'] . "\"><select class=\"sc-js-input scFormObjectOdd css_idtipos_receitas_obj" . $this->classes_100perc_fields['input'] . "\" style=\"\" id=\"id_sc_field_idtipos_receitas\" name=\"idtipos_receitas\" size=\"1\" alt=\"{type: 'select', enterTab: false}\">" ; 
+   echo " <span id=\"idAjaxSelect_idtipos_receitas\" class=\"" . $this->classes_100perc_fields['span_select'] . "\"><select class=\"sc-js-input scFormObjectOdd css_idtipos_receitas_obj" . $this->classes_100perc_fields['input'] . "\" style=\"\" id=\"id_sc_field_idtipos_receitas\" name=\"idtipos_receitas\" size=\"7\" alt=\"{type: 'select', enterTab: false}\">" ; 
    echo "\r" ; 
    while (!empty($todo[$x]) && !$nm_nao_carga) 
    {
@@ -2274,6 +2046,28 @@ if ($this->idgrupos_receitas != "")
 </td></tr><tr><td style="vertical-align: top; padding: 0"><table class="scFormFieldErrorTable" style="display: none" id="id_error_display_idtipos_receitas_frame"><tr><td class="scFormFieldErrorMessage"><span id="id_error_display_idtipos_receitas_text"></span></td></tr></table></td></tr></table> </TD>
    <?php }?>
 
+
+
+
+
+<?php if ($sc_hidden_yes > 0 && $sc_hidden_no > 0) { ?>
+
+
+    <TD class="scFormDataOdd" colspan="<?php echo $sc_hidden_yes * 1; ?>" >&nbsp;</TD>
+
+
+
+
+<?php } 
+?> 
+<?php $sStyleHidden_idforma_pagamento_prevista_dumb = ('' == $sStyleHidden_idforma_pagamento_prevista) ? 'display: none' : ''; ?>
+    <TD class="scFormDataOdd" id="hidden_field_data_idforma_pagamento_prevista_dumb" style="<?php echo $sStyleHidden_idforma_pagamento_prevista_dumb; ?>"></TD>
+<?php $sStyleHidden_idtipos_receitas_dumb = ('' == $sStyleHidden_idtipos_receitas) ? 'display: none' : ''; ?>
+    <TD class="scFormDataOdd" id="hidden_field_data_idtipos_receitas_dumb" style="<?php echo $sStyleHidden_idtipos_receitas_dumb; ?>"></TD>
+<?php if ($sc_hidden_no > 0) { echo "<tr>"; }; 
+      $sc_hidden_yes = 0; $sc_hidden_no = 0; ?>
+
+
    <?php
     if (!isset($this->nm_new_label['idnota_fiscal']))
     {
@@ -2317,11 +2111,12 @@ if ($this->idgrupos_receitas != "")
 </td></tr><tr><td style="vertical-align: top; padding: 0"><table class="scFormFieldErrorTable" style="display: none" id="id_error_display_idnota_fiscal_frame"><tr><td class="scFormFieldErrorMessage"><span id="id_error_display_idnota_fiscal_text"></span></td></tr></table></td></tr></table> </TD>
    <?php }?>
 
+    <TD class="scFormDataOdd" colspan="1" >&nbsp;</TD>
 
 
 
 
-<?php if ($sc_hidden_yes > 0 && $sc_hidden_no > 0) { ?>
+<?php if ($sc_hidden_yes > 0) { ?>
 
 
     <TD class="scFormDataOdd" colspan="<?php echo $sc_hidden_yes * 1; ?>" >&nbsp;</TD>
@@ -2329,16 +2124,7 @@ if ($this->idgrupos_receitas != "")
 
 
 
-<?php } 
-?> 
-
-
-
-
-
-
-<?php $sStyleHidden_idtipos_receitas_dumb = ('' == $sStyleHidden_idtipos_receitas) ? 'display: none' : ''; ?>
-    <TD class="scFormDataOdd" id="hidden_field_data_idtipos_receitas_dumb" style="<?php echo $sStyleHidden_idtipos_receitas_dumb; ?>"></TD>
+<?php } ?>
 <?php $sStyleHidden_idnota_fiscal_dumb = ('' == $sStyleHidden_idnota_fiscal) ? 'display: none' : ''; ?>
     <TD class="scFormDataOdd" id="hidden_field_data_idnota_fiscal_dumb" style="<?php echo $sStyleHidden_idnota_fiscal_dumb; ?>"></TD>
    </tr>

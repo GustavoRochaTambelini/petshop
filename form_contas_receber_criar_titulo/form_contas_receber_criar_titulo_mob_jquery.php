@@ -56,7 +56,6 @@ function scEventControl_init(iSeqRow) {
   scEventControl_data["competencia" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["valor_a_receber" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["idforma_pagamento_prevista" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
-  scEventControl_data["idgrupos_receitas" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["idtipos_receitas" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["idnota_fiscal" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["data_emissao" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
@@ -100,12 +99,6 @@ function scEventControl_active(iSeqRow) {
     return true;
   }
   if (scEventControl_data["idforma_pagamento_prevista" + iSeqRow]["change"]) {
-    return true;
-  }
-  if (scEventControl_data["idgrupos_receitas" + iSeqRow]["blur"]) {
-    return true;
-  }
-  if (scEventControl_data["idgrupos_receitas" + iSeqRow]["change"]) {
     return true;
   }
   if (scEventControl_data["idtipos_receitas" + iSeqRow]["blur"]) {
@@ -194,9 +187,6 @@ function scEventControl_onFocus(oField, iSeq) {
   if ("idforma_pagamento_prevista" + iSeq == fieldName) {
     scEventControl_data[fieldName]["blur"] = false;
   }
-  if ("idgrupos_receitas" + iSeq == fieldName) {
-    scEventControl_data[fieldName]["blur"] = false;
-  }
   if ("idtipos_receitas" + iSeq == fieldName) {
     scEventControl_data[fieldName]["blur"] = false;
   }
@@ -204,6 +194,9 @@ function scEventControl_onFocus(oField, iSeq) {
     scEventControl_data[fieldName]["blur"] = false;
   }
   if ("idforma_pagamento" + iSeq == fieldName) {
+    scEventControl_data[fieldName]["blur"] = false;
+  }
+  if ("idgrupos_receitas" + iSeq == fieldName) {
     scEventControl_data[fieldName]["blur"] = false;
   }
   if ("idorcamento" + iSeq == fieldName) {
@@ -244,9 +237,6 @@ function scJQEventsAdd(iSeqRow) {
                                        .bind('focus', function() { sc_form_contas_receber_criar_titulo_idcliente_onfocus(this, iSeqRow) });
   $('#id_sc_field_idforma_pagamento_prevista' + iSeqRow).bind('blur', function() { sc_form_contas_receber_criar_titulo_idforma_pagamento_prevista_onblur(this, iSeqRow) })
                                                         .bind('focus', function() { sc_form_contas_receber_criar_titulo_idforma_pagamento_prevista_onfocus(this, iSeqRow) });
-  $('#id_sc_field_idgrupos_receitas' + iSeqRow).bind('blur', function() { sc_form_contas_receber_criar_titulo_idgrupos_receitas_onblur(this, iSeqRow) })
-                                               .bind('change', function() { sc_form_contas_receber_criar_titulo_idgrupos_receitas_onchange(this, iSeqRow) })
-                                               .bind('focus', function() { sc_form_contas_receber_criar_titulo_idgrupos_receitas_onfocus(this, iSeqRow) });
   $('#id_sc_field_idtipos_receitas' + iSeqRow).bind('blur', function() { sc_form_contas_receber_criar_titulo_idtipos_receitas_onblur(this, iSeqRow) })
                                               .bind('focus', function() { sc_form_contas_receber_criar_titulo_idtipos_receitas_onfocus(this, iSeqRow) });
   $('#id_sc_field_idnota_fiscal' + iSeqRow).bind('blur', function() { sc_form_contas_receber_criar_titulo_idnota_fiscal_onblur(this, iSeqRow) })
@@ -307,20 +297,6 @@ function sc_form_contas_receber_criar_titulo_idforma_pagamento_prevista_onblur(o
 }
 
 function sc_form_contas_receber_criar_titulo_idforma_pagamento_prevista_onfocus(oThis, iSeqRow) {
-  scEventControl_onFocus(oThis, iSeqRow);
-  scCssFocus(oThis);
-}
-
-function sc_form_contas_receber_criar_titulo_idgrupos_receitas_onblur(oThis, iSeqRow) {
-  do_ajax_form_contas_receber_criar_titulo_mob_validate_idgrupos_receitas();
-  scCssBlur(oThis);
-}
-
-function sc_form_contas_receber_criar_titulo_idgrupos_receitas_onchange(oThis, iSeqRow) {
-  do_ajax_form_contas_receber_criar_titulo_mob_refresh_idgrupos_receitas();
-}
-
-function sc_form_contas_receber_criar_titulo_idgrupos_receitas_onfocus(oThis, iSeqRow) {
   scEventControl_onFocus(oThis, iSeqRow);
   scCssFocus(oThis);
 }
@@ -496,7 +472,6 @@ function displayChange_block_0(status) {
 
 function displayChange_block_1(status) {
 	displayChange_field("idforma_pagamento_prevista", "", status);
-	displayChange_field("idgrupos_receitas", "", status);
 	displayChange_field("idtipos_receitas", "", status);
 	displayChange_field("idnota_fiscal", "", status);
 }
@@ -526,7 +501,6 @@ function displayChange_row(row, status) {
 	displayChange_field_competencia(row, status);
 	displayChange_field_valor_a_receber(row, status);
 	displayChange_field_idforma_pagamento_prevista(row, status);
-	displayChange_field_idgrupos_receitas(row, status);
 	displayChange_field_idtipos_receitas(row, status);
 	displayChange_field_idnota_fiscal(row, status);
 	displayChange_field_data_emissao(row, status);
@@ -556,9 +530,6 @@ function displayChange_field(field, row, status) {
 	}
 	if ("idforma_pagamento_prevista" == field) {
 		displayChange_field_idforma_pagamento_prevista(row, status);
-	}
-	if ("idgrupos_receitas" == field) {
-		displayChange_field_idgrupos_receitas(row, status);
 	}
 	if ("idtipos_receitas" == field) {
 		displayChange_field_idtipos_receitas(row, status);
@@ -642,22 +613,6 @@ function displayChange_field_idforma_pagamento_prevista(row, status) {
 	}
 }
 
-function displayChange_field_idgrupos_receitas(row, status) {
-    var fieldId;
-	if ("on" == status) {
-		if ("all" == row) {
-			var fieldList = $(".css_idgrupos_receitas__obj");
-			for (var i = 0; i < fieldList.length; i++) {
-				$($(fieldList[i]).attr("id")).select2("destroy");
-			}
-		}
-		else {
-			$("#id_sc_field_idgrupos_receitas" + row).select2("destroy");
-		}
-		scJQSelect2Add(row, "idgrupos_receitas");
-	}
-}
-
 function displayChange_field_idtipos_receitas(row, status) {
     var fieldId;
 	if ("on" == status) {
@@ -721,7 +676,6 @@ function displayChange_field_observacoes(row, status) {
 function scRecreateSelect2() {
 	displayChange_field_idcliente("all", "on");
 	displayChange_field_idforma_pagamento_prevista("all", "on");
-	displayChange_field_idgrupos_receitas("all", "on");
 	displayChange_field_idtipos_receitas("all", "on");
 }
 function scResetPagesDisplay() {
@@ -1187,14 +1141,14 @@ function scJQSelect2Add(seqRow, specificField) {
   if (null == specificField || "idforma_pagamento_prevista" == specificField) {
     scJQSelect2Add_idforma_pagamento_prevista(seqRow);
   }
-  if (null == specificField || "idgrupos_receitas" == specificField) {
-    scJQSelect2Add_idgrupos_receitas(seqRow);
-  }
   if (null == specificField || "idtipos_receitas" == specificField) {
     scJQSelect2Add_idtipos_receitas(seqRow);
   }
   if (null == specificField || "idforma_pagamento" == specificField) {
     scJQSelect2Add_idforma_pagamento(seqRow);
+  }
+  if (null == specificField || "idgrupos_receitas" == specificField) {
+    scJQSelect2Add_idgrupos_receitas(seqRow);
   }
   if (null == specificField || "idorcamento" == specificField) {
     scJQSelect2Add_idorcamento(seqRow);
@@ -1225,24 +1179,6 @@ function scJQSelect2Add_idforma_pagamento_prevista(seqRow) {
     {
       containerCssClass: 'css_idforma_pagamento_prevista_obj',
       dropdownCssClass: 'css_idforma_pagamento_prevista_obj',
-      language: {
-        noResults: function() {
-          return "<?php echo $this->Ini->Nm_lang['lang_autocomp_notfound'] ?>";
-        },
-        searching: function() {
-          return "<?php echo $this->Ini->Nm_lang['lang_autocomp_searching'] ?>";
-        }
-      }
-    }
-  );
-} // scJQSelect2Add
-
-function scJQSelect2Add_idgrupos_receitas(seqRow) {
-  var elemSelector = "all" == seqRow ? ".css_idgrupos_receitas_obj" : "#id_sc_field_idgrupos_receitas" + seqRow;
-  $(elemSelector).select2(
-    {
-      containerCssClass: 'css_idgrupos_receitas_obj',
-      dropdownCssClass: 'css_idgrupos_receitas_obj',
       language: {
         noResults: function() {
           return "<?php echo $this->Ini->Nm_lang['lang_autocomp_notfound'] ?>";
@@ -1291,6 +1227,24 @@ function scJQSelect2Add_idforma_pagamento(seqRow) {
   );
 } // scJQSelect2Add
 
+function scJQSelect2Add_idgrupos_receitas(seqRow) {
+  var elemSelector = "all" == seqRow ? ".css_idgrupos_receitas_obj" : "#id_sc_field_idgrupos_receitas" + seqRow;
+  $(elemSelector).select2(
+    {
+      containerCssClass: 'css_idgrupos_receitas_obj',
+      dropdownCssClass: 'css_idgrupos_receitas_obj',
+      language: {
+        noResults: function() {
+          return "<?php echo $this->Ini->Nm_lang['lang_autocomp_notfound'] ?>";
+        },
+        searching: function() {
+          return "<?php echo $this->Ini->Nm_lang['lang_autocomp_searching'] ?>";
+        }
+      }
+    }
+  );
+} // scJQSelect2Add
+
 function scJQSelect2Add_idorcamento(seqRow) {
   var elemSelector = "all" == seqRow ? ".css_idorcamento_obj" : "#id_sc_field_idorcamento" + seqRow;
   $(elemSelector).select2(
@@ -1320,9 +1274,9 @@ function scJQElementsAdd(iLine) {
   scJQSelect2Add(iLine);
   setTimeout(function () { if ('function' == typeof displayChange_field_idcliente) { displayChange_field_idcliente(iLine, "on"); } }, 150);
   setTimeout(function () { if ('function' == typeof displayChange_field_idforma_pagamento_prevista) { displayChange_field_idforma_pagamento_prevista(iLine, "on"); } }, 150);
-  setTimeout(function () { if ('function' == typeof displayChange_field_idgrupos_receitas) { displayChange_field_idgrupos_receitas(iLine, "on"); } }, 150);
   setTimeout(function () { if ('function' == typeof displayChange_field_idtipos_receitas) { displayChange_field_idtipos_receitas(iLine, "on"); } }, 150);
   setTimeout(function () { if ('function' == typeof displayChange_field_idforma_pagamento) { displayChange_field_idforma_pagamento(iLine, "on"); } }, 150);
+  setTimeout(function () { if ('function' == typeof displayChange_field_idgrupos_receitas) { displayChange_field_idgrupos_receitas(iLine, "on"); } }, 150);
   setTimeout(function () { if ('function' == typeof displayChange_field_idorcamento) { displayChange_field_idorcamento(iLine, "on"); } }, 150);
 } // scJQElementsAdd
 

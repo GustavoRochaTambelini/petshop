@@ -3390,6 +3390,43 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
     scAjaxSetFocus();
   } // do_ajax_form_cliente_validate_cidade_idcidade_cb
 
+  // ---------- Validate uf
+  function do_ajax_form_cliente_validate_uf()
+  {
+    var nomeCampo_uf = "uf";
+    var var_uf = scAjaxGetFieldSelect(nomeCampo_uf);
+    var var_script_case_init = document.F1.script_case_init.value;
+    x_ajax_form_cliente_validate_uf(var_uf, var_script_case_init, do_ajax_form_cliente_validate_uf_cb);
+  } // do_ajax_form_cliente_validate_uf
+
+  function do_ajax_form_cliente_validate_uf_cb(sResp)
+  {
+    oResp = scAjaxResponse(sResp);
+    scAjaxRedir();
+    sFieldValid = "uf";
+    scEventControl_onBlur(sFieldValid);
+    scAjaxUpdateFieldErrors(sFieldValid, "valid");
+    sFieldErrors = scAjaxListFieldErrors(sFieldValid, false);
+    if ("" == sFieldErrors)
+    {
+      var sImgStatus = sc_img_status_ok;
+      scAjaxHideErrorDisplay(sFieldValid);
+    }
+    else
+    {
+      var sImgStatus = sc_img_status_err;
+      scAjaxShowErrorDisplay(sFieldValid, sFieldErrors);
+    }
+    var $oImg = $('#id_sc_status_' + sFieldValid);
+    if (0 < $oImg.length)
+    {
+      $oImg.attr('src', sImgStatus).css('display', '');
+    }
+    scAjaxShowDebug();
+    scAjaxSetMaster();
+    scAjaxSetFocus();
+  } // do_ajax_form_cliente_validate_uf_cb
+
   // ---------- Validate cliente_telefone
   function do_ajax_form_cliente_validate_cliente_telefone()
   {
@@ -3501,6 +3538,56 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
     scAjaxSetFocus();
   } // do_ajax_form_cliente_validate_cliente_pet_cb
 
+  // ---------- Event onchange cep
+  function do_ajax_form_cliente_event_cep_onchange()
+  {
+    var var_cep = scAjaxGetFieldText("cep");
+    var var_logradouro = scAjaxGetFieldText("logradouro");
+    var var_bairro = scAjaxGetFieldText("bairro");
+    var var_cidade_idcidade = scAjaxGetFieldSelect("cidade_idcidade");
+    var var_uf = scAjaxGetFieldSelect("uf");
+    var var_script_case_init = document.F2.script_case_init.value;
+    scAjaxProcOn(true);
+    x_ajax_form_cliente_event_cep_onchange(var_cep, var_logradouro, var_bairro, var_cidade_idcidade, var_uf, var_script_case_init, do_ajax_form_cliente_event_cep_onchange_cb);
+  } // do_ajax_form_cliente_event_cep_onchange
+
+  function do_ajax_form_cliente_event_cep_onchange_cb(sResp)
+  {
+    scAjaxProcOff(true);
+    oResp = scAjaxResponse(sResp);
+    sFieldValid = "cep";
+    scEventControl_onChange(sFieldValid);
+    scAjaxUpdateFieldErrors(sFieldValid, "onchange");
+    sFieldErrors = scAjaxListFieldErrors(sFieldValid, false);
+    if ("" == sFieldErrors)
+    {
+      scAjaxHideErrorDisplay(sFieldValid);
+    }
+    else
+    {
+      scAjaxShowErrorDisplay(sFieldValid, sFieldErrors);
+    }
+    if (!scAjaxHasError())
+    {
+      scAjaxSetFields();
+      scAjaxSetVariables();
+    }
+    scAjaxShowDebug();
+    scAjaxSetDisplay();
+    scBtnDisabled();
+    scBtnLabel();
+    scAjaxSetLabel();
+    scAjaxSetReadonly();
+    scAjaxSetMaster();
+    scAjaxAlert(do_ajax_form_cliente_event_cep_onchange_cb_after_alert);
+  } // do_ajax_form_cliente_event_cep_onchange_cb
+  function do_ajax_form_cliente_event_cep_onchange_cb_after_alert() {
+    scAjaxMessage();
+    scAjaxJavascript();
+    scAjaxSetFocus();
+    scAjaxRedir();
+  } // do_ajax_form_cliente_event_cep_onchange_cb_after_alert
+
   // ---------- Event onclick scajaxbutton_btn_voltar
   function do_ajax_form_cliente_event_scajaxbutton_btn_voltar_onclick()
   {
@@ -3544,28 +3631,6 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
     scAjaxSetFocus();
     scAjaxRedir();
   } // do_ajax_form_cliente_event_scajaxbutton_btn_voltar_onclick_cb_after_alert
-
-  var cepReturnFieldData;
-
-  function cepReturnValues(fieldConf)
-  {
-    cepReturnFieldData = fieldConf;
-  } // cepReturnValues
-
-  function cepForceValue(fieldName, fieldValue)
-  {
-    var i, fieldOptions, fieldOption;
-    fieldOptions = $("#id_sc_field_" + fieldName).find("option");
-    for (i = 0; i < fieldOptions.length; i++) {
-      fieldOption = $(fieldOptions[i]);
-      if (fieldValue == fieldOption.val() || fieldValue == fieldOption.text()) {
-        $("#id_sc_field_" + fieldName).prop("selectedIndex", fieldOption.index());
-        cepReturnFieldData[fieldName] = null;
-        return;
-      }
-    }
-  } // cepForceValue
-
 function scAjaxShowErrorDisplay(sErrorId, sErrorMsg) {
 	if ("table" != sErrorId && !$("id_error_display_" + sErrorId + "_frame").hasClass('scFormToastDivFixed')) {
 		scAjaxShowErrorDisplay_default(sErrorId, sErrorMsg);
@@ -3873,6 +3938,7 @@ function scJs_sweetalert_params(params) {
     var var_numero = scAjaxGetFieldText("numero");
     var var_bairro = scAjaxGetFieldText("bairro");
     var var_cidade_idcidade = scAjaxGetFieldSelect("cidade_idcidade");
+    var var_uf = scAjaxGetFieldSelect("uf");
     var var_nm_form_submit = document.F1.nm_form_submit.value;
     var var_nmgp_url_saida = document.F1.nmgp_url_saida.value;
     var var_nmgp_opcao = document.F1.nmgp_opcao.value;
@@ -3882,7 +3948,7 @@ function scJs_sweetalert_params(params) {
     var var_script_case_init = document.F1.script_case_init.value;
     var var_csrf_token = scAjaxGetFieldText("csrf_token");
     scAjaxProcOn();
-    x_ajax_form_cliente_submit_form(var_idcliente, var_cpf_cnpj, var_nome_fantasia, var_razao_social, var_data_nascimento, var_email, var_indicacao, var_cep, var_logradouro, var_numero, var_bairro, var_cidade_idcidade, var_nm_form_submit, var_nmgp_url_saida, var_nmgp_opcao, var_nmgp_ancora, var_nmgp_num_form, var_nmgp_parms, var_script_case_init, var_csrf_token, do_ajax_form_cliente_submit_form_cb);
+    x_ajax_form_cliente_submit_form(var_idcliente, var_cpf_cnpj, var_nome_fantasia, var_razao_social, var_data_nascimento, var_email, var_indicacao, var_cep, var_logradouro, var_numero, var_bairro, var_cidade_idcidade, var_uf, var_nm_form_submit, var_nmgp_url_saida, var_nmgp_opcao, var_nmgp_ancora, var_nmgp_num_form, var_nmgp_parms, var_script_case_init, var_csrf_token, do_ajax_form_cliente_submit_form_cb);
   } // do_ajax_form_cliente_submit_form
 
   function do_ajax_form_cliente_submit_form_cb(sResp)
@@ -3918,6 +3984,7 @@ function scJs_sweetalert_params(params) {
       scAjaxHideErrorDisplay("numero");
       scAjaxHideErrorDisplay("bairro");
       scAjaxHideErrorDisplay("cidade_idcidade");
+      scAjaxHideErrorDisplay("uf");
       scAjaxHideErrorDisplay("cliente_telefone");
       scAjaxHideErrorDisplay("cliente_dependente");
       scAjaxHideErrorDisplay("cliente_pet");
@@ -3998,6 +4065,7 @@ if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_cliente']['dashboar
     scAjaxHideErrorDisplay("numero");
     scAjaxHideErrorDisplay("bairro");
     scAjaxHideErrorDisplay("cidade_idcidade");
+    scAjaxHideErrorDisplay("uf");
     scAjaxHideErrorDisplay("cliente_telefone");
     scAjaxHideErrorDisplay("cliente_dependente");
     scAjaxHideErrorDisplay("cliente_pet");
@@ -4055,6 +4123,7 @@ foreach ($this->Ini->sc_lig_iframe as $tmp_i => $tmp_v)
     scAjaxSetReadonly(true);
     scAjaxSetMaster();
     scAjaxSetNavStatus("t");
+    scAjaxSetNavStatus("b");
     scAjaxSetDisplay(true);
     if (scMasterDetailIframe && scMasterDetailIframe["nmsc_iframe_liga_form_telefone"] && "nmsc_iframe_liga_form_telefone" != scMasterDetailIframe["nmsc_iframe_liga_form_telefone"]) {
         scMoveMasterDetail(scMasterDetailIframe["nmsc_iframe_liga_form_telefone"]);
@@ -4158,9 +4227,10 @@ if ($this->Embutida_form)
   ajax_field_list[9] = "numero";
   ajax_field_list[10] = "bairro";
   ajax_field_list[11] = "cidade_idcidade";
-  ajax_field_list[12] = "cliente_telefone";
-  ajax_field_list[13] = "cliente_dependente";
-  ajax_field_list[14] = "cliente_pet";
+  ajax_field_list[12] = "uf";
+  ajax_field_list[13] = "cliente_telefone";
+  ajax_field_list[14] = "cliente_dependente";
+  ajax_field_list[15] = "cliente_pet";
 
   var ajax_block_list = new Array();
   ajax_block_list[0] = "0";
@@ -4182,6 +4252,7 @@ if ($this->Embutida_form)
     "numero": {"label": "NUMERO", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "bairro": {"label": "BAIRRO", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "cidade_idcidade": {"label": "CIDADE", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
+    "uf": {"label": "UF", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "cliente_telefone": {"label": "cliente_telefone", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "cliente_dependente": {"label": "cliente_dependente", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "cliente_pet": {"label": "cliente_pet", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5}
@@ -4217,6 +4288,7 @@ if ($this->Embutida_form)
     "numero": new Array(),
     "bairro": new Array(),
     "cidade_idcidade": new Array(),
+    "uf": new Array(),
     "cliente_telefone": new Array(),
     "cliente_dependente": new Array(),
     "cliente_pet": new Array()
@@ -4233,6 +4305,7 @@ if ($this->Embutida_form)
   ajax_field_mult["numero"][1] = "numero";
   ajax_field_mult["bairro"][1] = "bairro";
   ajax_field_mult["cidade_idcidade"][1] = "cidade_idcidade";
+  ajax_field_mult["uf"][1] = "uf";
   ajax_field_mult["cliente_telefone"][1] = "cliente_telefone";
   ajax_field_mult["cliente_dependente"][1] = "cliente_dependente";
   ajax_field_mult["cliente_pet"][1] = "cliente_pet";
@@ -4250,6 +4323,7 @@ if ($this->Embutida_form)
     "numero": new Array("hidden_field_label_numero", "hidden_field_data_numero"),
     "bairro": new Array("hidden_field_label_bairro", "hidden_field_data_bairro"),
     "cidade_idcidade": new Array("hidden_field_label_cidade_idcidade", "hidden_field_data_cidade_idcidade"),
+    "uf": new Array("hidden_field_label_uf", "hidden_field_data_uf"),
     "cliente_telefone": new Array("hidden_field_label_cliente_telefone", "hidden_field_data_cliente_telefone"),
     "cliente_dependente": new Array("hidden_field_label_cliente_dependente", "hidden_field_data_cliente_dependente"),
     "cliente_pet": new Array("hidden_field_label_cliente_pet", "hidden_field_data_cliente_pet")
@@ -4268,6 +4342,7 @@ if ($this->Embutida_form)
     "numero": "off",
     "bairro": "off",
     "cidade_idcidade": "off",
+    "uf": "off",
     "cliente_telefone": "off",
     "cliente_dependente": "off",
     "cliente_pet": "off"
@@ -4470,6 +4545,23 @@ if ($this->Embutida_form)
       return;
     }
     if ("cidade_idcidade" == sIndex)
+    {
+      scAjaxSetFieldSelect(sIndex, aValue, null);
+      updateHeaderFooter(sIndex, aValue);
+
+      if ($("#id_sc_field_" + sIndex).length) {
+          $("#id_sc_field_" + sIndex).change();
+      }
+      else if (document.F1.elements[sIndex]) {
+          $(document.F1.elements[sIndex]).change();
+      }
+      else if (document.F1.elements[sFieldName + "[]"]) {
+          $(document.F1.elements[sFieldName + "[]"]).change();
+      }
+
+      return;
+    }
+    if ("uf" == sIndex)
     {
       scAjaxSetFieldSelect(sIndex, aValue, null);
       updateHeaderFooter(sIndex, aValue);

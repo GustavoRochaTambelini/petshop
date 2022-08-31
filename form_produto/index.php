@@ -295,8 +295,8 @@ class form_produto_ini
       $this->nm_dt_criacao   = "20220803"; 
       $this->nm_hr_criacao   = "102520"; 
       $this->nm_autor_alt    = "admin"; 
-      $this->nm_dt_ult_alt   = "20220827"; 
-      $this->nm_hr_ult_alt   = "154301"; 
+      $this->nm_dt_ult_alt   = "20220829"; 
+      $this->nm_hr_ult_alt   = "225902"; 
       list($NM_usec, $NM_sec) = explode(" ", microtime()); 
       $this->nm_timestamp    = (float) $NM_sec; 
       $this->nm_app_version  = "1.0.0"; 
@@ -895,7 +895,7 @@ class form_produto_ini
       $this->Nm_accent_mysql     = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
       $this->Nm_accent_postgres  = array('cmp_i'=>"unaccent(",'cmp_f'=>")",'cmp_apos'=>"",'arg_i'=>"' || unaccent('",'arg_f'=>"') || '",'arg_apos'=>"");
       $this->Nm_accent_sqlite    = array('cmp_i'=>"",'cmp_f'=>"",'cmp_apos'=>"",'arg_i'=>"",'arg_f'=>"",'arg_apos'=>"");
-      $_SESSION['scriptcase']['nm_bases_security']  = "enc_nm_enc_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";
+      $_SESSION['scriptcase']['nm_bases_security']  = "enc_nm_enc_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";
       $this->prep_conect();
       $this->conectDB();
       if (!in_array(strtolower($this->nm_tpbanco), $this->nm_bases_all))
@@ -1573,6 +1573,11 @@ ob_start();
             $valor = NM_utf8_urldecode($_POST['rsargs'][0]);
             $script_case_init = NM_utf8_urldecode($_POST['rsargs'][1]);
         }
+        if ('ajax_form_produto_validate_margem_lucro' == $_POST['rs'])
+        {
+            $margem_lucro = NM_utf8_urldecode($_POST['rsargs'][0]);
+            $script_case_init = NM_utf8_urldecode($_POST['rsargs'][1]);
+        }
         if ('ajax_form_produto_validate_estoque_minimo' == $_POST['rs'])
         {
             $estoque_minimo = NM_utf8_urldecode($_POST['rsargs'][0]);
@@ -1608,6 +1613,20 @@ ob_start();
             $foto = NM_utf8_urldecode($_POST['rsargs'][0]);
             $script_case_init = NM_utf8_urldecode($_POST['rsargs'][1]);
         }
+        if ('ajax_form_produto_event_custo_onblur' == $_POST['rs'])
+        {
+            $valor = NM_utf8_urldecode($_POST['rsargs'][0]);
+            $custo = NM_utf8_urldecode($_POST['rsargs'][1]);
+            $margem_lucro = NM_utf8_urldecode($_POST['rsargs'][2]);
+            $script_case_init = NM_utf8_urldecode($_POST['rsargs'][3]);
+        }
+        if ('ajax_form_produto_event_valor_onblur' == $_POST['rs'])
+        {
+            $valor = NM_utf8_urldecode($_POST['rsargs'][0]);
+            $custo = NM_utf8_urldecode($_POST['rsargs'][1]);
+            $margem_lucro = NM_utf8_urldecode($_POST['rsargs'][2]);
+            $script_case_init = NM_utf8_urldecode($_POST['rsargs'][3]);
+        }
         if ('ajax_form_produto_submit_form' == $_POST['rs'])
         {
             $idproduto = NM_utf8_urldecode($_POST['rsargs'][0]);
@@ -1616,24 +1635,25 @@ ob_start();
             $descricao = NM_utf8_urldecode($_POST['rsargs'][3]);
             $custo = NM_utf8_urldecode($_POST['rsargs'][4]);
             $valor = NM_utf8_urldecode($_POST['rsargs'][5]);
-            $estoque_minimo = NM_utf8_urldecode($_POST['rsargs'][6]);
-            $tipo = NM_utf8_urldecode($_POST['rsargs'][7]);
-            $idgrupo = NM_utf8_urldecode($_POST['rsargs'][8]);
-            $idsubgrupo = NM_utf8_urldecode($_POST['rsargs'][9]);
-            $idmarca = NM_utf8_urldecode($_POST['rsargs'][10]);
-            $idunidade = NM_utf8_urldecode($_POST['rsargs'][11]);
-            $foto = NM_utf8_urldecode($_POST['rsargs'][12]);
-            $foto_ul_name = NM_utf8_urldecode($_POST['rsargs'][13]);
-            $foto_ul_type = NM_utf8_urldecode($_POST['rsargs'][14]);
-            $foto_limpa = NM_utf8_urldecode($_POST['rsargs'][15]);
-            $nm_form_submit = NM_utf8_urldecode($_POST['rsargs'][16]);
-            $nmgp_url_saida = NM_utf8_urldecode($_POST['rsargs'][17]);
-            $nmgp_opcao = NM_utf8_urldecode($_POST['rsargs'][18]);
-            $nmgp_ancora = NM_utf8_urldecode($_POST['rsargs'][19]);
-            $nmgp_num_form = NM_utf8_urldecode($_POST['rsargs'][20]);
-            $nmgp_parms = NM_utf8_urldecode($_POST['rsargs'][21]);
-            $script_case_init = NM_utf8_urldecode($_POST['rsargs'][22]);
-            $csrf_token = NM_utf8_urldecode($_POST['rsargs'][23]);
+            $margem_lucro = NM_utf8_urldecode($_POST['rsargs'][6]);
+            $estoque_minimo = NM_utf8_urldecode($_POST['rsargs'][7]);
+            $tipo = NM_utf8_urldecode($_POST['rsargs'][8]);
+            $idgrupo = NM_utf8_urldecode($_POST['rsargs'][9]);
+            $idsubgrupo = NM_utf8_urldecode($_POST['rsargs'][10]);
+            $idmarca = NM_utf8_urldecode($_POST['rsargs'][11]);
+            $idunidade = NM_utf8_urldecode($_POST['rsargs'][12]);
+            $foto = NM_utf8_urldecode($_POST['rsargs'][13]);
+            $foto_ul_name = NM_utf8_urldecode($_POST['rsargs'][14]);
+            $foto_ul_type = NM_utf8_urldecode($_POST['rsargs'][15]);
+            $foto_limpa = NM_utf8_urldecode($_POST['rsargs'][16]);
+            $nm_form_submit = NM_utf8_urldecode($_POST['rsargs'][17]);
+            $nmgp_url_saida = NM_utf8_urldecode($_POST['rsargs'][18]);
+            $nmgp_opcao = NM_utf8_urldecode($_POST['rsargs'][19]);
+            $nmgp_ancora = NM_utf8_urldecode($_POST['rsargs'][20]);
+            $nmgp_num_form = NM_utf8_urldecode($_POST['rsargs'][21]);
+            $nmgp_parms = NM_utf8_urldecode($_POST['rsargs'][22]);
+            $script_case_init = NM_utf8_urldecode($_POST['rsargs'][23]);
+            $csrf_token = NM_utf8_urldecode($_POST['rsargs'][24]);
         }
         if ('ajax_form_produto_navigate_form' == $_POST['rs'])
         {
@@ -2237,6 +2257,7 @@ ob_start();
     sajax_export("ajax_form_produto_validate_descricao");
     sajax_export("ajax_form_produto_validate_custo");
     sajax_export("ajax_form_produto_validate_valor");
+    sajax_export("ajax_form_produto_validate_margem_lucro");
     sajax_export("ajax_form_produto_validate_estoque_minimo");
     sajax_export("ajax_form_produto_validate_tipo");
     sajax_export("ajax_form_produto_validate_idgrupo");
@@ -2244,6 +2265,8 @@ ob_start();
     sajax_export("ajax_form_produto_validate_idmarca");
     sajax_export("ajax_form_produto_validate_idunidade");
     sajax_export("ajax_form_produto_validate_foto");
+    sajax_export("ajax_form_produto_event_custo_onblur");
+    sajax_export("ajax_form_produto_event_valor_onblur");
     sajax_export("ajax_form_produto_submit_form");
     sajax_export("ajax_form_produto_navigate_form");
     sajax_handle_client_request();
@@ -2372,6 +2395,25 @@ ob_start();
         $inicial_form_produto->contr_form_produto->controle();
         exit;
     } // ajax_validate_valor
+
+    function ajax_form_produto_validate_margem_lucro($margem_lucro, $script_case_init)
+    {
+        global $inicial_form_produto;
+        //register_shutdown_function("form_produto_pack_ajax_response");
+        $inicial_form_produto->contr_form_produto->NM_ajax_flag          = true;
+        $inicial_form_produto->contr_form_produto->NM_ajax_opcao         = 'validate_margem_lucro';
+        $inicial_form_produto->contr_form_produto->NM_ajax_info['param'] = array(
+                  'margem_lucro' => NM_utf8_urldecode($margem_lucro),
+                  'script_case_init' => NM_utf8_urldecode($script_case_init),
+                  'buffer_output' => true,
+                 );
+        if ($inicial_form_produto->contr_form_produto->NM_ajax_info['param']['buffer_output'])
+        {
+            ob_start();
+        }
+        $inicial_form_produto->contr_form_produto->controle();
+        exit;
+    } // ajax_validate_margem_lucro
 
     function ajax_form_produto_validate_estoque_minimo($estoque_minimo, $script_case_init)
     {
@@ -2506,7 +2548,49 @@ ob_start();
         exit;
     } // ajax_validate_foto
 
-    function ajax_form_produto_submit_form($idproduto, $referencia, $codigo_de_barras, $descricao, $custo, $valor, $estoque_minimo, $tipo, $idgrupo, $idsubgrupo, $idmarca, $idunidade, $foto, $foto_ul_name, $foto_ul_type, $foto_limpa, $nm_form_submit, $nmgp_url_saida, $nmgp_opcao, $nmgp_ancora, $nmgp_num_form, $nmgp_parms, $script_case_init, $csrf_token)
+    function ajax_form_produto_event_custo_onblur($valor, $custo, $margem_lucro, $script_case_init)
+    {
+        global $inicial_form_produto;
+        //register_shutdown_function("form_produto_pack_ajax_response");
+        $inicial_form_produto->contr_form_produto->NM_ajax_flag          = true;
+        $inicial_form_produto->contr_form_produto->NM_ajax_opcao         = 'event_custo_onblur';
+        $inicial_form_produto->contr_form_produto->NM_ajax_info['param'] = array(
+                  'valor' => NM_utf8_urldecode($valor),
+                  'custo' => NM_utf8_urldecode($custo),
+                  'margem_lucro' => NM_utf8_urldecode($margem_lucro),
+                  'script_case_init' => NM_utf8_urldecode($script_case_init),
+                  'buffer_output' => true,
+                 );
+        if ($inicial_form_produto->contr_form_produto->NM_ajax_info['param']['buffer_output'])
+        {
+            ob_start();
+        }
+        $inicial_form_produto->contr_form_produto->controle();
+        exit;
+    } // ajax_event_custo_onblur
+
+    function ajax_form_produto_event_valor_onblur($valor, $custo, $margem_lucro, $script_case_init)
+    {
+        global $inicial_form_produto;
+        //register_shutdown_function("form_produto_pack_ajax_response");
+        $inicial_form_produto->contr_form_produto->NM_ajax_flag          = true;
+        $inicial_form_produto->contr_form_produto->NM_ajax_opcao         = 'event_valor_onblur';
+        $inicial_form_produto->contr_form_produto->NM_ajax_info['param'] = array(
+                  'valor' => NM_utf8_urldecode($valor),
+                  'custo' => NM_utf8_urldecode($custo),
+                  'margem_lucro' => NM_utf8_urldecode($margem_lucro),
+                  'script_case_init' => NM_utf8_urldecode($script_case_init),
+                  'buffer_output' => true,
+                 );
+        if ($inicial_form_produto->contr_form_produto->NM_ajax_info['param']['buffer_output'])
+        {
+            ob_start();
+        }
+        $inicial_form_produto->contr_form_produto->controle();
+        exit;
+    } // ajax_event_valor_onblur
+
+    function ajax_form_produto_submit_form($idproduto, $referencia, $codigo_de_barras, $descricao, $custo, $valor, $margem_lucro, $estoque_minimo, $tipo, $idgrupo, $idsubgrupo, $idmarca, $idunidade, $foto, $foto_ul_name, $foto_ul_type, $foto_limpa, $nm_form_submit, $nmgp_url_saida, $nmgp_opcao, $nmgp_ancora, $nmgp_num_form, $nmgp_parms, $script_case_init, $csrf_token)
     {
         global $inicial_form_produto;
         //register_shutdown_function("form_produto_pack_ajax_response");
@@ -2519,6 +2603,7 @@ ob_start();
                   'descricao' => NM_utf8_urldecode($descricao),
                   'custo' => NM_utf8_urldecode($custo),
                   'valor' => NM_utf8_urldecode($valor),
+                  'margem_lucro' => NM_utf8_urldecode($margem_lucro),
                   'estoque_minimo' => NM_utf8_urldecode($estoque_minimo),
                   'tipo' => NM_utf8_urldecode($tipo),
                   'idgrupo' => NM_utf8_urldecode($idgrupo),

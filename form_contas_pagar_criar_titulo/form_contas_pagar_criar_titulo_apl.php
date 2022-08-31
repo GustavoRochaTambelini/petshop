@@ -156,10 +156,6 @@ class form_contas_pagar_criar_titulo_apl
           {
               $this->idforma_pagamento_prevista = $this->NM_ajax_info['param']['idforma_pagamento_prevista'];
           }
-          if (isset($this->NM_ajax_info['param']['idgrupo_contas']))
-          {
-              $this->idgrupo_contas = $this->NM_ajax_info['param']['idgrupo_contas'];
-          }
           if (isset($this->NM_ajax_info['param']['idtipo_contas']))
           {
               $this->idtipo_contas = $this->NM_ajax_info['param']['idtipo_contas'];
@@ -191,10 +187,6 @@ class form_contas_pagar_criar_titulo_apl
           if (isset($this->NM_ajax_info['param']['nmgp_parms']))
           {
               $this->nmgp_parms = $this->NM_ajax_info['param']['nmgp_parms'];
-          }
-          if (isset($this->NM_ajax_info['param']['nmgp_refresh_fields']))
-          {
-              $this->nmgp_refresh_fields = $this->NM_ajax_info['param']['nmgp_refresh_fields'];
           }
           if (isset($this->NM_ajax_info['param']['nmgp_url_saida']))
           {
@@ -910,6 +902,7 @@ class form_contas_pagar_criar_titulo_apl
       {
           $this->nmgp_dados_form = $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['dados_form'];
           if (!isset($this->idforma_pagamento)){$this->idforma_pagamento = $this->nmgp_dados_form['idforma_pagamento'];} 
+          if (!isset($this->idgrupo_contas)){$this->idgrupo_contas = $this->nmgp_dados_form['idgrupo_contas'];} 
           if (!isset($this->idbaixa_conta_corrente)){$this->idbaixa_conta_corrente = $this->nmgp_dados_form['idbaixa_conta_corrente'];} 
           if (!isset($this->valor_pago)){$this->valor_pago = $this->nmgp_dados_form['valor_pago'];} 
           if (!isset($this->juros)){$this->juros = $this->nmgp_dados_form['juros'];} 
@@ -1145,7 +1138,6 @@ $_SESSION['scriptcase']['form_contas_pagar_criar_titulo']['contr_erro'] = 'off';
       if (isset($this->idcliente)) { $this->nm_limpa_alfa($this->idcliente); }
       if (isset($this->idforma_pagamento_prevista)) { $this->nm_limpa_alfa($this->idforma_pagamento_prevista); }
       if (isset($this->idtipo_contas)) { $this->nm_limpa_alfa($this->idtipo_contas); }
-      if (isset($this->idgrupo_contas)) { $this->nm_limpa_alfa($this->idgrupo_contas); }
       if (isset($this->valor_a_pagar)) { $this->nm_limpa_alfa($this->valor_a_pagar); }
       if (isset($this->pago)) { $this->nm_limpa_alfa($this->pago); }
       if (isset($this->competencia)) { $this->nm_limpa_alfa($this->competencia); }
@@ -1327,10 +1319,6 @@ $_SESSION['scriptcase']['form_contas_pagar_criar_titulo']['contr_erro'] = 'off';
           if ('validate_idforma_pagamento_prevista' == $this->NM_ajax_opcao)
           {
               $this->Valida_campos($Campos_Crit, $Campos_Falta, $Campos_Erros, 'idforma_pagamento_prevista');
-          }
-          if ('validate_idgrupo_contas' == $this->NM_ajax_opcao)
-          {
-              $this->Valida_campos($Campos_Crit, $Campos_Falta, $Campos_Erros, 'idgrupo_contas');
           }
           if ('validate_idtipo_contas' == $this->NM_ajax_opcao)
           {
@@ -1991,9 +1979,6 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
            case 'idforma_pagamento_prevista':
                return "FORMA DE PAGAMENTO";
                break;
-           case 'idgrupo_contas':
-               return "GRUPO DE CONTAS";
-               break;
            case 'idtipo_contas':
                return "TIPO DE CONTAS";
                break;
@@ -2029,6 +2014,9 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
                break;
            case 'idforma_pagamento':
                return "Idforma Pagamento";
+               break;
+           case 'idgrupo_contas':
+               return "GRUPO DE CONTAS";
                break;
            case 'idbaixa_conta_corrente':
                return "Idbaixa Conta Corrente";
@@ -2103,8 +2091,6 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
         $this->ValidateField_valor_a_pagar($Campos_Crit, $Campos_Falta, $Campos_Erros);
       if ((!is_array($filtro) && ('' == $filtro || 'idforma_pagamento_prevista' == $filtro)) || (is_array($filtro) && in_array('idforma_pagamento_prevista', $filtro)))
         $this->ValidateField_idforma_pagamento_prevista($Campos_Crit, $Campos_Falta, $Campos_Erros);
-      if ((!is_array($filtro) && ('' == $filtro || 'idgrupo_contas' == $filtro)) || (is_array($filtro) && in_array('idgrupo_contas', $filtro)))
-        $this->ValidateField_idgrupo_contas($Campos_Crit, $Campos_Falta, $Campos_Erros);
       if ((!is_array($filtro) && ('' == $filtro || 'idtipo_contas' == $filtro)) || (is_array($filtro) && in_array('idtipo_contas', $filtro)))
         $this->ValidateField_idtipo_contas($Campos_Crit, $Campos_Falta, $Campos_Erros);
       if ((!is_array($filtro) && ('' == $filtro || 'nota_fiscal' == $filtro)) || (is_array($filtro) && in_array('nota_fiscal', $filtro)))
@@ -2421,50 +2407,6 @@ $_SESSION['scriptcase']['form_contas_pagar_criar_titulo']['contr_erro'] = 'off';
             $this->NM_ajax_info['fieldsWithErrors'][] = $fieldName;
         }
     } // ValidateField_idforma_pagamento_prevista
-
-    function ValidateField_idgrupo_contas(&$Campos_Crit, &$Campos_Falta, &$Campos_Erros)
-    {
-        global $teste_validade;
-        $hasError = false;
-      if ($this->idgrupo_contas == "" && $this->nmgp_opcao != "excluir" && (!isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['php_cmp_required']['idgrupo_contas']) || $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['php_cmp_required']['idgrupo_contas'] == "on"))
-      {
-          $hasError = true;
-          $Campos_Falta[] = "GRUPO DE CONTAS" ; 
-          if (!isset($Campos_Erros['idgrupo_contas']))
-          {
-              $Campos_Erros['idgrupo_contas'] = array();
-          }
-          $Campos_Erros['idgrupo_contas'][] = $this->Ini->Nm_lang['lang_errm_ajax_rqrd'];
-          if (!isset($this->NM_ajax_info['errList']['idgrupo_contas']) || !is_array($this->NM_ajax_info['errList']['idgrupo_contas']))
-          {
-              $this->NM_ajax_info['errList']['idgrupo_contas'] = array();
-          }
-          $this->NM_ajax_info['errList']['idgrupo_contas'][] = $this->Ini->Nm_lang['lang_errm_ajax_rqrd'];
-      }
-          if (!empty($this->idgrupo_contas) && isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idgrupo_contas']) && !in_array($this->idgrupo_contas, $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idgrupo_contas']))
-          {
-              $hasError = true;
-              $Campos_Crit .= $this->Ini->Nm_lang['lang_errm_ajax_data'];
-              if (!isset($Campos_Erros['idgrupo_contas']))
-              {
-                  $Campos_Erros['idgrupo_contas'] = array();
-              }
-              $Campos_Erros['idgrupo_contas'][] = $this->Ini->Nm_lang['lang_errm_ajax_data'];
-              if (!isset($this->NM_ajax_info['errList']['idgrupo_contas']) || !is_array($this->NM_ajax_info['errList']['idgrupo_contas']))
-              {
-                  $this->NM_ajax_info['errList']['idgrupo_contas'] = array();
-              }
-              $this->NM_ajax_info['errList']['idgrupo_contas'][] = $this->Ini->Nm_lang['lang_errm_ajax_data'];
-          }
-        if ($hasError) {
-            global $sc_seq_vert;
-            $fieldName = 'idgrupo_contas';
-            if (isset($sc_seq_vert) && '' != $sc_seq_vert) {
-                $fieldName .= $sc_seq_vert;
-            }
-            $this->NM_ajax_info['fieldsWithErrors'][] = $fieldName;
-        }
-    } // ValidateField_idgrupo_contas
 
     function ValidateField_idtipo_contas(&$Campos_Crit, &$Campos_Falta, &$Campos_Erros)
     {
@@ -2973,7 +2915,6 @@ $_SESSION['scriptcase']['form_contas_pagar_criar_titulo']['contr_erro'] = 'off';
     $this->nmgp_dados_form['competencia'] = $this->competencia;
     $this->nmgp_dados_form['valor_a_pagar'] = $this->valor_a_pagar;
     $this->nmgp_dados_form['idforma_pagamento_prevista'] = $this->idforma_pagamento_prevista;
-    $this->nmgp_dados_form['idgrupo_contas'] = $this->idgrupo_contas;
     $this->nmgp_dados_form['idtipo_contas'] = $this->idtipo_contas;
     $this->nmgp_dados_form['nota_fiscal'] = $this->nota_fiscal;
     $this->nmgp_dados_form['data_emissao'] = $this->data_emissao;
@@ -2986,6 +2927,7 @@ $_SESSION['scriptcase']['form_contas_pagar_criar_titulo']['contr_erro'] = 'off';
     $this->nmgp_dados_form['pago'] = $this->pago;
     $this->nmgp_dados_form['observacao'] = $this->observacao;
     $this->nmgp_dados_form['idforma_pagamento'] = $this->idforma_pagamento;
+    $this->nmgp_dados_form['idgrupo_contas'] = $this->idgrupo_contas;
     $this->nmgp_dados_form['idbaixa_conta_corrente'] = $this->idbaixa_conta_corrente;
     $this->nmgp_dados_form['valor_pago'] = $this->valor_pago;
     $this->nmgp_dados_form['juros'] = $this->juros;
@@ -3642,7 +3584,6 @@ $_SESSION['scriptcase']['form_contas_pagar_criar_titulo']['contr_erro'] = 'off';
           $this->ajax_return_values_competencia();
           $this->ajax_return_values_valor_a_pagar();
           $this->ajax_return_values_idforma_pagamento_prevista();
-          $this->ajax_return_values_idgrupo_contas();
           $this->ajax_return_values_idtipo_contas();
           $this->ajax_return_values_nota_fiscal();
           $this->ajax_return_values_data_emissao();
@@ -4123,27 +4064,25 @@ else
           }
    }
 
-          //----- idgrupo_contas
-   function ajax_return_values_idgrupo_contas($bForce = false)
+          //----- idtipo_contas
+   function ajax_return_values_idtipo_contas($bForce = false)
    {
-          if ('navigate_form' == $this->NM_ajax_opcao || 'backup_line' == $this->NM_ajax_opcao || (isset($this->nmgp_refresh_fields) && in_array("idgrupo_contas", $this->nmgp_refresh_fields)) || $bForce)
+          if ('navigate_form' == $this->NM_ajax_opcao || 'backup_line' == $this->NM_ajax_opcao || (isset($this->nmgp_refresh_fields) && in_array("idtipo_contas", $this->nmgp_refresh_fields)) || $bForce)
           {
-              $sTmpValue = NM_charset_to_utf8($this->idgrupo_contas);
+              $sTmpValue = NM_charset_to_utf8($this->idtipo_contas);
               $aLookup = array();
-              $this->_tmp_lookup_idgrupo_contas = $this->idgrupo_contas;
+              $this->_tmp_lookup_idtipo_contas = $this->idtipo_contas;
 
  
 $nmgp_def_dados = "" ; 
-if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idgrupo_contas']))
+if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas']))
 {
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idgrupo_contas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idgrupo_contas']); 
+    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas']); 
 }
 else
 {
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idgrupo_contas'] = array(); 
+    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas'] = array(); 
 }
-$aLookup[] = array(form_contas_pagar_criar_titulo_pack_protect_string('') => str_replace('<', '&lt;',form_contas_pagar_criar_titulo_pack_protect_string(' ')));
-$_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idgrupo_contas'][] = '';
    if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
    { 
        $GLOBALS["NM_ERRO_IBASE"] = 1;  
@@ -4235,144 +4174,7 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['
           $sc_field_4_val_str .= "'$Tmp_val_cmp'";
        }
    }
-   $nm_comando = "SELECT idgrupo_contas, descricao  FROM grupo_contas  ORDER BY descricao";
-
-   $this->idcontas_pagar = $old_value_idcontas_pagar;
-   $this->competencia = $old_value_competencia;
-   $this->valor_a_pagar = $old_value_valor_a_pagar;
-   $this->nota_fiscal = $old_value_nota_fiscal;
-   $this->data_emissao = $old_value_data_emissao;
-   $this->data_vencimanto = $old_value_data_vencimanto;
-   $this->sc_field_3 = $old_value_sc_field_3;
-   $this->sc_field_2 = $old_value_sc_field_2;
-
-   $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
-   $_SESSION['scriptcase']['sc_sql_ult_conexao'] = '';
-   if ($nm_comando != "" && $rs = $this->Db->Execute($nm_comando))
-   {
-       while (!$rs->EOF) 
-       { 
-              $rs->fields[0] = str_replace(',', '.', $rs->fields[0]);
-              $rs->fields[0] = (strpos(strtolower($rs->fields[0]), "e")) ? (float)$rs->fields[0] : $rs->fields[0];
-              $rs->fields[0] = (string)$rs->fields[0];
-              $aLookup[] = array(form_contas_pagar_criar_titulo_pack_protect_string(NM_charset_to_utf8($rs->fields[0])) => str_replace('<', '&lt;', form_contas_pagar_criar_titulo_pack_protect_string(NM_charset_to_utf8($rs->fields[1]))));
-              $nmgp_def_dados .= $rs->fields[1] . "?#?" ; 
-              $nmgp_def_dados .= $rs->fields[0] . "?#?N?@?" ; 
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idgrupo_contas'][] = $rs->fields[0];
-              $rs->MoveNext() ; 
-       } 
-       $rs->Close() ; 
-   } 
-   elseif ($GLOBALS["NM_ERRO_IBASE"] != 1 && $nm_comando != "")  
-   {  
-       $this->Erro->mensagem(__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dber'], $this->Db->ErrorMsg()); 
-       exit; 
-   } 
-   $GLOBALS["NM_ERRO_IBASE"] = 0; 
-          $aLookupOrig = $aLookup;
-          $sSelComp = "name=\"idgrupo_contas\"";
-          if (isset($this->NM_ajax_info['select_html']['idgrupo_contas']) && !empty($this->NM_ajax_info['select_html']['idgrupo_contas']))
-          {
-              $sSelComp = str_replace('{SC_100PERC_CLASS_INPUT}', $this->classes_100perc_fields['input'], $this->NM_ajax_info['select_html']['idgrupo_contas']);
-          }
-          $sLookup = '';
-          if (empty($aLookup))
-          {
-              $aLookup[] = array('' => '');
-          }
-          foreach ($aLookup as $aOption)
-          {
-              foreach ($aOption as $sValue => $sLabel)
-              {
-
-                  if ($this->idgrupo_contas == $sValue)
-                  {
-                      $this->_tmp_lookup_idgrupo_contas = $sLabel;
-                  }
-
-                  $sOpt     = ($sValue !== $sLabel) ? $sValue : $sLabel;
-                  $sLookup .= "<option value=\"" . $sOpt . "\">" . $sLabel . "</option>";
-              }
-          }
-          $aLookup  = $sLookup;
-          $this->NM_ajax_info['fldList']['idgrupo_contas'] = array(
-                       'row'    => '',
-               'type'    => 'select',
-               'valList' => array($sTmpValue),
-               'optList' => $aLookup,
-              );
-          $aLabel     = array();
-          $aLabelTemp = array();
-          foreach ($this->NM_ajax_info['fldList']['idgrupo_contas']['valList'] as $i => $v)
-          {
-              $this->NM_ajax_info['fldList']['idgrupo_contas']['valList'][$i] = form_contas_pagar_criar_titulo_pack_protect_string($v);
-          }
-          foreach ($aLookupOrig as $aValData)
-          {
-              if (in_array(key($aValData), $this->NM_ajax_info['fldList']['idgrupo_contas']['valList']))
-              {
-                  $aLabelTemp[key($aValData)] = current($aValData);
-              }
-          }
-          foreach ($this->NM_ajax_info['fldList']['idgrupo_contas']['valList'] as $iIndex => $sValue)
-          {
-              $aLabel[$iIndex] = (isset($aLabelTemp[$sValue])) ? $aLabelTemp[$sValue] : $sValue;
-          }
-          $this->NM_ajax_info['fldList']['idgrupo_contas']['labList'] = $aLabel;
-          }
-   }
-
-          //----- idtipo_contas
-   function ajax_return_values_idtipo_contas($bForce = false)
-   {
-          if ('navigate_form' == $this->NM_ajax_opcao || 'backup_line' == $this->NM_ajax_opcao || (isset($this->nmgp_refresh_fields) && in_array("idtipo_contas", $this->nmgp_refresh_fields)) || $bForce)
-          {
-              $sTmpValue = NM_charset_to_utf8($this->idtipo_contas);
-              $aLookup = array();
-              $this->_tmp_lookup_idtipo_contas = $this->idtipo_contas;
-
- 
-$nmgp_def_dados = "" ; 
-if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas']))
-{
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas']); 
-}
-else
-{
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas'] = array(); 
-}
-if ($this->idgrupo_contas != "")
-{ 
-   $this->nm_clear_val("idgrupo_contas");
-   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
-   { 
-       $GLOBALS["NM_ERRO_IBASE"] = 1;  
-   } 
-   $nm_nao_carga = false;
-   $nmgp_def_dados = "" ; 
-
-   $old_value_idcontas_pagar = $this->idcontas_pagar;
-   $old_value_competencia = $this->competencia;
-   $old_value_valor_a_pagar = $this->valor_a_pagar;
-   $old_value_nota_fiscal = $this->nota_fiscal;
-   $old_value_data_emissao = $this->data_emissao;
-   $old_value_data_vencimanto = $this->data_vencimanto;
-   $old_value_sc_field_3 = $this->sc_field_3;
-   $old_value_sc_field_2 = $this->sc_field_2;
-   $this->nm_tira_formatacao();
-   $this->nm_converte_datas(false);
-
-
-   $unformatted_value_idcontas_pagar = $this->idcontas_pagar;
-   $unformatted_value_competencia = $this->competencia;
-   $unformatted_value_valor_a_pagar = $this->valor_a_pagar;
-   $unformatted_value_nota_fiscal = $this->nota_fiscal;
-   $unformatted_value_data_emissao = $this->data_emissao;
-   $unformatted_value_data_vencimanto = $this->data_vencimanto;
-   $unformatted_value_sc_field_3 = $this->sc_field_3;
-   $unformatted_value_sc_field_2 = $this->sc_field_2;
-
-   $nm_comando = "SELECT idtipo_contas, descricao  FROM tipo_contas  WHERE idgrupo_contas = $this->idgrupo_contas ORDER BY descricao";
+   $nm_comando = "SELECT idtipo_contas, descricao  FROM tipo_contas ORDER BY descricao";
 
    $this->idcontas_pagar = $old_value_idcontas_pagar;
    $this->competencia = $old_value_competencia;
@@ -4406,7 +4208,6 @@ if ($this->idgrupo_contas != "")
        exit; 
    } 
    $GLOBALS["NM_ERRO_IBASE"] = 0; 
-} 
           $aLookupOrig = $aLookup;
           $sSelComp = "name=\"idtipo_contas\"";
           if (isset($this->NM_ajax_info['select_html']['idtipo_contas']) && !empty($this->NM_ajax_info['select_html']['idtipo_contas']))
@@ -5107,7 +4908,6 @@ $_SESSION['scriptcase']['form_contas_pagar_criar_titulo']['contr_erro'] = 'off';
       $NM_val_form['competencia'] = $this->competencia;
       $NM_val_form['valor_a_pagar'] = $this->valor_a_pagar;
       $NM_val_form['idforma_pagamento_prevista'] = $this->idforma_pagamento_prevista;
-      $NM_val_form['idgrupo_contas'] = $this->idgrupo_contas;
       $NM_val_form['idtipo_contas'] = $this->idtipo_contas;
       $NM_val_form['nota_fiscal'] = $this->nota_fiscal;
       $NM_val_form['data_emissao'] = $this->data_emissao;
@@ -5120,6 +4920,7 @@ $_SESSION['scriptcase']['form_contas_pagar_criar_titulo']['contr_erro'] = 'off';
       $NM_val_form['pago'] = $this->pago;
       $NM_val_form['observacao'] = $this->observacao;
       $NM_val_form['idforma_pagamento'] = $this->idforma_pagamento;
+      $NM_val_form['idgrupo_contas'] = $this->idgrupo_contas;
       $NM_val_form['idbaixa_conta_corrente'] = $this->idbaixa_conta_corrente;
       $NM_val_form['valor_pago'] = $this->valor_pago;
       $NM_val_form['juros'] = $this->juros;
@@ -5294,26 +5095,30 @@ $_SESSION['scriptcase']['form_contas_pagar_criar_titulo']['contr_erro'] = 'off';
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento_prevista = $this->idforma_pagamento_prevista, idtipo_contas = $this->idtipo_contas, idgrupo_contas = $this->idgrupo_contas, valor_a_pagar = $this->valor_a_pagar, pago = '$this->pago', competencia = '$this->competencia', data_emissao = '$this->data_emissao', data_vencimanto = '$this->data_vencimanto', nota_fiscal = $this->nota_fiscal, observacao = '$this->observacao'"; 
+                  $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento_prevista = $this->idforma_pagamento_prevista, idtipo_contas = $this->idtipo_contas, valor_a_pagar = $this->valor_a_pagar, pago = '$this->pago', competencia = '$this->competencia', data_emissao = '$this->data_emissao', data_vencimanto = '$this->data_vencimanto', nota_fiscal = $this->nota_fiscal, observacao = '$this->observacao'"; 
               } 
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento_prevista = $this->idforma_pagamento_prevista, idtipo_contas = $this->idtipo_contas, idgrupo_contas = $this->idgrupo_contas, valor_a_pagar = $this->valor_a_pagar, pago = '$this->pago', competencia = '$this->competencia', data_emissao = '$this->data_emissao', data_vencimanto = '$this->data_vencimanto', nota_fiscal = $this->nota_fiscal, observacao = '$this->observacao'"; 
+                  $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento_prevista = $this->idforma_pagamento_prevista, idtipo_contas = $this->idtipo_contas, valor_a_pagar = $this->valor_a_pagar, pago = '$this->pago', competencia = '$this->competencia', data_emissao = '$this->data_emissao', data_vencimanto = '$this->data_vencimanto', nota_fiscal = $this->nota_fiscal, observacao = '$this->observacao'"; 
               } 
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento_prevista = $this->idforma_pagamento_prevista, idtipo_contas = $this->idtipo_contas, idgrupo_contas = $this->idgrupo_contas, valor_a_pagar = $this->valor_a_pagar, pago = '$this->pago', competencia = '$this->competencia', data_emissao = '$this->data_emissao', data_vencimanto = '$this->data_vencimanto', nota_fiscal = $this->nota_fiscal"; 
+                  $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento_prevista = $this->idforma_pagamento_prevista, idtipo_contas = $this->idtipo_contas, valor_a_pagar = $this->valor_a_pagar, pago = '$this->pago', competencia = '$this->competencia', data_emissao = '$this->data_emissao', data_vencimanto = '$this->data_vencimanto', nota_fiscal = $this->nota_fiscal"; 
               } 
               else 
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento_prevista = $this->idforma_pagamento_prevista, idtipo_contas = $this->idtipo_contas, idgrupo_contas = $this->idgrupo_contas, valor_a_pagar = $this->valor_a_pagar, pago = '$this->pago', competencia = '$this->competencia', data_emissao = '$this->data_emissao', data_vencimanto = '$this->data_vencimanto', nota_fiscal = $this->nota_fiscal, observacao = '$this->observacao'"; 
+                  $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento_prevista = $this->idforma_pagamento_prevista, idtipo_contas = $this->idtipo_contas, valor_a_pagar = $this->valor_a_pagar, pago = '$this->pago', competencia = '$this->competencia', data_emissao = '$this->data_emissao', data_vencimanto = '$this->data_vencimanto', nota_fiscal = $this->nota_fiscal, observacao = '$this->observacao'"; 
               } 
               if (isset($NM_val_form['idforma_pagamento']) && $NM_val_form['idforma_pagamento'] != $this->nmgp_dados_select['idforma_pagamento']) 
               { 
                   $SC_fields_update[] = "idforma_pagamento = $this->idforma_pagamento"; 
+              } 
+              if (isset($NM_val_form['idgrupo_contas']) && $NM_val_form['idgrupo_contas'] != $this->nmgp_dados_select['idgrupo_contas']) 
+              { 
+                  $SC_fields_update[] = "idgrupo_contas = $this->idgrupo_contas"; 
               } 
               if (isset($NM_val_form['idbaixa_conta_corrente']) && $NM_val_form['idbaixa_conta_corrente'] != $this->nmgp_dados_select['idbaixa_conta_corrente']) 
               { 
@@ -5417,8 +5222,6 @@ $_SESSION['scriptcase']['form_contas_pagar_criar_titulo']['contr_erro'] = 'off';
               elseif (isset($this->idforma_pagamento_prevista)) { $this->nm_limpa_alfa($this->idforma_pagamento_prevista); }
               if     (isset($NM_val_form) && isset($NM_val_form['idtipo_contas'])) { $this->idtipo_contas = $NM_val_form['idtipo_contas']; }
               elseif (isset($this->idtipo_contas)) { $this->nm_limpa_alfa($this->idtipo_contas); }
-              if     (isset($NM_val_form) && isset($NM_val_form['idgrupo_contas'])) { $this->idgrupo_contas = $NM_val_form['idgrupo_contas']; }
-              elseif (isset($this->idgrupo_contas)) { $this->nm_limpa_alfa($this->idgrupo_contas); }
               if     (isset($NM_val_form) && isset($NM_val_form['valor_a_pagar'])) { $this->valor_a_pagar = $NM_val_form['valor_a_pagar']; }
               elseif (isset($this->valor_a_pagar)) { $this->nm_limpa_alfa($this->valor_a_pagar); }
               if     (isset($NM_val_form) && isset($NM_val_form['pago'])) { $this->pago = $NM_val_form['pago']; }
@@ -5433,7 +5236,7 @@ $_SESSION['scriptcase']['form_contas_pagar_criar_titulo']['contr_erro'] = 'off';
               $this->nm_formatar_campos();
 
               $aOldRefresh               = $this->nmgp_refresh_fields;
-              $this->nmgp_refresh_fields = array_diff(array('idcontas_pagar', 'idcliente', 'competencia', 'valor_a_pagar', 'idforma_pagamento_prevista', 'idgrupo_contas', 'idtipo_contas', 'nota_fiscal', 'data_emissao', 'data_vencimanto', 'sc_field_3', 'sc_field_2', 'sc_field_0', 'sc_field_4', 'sc_field_1', 'pago', 'observacao'), $aDoNotUpdate);
+              $this->nmgp_refresh_fields = array_diff(array('idcontas_pagar', 'idcliente', 'competencia', 'valor_a_pagar', 'idforma_pagamento_prevista', 'idtipo_contas', 'nota_fiscal', 'data_emissao', 'data_vencimanto', 'sc_field_3', 'sc_field_2', 'sc_field_0', 'sc_field_4', 'sc_field_1', 'pago', 'observacao'), $aDoNotUpdate);
               $this->ajax_return_values();
               $this->nmgp_refresh_fields = $aOldRefresh;
 
@@ -6334,7 +6137,6 @@ $_SESSION['scriptcase']['form_contas_pagar_criar_titulo']['contr_erro'] = 'on';
 $original_idcliente = $this->idcliente;
 $original_competencia = $this->competencia;
 $original_valor_a_pagar = $this->valor_a_pagar;
-$original_idgrupo_contas = $this->idgrupo_contas;
 $original_pago = $this->pago;
 $original_sc_field_0 = $this->sc_field_0;
 $original_sc_field_3 = $this->sc_field_3;
@@ -6362,7 +6164,6 @@ if($this->idcliente  == ''){
 $modificado_idcliente = $this->idcliente;
 $modificado_competencia = $this->competencia;
 $modificado_valor_a_pagar = $this->valor_a_pagar;
-$modificado_idgrupo_contas = $this->idgrupo_contas;
 $modificado_pago = $this->pago;
 $modificado_sc_field_0 = $this->sc_field_0;
 $modificado_sc_field_3 = $this->sc_field_3;
@@ -6375,7 +6176,7 @@ $modificado_observacao = $this->observacao;
 $modificado_sc_field_4 = $this->sc_field_4;
 $modificado_sc_field_2 = $this->sc_field_2;
 $modificado_sc_field_1 = $this->sc_field_1;
-$this->nm_formatar_campos('idcliente', 'competencia', 'valor_a_pagar', 'idgrupo_contas', 'pago', 'sc_field_0', 'sc_field_3', 'data_vencimanto', 'idforma_pagamento_prevista', 'idtipo_contas', 'data_emissao', 'nota_fiscal', 'observacao', 'sc_field_4', 'sc_field_2', 'sc_field_1');
+$this->nm_formatar_campos('idcliente', 'competencia', 'valor_a_pagar', 'pago', 'sc_field_0', 'sc_field_3', 'data_vencimanto', 'idforma_pagamento_prevista', 'idtipo_contas', 'data_emissao', 'nota_fiscal', 'observacao', 'sc_field_4', 'sc_field_2', 'sc_field_1');
 if ($original_idcliente !== $modificado_idcliente || isset($this->nmgp_cmp_readonly['idcliente']) || (isset($bFlagRead_idcliente) && $bFlagRead_idcliente))
 {
     $this->ajax_return_values_idcliente(true);
@@ -6387,10 +6188,6 @@ if ($original_competencia !== $modificado_competencia || isset($this->nmgp_cmp_r
 if ($original_valor_a_pagar !== $modificado_valor_a_pagar || isset($this->nmgp_cmp_readonly['valor_a_pagar']) || (isset($bFlagRead_valor_a_pagar) && $bFlagRead_valor_a_pagar))
 {
     $this->ajax_return_values_valor_a_pagar(true);
-}
-if ($original_idgrupo_contas !== $modificado_idgrupo_contas || isset($this->nmgp_cmp_readonly['idgrupo_contas']) || (isset($bFlagRead_idgrupo_contas) && $bFlagRead_idgrupo_contas))
-{
-    $this->ajax_return_values_idgrupo_contas(true);
 }
 if ($original_pago !== $modificado_pago || isset($this->nmgp_cmp_readonly['pago']) || (isset($bFlagRead_pago) && $bFlagRead_pago))
 {
@@ -6570,10 +6367,10 @@ $_SESSION['scriptcase']['form_contas_pagar_criar_titulo']['contr_erro'] = 'off';
     function form_highlight_search_quicksearch(&$result, $field, $value)
     {
         $searchOk = false;
-        if ('SC_all_Cmp' == $this->nmgp_fast_search && in_array($field, array("idcontas_pagar", "idcliente", "competencia", "valor_a_pagar", "idforma_pagamento_prevista", "idgrupo_contas", "idtipo_contas", "nota_fiscal", "data_emissao", "data_vencimanto", "pago", "observacao"))) {
+        if ('SC_all_Cmp' == $this->nmgp_fast_search && in_array($field, array("idcontas_pagar", "idcliente", "competencia", "valor_a_pagar", "idforma_pagamento_prevista", "idtipo_contas", "nota_fiscal", "data_emissao", "data_vencimanto", "pago", "observacao"))) {
             $searchOk = true;
         }
-        elseif ($field == $this->nmgp_fast_search && in_array($field, array("idcontas_pagar", "idcliente", "competencia", "valor_a_pagar", "idforma_pagamento_prevista", "idgrupo_contas", "idtipo_contas", "nota_fiscal", "data_emissao", "data_vencimanto", "pago", "observacao"))) {
+        elseif ($field == $this->nmgp_fast_search && in_array($field, array("idcontas_pagar", "idcliente", "competencia", "valor_a_pagar", "idforma_pagamento_prevista", "idtipo_contas", "nota_fiscal", "data_emissao", "data_vencimanto", "pago", "observacao"))) {
             $searchOk = true;
         }
 
@@ -7354,16 +7151,16 @@ else
    return $todo;
 
    }
-   function Form_lookup_idgrupo_contas()
+   function Form_lookup_idtipo_contas()
    {
 $nmgp_def_dados = "" ; 
-if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idgrupo_contas']))
+if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas']))
 {
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idgrupo_contas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idgrupo_contas']); 
+    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas']); 
 }
 else
 {
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idgrupo_contas'] = array(); 
+    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas'] = array(); 
 }
    if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
    { 
@@ -7371,13 +7168,13 @@ else
    } 
    $nm_nao_carga = false;
    $nmgp_def_dados = "" ; 
-   if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idgrupo_contas']))
+   if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas']))
    {
-       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idgrupo_contas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idgrupo_contas']); 
+       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas']); 
    }
    else
    {
-       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idgrupo_contas'] = array(); 
+       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas'] = array(); 
     }
 
    $old_value_idcontas_pagar = $this->idcontas_pagar;
@@ -7464,95 +7261,7 @@ else
           $sc_field_4_val_str .= "'$Tmp_val_cmp'";
        }
    }
-   $nm_comando = "SELECT idgrupo_contas, descricao  FROM grupo_contas  ORDER BY descricao";
-
-   $this->idcontas_pagar = $old_value_idcontas_pagar;
-   $this->competencia = $old_value_competencia;
-   $this->valor_a_pagar = $old_value_valor_a_pagar;
-   $this->nota_fiscal = $old_value_nota_fiscal;
-   $this->data_emissao = $old_value_data_emissao;
-   $this->data_vencimanto = $old_value_data_vencimanto;
-   $this->sc_field_3 = $old_value_sc_field_3;
-   $this->sc_field_2 = $old_value_sc_field_2;
-
-   $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
-   $_SESSION['scriptcase']['sc_sql_ult_conexao'] = '';
-   if ($nm_comando != "" && $rs = $this->Db->Execute($nm_comando))
-   {
-       while (!$rs->EOF) 
-       { 
-              $rs->fields[0] = str_replace(',', '.', $rs->fields[0]);
-              $rs->fields[0] = (strpos(strtolower($rs->fields[0]), "e")) ? (float)$rs->fields[0] : $rs->fields[0];
-              $rs->fields[0] = (string)$rs->fields[0];
-              $nmgp_def_dados .= $rs->fields[1] . "?#?" ; 
-              $nmgp_def_dados .= $rs->fields[0] . "?#?N?@?" ; 
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idgrupo_contas'][] = $rs->fields[0];
-              $rs->MoveNext() ; 
-       } 
-       $rs->Close() ; 
-   } 
-   elseif ($GLOBALS["NM_ERRO_IBASE"] != 1 && $nm_comando != "")  
-   {  
-       $this->Erro->mensagem(__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dber'], $this->Db->ErrorMsg()); 
-       exit; 
-   } 
-   $GLOBALS["NM_ERRO_IBASE"] = 0; 
-   $todox = str_replace("?#?@?#?", "?#?@ ?#?", trim($nmgp_def_dados)) ; 
-   $todo  = explode("?@?", $todox) ; 
-   return $todo;
-
-   }
-   function Form_lookup_idtipo_contas()
-   {
-$nmgp_def_dados = "" ; 
-if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas']))
-{
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas']); 
-}
-else
-{
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas'] = array(); 
-}
-if ($this->idgrupo_contas != "")
-{ 
-   $this->nm_clear_val("idgrupo_contas");
-   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
-   { 
-       $GLOBALS["NM_ERRO_IBASE"] = 1;  
-   } 
-   $nm_nao_carga = false;
-   $nmgp_def_dados = "" ; 
-   if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas']))
-   {
-       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas']); 
-   }
-   else
-   {
-       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo']['Lookup_idtipo_contas'] = array(); 
-    }
-
-   $old_value_idcontas_pagar = $this->idcontas_pagar;
-   $old_value_competencia = $this->competencia;
-   $old_value_valor_a_pagar = $this->valor_a_pagar;
-   $old_value_nota_fiscal = $this->nota_fiscal;
-   $old_value_data_emissao = $this->data_emissao;
-   $old_value_data_vencimanto = $this->data_vencimanto;
-   $old_value_sc_field_3 = $this->sc_field_3;
-   $old_value_sc_field_2 = $this->sc_field_2;
-   $this->nm_tira_formatacao();
-   $this->nm_converte_datas(false);
-
-
-   $unformatted_value_idcontas_pagar = $this->idcontas_pagar;
-   $unformatted_value_competencia = $this->competencia;
-   $unformatted_value_valor_a_pagar = $this->valor_a_pagar;
-   $unformatted_value_nota_fiscal = $this->nota_fiscal;
-   $unformatted_value_data_emissao = $this->data_emissao;
-   $unformatted_value_data_vencimanto = $this->data_vencimanto;
-   $unformatted_value_sc_field_3 = $this->sc_field_3;
-   $unformatted_value_sc_field_2 = $this->sc_field_2;
-
-   $nm_comando = "SELECT idtipo_contas, descricao  FROM tipo_contas  WHERE idgrupo_contas = $this->idgrupo_contas ORDER BY descricao";
+   $nm_comando = "SELECT idtipo_contas, descricao  FROM tipo_contas ORDER BY descricao";
 
    $this->idcontas_pagar = $old_value_idcontas_pagar;
    $this->competencia = $old_value_competencia;
@@ -7585,7 +7294,6 @@ if ($this->idgrupo_contas != "")
        exit; 
    } 
    $GLOBALS["NM_ERRO_IBASE"] = 0; 
-} 
    $todox = str_replace("?#?@?#?", "?#?@ ?#?", trim($nmgp_def_dados)) ; 
    $todo  = explode("?@?", $todox) ; 
    return $todo;
@@ -7679,14 +7387,6 @@ if ($this->idgrupo_contas != "")
               if (is_array($data_lookup) && !empty($data_lookup)) 
               {
                   $this->SC_monta_condicao($comando, "idforma_pagamento_prevista", $arg_search, $data_lookup, "INT", false);
-              }
-          }
-          if ($field == "SC_all_Cmp" || $field == "idgrupo_contas") 
-          {
-              $data_lookup = $this->SC_lookup_idgrupo_contas($arg_search, $data_search);
-              if (is_array($data_lookup) && !empty($data_lookup)) 
-              {
-                  $this->SC_monta_condicao($comando, "idgrupo_contas", $arg_search, $data_lookup, "INT", false);
               }
           }
           if ($field == "SC_all_Cmp" || $field == "idtipo_contas") 
@@ -8141,12 +7841,12 @@ if ($this->idgrupo_contas != "")
            exit; 
        } 
    }
-   function SC_lookup_idgrupo_contas($condicao, $campo)
+   function SC_lookup_idtipo_contas($condicao, $campo)
    {
        $result = array();
        $campo_orig = $campo;
        $campo  = substr($this->Db->qstr($campo), 1, -1);
-       $nm_comando = "SELECT descricao, idgrupo_contas FROM grupo_contas WHERE (#cmp_idescricao#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos)" ; 
+       $nm_comando = "SELECT descricao, idtipo_contas FROM tipo_contas WHERE (#cmp_idescricao#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos)" ; 
        if ($condicao == "ii")
        {
            $nm_comando = str_replace("LIKE '%#arg_i" . $campo . "#arg_f%'", "LIKE '#arg_i" . $campo . "#arg_f%'", $nm_comando);
@@ -8230,10 +7930,6 @@ if ($this->idgrupo_contas != "")
            $this->Erro->mensagem(__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dber'], $this->Db->ErrorMsg()); 
            exit; 
        } 
-   }
-   function SC_lookup_idtipo_contas($condicao, $campo)
-   {
-       return $campo;
    }
    function SC_lookup_pago($condicao, $campo)
    {
@@ -8650,8 +8346,6 @@ if (parent && parent.scAjaxDetailValue)
                 return 'desc';
             case "idforma_pagamento_prevista":
                 return 'desc';
-            case "idgrupo_contas":
-                return 'desc';
             case "idtipo_contas":
                 return 'desc';
             case "nota_fiscal":
@@ -8661,6 +8355,8 @@ if (parent && parent.scAjaxDetailValue)
             case "data_vencimanto":
                 return 'desc';
             case "idforma_pagamento":
+                return 'desc';
+            case "idgrupo_contas":
                 return 'desc';
             case "idbaixa_conta_corrente":
                 return 'desc';

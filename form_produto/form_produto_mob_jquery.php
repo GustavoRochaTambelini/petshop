@@ -57,6 +57,7 @@ function scEventControl_init(iSeqRow) {
   scEventControl_data["descricao" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["custo" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["valor" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
+  scEventControl_data["margem_lucro" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["estoque_minimo" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["tipo" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["idgrupo" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
@@ -101,6 +102,12 @@ function scEventControl_active(iSeqRow) {
     return true;
   }
   if (scEventControl_data["valor" + iSeqRow]["change"]) {
+    return true;
+  }
+  if (scEventControl_data["margem_lucro" + iSeqRow]["blur"]) {
+    return true;
+  }
+  if (scEventControl_data["margem_lucro" + iSeqRow]["change"]) {
     return true;
   }
   if (scEventControl_data["estoque_minimo" + iSeqRow]["blur"]) {
@@ -211,6 +218,8 @@ function scJQEventsAdd(iSeqRow) {
                                   .bind('focus', function() { sc_form_produto_foto_onfocus(this, iSeqRow) });
   $('#id_sc_field_tipo' + iSeqRow).bind('blur', function() { sc_form_produto_tipo_onblur(this, iSeqRow) })
                                   .bind('focus', function() { sc_form_produto_tipo_onfocus(this, iSeqRow) });
+  $('#id_sc_field_margem_lucro' + iSeqRow).bind('blur', function() { sc_form_produto_margem_lucro_onblur(this, iSeqRow) })
+                                          .bind('focus', function() { sc_form_produto_margem_lucro_onfocus(this, iSeqRow) });
 } // scJQEventsAdd
 
 function sc_form_produto_idproduto_onblur(oThis, iSeqRow) {
@@ -296,6 +305,7 @@ function sc_form_produto_descricao_onfocus(oThis, iSeqRow) {
 function sc_form_produto_custo_onblur(oThis, iSeqRow) {
   do_ajax_form_produto_mob_validate_custo();
   scCssBlur(oThis);
+  do_ajax_form_produto_mob_event_custo_onblur();
 }
 
 function sc_form_produto_custo_onfocus(oThis, iSeqRow) {
@@ -306,6 +316,7 @@ function sc_form_produto_custo_onfocus(oThis, iSeqRow) {
 function sc_form_produto_valor_onblur(oThis, iSeqRow) {
   do_ajax_form_produto_mob_validate_valor();
   scCssBlur(oThis);
+  do_ajax_form_produto_mob_event_valor_onblur();
 }
 
 function sc_form_produto_valor_onfocus(oThis, iSeqRow) {
@@ -341,6 +352,16 @@ function sc_form_produto_tipo_onfocus(oThis, iSeqRow) {
   scCssFocus(oThis);
 }
 
+function sc_form_produto_margem_lucro_onblur(oThis, iSeqRow) {
+  do_ajax_form_produto_mob_validate_margem_lucro();
+  scCssBlur(oThis);
+}
+
+function sc_form_produto_margem_lucro_onfocus(oThis, iSeqRow) {
+  scEventControl_onFocus(oThis, iSeqRow);
+  scCssFocus(oThis);
+}
+
 function displayChange_block(block, status) {
 	if ("0" == block) {
 		displayChange_block_0(status);
@@ -360,6 +381,7 @@ function displayChange_block_0(status) {
 	displayChange_field("descricao", "", status);
 	displayChange_field("custo", "", status);
 	displayChange_field("valor", "", status);
+	displayChange_field("margem_lucro", "", status);
 	displayChange_field("estoque_minimo", "", status);
 	displayChange_field("tipo", "", status);
 }
@@ -382,6 +404,7 @@ function displayChange_row(row, status) {
 	displayChange_field_descricao(row, status);
 	displayChange_field_custo(row, status);
 	displayChange_field_valor(row, status);
+	displayChange_field_margem_lucro(row, status);
 	displayChange_field_estoque_minimo(row, status);
 	displayChange_field_tipo(row, status);
 	displayChange_field_idgrupo(row, status);
@@ -409,6 +432,9 @@ function displayChange_field(field, row, status) {
 	}
 	if ("valor" == field) {
 		displayChange_field_valor(row, status);
+	}
+	if ("margem_lucro" == field) {
+		displayChange_field_margem_lucro(row, status);
 	}
 	if ("estoque_minimo" == field) {
 		displayChange_field_estoque_minimo(row, status);
@@ -454,6 +480,10 @@ function displayChange_field_custo(row, status) {
 }
 
 function displayChange_field_valor(row, status) {
+    var fieldId;
+}
+
+function displayChange_field_margem_lucro(row, status) {
     var fieldId;
 }
 

@@ -34,12 +34,17 @@ function scFocusField(sField) {
       case 'numero':
       case 'bairro':
       case 'cidade_idcidade':
-      case 'cliente_telefone':
-      case 'cliente_dependente':
+      case 'uf':
         sc_exib_ocult_pag('form_cliente_form0');
         break;
-      case 'cliente_pet':
+      case 'cliente_telefone':
         sc_exib_ocult_pag('form_cliente_form1');
+        break;
+      case 'cliente_dependente':
+        sc_exib_ocult_pag('form_cliente_form2');
+        break;
+      case 'cliente_pet':
+        sc_exib_ocult_pag('form_cliente_form3');
         break;
     }
   }
@@ -87,6 +92,7 @@ function scEventControl_init(iSeqRow) {
   scEventControl_data["numero" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["bairro" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["cidade_idcidade" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
+  scEventControl_data["uf" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["cliente_telefone" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["cliente_dependente" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["cliente_pet" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
@@ -165,6 +171,12 @@ function scEventControl_active(iSeqRow) {
   if (scEventControl_data["cidade_idcidade" + iSeqRow]["change"]) {
     return true;
   }
+  if (scEventControl_data["uf" + iSeqRow]["blur"]) {
+    return true;
+  }
+  if (scEventControl_data["uf" + iSeqRow]["change"]) {
+    return true;
+  }
   if (scEventControl_data["cliente_telefone" + iSeqRow]["blur"]) {
     return true;
   }
@@ -193,6 +205,15 @@ function scEventControl_onFocus(oField, iSeq) {
   scEventControl_data[fieldName]["blur"] = true;
   if ("cidade_idcidade" + iSeq == fieldName) {
     scEventControl_data[fieldName]["blur"] = false;
+  }
+  if ("uf" + iSeq == fieldName) {
+    scEventControl_data[fieldName]["blur"] = false;
+  }
+  if ("cep" + iSeq == fieldName) {
+    scEventControl_data[fieldName]["change"]   = true;
+    scEventControl_data[fieldName]["original"] = $(oField).val();
+    scEventControl_data[fieldName]["calculated"] = $(oField).val();
+    return;
   }
   scEventControl_data[fieldName]["change"] = false;
 } // scEventControl_onFocus
@@ -253,6 +274,9 @@ function scJQEventsAdd(iSeqRow) {
   $('#id_sc_field_cep' + iSeqRow).bind('blur', function() { sc_form_cliente_cep_onblur(this, iSeqRow) })
                                  .bind('change', function() { sc_form_cliente_cep_onchange(this, iSeqRow) })
                                  .bind('focus', function() { sc_form_cliente_cep_onfocus(this, iSeqRow) });
+  $('#id_sc_field_uf' + iSeqRow).bind('blur', function() { sc_form_cliente_uf_onblur(this, iSeqRow) })
+                                .bind('change', function() { sc_form_cliente_uf_onchange(this, iSeqRow) })
+                                .bind('focus', function() { sc_form_cliente_uf_onfocus(this, iSeqRow) });
   $('#id_sc_field_cliente_dependente' + iSeqRow).bind('blur', function() { sc_form_cliente_cliente_dependente_onblur(this, iSeqRow) })
                                                 .bind('change', function() { sc_form_cliente_cliente_dependente_onchange(this, iSeqRow) })
                                                 .bind('focus', function() { sc_form_cliente_cliente_dependente_onfocus(this, iSeqRow) });
@@ -425,9 +449,24 @@ function sc_form_cliente_cep_onblur(oThis, iSeqRow) {
 
 function sc_form_cliente_cep_onchange(oThis, iSeqRow) {
   scMarkFormAsChanged();
+  do_ajax_form_cliente_event_cep_onchange();
 }
 
 function sc_form_cliente_cep_onfocus(oThis, iSeqRow) {
+  scEventControl_onFocus(oThis, iSeqRow);
+  scCssFocus(oThis);
+}
+
+function sc_form_cliente_uf_onblur(oThis, iSeqRow) {
+  do_ajax_form_cliente_validate_uf();
+  scCssBlur(oThis);
+}
+
+function sc_form_cliente_uf_onchange(oThis, iSeqRow) {
+  scMarkFormAsChanged();
+}
+
+function sc_form_cliente_uf_onfocus(oThis, iSeqRow) {
   scEventControl_onFocus(oThis, iSeqRow);
   scCssFocus(oThis);
 }
@@ -481,16 +520,28 @@ function displayChange_page(page, status) {
 	if ("1" == page) {
 		displayChange_page_1(status);
 	}
+	if ("2" == page) {
+		displayChange_page_2(status);
+	}
+	if ("3" == page) {
+		displayChange_page_3(status);
+	}
 }
 
 function displayChange_page_0(status) {
 	displayChange_block("0", status);
 	displayChange_block("1", status);
-	displayChange_block("2", status);
-	displayChange_block("3", status);
 }
 
 function displayChange_page_1(status) {
+	displayChange_block("2", status);
+}
+
+function displayChange_page_2(status) {
+	displayChange_block("3", status);
+}
+
+function displayChange_page_3(status) {
 	displayChange_block("4", status);
 }
 
@@ -528,6 +579,7 @@ function displayChange_block_1(status) {
 	displayChange_field("numero", "", status);
 	displayChange_field("bairro", "", status);
 	displayChange_field("cidade_idcidade", "", status);
+	displayChange_field("uf", "", status);
 }
 
 function displayChange_block_2(status) {
@@ -555,6 +607,7 @@ function displayChange_row(row, status) {
 	displayChange_field_numero(row, status);
 	displayChange_field_bairro(row, status);
 	displayChange_field_cidade_idcidade(row, status);
+	displayChange_field_uf(row, status);
 	displayChange_field_cliente_telefone(row, status);
 	displayChange_field_cliente_dependente(row, status);
 	displayChange_field_cliente_pet(row, status);
@@ -596,6 +649,9 @@ function displayChange_field(field, row, status) {
 	}
 	if ("cidade_idcidade" == field) {
 		displayChange_field_cidade_idcidade(row, status);
+	}
+	if ("uf" == field) {
+		displayChange_field_uf(row, status);
 	}
 	if ("cliente_telefone" == field) {
 		displayChange_field_cliente_telefone(row, status);
@@ -668,6 +724,22 @@ function displayChange_field_cidade_idcidade(row, status) {
 	}
 }
 
+function displayChange_field_uf(row, status) {
+    var fieldId;
+	if ("on" == status) {
+		if ("all" == row) {
+			var fieldList = $(".css_uf__obj");
+			for (var i = 0; i < fieldList.length; i++) {
+				$($(fieldList[i]).attr("id")).select2("destroy");
+			}
+		}
+		else {
+			$("#id_sc_field_uf" + row).select2("destroy");
+		}
+		scJQSelect2Add(row, "uf");
+	}
+}
+
 function displayChange_field_cliente_telefone(row, status) {
     var fieldId;
 	if ("on" == status && typeof $("#nmsc_iframe_liga_form_telefone")[0].contentWindow.scRecreateSelect2 === "function") {
@@ -691,6 +763,7 @@ function displayChange_field_cliente_pet(row, status) {
 
 function scRecreateSelect2() {
 	displayChange_field_cidade_idcidade("all", "on");
+	displayChange_field_uf("all", "on");
 }
 function scResetPagesDisplay() {
 	$(".sc-form-page").show();
@@ -919,6 +992,9 @@ function scJQSelect2Add(seqRow, specificField) {
   if (null == specificField || "cidade_idcidade" == specificField) {
     scJQSelect2Add_cidade_idcidade(seqRow);
   }
+  if (null == specificField || "uf" == specificField) {
+    scJQSelect2Add_uf(seqRow);
+  }
 } // scJQSelect2Add
 
 function scJQSelect2Add_cidade_idcidade(seqRow) {
@@ -927,6 +1003,24 @@ function scJQSelect2Add_cidade_idcidade(seqRow) {
     {
       containerCssClass: 'css_cidade_idcidade_obj',
       dropdownCssClass: 'css_cidade_idcidade_obj',
+      language: {
+        noResults: function() {
+          return "<?php echo $this->Ini->Nm_lang['lang_autocomp_notfound'] ?>";
+        },
+        searching: function() {
+          return "<?php echo $this->Ini->Nm_lang['lang_autocomp_searching'] ?>";
+        }
+      }
+    }
+  );
+} // scJQSelect2Add
+
+function scJQSelect2Add_uf(seqRow) {
+  var elemSelector = "all" == seqRow ? ".css_uf_obj" : "#id_sc_field_uf" + seqRow;
+  $(elemSelector).select2(
+    {
+      containerCssClass: 'css_uf_obj',
+      dropdownCssClass: 'css_uf_obj',
       language: {
         noResults: function() {
           return "<?php echo $this->Ini->Nm_lang['lang_autocomp_notfound'] ?>";
@@ -948,6 +1042,7 @@ function scJQElementsAdd(iLine) {
   scJQPasswordToggleAdd(iLine);
   scJQSelect2Add(iLine);
   setTimeout(function () { if ('function' == typeof displayChange_field_cidade_idcidade) { displayChange_field_cidade_idcidade(iLine, "on"); } }, 150);
+  setTimeout(function () { if ('function' == typeof displayChange_field_uf) { displayChange_field_uf(iLine, "on"); } }, 150);
 } // scJQElementsAdd
 
 function scGetFileExtension(fileName)

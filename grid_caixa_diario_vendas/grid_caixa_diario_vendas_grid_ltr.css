@@ -1,0 +1,18 @@
+.css_data_label {text-align:center;vertical-align:middle;justify-content:center;font-weight:bold;}
+.css_data_grid_line {vertical-align: top;text-align: center;}
+.css_idcliente_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_idcliente_grid_line {vertical-align: top;text-align: left;}
+.css_idforma_pagamento_label {text-align:left;vertical-align:middle;justify-content:left;font-weight:bold;}
+.css_idforma_pagamento_grid_line {vertical-align: top;text-align: left;}
+.css_entrada_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_entrada_grid_line {vertical-align: top;text-align: right;}
+.css_entrada_tot_ger {text-align: right;}
+.css_saida_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_saida_grid_line {vertical-align: top;text-align: right;}
+.css_saida_tot_ger {text-align: right;}
+.css_saldo_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_saldo_grid_line {text-align: right;}
+.css_idcaixa_diario_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_idcaixa_diario_grid_line {vertical-align: top;text-align: right;}
+.css_idconta_corrente_label {text-align:right;vertical-align:middle;justify-content:right;font-weight:bold;}
+.css_idconta_corrente_grid_line {vertical-align: top;text-align: right;}

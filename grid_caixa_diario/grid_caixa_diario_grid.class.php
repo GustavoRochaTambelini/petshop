@@ -3140,7 +3140,20 @@ if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_caixa_diario']['proc_pdf'
           $_SESSION['sc_session'][$this->Ini->sc_page]['grid_caixa_diario']['rows_emb']++;
           $this->sc_proc_grid = true;
           $_SESSION['scriptcase']['grid_caixa_diario']['contr_erro'] = 'on';
- $this->valor_total  = $this->valor_total  + ($this->entrada  - $this->saida );
+ 
+$v_entrada = trim($this->entrada );
+$v_saida = trim($this->saida );
+$v_valor_total= trim($this->valor_total );
+if((empty($v_saida) || is_null($v_saida))){
+	$v_saida = 0;
+}
+if((empty($v_entrada) || is_null($v_entrada))){
+	$v_entrada = 0;
+}
+if((empty($v_valor_total) || is_null($v_valor_total))){
+	$v_valor_total = 0;
+}
+ $this->valor_total  = $v_valor_total + ($v_entrada - $v_saida);
 $_SESSION['scriptcase']['grid_caixa_diario']['contr_erro'] = 'off';
           if (!$_SESSION['sc_session'][$this->Ini->sc_page]['grid_caixa_diario']['proc_pdf'])
           {

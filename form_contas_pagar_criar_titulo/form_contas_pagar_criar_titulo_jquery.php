@@ -56,7 +56,6 @@ function scEventControl_init(iSeqRow) {
   scEventControl_data["competencia" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["valor_a_pagar" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["idforma_pagamento_prevista" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
-  scEventControl_data["idgrupo_contas" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["idtipo_contas" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["nota_fiscal" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
   scEventControl_data["data_emissao" + iSeqRow] = {"blur": false, "change": false, "autocomp": false, "original": "", "calculated": ""};
@@ -99,12 +98,6 @@ function scEventControl_active(iSeqRow) {
     return true;
   }
   if (scEventControl_data["idforma_pagamento_prevista" + iSeqRow]["change"]) {
-    return true;
-  }
-  if (scEventControl_data["idgrupo_contas" + iSeqRow]["blur"]) {
-    return true;
-  }
-  if (scEventControl_data["idgrupo_contas" + iSeqRow]["change"]) {
     return true;
   }
   if (scEventControl_data["idtipo_contas" + iSeqRow]["blur"]) {
@@ -187,9 +180,6 @@ function scEventControl_onFocus(oField, iSeq) {
   if ("idforma_pagamento_prevista" + iSeq == fieldName) {
     scEventControl_data[fieldName]["blur"] = false;
   }
-  if ("idgrupo_contas" + iSeq == fieldName) {
-    scEventControl_data[fieldName]["blur"] = false;
-  }
   if ("idtipo_contas" + iSeq == fieldName) {
     scEventControl_data[fieldName]["blur"] = false;
   }
@@ -197,6 +187,9 @@ function scEventControl_onFocus(oField, iSeq) {
     scEventControl_data[fieldName]["blur"] = false;
   }
   if ("idforma_pagamento" + iSeq == fieldName) {
+    scEventControl_data[fieldName]["blur"] = false;
+  }
+  if ("idgrupo_contas" + iSeq == fieldName) {
     scEventControl_data[fieldName]["blur"] = false;
   }
   if ("pago" + iSeq == fieldName) {
@@ -241,9 +234,7 @@ function scJQEventsAdd(iSeqRow) {
   $('#id_sc_field_idtipo_contas' + iSeqRow).bind('blur', function() { sc_form_contas_pagar_criar_titulo_idtipo_contas_onblur(this, iSeqRow) })
                                            .bind('change', function() { sc_form_contas_pagar_criar_titulo_idtipo_contas_onchange(this, iSeqRow) })
                                            .bind('focus', function() { sc_form_contas_pagar_criar_titulo_idtipo_contas_onfocus(this, iSeqRow) });
-  $('#id_sc_field_idgrupo_contas' + iSeqRow).bind('blur', function() { sc_form_contas_pagar_criar_titulo_idgrupo_contas_onblur(this, iSeqRow) })
-                                            .bind('change', function() { sc_form_contas_pagar_criar_titulo_idgrupo_contas_onchange(this, iSeqRow) })
-                                            .bind('focus', function() { sc_form_contas_pagar_criar_titulo_idgrupo_contas_onfocus(this, iSeqRow) });
+  $('#id_sc_field_idgrupo_contas' + iSeqRow).bind('change', function() { sc_form_contas_pagar_criar_titulo_idgrupo_contas_onchange(this, iSeqRow) });
   $('#id_sc_field_idbaixa_conta_corrente' + iSeqRow).bind('change', function() { sc_form_contas_pagar_criar_titulo_idbaixa_conta_corrente_onchange(this, iSeqRow) });
   $('#id_sc_field_valor_a_pagar' + iSeqRow).bind('blur', function() { sc_form_contas_pagar_criar_titulo_valor_a_pagar_onblur(this, iSeqRow) })
                                            .bind('change', function() { sc_form_contas_pagar_criar_titulo_valor_a_pagar_onchange(this, iSeqRow) })
@@ -352,19 +343,8 @@ function sc_form_contas_pagar_criar_titulo_idtipo_contas_onfocus(oThis, iSeqRow)
   scCssFocus(oThis);
 }
 
-function sc_form_contas_pagar_criar_titulo_idgrupo_contas_onblur(oThis, iSeqRow) {
-  do_ajax_form_contas_pagar_criar_titulo_validate_idgrupo_contas();
-  scCssBlur(oThis);
-}
-
 function sc_form_contas_pagar_criar_titulo_idgrupo_contas_onchange(oThis, iSeqRow) {
   scMarkFormAsChanged();
-  do_ajax_form_contas_pagar_criar_titulo_refresh_idgrupo_contas();
-}
-
-function sc_form_contas_pagar_criar_titulo_idgrupo_contas_onfocus(oThis, iSeqRow) {
-  scEventControl_onFocus(oThis, iSeqRow);
-  scCssFocus(oThis);
 }
 
 function sc_form_contas_pagar_criar_titulo_idbaixa_conta_corrente_onchange(oThis, iSeqRow) {
@@ -591,7 +571,6 @@ function displayChange_block_0(status) {
 
 function displayChange_block_1(status) {
 	displayChange_field("idforma_pagamento_prevista", "", status);
-	displayChange_field("idgrupo_contas", "", status);
 	displayChange_field("idtipo_contas", "", status);
 	displayChange_field("nota_fiscal", "", status);
 }
@@ -620,7 +599,6 @@ function displayChange_row(row, status) {
 	displayChange_field_competencia(row, status);
 	displayChange_field_valor_a_pagar(row, status);
 	displayChange_field_idforma_pagamento_prevista(row, status);
-	displayChange_field_idgrupo_contas(row, status);
 	displayChange_field_idtipo_contas(row, status);
 	displayChange_field_nota_fiscal(row, status);
 	displayChange_field_data_emissao(row, status);
@@ -649,9 +627,6 @@ function displayChange_field(field, row, status) {
 	}
 	if ("idforma_pagamento_prevista" == field) {
 		displayChange_field_idforma_pagamento_prevista(row, status);
-	}
-	if ("idgrupo_contas" == field) {
-		displayChange_field_idgrupo_contas(row, status);
 	}
 	if ("idtipo_contas" == field) {
 		displayChange_field_idtipo_contas(row, status);
@@ -732,22 +707,6 @@ function displayChange_field_idforma_pagamento_prevista(row, status) {
 	}
 }
 
-function displayChange_field_idgrupo_contas(row, status) {
-    var fieldId;
-	if ("on" == status) {
-		if ("all" == row) {
-			var fieldList = $(".css_idgrupo_contas__obj");
-			for (var i = 0; i < fieldList.length; i++) {
-				$($(fieldList[i]).attr("id")).select2("destroy");
-			}
-		}
-		else {
-			$("#id_sc_field_idgrupo_contas" + row).select2("destroy");
-		}
-		scJQSelect2Add(row, "idgrupo_contas");
-	}
-}
-
 function displayChange_field_idtipo_contas(row, status) {
     var fieldId;
 }
@@ -795,7 +754,6 @@ function displayChange_field_observacao(row, status) {
 function scRecreateSelect2() {
 	displayChange_field_idcliente("all", "on");
 	displayChange_field_idforma_pagamento_prevista("all", "on");
-	displayChange_field_idgrupo_contas("all", "on");
 }
 function scResetPagesDisplay() {
 	$(".sc-form-page").show();
@@ -1259,11 +1217,11 @@ function scJQSelect2Add(seqRow, specificField) {
   if (null == specificField || "idforma_pagamento_prevista" == specificField) {
     scJQSelect2Add_idforma_pagamento_prevista(seqRow);
   }
-  if (null == specificField || "idgrupo_contas" == specificField) {
-    scJQSelect2Add_idgrupo_contas(seqRow);
-  }
   if (null == specificField || "idforma_pagamento" == specificField) {
     scJQSelect2Add_idforma_pagamento(seqRow);
+  }
+  if (null == specificField || "idgrupo_contas" == specificField) {
+    scJQSelect2Add_idgrupo_contas(seqRow);
   }
 } // scJQSelect2Add
 
@@ -1303,12 +1261,12 @@ function scJQSelect2Add_idforma_pagamento_prevista(seqRow) {
   );
 } // scJQSelect2Add
 
-function scJQSelect2Add_idgrupo_contas(seqRow) {
-  var elemSelector = "all" == seqRow ? ".css_idgrupo_contas_obj" : "#id_sc_field_idgrupo_contas" + seqRow;
+function scJQSelect2Add_idforma_pagamento(seqRow) {
+  var elemSelector = "all" == seqRow ? ".css_idforma_pagamento_obj" : "#id_sc_field_idforma_pagamento" + seqRow;
   $(elemSelector).select2(
     {
-      containerCssClass: 'css_idgrupo_contas_obj',
-      dropdownCssClass: 'css_idgrupo_contas_obj',
+      containerCssClass: 'css_idforma_pagamento_obj',
+      dropdownCssClass: 'css_idforma_pagamento_obj',
       language: {
         noResults: function() {
           return "<?php echo $this->Ini->Nm_lang['lang_autocomp_notfound'] ?>";
@@ -1321,12 +1279,12 @@ function scJQSelect2Add_idgrupo_contas(seqRow) {
   );
 } // scJQSelect2Add
 
-function scJQSelect2Add_idforma_pagamento(seqRow) {
-  var elemSelector = "all" == seqRow ? ".css_idforma_pagamento_obj" : "#id_sc_field_idforma_pagamento" + seqRow;
+function scJQSelect2Add_idgrupo_contas(seqRow) {
+  var elemSelector = "all" == seqRow ? ".css_idgrupo_contas_obj" : "#id_sc_field_idgrupo_contas" + seqRow;
   $(elemSelector).select2(
     {
-      containerCssClass: 'css_idforma_pagamento_obj',
-      dropdownCssClass: 'css_idforma_pagamento_obj',
+      containerCssClass: 'css_idgrupo_contas_obj',
+      dropdownCssClass: 'css_idgrupo_contas_obj',
       language: {
         noResults: function() {
           return "<?php echo $this->Ini->Nm_lang['lang_autocomp_notfound'] ?>";
@@ -1350,8 +1308,8 @@ function scJQElementsAdd(iLine) {
   scJQSelect2Add(iLine);
   setTimeout(function () { if ('function' == typeof displayChange_field_idcliente) { displayChange_field_idcliente(iLine, "on"); } }, 150);
   setTimeout(function () { if ('function' == typeof displayChange_field_idforma_pagamento_prevista) { displayChange_field_idforma_pagamento_prevista(iLine, "on"); } }, 150);
-  setTimeout(function () { if ('function' == typeof displayChange_field_idgrupo_contas) { displayChange_field_idgrupo_contas(iLine, "on"); } }, 150);
   setTimeout(function () { if ('function' == typeof displayChange_field_idforma_pagamento) { displayChange_field_idforma_pagamento(iLine, "on"); } }, 150);
+  setTimeout(function () { if ('function' == typeof displayChange_field_idgrupo_contas) { displayChange_field_idgrupo_contas(iLine, "on"); } }, 150);
 } // scJQElementsAdd
 
 function scGetFileExtension(fileName)

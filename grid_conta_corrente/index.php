@@ -225,8 +225,8 @@ class grid_conta_corrente_ini
       $this->nm_dt_criacao   = "20220819"; 
       $this->nm_hr_criacao   = "171359"; 
       $this->nm_autor_alt    = "admin"; 
-      $this->nm_dt_ult_alt   = "20220827"; 
-      $this->nm_hr_ult_alt   = "154301"; 
+      $this->nm_dt_ult_alt   = "20220829"; 
+      $this->nm_hr_ult_alt   = "225902"; 
       $this->Apl_paginacao   = "PARCIAL"; 
       $temp_bug_list         = explode(" ", microtime()); 
       list($NM_usec, $NM_sec) = $temp_bug_list; 
@@ -527,6 +527,25 @@ class grid_conta_corrente_ini
       }
       $this->sc_lig_target["C_@scinf_descricao"] = '_self';
       $this->sc_lig_target["C_@scinf_descricao_@scinf_form_conta_corrente_detalhe"] = '_self';
+      $Tmp_apl_lig = "form_caixa_diario_vendas";
+      if (is_file($this->root . $this->path_link . "_lib/friendly_url/form_caixa_diario_vendas_ini.txt"))
+      {
+          $Friendly = file($this->root . $this->path_link . "_lib/friendly_url/form_caixa_diario_vendas_ini.txt");
+          if (isset($Friendly[0]) && !empty($Friendly[0]))
+          {
+              $Tmp_apl_lig = trim($Friendly[0]);
+          }
+      }
+      if (is_file($this->root . $this->path_link . $Tmp_apl_lig . "/form_caixa_diario_vendas_ini.txt"))
+      {
+          $L_md5 = file($this->root . $this->path_link . $Tmp_apl_lig . "/form_caixa_diario_vendas_ini.txt");
+          if (isset($L_md5[6]) && trim($L_md5[6]) == "LigMd5")
+          {
+              $this->sc_lig_md5["form_caixa_diario_vendas"] = 'S';
+          }
+      }
+      $this->sc_lig_target["B_@scinf_caixa_diario"] = '_self';
+      $this->sc_lig_target["B_@scinf_caixa_diario_@scinf_form_caixa_diario_vendas"] = '_self';
       if ($_SESSION['sc_session'][$this->sc_page]['grid_conta_corrente']['dashboard_info']['under_dashboard'])
       {
           $sTmpDashboardApp = $_SESSION['sc_session'][$this->sc_page]['grid_conta_corrente']['dashboard_info']['dashboard_app'];
@@ -817,6 +836,17 @@ class grid_conta_corrente_ini
       { 
           $_SESSION['scriptcase']['sc_num_img'] = 1;
       } 
+      $this->arr_buttons_usr = array();
+
+      $this->arr_buttons_usr['caixa_diario']['hint']             = "";
+      $this->arr_buttons_usr['caixa_diario']['type']             = "button";
+      $this->arr_buttons_usr['caixa_diario']['value']            = "CAIXA DIARIO";
+      $this->arr_buttons_usr['caixa_diario']['display']          = "text_fontawesomeicon";
+      $this->arr_buttons_usr['caixa_diario']['display_position'] = "text_right";
+      $this->arr_buttons_usr['caixa_diario']['style']            = "default";
+      $this->arr_buttons_usr['caixa_diario']['image']            = "";
+      $this->arr_buttons_usr['caixa_diario']['has_fa']            = "true";
+      $this->arr_buttons_usr['caixa_diario']['fontawesomeicon']            = "fas fa-dollar-sign";
       $this->str_google_fonts= isset($str_google_fonts)?$str_google_fonts:'';
       $this->regionalDefault();
       $this->Str_btn_grid    = trim($str_button) . "/" . trim($str_button) . $_SESSION['scriptcase']['reg_conf']['css_dir'] . ".php";
@@ -928,7 +958,7 @@ class grid_conta_corrente_ini
       $this->nm_ttf_chi  = array("zh_cn", "zh_hk", "ko");
       $_SESSION['sc_session'][$this->sc_page]['grid_conta_corrente']['seq_dir'] = 0; 
       $_SESSION['sc_session'][$this->sc_page]['grid_conta_corrente']['sub_dir'] = array(); 
-      $_SESSION['scriptcase']['nm_bases_security']  = "enc_nm_enc_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";
+      $_SESSION['scriptcase']['nm_bases_security']  = "enc_nm_enc_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";
       $this->prep_conect();
       $this->conectDB();
       if (!in_array(strtolower($this->nm_tpbanco), $this->nm_bases_all))

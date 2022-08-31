@@ -1850,45 +1850,45 @@ else
 
 
    <?php
-   if (!isset($this->nm_new_label['idgrupo_contas']))
+   if (!isset($this->nm_new_label['idtipo_contas']))
    {
-       $this->nm_new_label['idgrupo_contas'] = "GRUPO DE CONTAS";
+       $this->nm_new_label['idtipo_contas'] = "TIPO DE CONTAS";
    }
    $nm_cor_fun_cel  = (isset($nm_cor_fun_cel) && $nm_cor_fun_cel  == $this->Ini->cor_grid_impar ? $this->Ini->cor_grid_par : $this->Ini->cor_grid_impar);
    $nm_img_fun_cel  = (isset($nm_img_fun_cel) && $nm_img_fun_cel  == $this->Ini->img_fun_imp    ? $this->Ini->img_fun_par  : $this->Ini->img_fun_imp);
-   $idgrupo_contas = $this->idgrupo_contas;
-   $sStyleHidden_idgrupo_contas = '';
-   if (isset($this->nmgp_cmp_hidden['idgrupo_contas']) && $this->nmgp_cmp_hidden['idgrupo_contas'] == 'off')
+   $idtipo_contas = $this->idtipo_contas;
+   $sStyleHidden_idtipo_contas = '';
+   if (isset($this->nmgp_cmp_hidden['idtipo_contas']) && $this->nmgp_cmp_hidden['idtipo_contas'] == 'off')
    {
-       unset($this->nmgp_cmp_hidden['idgrupo_contas']);
-       $sStyleHidden_idgrupo_contas = 'display: none;';
+       unset($this->nmgp_cmp_hidden['idtipo_contas']);
+       $sStyleHidden_idtipo_contas = 'display: none;';
    }
    $bTestReadOnly = true;
-   $sStyleReadLab_idgrupo_contas = 'display: none;';
-   $sStyleReadInp_idgrupo_contas = '';
-   if (/*$this->nmgp_opcao != "novo" && */isset($this->nmgp_cmp_readonly['idgrupo_contas']) && $this->nmgp_cmp_readonly['idgrupo_contas'] == 'on')
+   $sStyleReadLab_idtipo_contas = 'display: none;';
+   $sStyleReadInp_idtipo_contas = '';
+   if (/*$this->nmgp_opcao != "novo" && */isset($this->nmgp_cmp_readonly['idtipo_contas']) && $this->nmgp_cmp_readonly['idtipo_contas'] == 'on')
    {
        $bTestReadOnly = false;
-       unset($this->nmgp_cmp_readonly['idgrupo_contas']);
-       $sStyleReadLab_idgrupo_contas = '';
-       $sStyleReadInp_idgrupo_contas = 'display: none;';
+       unset($this->nmgp_cmp_readonly['idtipo_contas']);
+       $sStyleReadLab_idtipo_contas = '';
+       $sStyleReadInp_idtipo_contas = 'display: none;';
    }
 ?>
-<?php if (isset($this->nmgp_cmp_hidden['idgrupo_contas']) && $this->nmgp_cmp_hidden['idgrupo_contas'] == 'off') { $sc_hidden_yes++; ?>
-<input type=hidden name="idgrupo_contas" value="<?php echo $this->form_encode_input($this->idgrupo_contas) . "\">"; ?>
+<?php if (isset($this->nmgp_cmp_hidden['idtipo_contas']) && $this->nmgp_cmp_hidden['idtipo_contas'] == 'off') { $sc_hidden_yes++; ?>
+<input type=hidden name="idtipo_contas" value="<?php echo $this->form_encode_input($this->idtipo_contas) . "\">"; ?>
 <?php } else { $sc_hidden_no++; ?>
 
-    <TD class="scFormDataOdd css_idgrupo_contas_line" id="hidden_field_data_idgrupo_contas" style="<?php echo $sStyleHidden_idgrupo_contas; ?>"> <table style="border-width: 0px; border-collapse: collapse; width: 100%"><tr><td  class="scFormDataFontOdd css_idgrupo_contas_line" style="vertical-align: top;padding: 0px"><span class="scFormLabelOddFormat css_idgrupo_contas_label" style=""><span id="id_label_idgrupo_contas"><?php echo $this->nm_new_label['idgrupo_contas']; ?></span><?php if (!isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['php_cmp_required']['idgrupo_contas']) || $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['php_cmp_required']['idgrupo_contas'] == "on") { ?> <span class="scFormRequiredOdd">*</span> <?php }?></span><br>
-<?php if ($bTestReadOnly && $this->nmgp_opcao != "novo" && isset($this->nmgp_cmp_readonly["idgrupo_contas"]) &&  $this->nmgp_cmp_readonly["idgrupo_contas"] == "on") { 
+    <TD class="scFormDataOdd css_idtipo_contas_line" id="hidden_field_data_idtipo_contas" style="<?php echo $sStyleHidden_idtipo_contas; ?>"> <table style="border-width: 0px; border-collapse: collapse; width: 100%"><tr><td  class="scFormDataFontOdd css_idtipo_contas_line" style="vertical-align: top;padding: 0px"><span class="scFormLabelOddFormat css_idtipo_contas_label" style=""><span id="id_label_idtipo_contas"><?php echo $this->nm_new_label['idtipo_contas']; ?></span><?php if (!isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['php_cmp_required']['idtipo_contas']) || $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['php_cmp_required']['idtipo_contas'] == "on") { ?> <span class="scFormRequiredOdd">*</span> <?php }?></span><br>
+<?php if ($bTestReadOnly && $this->nmgp_opcao != "novo" && isset($this->nmgp_cmp_readonly["idtipo_contas"]) &&  $this->nmgp_cmp_readonly["idtipo_contas"] == "on") { 
  
 $nmgp_def_dados = "" ; 
-if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idgrupo_contas']))
+if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idtipo_contas']))
 {
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idgrupo_contas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idgrupo_contas']); 
+    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idtipo_contas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idtipo_contas']); 
 }
 else
 {
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idgrupo_contas'] = array(); 
+    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idtipo_contas'] = array(); 
 }
    if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
    { 
@@ -1896,13 +1896,13 @@ else
    } 
    $nm_nao_carga = false;
    $nmgp_def_dados = "" ; 
-   if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idgrupo_contas']))
+   if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idtipo_contas']))
    {
-       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idgrupo_contas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idgrupo_contas']); 
+       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idtipo_contas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idtipo_contas']); 
    }
    else
    {
-       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idgrupo_contas'] = array(); 
+       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idtipo_contas'] = array(); 
     }
 
    $old_value_idcontas_pagar = $this->idcontas_pagar;
@@ -1989,216 +1989,7 @@ else
           $sc_field_4_val_str .= "'$Tmp_val_cmp'";
        }
    }
-   $nm_comando = "SELECT idgrupo_contas, descricao  FROM grupo_contas  ORDER BY descricao";
-
-   $this->idcontas_pagar = $old_value_idcontas_pagar;
-   $this->competencia = $old_value_competencia;
-   $this->valor_a_pagar = $old_value_valor_a_pagar;
-   $this->nota_fiscal = $old_value_nota_fiscal;
-   $this->data_emissao = $old_value_data_emissao;
-   $this->data_vencimanto = $old_value_data_vencimanto;
-   $this->sc_field_3 = $old_value_sc_field_3;
-   $this->sc_field_2 = $old_value_sc_field_2;
-
-   $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
-   $_SESSION['scriptcase']['sc_sql_ult_conexao'] = '';
-   if ($nm_comando != "" && $rs = $this->Db->Execute($nm_comando))
-   {
-       while (!$rs->EOF) 
-       { 
-              $rs->fields[0] = str_replace(',', '.', $rs->fields[0]);
-              $rs->fields[0] = (strpos(strtolower($rs->fields[0]), "e")) ? (float)$rs->fields[0] : $rs->fields[0];
-              $rs->fields[0] = (string)$rs->fields[0];
-              $nmgp_def_dados .= $rs->fields[1] . "?#?" ; 
-              $nmgp_def_dados .= $rs->fields[0] . "?#?N?@?" ; 
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idgrupo_contas'][] = $rs->fields[0];
-              $rs->MoveNext() ; 
-       } 
-       $rs->Close() ; 
-   } 
-   elseif ($GLOBALS["NM_ERRO_IBASE"] != 1 && $nm_comando != "")  
-   {  
-       $this->Erro->mensagem(__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dber'], $this->Db->ErrorMsg()); 
-       exit; 
-   } 
-   $GLOBALS["NM_ERRO_IBASE"] = 0; 
-   $x = 0; 
-   $idgrupo_contas_look = ""; 
-   $todox = str_replace("?#?@?#?", "?#?@ ?#?", trim($nmgp_def_dados)) ; 
-   $todo  = explode("?@?", $todox) ; 
-   while (!empty($todo[$x])) 
-   {
-          $cadaselect = explode("?#?", $todo[$x]) ; 
-          if ($cadaselect[1] == "@ ") {$cadaselect[1]= trim($cadaselect[1]); } ; 
-          if (isset($this->Embutida_ronly) && $this->Embutida_ronly && isset($this->idgrupo_contas_1))
-          {
-              foreach ($this->idgrupo_contas_1 as $tmp_idgrupo_contas)
-              {
-                  if (trim($tmp_idgrupo_contas) === trim($cadaselect[1])) { $idgrupo_contas_look .= $cadaselect[0] . '__SC_BREAK_LINE__'; }
-              }
-          }
-          elseif (trim($this->idgrupo_contas) === trim($cadaselect[1])) { $idgrupo_contas_look .= $cadaselect[0]; } 
-          $x++; 
-   }
-
-?>
-<input type="hidden" name="idgrupo_contas" value="<?php echo $this->form_encode_input($idgrupo_contas) . "\">" . $idgrupo_contas_look . ""; ?>
-<?php } else { ?>
-<?php
-   $todo = $this->Form_lookup_idgrupo_contas();
-   $x = 0 ; 
-   $idgrupo_contas_look = ""; 
-   while (!empty($todo[$x])) 
-   {
-          $cadaselect = explode("?#?", $todo[$x]) ; 
-          if ($cadaselect[1] == "@ ") {$cadaselect[1]= trim($cadaselect[1]); } ; 
-          if (isset($this->Embutida_ronly) && $this->Embutida_ronly && isset($this->idgrupo_contas_1))
-          {
-              foreach ($this->idgrupo_contas_1 as $tmp_idgrupo_contas)
-              {
-                  if (trim($tmp_idgrupo_contas) === trim($cadaselect[1])) { $idgrupo_contas_look .= $cadaselect[0] . '__SC_BREAK_LINE__'; }
-              }
-          }
-          elseif (trim($this->idgrupo_contas) === trim($cadaselect[1])) { $idgrupo_contas_look .= $cadaselect[0]; } 
-          $x++; 
-   }
-          if (empty($idgrupo_contas_look))
-          {
-              $idgrupo_contas_look = $this->idgrupo_contas;
-          }
-   $x = 0; 
-   echo "<span id=\"id_read_on_idgrupo_contas\" class=\"css_idgrupo_contas_line\" style=\"" .  $sStyleReadLab_idgrupo_contas . "\">" . $this->form_format_readonly("idgrupo_contas", $this->form_encode_input($idgrupo_contas_look)) . "</span><span id=\"id_read_off_idgrupo_contas\" class=\"css_read_off_idgrupo_contas" . $this->classes_100perc_fields['span_input'] . "\" style=\"white-space: nowrap; " . $sStyleReadInp_idgrupo_contas . "\">";
-   echo " <span id=\"idAjaxSelect_idgrupo_contas\" class=\"" . $this->classes_100perc_fields['span_select'] . "\"><select class=\"sc-js-input scFormObjectOdd css_idgrupo_contas_obj" . $this->classes_100perc_fields['input'] . "\" style=\"\" id=\"id_sc_field_idgrupo_contas\" name=\"idgrupo_contas\" size=\"1\" alt=\"{type: 'select', enterTab: false}\">" ; 
-   echo "\r" ; 
-   $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idgrupo_contas'][] = ''; 
-   echo "  <option value=\"\">" . str_replace("<", "&lt;"," ") . "</option>" ; 
-   while (!empty($todo[$x]) && !$nm_nao_carga) 
-   {
-          $cadaselect = explode("?#?", $todo[$x]) ; 
-          if ($cadaselect[1] == "@ ") {$cadaselect[1]= trim($cadaselect[1]); } ; 
-          echo "  <option value=\"$cadaselect[1]\"" ; 
-          if (trim($this->idgrupo_contas) === trim($cadaselect[1])) 
-          {
-              echo " selected" ; 
-          }
-          if (strtoupper($cadaselect[2]) == "S") 
-          {
-              if (empty($this->idgrupo_contas)) 
-              {
-                  echo " selected" ;
-              } 
-           } 
-          echo ">" . str_replace('<', '&lt;',$cadaselect[0]) . "</option>" ; 
-          echo "\r" ; 
-          $x++ ; 
-   }  ; 
-   echo " </select></span>" ; 
-   echo "\r" ; 
-   echo "</span>";
-?> 
-<?php  }?>
-</td></tr><tr><td style="vertical-align: top; padding: 0"><table class="scFormFieldErrorTable" style="display: none" id="id_error_display_idgrupo_contas_frame"><tr><td class="scFormFieldErrorMessage"><span id="id_error_display_idgrupo_contas_text"></span></td></tr></table></td></tr></table> </TD>
-   <?php }?>
-
-
-
-
-
-<?php if ($sc_hidden_yes > 0 && $sc_hidden_no > 0) { ?>
-
-
-    <TD class="scFormDataOdd" colspan="<?php echo $sc_hidden_yes * 1; ?>" >&nbsp;</TD>
-
-
-
-
-<?php } 
-?> 
-<?php if ($sc_hidden_no > 0) { echo "<tr>"; }; 
-      $sc_hidden_yes = 0; $sc_hidden_no = 0; ?>
-
-
-   <?php
-   if (!isset($this->nm_new_label['idtipo_contas']))
-   {
-       $this->nm_new_label['idtipo_contas'] = "TIPO DE CONTAS";
-   }
-   $nm_cor_fun_cel  = (isset($nm_cor_fun_cel) && $nm_cor_fun_cel  == $this->Ini->cor_grid_impar ? $this->Ini->cor_grid_par : $this->Ini->cor_grid_impar);
-   $nm_img_fun_cel  = (isset($nm_img_fun_cel) && $nm_img_fun_cel  == $this->Ini->img_fun_imp    ? $this->Ini->img_fun_par  : $this->Ini->img_fun_imp);
-   $idtipo_contas = $this->idtipo_contas;
-   $sStyleHidden_idtipo_contas = '';
-   if (isset($this->nmgp_cmp_hidden['idtipo_contas']) && $this->nmgp_cmp_hidden['idtipo_contas'] == 'off')
-   {
-       unset($this->nmgp_cmp_hidden['idtipo_contas']);
-       $sStyleHidden_idtipo_contas = 'display: none;';
-   }
-   $bTestReadOnly = true;
-   $sStyleReadLab_idtipo_contas = 'display: none;';
-   $sStyleReadInp_idtipo_contas = '';
-   if (/*$this->nmgp_opcao != "novo" && */isset($this->nmgp_cmp_readonly['idtipo_contas']) && $this->nmgp_cmp_readonly['idtipo_contas'] == 'on')
-   {
-       $bTestReadOnly = false;
-       unset($this->nmgp_cmp_readonly['idtipo_contas']);
-       $sStyleReadLab_idtipo_contas = '';
-       $sStyleReadInp_idtipo_contas = 'display: none;';
-   }
-?>
-<?php if (isset($this->nmgp_cmp_hidden['idtipo_contas']) && $this->nmgp_cmp_hidden['idtipo_contas'] == 'off') { $sc_hidden_yes++; ?>
-<input type=hidden name="idtipo_contas" value="<?php echo $this->form_encode_input($this->idtipo_contas) . "\">"; ?>
-<?php } else { $sc_hidden_no++; ?>
-
-    <TD class="scFormDataOdd css_idtipo_contas_line" id="hidden_field_data_idtipo_contas" style="<?php echo $sStyleHidden_idtipo_contas; ?>"> <table style="border-width: 0px; border-collapse: collapse; width: 100%"><tr><td  class="scFormDataFontOdd css_idtipo_contas_line" style="vertical-align: top;padding: 0px"><span class="scFormLabelOddFormat css_idtipo_contas_label" style=""><span id="id_label_idtipo_contas"><?php echo $this->nm_new_label['idtipo_contas']; ?></span><?php if (!isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['php_cmp_required']['idtipo_contas']) || $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['php_cmp_required']['idtipo_contas'] == "on") { ?> <span class="scFormRequiredOdd">*</span> <?php }?></span><br>
-<?php if ($bTestReadOnly && $this->nmgp_opcao != "novo" && isset($this->nmgp_cmp_readonly["idtipo_contas"]) &&  $this->nmgp_cmp_readonly["idtipo_contas"] == "on") { 
- 
-$nmgp_def_dados = "" ; 
-if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idtipo_contas']))
-{
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idtipo_contas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idtipo_contas']); 
-}
-else
-{
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idtipo_contas'] = array(); 
-}
-if ($this->idgrupo_contas != "")
-{ 
-   $this->nm_clear_val("idgrupo_contas");
-   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
-   { 
-       $GLOBALS["NM_ERRO_IBASE"] = 1;  
-   } 
-   $nm_nao_carga = false;
-   $nmgp_def_dados = "" ; 
-   if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idtipo_contas']))
-   {
-       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idtipo_contas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idtipo_contas']); 
-   }
-   else
-   {
-       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_titulo_mob']['Lookup_idtipo_contas'] = array(); 
-    }
-
-   $old_value_idcontas_pagar = $this->idcontas_pagar;
-   $old_value_competencia = $this->competencia;
-   $old_value_valor_a_pagar = $this->valor_a_pagar;
-   $old_value_nota_fiscal = $this->nota_fiscal;
-   $old_value_data_emissao = $this->data_emissao;
-   $old_value_data_vencimanto = $this->data_vencimanto;
-   $old_value_sc_field_3 = $this->sc_field_3;
-   $old_value_sc_field_2 = $this->sc_field_2;
-   $this->nm_tira_formatacao();
-   $this->nm_converte_datas(false);
-
-
-   $unformatted_value_idcontas_pagar = $this->idcontas_pagar;
-   $unformatted_value_competencia = $this->competencia;
-   $unformatted_value_valor_a_pagar = $this->valor_a_pagar;
-   $unformatted_value_nota_fiscal = $this->nota_fiscal;
-   $unformatted_value_data_emissao = $this->data_emissao;
-   $unformatted_value_data_vencimanto = $this->data_vencimanto;
-   $unformatted_value_sc_field_3 = $this->sc_field_3;
-   $unformatted_value_sc_field_2 = $this->sc_field_2;
-
-   $nm_comando = "SELECT idtipo_contas, descricao  FROM tipo_contas  WHERE idgrupo_contas = $this->idgrupo_contas ORDER BY descricao";
+   $nm_comando = "SELECT idtipo_contas, descricao  FROM tipo_contas ORDER BY descricao";
 
    $this->idcontas_pagar = $old_value_idcontas_pagar;
    $this->competencia = $old_value_competencia;
@@ -2231,7 +2022,6 @@ if ($this->idgrupo_contas != "")
        exit; 
    } 
    $GLOBALS["NM_ERRO_IBASE"] = 0; 
-} 
    $x = 0; 
    $idtipo_contas_look = ""; 
    $todox = str_replace("?#?@?#?", "?#?@ ?#?", trim($nmgp_def_dados)) ; 

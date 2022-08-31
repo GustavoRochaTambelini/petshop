@@ -333,6 +333,7 @@ class grid_conta_corrente_grid
    $this->nmgp_botoes['groupby'] = "on";
    $this->nmgp_botoes['gridsave'] = "on";
    $this->nmgp_botoes['gridsavesession'] = "on";
+   $this->nmgp_botoes['caixa_diario'] = "on";
    $this->Cmps_ord_def['idconta_corrente'] = " desc";
    $this->Cmps_ord_def['descricao'] = " asc";
    $this->Cmps_ord_def['ativo'] = " asc";
@@ -2049,6 +2050,7 @@ $nm_saida->saida("}\r\n");
    include($this->Ini->path_btn . $this->Ini->Str_btn_grid);
    if (!$_SESSION['sc_session'][$this->Ini->sc_page]['grid_conta_corrente']['embutida'])
    {
+       $this->arr_buttons = array_merge($this->arr_buttons, $this->Ini->arr_buttons_usr);
        $this->NM_css_val_embed = "sznmxizkjnvl";
        $this->NM_css_ajx_embed = "Ajax_res";
    }
@@ -4100,6 +4102,20 @@ if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_conta_corrente']['proc_pd
         }
           $nm_saida->saida("         </td> \r\n");
           $nm_saida->saida("          <td class=\"" . $this->css_scGridToolbarPadd . "\" nowrap valign=\"middle\" align=\"right\" width=\"33%\"> \r\n");
+      if (!$this->Ini->SC_Link_View && $this->nmgp_botoes['caixa_diario'] == "on" && !$this->grid_emb_form) 
+      { 
+          $this->nm_btn_exist['caixa_diario'][] = "sc_caixa_diario_top";
+           if (isset($this->Ini->sc_lig_md5["form_caixa_diario_vendas"]) && $this->Ini->sc_lig_md5["form_caixa_diario_vendas"] == "S") {
+               $Parms_Lig  = "script_case_init*scin" . NM_encode_input($this->Ini->sc_page) . "*scoutNM_btn_insert*scinS*scoutNM_btn_update*scinS*scoutNM_btn_delete*scinS*scoutNM_btn_navega*scinN*scout";
+               $Md5_Lig    = "@SC_par@" . NM_encode_input($this->Ini->sc_page) . "@SC_par@grid_conta_corrente@SC_par@" . md5($Parms_Lig);
+               $_SESSION['sc_session'][$this->Ini->sc_page]['grid_conta_corrente']['Lig_Md5'][md5($Parms_Lig)] = $Parms_Lig;
+           } else {
+               $Md5_Lig  = "script_case_init*scin" . NM_encode_input($this->Ini->sc_page) . "*scoutNM_btn_insert*scinS*scoutNM_btn_update*scinS*scoutNM_btn_delete*scinS*scoutNM_btn_navega*scinN*scout";
+           }
+          $Cod_Btn = nmButtonOutput($this->arr_buttons, "caixa_diario", "nm_gp_submit5('" .  $this->Ini->sc_protocolo . $this->Ini->server . $this->Ini->path_link  . "" .  SC_dir_app_name('form_caixa_diario_vendas')  . "/index.php', '$this->nm_location', '" .  $Md5_Lig  . "', '_self', '', '', '', '', 'form_caixa_diario_vendas');;", "nm_gp_submit5('" .  $this->Ini->sc_protocolo . $this->Ini->server . $this->Ini->path_link  . "" .  SC_dir_app_name('form_caixa_diario_vendas')  . "/index.php', '$this->nm_location', '" .  $Md5_Lig  . "', '_self', '', '', '', '', 'form_caixa_diario_vendas');;", "sc_caixa_diario_top", "", "CAIXA DIARIO", "", "absmiddle", "", "0px", $this->Ini->path_botoes, "", "", "", "", "", "only_text", "text_right", "", "", "", "", "", "", "");
+          $nm_saida->saida("          $Cod_Btn \r\n");
+          $NM_btn = true;
+      } 
           if (is_file("grid_conta_corrente_help.txt") && !$this->grid_emb_form)
           {
              $Arq_WebHelp = file("grid_conta_corrente_help.txt"); 
@@ -5612,6 +5628,10 @@ if ($_SESSION['sc_session'][$this->Ini->sc_page]['grid_conta_corrente']['proc_pd
    $nm_saida->saida("       css_tr        = class_obj;\r\n");
    $nm_saida->saida("       obj.className = '" . $this->css_scGridFieldClick . "';\r\n");
    $nm_saida->saida("   }\r\n");
+   $nm_saida->saida("   function caixa_diario() \r\n");
+   $nm_saida->saida("   { \r\n");
+   $nm_saida->saida("       \r\n");
+   $nm_saida->saida("   } \r\n");
    $nm_saida->saida("   var tem_hint;\r\n");
    $nm_saida->saida("   function nm_mostra_hint(nm_obj, nm_evt, nm_mens)\r\n");
    $nm_saida->saida("   {\r\n");

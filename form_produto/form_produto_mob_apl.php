@@ -78,6 +78,7 @@ class form_produto_mob_apl
    var $peso_liquido;
    var $tipo;
    var $tipo_1;
+   var $margem_lucro;
    var $nm_data;
    var $nmgp_opcao;
    var $nmgp_opc_ant;
@@ -178,6 +179,10 @@ class form_produto_mob_apl
           if (isset($this->NM_ajax_info['param']['idunidade']))
           {
               $this->idunidade = $this->NM_ajax_info['param']['idunidade'];
+          }
+          if (isset($this->NM_ajax_info['param']['margem_lucro']))
+          {
+              $this->margem_lucro = $this->NM_ajax_info['param']['margem_lucro'];
           }
           if (isset($this->NM_ajax_info['param']['nm_form_submit']))
           {
@@ -1137,6 +1142,7 @@ class form_produto_mob_apl
       if (isset($this->custo)) { $this->nm_limpa_alfa($this->custo); }
       if (isset($this->valor)) { $this->nm_limpa_alfa($this->valor); }
       if (isset($this->estoque_minimo)) { $this->nm_limpa_alfa($this->estoque_minimo); }
+      if (isset($this->margem_lucro)) { $this->nm_limpa_alfa($this->margem_lucro); }
       $Campos_Crit       = "";
       $Campos_erro       = "";
       $Campos_Falta      = array();
@@ -1177,6 +1183,13 @@ class form_produto_mob_apl
       $this->field_config['valor']['symbol_mon'] = '';
       $this->field_config['valor']['format_pos'] = $_SESSION['scriptcase']['reg_conf']['monet_f_pos'];
       $this->field_config['valor']['format_neg'] = $_SESSION['scriptcase']['reg_conf']['monet_f_neg'];
+      //-- margem_lucro
+      $this->field_config['margem_lucro']               = array();
+      $this->field_config['margem_lucro']['symbol_grp'] = $_SESSION['scriptcase']['reg_conf']['grup_num'];
+      $this->field_config['margem_lucro']['symbol_fmt'] = $_SESSION['scriptcase']['reg_conf']['num_group_digit'];
+      $this->field_config['margem_lucro']['symbol_dec'] = $_SESSION['scriptcase']['reg_conf']['dec_num'];
+      $this->field_config['margem_lucro']['symbol_neg'] = $_SESSION['scriptcase']['reg_conf']['simb_neg'];
+      $this->field_config['margem_lucro']['format_neg'] = $_SESSION['scriptcase']['reg_conf']['neg_num'];
       //-- estoque_minimo
       $this->field_config['estoque_minimo']               = array();
       $this->field_config['estoque_minimo']['symbol_grp'] = $_SESSION['scriptcase']['reg_conf']['grup_val'];
@@ -1249,6 +1262,10 @@ class form_produto_mob_apl
           {
               $this->Valida_campos($Campos_Crit, $Campos_Falta, $Campos_Erros, 'valor');
           }
+          if ('validate_margem_lucro' == $this->NM_ajax_opcao)
+          {
+              $this->Valida_campos($Campos_Crit, $Campos_Falta, $Campos_Erros, 'margem_lucro');
+          }
           if ('validate_estoque_minimo' == $this->NM_ajax_opcao)
           {
               $this->Valida_campos($Campos_Crit, $Campos_Falta, $Campos_Erros, 'estoque_minimo');
@@ -1276,6 +1293,20 @@ class form_produto_mob_apl
           if ('validate_foto' == $this->NM_ajax_opcao)
           {
               $this->Valida_campos($Campos_Crit, $Campos_Falta, $Campos_Erros, 'foto');
+          }
+          form_produto_mob_pack_ajax_response();
+          exit;
+      }
+      if ($this->NM_ajax_flag && 'event_' == substr($this->NM_ajax_opcao, 0, 6))
+      {
+          $this->nm_tira_formatacao();
+          if ('event_custo_onblur' == $this->NM_ajax_opcao)
+          {
+              $this->custo_onBlur();
+          }
+          if ('event_valor_onblur' == $this->NM_ajax_opcao)
+          {
+              $this->valor_onBlur();
           }
           form_produto_mob_pack_ajax_response();
           exit;
@@ -1800,6 +1831,9 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
            case 'valor':
                return "VALOR DE VENDA";
                break;
+           case 'margem_lucro':
+               return "MARGEM DE LUCRO (%)";
+               break;
            case 'estoque_minimo':
                return "ESTOQUE MINIMO";
                break;
@@ -1884,6 +1918,8 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
         $this->ValidateField_custo($Campos_Crit, $Campos_Falta, $Campos_Erros);
       if ((!is_array($filtro) && ('' == $filtro || 'valor' == $filtro)) || (is_array($filtro) && in_array('valor', $filtro)))
         $this->ValidateField_valor($Campos_Crit, $Campos_Falta, $Campos_Erros);
+      if ((!is_array($filtro) && ('' == $filtro || 'margem_lucro' == $filtro)) || (is_array($filtro) && in_array('margem_lucro', $filtro)))
+        $this->ValidateField_margem_lucro($Campos_Crit, $Campos_Falta, $Campos_Erros);
       if ((!is_array($filtro) && ('' == $filtro || 'estoque_minimo' == $filtro)) || (is_array($filtro) && in_array('estoque_minimo', $filtro)))
         $this->ValidateField_estoque_minimo($Campos_Crit, $Campos_Falta, $Campos_Erros);
       if ((!is_array($filtro) && ('' == $filtro || 'tipo' == $filtro)) || (is_array($filtro) && in_array('tipo', $filtro)))
@@ -1973,24 +2009,6 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
         global $teste_validade;
         $hasError = false;
       $this->referencia = sc_strtoupper($this->referencia); 
-      if ($this->nmgp_opcao != "excluir" && (!isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_produto_mob']['php_cmp_required']['referencia']) || $_SESSION['sc_session'][$this->Ini->sc_page]['form_produto_mob']['php_cmp_required']['referencia'] == "on")) 
-      { 
-          if ($this->referencia == "")  
-          { 
-              $hasError = true;
-              $Campos_Falta[] =  "REFERENCIA" ; 
-              if (!isset($Campos_Erros['referencia']))
-              {
-                  $Campos_Erros['referencia'] = array();
-              }
-              $Campos_Erros['referencia'][] = $this->Ini->Nm_lang['lang_errm_ajax_rqrd'];
-                  if (!isset($this->NM_ajax_info['errList']['referencia']) || !is_array($this->NM_ajax_info['errList']['referencia']))
-                  {
-                      $this->NM_ajax_info['errList']['referencia'] = array();
-                  }
-                  $this->NM_ajax_info['errList']['referencia'][] = $this->Ini->Nm_lang['lang_errm_ajax_rqrd'];
-          } 
-      } 
       if ($this->nmgp_opcao != "excluir") 
       { 
           if (NM_utf8_strlen($this->referencia) > 45) 
@@ -2246,6 +2264,77 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
             $this->NM_ajax_info['fieldsWithErrors'][] = $fieldName;
         }
     } // ValidateField_valor
+
+    function ValidateField_margem_lucro(&$Campos_Crit, &$Campos_Falta, &$Campos_Erros)
+    {
+        global $teste_validade;
+        $hasError = false;
+      if ($this->margem_lucro === "" || is_null($this->margem_lucro))  
+      { 
+          $this->margem_lucro = 0;
+          $this->sc_force_zero[] = 'margem_lucro';
+      } 
+      if (!empty($this->field_config['margem_lucro']['symbol_dec']))
+      {
+          nm_limpa_valor($this->margem_lucro, $this->field_config['margem_lucro']['symbol_dec'], $this->field_config['margem_lucro']['symbol_grp']) ; 
+          if ('.' == substr($this->margem_lucro, 0, 1))
+          {
+              if ('' == str_replace('0', '', substr($this->margem_lucro, 1)))
+              {
+                  $this->margem_lucro = '';
+              }
+              else
+              {
+                  $this->margem_lucro = '0' . $this->margem_lucro;
+              }
+          }
+      }
+      if ($this->nmgp_opcao != "excluir") 
+      { 
+          if ($this->margem_lucro != '')  
+          { 
+              $iTestSize = 16;
+              if (strlen($this->margem_lucro) > $iTestSize)  
+              { 
+                  $hasError = true;
+                  $Campos_Crit .= "MARGEM DE LUCRO (%): " . $this->Ini->Nm_lang['lang_errm_size']; 
+                  if (!isset($Campos_Erros['margem_lucro']))
+                  {
+                      $Campos_Erros['margem_lucro'] = array();
+                  }
+                  $Campos_Erros['margem_lucro'][] = $this->Ini->Nm_lang['lang_errm_size'];
+                  if (!isset($this->NM_ajax_info['errList']['margem_lucro']) || !is_array($this->NM_ajax_info['errList']['margem_lucro']))
+                  {
+                      $this->NM_ajax_info['errList']['margem_lucro'] = array();
+                  }
+                  $this->NM_ajax_info['errList']['margem_lucro'][] = $this->Ini->Nm_lang['lang_errm_size'];
+              } 
+              if ($teste_validade->Valor($this->margem_lucro, 12, 3, -0, 1.0E+15, "N") == false)  
+              { 
+                  $hasError = true;
+                  $Campos_Crit .= "MARGEM DE LUCRO (%); " ; 
+                  if (!isset($Campos_Erros['margem_lucro']))
+                  {
+                      $Campos_Erros['margem_lucro'] = array();
+                  }
+                  $Campos_Erros['margem_lucro'][] = "" . $this->Ini->Nm_lang['lang_errm_ajax_data'] . "";
+                  if (!isset($this->NM_ajax_info['errList']['margem_lucro']) || !is_array($this->NM_ajax_info['errList']['margem_lucro']))
+                  {
+                      $this->NM_ajax_info['errList']['margem_lucro'] = array();
+                  }
+                  $this->NM_ajax_info['errList']['margem_lucro'][] = "" . $this->Ini->Nm_lang['lang_errm_ajax_data'] . "";
+              } 
+          } 
+      } 
+        if ($hasError) {
+            global $sc_seq_vert;
+            $fieldName = 'margem_lucro';
+            if (isset($sc_seq_vert) && '' != $sc_seq_vert) {
+                $fieldName .= $sc_seq_vert;
+            }
+            $this->NM_ajax_info['fieldsWithErrors'][] = $fieldName;
+        }
+    } // ValidateField_margem_lucro
 
     function ValidateField_estoque_minimo(&$Campos_Crit, &$Campos_Falta, &$Campos_Erros)
     {
@@ -2623,6 +2712,7 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
     $this->nmgp_dados_form['descricao'] = $this->descricao;
     $this->nmgp_dados_form['custo'] = $this->custo;
     $this->nmgp_dados_form['valor'] = $this->valor;
+    $this->nmgp_dados_form['margem_lucro'] = $this->margem_lucro;
     $this->nmgp_dados_form['estoque_minimo'] = $this->estoque_minimo;
     $this->nmgp_dados_form['tipo'] = $this->tipo;
     $this->nmgp_dados_form['idgrupo'] = $this->idgrupo;
@@ -2656,6 +2746,11 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
       {
          $this->sc_remove_currency($this->valor, $this->field_config['valor']['symbol_dec'], $this->field_config['valor']['symbol_grp'], $this->field_config['valor']['symbol_mon']);
          nm_limpa_valor($this->valor, $this->field_config['valor']['symbol_dec'], $this->field_config['valor']['symbol_grp']);
+      }
+      $this->Before_unformat['margem_lucro'] = $this->margem_lucro;
+      if (!empty($this->field_config['margem_lucro']['symbol_dec']))
+      {
+         nm_limpa_valor($this->margem_lucro, $this->field_config['margem_lucro']['symbol_dec'], $this->field_config['margem_lucro']['symbol_grp']);
       }
       $this->Before_unformat['estoque_minimo'] = $this->estoque_minimo;
       if (!empty($this->field_config['estoque_minimo']['symbol_dec']))
@@ -2726,6 +2821,13 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
              nm_limpa_valor($this->valor, $this->field_config['valor']['symbol_dec'], $this->field_config['valor']['symbol_grp']);
           }
       }
+      if ($Nome_Campo == "margem_lucro")
+      {
+          if (!empty($this->field_config['margem_lucro']['symbol_dec']))
+          {
+             nm_limpa_valor($this->margem_lucro, $this->field_config['margem_lucro']['symbol_dec'], $this->field_config['margem_lucro']['symbol_grp']);
+          }
+      }
       if ($Nome_Campo == "estoque_minimo")
       {
           if (!empty($this->field_config['estoque_minimo']['symbol_dec']))
@@ -2754,6 +2856,10 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
       if ('' !== $this->valor || (!empty($format_fields) && isset($format_fields['valor'])))
       {
           nmgp_Form_Num_Val($this->valor, $this->field_config['valor']['symbol_grp'], $this->field_config['valor']['symbol_dec'], "2", "S", $this->field_config['valor']['format_neg'], "", "", "-", $this->field_config['valor']['symbol_fmt']) ; 
+      }
+      if ('' !== $this->margem_lucro || (!empty($format_fields) && isset($format_fields['margem_lucro'])))
+      {
+          nmgp_Form_Num_Val($this->margem_lucro, $this->field_config['margem_lucro']['symbol_grp'], $this->field_config['margem_lucro']['symbol_dec'], "3", "S", $this->field_config['margem_lucro']['format_neg'], "", "", "-", $this->field_config['margem_lucro']['symbol_fmt']) ; 
       }
       if ('' !== $this->estoque_minimo || (!empty($format_fields) && isset($format_fields['estoque_minimo'])))
       {
@@ -3150,6 +3256,7 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
           $this->ajax_return_values_descricao();
           $this->ajax_return_values_custo();
           $this->ajax_return_values_valor();
+          $this->ajax_return_values_margem_lucro();
           $this->ajax_return_values_estoque_minimo();
           $this->ajax_return_values_tipo();
           $this->ajax_return_values_idgrupo();
@@ -3256,6 +3363,22 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
               $aLookup = array();
           $aLookupOrig = $aLookup;
           $this->NM_ajax_info['fldList']['valor'] = array(
+                       'row'    => '',
+               'type'    => 'text',
+               'valList' => array($sTmpValue),
+              );
+          }
+   }
+
+          //----- margem_lucro
+   function ajax_return_values_margem_lucro($bForce = false)
+   {
+          if ('navigate_form' == $this->NM_ajax_opcao || 'backup_line' == $this->NM_ajax_opcao || (isset($this->nmgp_refresh_fields) && in_array("margem_lucro", $this->nmgp_refresh_fields)) || $bForce)
+          {
+              $sTmpValue = NM_charset_to_utf8($this->margem_lucro);
+              $aLookup = array();
+          $aLookupOrig = $aLookup;
+          $this->NM_ajax_info['fldList']['margem_lucro'] = array(
                        'row'    => '',
                'type'    => 'text',
                'valList' => array($sTmpValue),
@@ -3373,6 +3496,7 @@ else
    $old_value_idproduto = $this->idproduto;
    $old_value_custo = $this->custo;
    $old_value_valor = $this->valor;
+   $old_value_margem_lucro = $this->margem_lucro;
    $old_value_estoque_minimo = $this->estoque_minimo;
    $this->nm_tira_formatacao();
 
@@ -3380,6 +3504,7 @@ else
    $unformatted_value_idproduto = $this->idproduto;
    $unformatted_value_custo = $this->custo;
    $unformatted_value_valor = $this->valor;
+   $unformatted_value_margem_lucro = $this->margem_lucro;
    $unformatted_value_estoque_minimo = $this->estoque_minimo;
 
    $nm_comando = "SELECT idgrupo, descricao  FROM gurpo  ORDER BY descricao";
@@ -3387,6 +3512,7 @@ else
    $this->idproduto = $old_value_idproduto;
    $this->custo = $old_value_custo;
    $this->valor = $old_value_valor;
+   $this->margem_lucro = $old_value_margem_lucro;
    $this->estoque_minimo = $old_value_estoque_minimo;
 
    $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
@@ -3494,6 +3620,7 @@ else
    $old_value_idproduto = $this->idproduto;
    $old_value_custo = $this->custo;
    $old_value_valor = $this->valor;
+   $old_value_margem_lucro = $this->margem_lucro;
    $old_value_estoque_minimo = $this->estoque_minimo;
    $this->nm_tira_formatacao();
 
@@ -3501,6 +3628,7 @@ else
    $unformatted_value_idproduto = $this->idproduto;
    $unformatted_value_custo = $this->custo;
    $unformatted_value_valor = $this->valor;
+   $unformatted_value_margem_lucro = $this->margem_lucro;
    $unformatted_value_estoque_minimo = $this->estoque_minimo;
 
    $nm_comando = "SELECT idsubgrupo, descricao  FROM subgrupo  ORDER BY descricao";
@@ -3508,6 +3636,7 @@ else
    $this->idproduto = $old_value_idproduto;
    $this->custo = $old_value_custo;
    $this->valor = $old_value_valor;
+   $this->margem_lucro = $old_value_margem_lucro;
    $this->estoque_minimo = $old_value_estoque_minimo;
 
    $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
@@ -3615,6 +3744,7 @@ else
    $old_value_idproduto = $this->idproduto;
    $old_value_custo = $this->custo;
    $old_value_valor = $this->valor;
+   $old_value_margem_lucro = $this->margem_lucro;
    $old_value_estoque_minimo = $this->estoque_minimo;
    $this->nm_tira_formatacao();
 
@@ -3622,6 +3752,7 @@ else
    $unformatted_value_idproduto = $this->idproduto;
    $unformatted_value_custo = $this->custo;
    $unformatted_value_valor = $this->valor;
+   $unformatted_value_margem_lucro = $this->margem_lucro;
    $unformatted_value_estoque_minimo = $this->estoque_minimo;
 
    $nm_comando = "SELECT idmarca, descricao  FROM marca  ORDER BY descricao";
@@ -3629,6 +3760,7 @@ else
    $this->idproduto = $old_value_idproduto;
    $this->custo = $old_value_custo;
    $this->valor = $old_value_valor;
+   $this->margem_lucro = $old_value_margem_lucro;
    $this->estoque_minimo = $old_value_estoque_minimo;
 
    $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
@@ -3736,6 +3868,7 @@ else
    $old_value_idproduto = $this->idproduto;
    $old_value_custo = $this->custo;
    $old_value_valor = $this->valor;
+   $old_value_margem_lucro = $this->margem_lucro;
    $old_value_estoque_minimo = $this->estoque_minimo;
    $this->nm_tira_formatacao();
 
@@ -3743,6 +3876,7 @@ else
    $unformatted_value_idproduto = $this->idproduto;
    $unformatted_value_custo = $this->custo;
    $unformatted_value_valor = $this->valor;
+   $unformatted_value_margem_lucro = $this->margem_lucro;
    $unformatted_value_estoque_minimo = $this->estoque_minimo;
 
    $nm_comando = "SELECT idunidade, descricao  FROM unidade  ORDER BY descricao";
@@ -3750,6 +3884,7 @@ else
    $this->idproduto = $old_value_idproduto;
    $this->custo = $old_value_custo;
    $this->valor = $old_value_valor;
+   $this->margem_lucro = $old_value_margem_lucro;
    $this->estoque_minimo = $old_value_estoque_minimo;
 
    $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
@@ -3979,18 +4114,21 @@ else
    { 
       $this->custo = str_replace($sc_parm1, $sc_parm2, $this->custo); 
       $this->valor = str_replace($sc_parm1, $sc_parm2, $this->valor); 
+      $this->margem_lucro = str_replace($sc_parm1, $sc_parm2, $this->margem_lucro); 
       $this->estoque_minimo = str_replace($sc_parm1, $sc_parm2, $this->estoque_minimo); 
    } 
    function nm_poe_aspas_decimal() 
    { 
       $this->custo = "'" . $this->custo . "'";
       $this->valor = "'" . $this->valor . "'";
+      $this->margem_lucro = "'" . $this->margem_lucro . "'";
       $this->estoque_minimo = "'" . $this->estoque_minimo . "'";
    } 
    function nm_tira_aspas_decimal() 
    { 
       $this->custo = str_replace("'", "", $this->custo); 
       $this->valor = str_replace("'", "", $this->valor); 
+      $this->margem_lucro = str_replace("'", "", $this->margem_lucro); 
       $this->estoque_minimo = str_replace("'", "", $this->estoque_minimo); 
    } 
 //----------- 
@@ -4060,7 +4198,7 @@ if (isset($this->NM_ajax_flag) && $this->NM_ajax_flag)
 {
     $original_idproduto = $this->idproduto;
 }
-             /* estoque */
+              /* estoque */
       if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
       {
           $sc_cmd_dependency = "SELECT COUNT(*) AS countTest FROM estoque WHERE idproduto = " . $this->idproduto ;
@@ -4269,6 +4407,7 @@ $_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'off';
       $NM_val_form['descricao'] = $this->descricao;
       $NM_val_form['custo'] = $this->custo;
       $NM_val_form['valor'] = $this->valor;
+      $NM_val_form['margem_lucro'] = $this->margem_lucro;
       $NM_val_form['estoque_minimo'] = $this->estoque_minimo;
       $NM_val_form['tipo'] = $this->tipo;
       $NM_val_form['idgrupo'] = $this->idgrupo;
@@ -4315,6 +4454,11 @@ $_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'off';
       { 
           $this->estoque_minimo = 0;
           $this->sc_force_zero[] = 'estoque_minimo';
+      } 
+      if ($this->margem_lucro === "" || is_null($this->margem_lucro))  
+      { 
+          $this->margem_lucro = 0;
+          $this->sc_force_zero[] = 'margem_lucro';
       } 
       $nm_bases_lob_geral = array_merge($this->Ini->nm_bases_ibase, $this->Ini->nm_bases_mysql, $this->Ini->nm_bases_access, $this->Ini->nm_bases_sqlite);
       if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_produto_mob']['decimal_db'] == ",") 
@@ -4439,22 +4583,22 @@ $_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'off';
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idgrupo = $this->idgrupo, idsubgrupo = $this->idsubgrupo, idmarca = $this->idmarca, idunidade = $this->idunidade, referencia = '$this->referencia', codigo_de_barras = '$this->codigo_de_barras', descricao = '$this->descricao', custo = $this->custo, valor = $this->valor, estoque_minimo = $this->estoque_minimo, tipo = '$this->tipo'"; 
+                  $SC_fields_update[] = "idgrupo = $this->idgrupo, idsubgrupo = $this->idsubgrupo, idmarca = $this->idmarca, idunidade = $this->idunidade, referencia = '$this->referencia', codigo_de_barras = '$this->codigo_de_barras', descricao = '$this->descricao', custo = $this->custo, valor = $this->valor, estoque_minimo = $this->estoque_minimo, tipo = '$this->tipo', margem_lucro = $this->margem_lucro"; 
               } 
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idgrupo = $this->idgrupo, idsubgrupo = $this->idsubgrupo, idmarca = $this->idmarca, idunidade = $this->idunidade, referencia = '$this->referencia', codigo_de_barras = '$this->codigo_de_barras', descricao = '$this->descricao', custo = $this->custo, valor = $this->valor, estoque_minimo = $this->estoque_minimo, tipo = '$this->tipo'"; 
+                  $SC_fields_update[] = "idgrupo = $this->idgrupo, idsubgrupo = $this->idsubgrupo, idmarca = $this->idmarca, idunidade = $this->idunidade, referencia = '$this->referencia', codigo_de_barras = '$this->codigo_de_barras', descricao = '$this->descricao', custo = $this->custo, valor = $this->valor, estoque_minimo = $this->estoque_minimo, tipo = '$this->tipo', margem_lucro = $this->margem_lucro"; 
               } 
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idgrupo = $this->idgrupo, idsubgrupo = $this->idsubgrupo, idmarca = $this->idmarca, idunidade = $this->idunidade, referencia = '$this->referencia', codigo_de_barras = '$this->codigo_de_barras', descricao = '$this->descricao', custo = $this->custo, valor = $this->valor, estoque_minimo = $this->estoque_minimo, tipo = '$this->tipo'"; 
+                  $SC_fields_update[] = "idgrupo = $this->idgrupo, idsubgrupo = $this->idsubgrupo, idmarca = $this->idmarca, idunidade = $this->idunidade, referencia = '$this->referencia', codigo_de_barras = '$this->codigo_de_barras', descricao = '$this->descricao', custo = $this->custo, valor = $this->valor, estoque_minimo = $this->estoque_minimo, tipo = '$this->tipo', margem_lucro = $this->margem_lucro"; 
               } 
               else 
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idgrupo = $this->idgrupo, idsubgrupo = $this->idsubgrupo, idmarca = $this->idmarca, idunidade = $this->idunidade, referencia = '$this->referencia', codigo_de_barras = '$this->codigo_de_barras', descricao = '$this->descricao', custo = $this->custo, valor = $this->valor, estoque_minimo = $this->estoque_minimo, tipo = '$this->tipo'"; 
+                  $SC_fields_update[] = "idgrupo = $this->idgrupo, idsubgrupo = $this->idsubgrupo, idmarca = $this->idmarca, idunidade = $this->idunidade, referencia = '$this->referencia', codigo_de_barras = '$this->codigo_de_barras', descricao = '$this->descricao', custo = $this->custo, valor = $this->valor, estoque_minimo = $this->estoque_minimo, tipo = '$this->tipo', margem_lucro = $this->margem_lucro"; 
               } 
               if (isset($NM_val_form['peso_liquido']) && $NM_val_form['peso_liquido'] != $this->nmgp_dados_select['peso_liquido']) 
               { 
@@ -4639,11 +4783,13 @@ $_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'off';
               elseif (isset($this->valor)) { $this->nm_limpa_alfa($this->valor); }
               if     (isset($NM_val_form) && isset($NM_val_form['estoque_minimo'])) { $this->estoque_minimo = $NM_val_form['estoque_minimo']; }
               elseif (isset($this->estoque_minimo)) { $this->nm_limpa_alfa($this->estoque_minimo); }
+              if     (isset($NM_val_form) && isset($NM_val_form['margem_lucro'])) { $this->margem_lucro = $NM_val_form['margem_lucro']; }
+              elseif (isset($this->margem_lucro)) { $this->nm_limpa_alfa($this->margem_lucro); }
 
               $this->nm_formatar_campos();
 
               $aOldRefresh               = $this->nmgp_refresh_fields;
-              $this->nmgp_refresh_fields = array_diff(array('idproduto', 'referencia', 'codigo_de_barras', 'descricao', 'custo', 'valor', 'estoque_minimo', 'tipo', 'idgrupo', 'idsubgrupo', 'idmarca', 'idunidade', 'foto'), $aDoNotUpdate);
+              $this->nmgp_refresh_fields = array_diff(array('idproduto', 'referencia', 'codigo_de_barras', 'descricao', 'custo', 'valor', 'margem_lucro', 'estoque_minimo', 'tipo', 'idgrupo', 'idsubgrupo', 'idmarca', 'idunidade', 'foto'), $aDoNotUpdate);
               $this->ajax_return_values();
               $this->nmgp_refresh_fields = $aOldRefresh;
 
@@ -4701,23 +4847,23 @@ $_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'off';
               }
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
               { 
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (idgrupo, idsubgrupo, idmarca, idunidade, referencia, codigo_de_barras, descricao, custo, valor, estoque_minimo, foto, peso_liquido, tipo) VALUES ($this->idgrupo, $this->idsubgrupo, $this->idmarca, $this->idunidade, '$this->referencia', '$this->codigo_de_barras', '$this->descricao', $this->custo, $this->valor, $this->estoque_minimo, '$this->foto', '$this->peso_liquido', '$this->tipo')"; 
+                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (idgrupo, idsubgrupo, idmarca, idunidade, referencia, codigo_de_barras, descricao, custo, valor, estoque_minimo, foto, peso_liquido, tipo, margem_lucro) VALUES ($this->idgrupo, $this->idsubgrupo, $this->idmarca, $this->idunidade, '$this->referencia', '$this->codigo_de_barras', '$this->descricao', $this->custo, $this->valor, $this->estoque_minimo, '$this->foto', '$this->peso_liquido', '$this->tipo', $this->margem_lucro)"; 
               }
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
               {
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idgrupo, idsubgrupo, idmarca, idunidade, referencia, codigo_de_barras, descricao, custo, valor, estoque_minimo, foto, peso_liquido, tipo) VALUES (" . $NM_seq_auto . "$this->idgrupo, $this->idsubgrupo, $this->idmarca, $this->idunidade, '$this->referencia', '$this->codigo_de_barras', '$this->descricao', $this->custo, $this->valor, $this->estoque_minimo, '', '$this->peso_liquido', '$this->tipo')"; 
+                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idgrupo, idsubgrupo, idmarca, idunidade, referencia, codigo_de_barras, descricao, custo, valor, estoque_minimo, foto, peso_liquido, tipo, margem_lucro) VALUES (" . $NM_seq_auto . "$this->idgrupo, $this->idsubgrupo, $this->idmarca, $this->idunidade, '$this->referencia', '$this->codigo_de_barras', '$this->descricao', $this->custo, $this->valor, $this->estoque_minimo, '', '$this->peso_liquido', '$this->tipo', $this->margem_lucro)"; 
               }
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
               {
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idgrupo, idsubgrupo, idmarca, idunidade, referencia, codigo_de_barras, descricao, custo, valor, estoque_minimo, foto, peso_liquido, tipo) VALUES (" . $NM_seq_auto . "$this->idgrupo, $this->idsubgrupo, $this->idmarca, $this->idunidade, '$this->referencia', '$this->codigo_de_barras', '$this->descricao', $this->custo, $this->valor, $this->estoque_minimo, '', '$this->peso_liquido', '$this->tipo')"; 
+                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idgrupo, idsubgrupo, idmarca, idunidade, referencia, codigo_de_barras, descricao, custo, valor, estoque_minimo, foto, peso_liquido, tipo, margem_lucro) VALUES (" . $NM_seq_auto . "$this->idgrupo, $this->idsubgrupo, $this->idmarca, $this->idunidade, '$this->referencia', '$this->codigo_de_barras', '$this->descricao', $this->custo, $this->valor, $this->estoque_minimo, '', '$this->peso_liquido', '$this->tipo', $this->margem_lucro)"; 
               }
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_sqlite))
               {
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idgrupo, idsubgrupo, idmarca, idunidade, referencia, codigo_de_barras, descricao, custo, valor, estoque_minimo, foto, peso_liquido, tipo) VALUES (" . $NM_seq_auto . "$this->idgrupo, $this->idsubgrupo, $this->idmarca, $this->idunidade, '$this->referencia', '$this->codigo_de_barras', '$this->descricao', $this->custo, $this->valor, $this->estoque_minimo, '', '$this->peso_liquido', '$this->tipo')"; 
+                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idgrupo, idsubgrupo, idmarca, idunidade, referencia, codigo_de_barras, descricao, custo, valor, estoque_minimo, foto, peso_liquido, tipo, margem_lucro) VALUES (" . $NM_seq_auto . "$this->idgrupo, $this->idsubgrupo, $this->idmarca, $this->idunidade, '$this->referencia', '$this->codigo_de_barras', '$this->descricao', $this->custo, $this->valor, $this->estoque_minimo, '', '$this->peso_liquido', '$this->tipo', $this->margem_lucro)"; 
               }
               else
               {
-                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idgrupo, idsubgrupo, idmarca, idunidade, referencia, codigo_de_barras, descricao, custo, valor, estoque_minimo, foto, peso_liquido, tipo) VALUES (" . $NM_seq_auto . "$this->idgrupo, $this->idsubgrupo, $this->idmarca, $this->idunidade, '$this->referencia', '$this->codigo_de_barras', '$this->descricao', $this->custo, $this->valor, $this->estoque_minimo, '$this->foto', '$this->peso_liquido', '$this->tipo')"; 
+                  $comando = "INSERT INTO " . $this->Ini->nm_tabela . " (" . $NM_cmp_auto . "idgrupo, idsubgrupo, idmarca, idunidade, referencia, codigo_de_barras, descricao, custo, valor, estoque_minimo, foto, peso_liquido, tipo, margem_lucro) VALUES (" . $NM_seq_auto . "$this->idgrupo, $this->idsubgrupo, $this->idmarca, $this->idunidade, '$this->referencia', '$this->codigo_de_barras', '$this->descricao', $this->custo, $this->valor, $this->estoque_minimo, '$this->foto', '$this->peso_liquido', '$this->tipo', $this->margem_lucro)"; 
               }
               $comando = str_replace("N'null'", "null", $comando) ; 
               $comando = str_replace("'null'", "null", $comando) ; 
@@ -4985,6 +5131,84 @@ $_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'off';
               eval('$this->' . $sc_val_null_field . ' = "";');
           }
       }
+    if ("insert" == $this->sc_evento && $this->nmgp_opcao != "nada") {
+        if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_produto_mob']['decimal_db'] == ",")
+        {
+            $this->nm_troca_decimal(",", ".");
+        }
+        $_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'on';
+if (isset($this->NM_ajax_flag) && $this->NM_ajax_flag)
+{
+    $original_idproduto = $this->idproduto;
+    $original_referencia = $this->referencia;
+}
+  $v_referencia = trim($this->referencia );
+$v_id = trim($this->idproduto );
+
+if(empty($v_referencia) || is_null($v_referencia)){
+	if(!(empty($v_id) || is_null($v_id))){
+	}	
+	$update_table  = 'produto';     
+	$update_where  = "idproduto = '".$this->idproduto ."'"; 
+	$update_fields = array(   
+		 "referencia = '".$this->idproduto ."'",
+	 );
+
+	$update_sql = 'UPDATE ' . $update_table
+		. ' SET '   . implode(', ', $update_fields)
+		. ' WHERE ' . $update_where;
+	
+     $nm_select = $update_sql; 
+         $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_select;
+      $_SESSION['scriptcase']['sc_sql_ult_conexao'] = ''; 
+         $rf = $this->Db->Execute($nm_select);
+         if ($rf === false)
+         {
+             $this->Erro->mensagem (__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dber'], $this->Db->ErrorMsg());
+             $this->NM_rollback_db(); 
+             if ($this->NM_ajax_flag)
+             {
+                form_produto_mob_pack_ajax_response();
+             }
+             exit;
+         }
+         $rf->Close();
+      ; 
+}
+if (isset($this->NM_ajax_flag) && $this->NM_ajax_flag)
+{
+    if (($original_idproduto != $this->idproduto || (isset($bFlagRead_idproduto) && $bFlagRead_idproduto)))
+    {
+        $this->ajax_return_values_idproduto(true);
+    }
+    if (($original_referencia != $this->referencia || (isset($bFlagRead_referencia) && $bFlagRead_referencia)))
+    {
+        $this->ajax_return_values_referencia(true);
+    }
+}
+$_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'off'; 
+    }
+      if (!empty($this->Campos_Mens_erro)) 
+      {
+          $this->Erro->mensagem(__FILE__, __LINE__, "critica", $this->Campos_Mens_erro); 
+          $this->Campos_Mens_erro = ""; 
+          $this->nmgp_opc_ant = $salva_opcao ; 
+          if ($salva_opcao == "incluir") 
+          { 
+              $GLOBALS["erro_incl"] = 1; 
+          }
+          if ($this->nmgp_opcao == "alterar" || $this->nmgp_opcao == "incluir" || $this->nmgp_opcao == "excluir") 
+          {
+              $this->nmgp_opcao = "nada"; 
+          } 
+          $this->sc_evento = ""; 
+          $this->NM_rollback_db(); 
+          return; 
+      }
+   if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_produto_mob']['decimal_db'] == ",")
+   {
+       $this->nm_troca_decimal(".", ",");
+   }
       if ($salva_opcao == "incluir" && $GLOBALS["erro_incl"] != 1) 
       { 
           $_SESSION['sc_session'][$this->Ini->sc_page]['form_produto_mob']['parms'] = "idproduto?#?$this->idproduto?@?"; 
@@ -5035,7 +5259,7 @@ $_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'off';
           { 
               $GLOBALS["NM_ERRO_IBASE"] = 1;  
           } 
-          $nmgp_select = "SELECT idproduto, idgrupo, idsubgrupo, idmarca, idunidade, referencia, codigo_de_barras, descricao, custo, valor, estoque_minimo, foto, peso_liquido, tipo from " . $this->Ini->nm_tabela ; 
+          $nmgp_select = "SELECT idproduto, idgrupo, idsubgrupo, idmarca, idunidade, referencia, codigo_de_barras, descricao, custo, valor, estoque_minimo, foto, peso_liquido, tipo, margem_lucro from " . $this->Ini->nm_tabela ; 
           $aWhere = array();
           $aWhere[] = $sc_where_filter;
           if ($this->nmgp_opcao == "igual" || (($_SESSION['sc_session'][$this->Ini->sc_page]['form_produto_mob']['run_iframe'] == "F" || $_SESSION['sc_session'][$this->Ini->sc_page]['form_produto_mob']['run_iframe'] == "R") && ($this->sc_evento == "insert" || $this->sc_evento == "update")) )
@@ -5186,6 +5410,8 @@ $_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'off';
               $this->nmgp_dados_select['peso_liquido'] = $this->peso_liquido;
               $this->tipo = $rs->fields[13] ; 
               $this->nmgp_dados_select['tipo'] = $this->tipo;
+              $this->margem_lucro = $rs->fields[14] ; 
+              $this->nmgp_dados_select['margem_lucro'] = $this->margem_lucro;
           $GLOBALS["NM_ERRO_IBASE"] = 0; 
               $this->nm_troca_decimal(",", ".");
               $this->idproduto = (string)$this->idproduto; 
@@ -5196,6 +5422,7 @@ $_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'off';
               $this->custo = (string)$this->custo; 
               $this->valor = (string)$this->valor; 
               $this->estoque_minimo = (string)$this->estoque_minimo; 
+              $this->margem_lucro = (string)$this->margem_lucro; 
               $_SESSION['sc_session'][$this->Ini->sc_page]['form_produto_mob']['parms'] = "idproduto?#?$this->idproduto?@?";
               $_SESSION['sc_session'][$this->Ini->sc_page]['form_produto']['sub_dir'][0]  = "";
           } 
@@ -5248,6 +5475,8 @@ $_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'off';
               $this->nmgp_dados_form["peso_liquido"] = $this->peso_liquido;
               $this->tipo = "";  
               $this->nmgp_dados_form["tipo"] = $this->tipo;
+              $this->margem_lucro = "";  
+              $this->nmgp_dados_form["margem_lucro"] = $this->margem_lucro;
               $_SESSION['sc_session'][$this->Ini->sc_page]['form_produto_mob']['dados_form'] = $this->nmgp_dados_form;
               $this->formatado = false;
           }
@@ -5305,6 +5534,91 @@ $_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'off';
                 }
         }
 
+//
+function custo_onBlur()
+{
+$_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'on';
+  
+$original_valor = $this->valor;
+$original_custo = $this->custo;
+$original_margem_lucro = $this->margem_lucro;
+
+$this->produto_markup();
+
+$modificado_valor = $this->valor;
+$modificado_custo = $this->custo;
+$modificado_margem_lucro = $this->margem_lucro;
+$this->nm_formatar_campos('valor', 'custo', 'margem_lucro');
+if ($original_valor !== $modificado_valor || isset($this->nmgp_cmp_readonly['valor']) || (isset($bFlagRead_valor) && $bFlagRead_valor))
+{
+    $this->ajax_return_values_valor(true);
+}
+if ($original_custo !== $modificado_custo || isset($this->nmgp_cmp_readonly['custo']) || (isset($bFlagRead_custo) && $bFlagRead_custo))
+{
+    $this->ajax_return_values_custo(true);
+}
+if ($original_margem_lucro !== $modificado_margem_lucro || isset($this->nmgp_cmp_readonly['margem_lucro']) || (isset($bFlagRead_margem_lucro) && $bFlagRead_margem_lucro))
+{
+    $this->ajax_return_values_margem_lucro(true);
+}
+$this->NM_ajax_info['event_field'] = 'custo';
+form_produto_mob_pack_ajax_response();
+exit;
+
+
+$_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'off';
+}
+function produto_markup()
+{
+$_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'on';
+  
+$v_venda = trim($this->valor );
+$v_custo = trim($this->custo );
+
+
+if(!(empty($v_venda) || is_null($v_venda))){
+	if(!(empty($v_custo) || is_null($v_custo))){
+		$p_markup = (($v_venda - $v_custo) / $v_custo) * 100;
+		$this->margem_lucro  = $p_markup;
+	}	
+}	
+
+
+$_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'off';
+}
+function valor_onBlur()
+{
+$_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'on';
+  
+$original_valor = $this->valor;
+$original_custo = $this->custo;
+$original_margem_lucro = $this->margem_lucro;
+
+$this->produto_markup();
+
+$modificado_valor = $this->valor;
+$modificado_custo = $this->custo;
+$modificado_margem_lucro = $this->margem_lucro;
+$this->nm_formatar_campos('valor', 'custo', 'margem_lucro');
+if ($original_valor !== $modificado_valor || isset($this->nmgp_cmp_readonly['valor']) || (isset($bFlagRead_valor) && $bFlagRead_valor))
+{
+    $this->ajax_return_values_valor(true);
+}
+if ($original_custo !== $modificado_custo || isset($this->nmgp_cmp_readonly['custo']) || (isset($bFlagRead_custo) && $bFlagRead_custo))
+{
+    $this->ajax_return_values_custo(true);
+}
+if ($original_margem_lucro !== $modificado_margem_lucro || isset($this->nmgp_cmp_readonly['margem_lucro']) || (isset($bFlagRead_margem_lucro) && $bFlagRead_margem_lucro))
+{
+    $this->ajax_return_values_margem_lucro(true);
+}
+$this->NM_ajax_info['event_field'] = 'valor';
+form_produto_mob_pack_ajax_response();
+exit;
+
+
+$_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'off';
+}
 //
  function nm_gera_html()
  {
@@ -5498,10 +5812,10 @@ $_SESSION['scriptcase']['form_produto_mob']['contr_erro'] = 'off';
     function form_highlight_search_quicksearch(&$result, $field, $value)
     {
         $searchOk = false;
-        if ('SC_all_Cmp' == $this->nmgp_fast_search && in_array($field, array("idproduto", "referencia", "codigo_de_barras", "descricao", "custo", "valor", "estoque_minimo", "tipo", "idgrupo", "idsubgrupo", "idmarca", "idunidade", "foto"))) {
+        if ('SC_all_Cmp' == $this->nmgp_fast_search && in_array($field, array("idproduto", "referencia", "codigo_de_barras", "descricao", "custo", "valor", "margem_lucro", "estoque_minimo", "tipo", "idgrupo", "idsubgrupo", "idmarca", "idunidade", "foto"))) {
             $searchOk = true;
         }
-        elseif ($field == $this->nmgp_fast_search && in_array($field, array("idproduto", "referencia", "codigo_de_barras", "descricao", "custo", "valor", "estoque_minimo", "tipo", "idgrupo", "idsubgrupo", "idmarca", "idunidade", "foto"))) {
+        elseif ($field == $this->nmgp_fast_search && in_array($field, array("idproduto", "referencia", "codigo_de_barras", "descricao", "custo", "valor", "margem_lucro", "estoque_minimo", "tipo", "idgrupo", "idsubgrupo", "idmarca", "idunidade", "foto"))) {
             $searchOk = true;
         }
 
@@ -5872,6 +6186,7 @@ else
    $old_value_idproduto = $this->idproduto;
    $old_value_custo = $this->custo;
    $old_value_valor = $this->valor;
+   $old_value_margem_lucro = $this->margem_lucro;
    $old_value_estoque_minimo = $this->estoque_minimo;
    $this->nm_tira_formatacao();
 
@@ -5879,6 +6194,7 @@ else
    $unformatted_value_idproduto = $this->idproduto;
    $unformatted_value_custo = $this->custo;
    $unformatted_value_valor = $this->valor;
+   $unformatted_value_margem_lucro = $this->margem_lucro;
    $unformatted_value_estoque_minimo = $this->estoque_minimo;
 
    $nm_comando = "SELECT idgrupo, descricao  FROM gurpo  ORDER BY descricao";
@@ -5886,6 +6202,7 @@ else
    $this->idproduto = $old_value_idproduto;
    $this->custo = $old_value_custo;
    $this->valor = $old_value_valor;
+   $this->margem_lucro = $old_value_margem_lucro;
    $this->estoque_minimo = $old_value_estoque_minimo;
 
    $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
@@ -5944,6 +6261,7 @@ else
    $old_value_idproduto = $this->idproduto;
    $old_value_custo = $this->custo;
    $old_value_valor = $this->valor;
+   $old_value_margem_lucro = $this->margem_lucro;
    $old_value_estoque_minimo = $this->estoque_minimo;
    $this->nm_tira_formatacao();
 
@@ -5951,6 +6269,7 @@ else
    $unformatted_value_idproduto = $this->idproduto;
    $unformatted_value_custo = $this->custo;
    $unformatted_value_valor = $this->valor;
+   $unformatted_value_margem_lucro = $this->margem_lucro;
    $unformatted_value_estoque_minimo = $this->estoque_minimo;
 
    $nm_comando = "SELECT idsubgrupo, descricao  FROM subgrupo  ORDER BY descricao";
@@ -5958,6 +6277,7 @@ else
    $this->idproduto = $old_value_idproduto;
    $this->custo = $old_value_custo;
    $this->valor = $old_value_valor;
+   $this->margem_lucro = $old_value_margem_lucro;
    $this->estoque_minimo = $old_value_estoque_minimo;
 
    $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
@@ -6016,6 +6336,7 @@ else
    $old_value_idproduto = $this->idproduto;
    $old_value_custo = $this->custo;
    $old_value_valor = $this->valor;
+   $old_value_margem_lucro = $this->margem_lucro;
    $old_value_estoque_minimo = $this->estoque_minimo;
    $this->nm_tira_formatacao();
 
@@ -6023,6 +6344,7 @@ else
    $unformatted_value_idproduto = $this->idproduto;
    $unformatted_value_custo = $this->custo;
    $unformatted_value_valor = $this->valor;
+   $unformatted_value_margem_lucro = $this->margem_lucro;
    $unformatted_value_estoque_minimo = $this->estoque_minimo;
 
    $nm_comando = "SELECT idmarca, descricao  FROM marca  ORDER BY descricao";
@@ -6030,6 +6352,7 @@ else
    $this->idproduto = $old_value_idproduto;
    $this->custo = $old_value_custo;
    $this->valor = $old_value_valor;
+   $this->margem_lucro = $old_value_margem_lucro;
    $this->estoque_minimo = $old_value_estoque_minimo;
 
    $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
@@ -6088,6 +6411,7 @@ else
    $old_value_idproduto = $this->idproduto;
    $old_value_custo = $this->custo;
    $old_value_valor = $this->valor;
+   $old_value_margem_lucro = $this->margem_lucro;
    $old_value_estoque_minimo = $this->estoque_minimo;
    $this->nm_tira_formatacao();
 
@@ -6095,6 +6419,7 @@ else
    $unformatted_value_idproduto = $this->idproduto;
    $unformatted_value_custo = $this->custo;
    $unformatted_value_valor = $this->valor;
+   $unformatted_value_margem_lucro = $this->margem_lucro;
    $unformatted_value_estoque_minimo = $this->estoque_minimo;
 
    $nm_comando = "SELECT idunidade, descricao  FROM unidade  ORDER BY descricao";
@@ -6102,6 +6427,7 @@ else
    $this->idproduto = $old_value_idproduto;
    $this->custo = $old_value_custo;
    $this->valor = $old_value_valor;
+   $this->margem_lucro = $old_value_margem_lucro;
    $this->estoque_minimo = $old_value_estoque_minimo;
 
    $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
@@ -6183,6 +6509,10 @@ else
           if ($field == "SC_all_Cmp" || $field == "valor") 
           {
               $this->SC_monta_condicao($comando, "valor", $arg_search, str_replace(",", ".", $data_search), "DECIMAL", false);
+          }
+          if ($field == "SC_all_Cmp" || $field == "margem_lucro") 
+          {
+              $this->SC_monta_condicao($comando, "margem_lucro", $arg_search, str_replace(",", ".", $data_search), "DECIMAL", false);
           }
           if ($field == "SC_all_Cmp" || $field == "estoque_minimo") 
           {
@@ -6307,7 +6637,7 @@ else
               $Nm_accent = $this->Ini->Nm_accent_sqlite;
           }
       }
-      $nm_numeric[] = "idproduto";$nm_numeric[] = "idgrupo";$nm_numeric[] = "idsubgrupo";$nm_numeric[] = "idmarca";$nm_numeric[] = "idunidade";$nm_numeric[] = "custo";$nm_numeric[] = "valor";$nm_numeric[] = "estoque_minimo";
+      $nm_numeric[] = "idproduto";$nm_numeric[] = "idgrupo";$nm_numeric[] = "idsubgrupo";$nm_numeric[] = "idmarca";$nm_numeric[] = "idunidade";$nm_numeric[] = "custo";$nm_numeric[] = "valor";$nm_numeric[] = "estoque_minimo";$nm_numeric[] = "margem_lucro";
       if (in_array($campo_join, $nm_numeric))
       {
          if ($_SESSION['sc_session'][$this->Ini->sc_page]['form_produto_mob']['decimal_db'] == ".")
@@ -7106,6 +7436,8 @@ if (parent && parent.scAjaxDetailValue)
                 return true;
             case "valor":
                 return true;
+            case "margem_lucro":
+                return true;
             case "estoque_minimo":
                 return true;
             default:
@@ -7122,6 +7454,8 @@ if (parent && parent.scAjaxDetailValue)
             case "custo":
                 return 'desc';
             case "valor":
+                return 'desc';
+            case "margem_lucro":
                 return 'desc';
             case "estoque_minimo":
                 return 'desc';

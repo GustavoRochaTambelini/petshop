@@ -90,6 +90,7 @@ class form_contas_receber_criar_titulo_apl
    var $sc_field_3_1;
    var $sc_field_4;
    var $sc_field_4_1;
+   var $inf_tipo_receita;
    var $nm_data;
    var $nmgp_opcao;
    var $nmgp_opc_ant;
@@ -166,10 +167,6 @@ class form_contas_receber_criar_titulo_apl
           {
               $this->idforma_pagamento_prevista = $this->NM_ajax_info['param']['idforma_pagamento_prevista'];
           }
-          if (isset($this->NM_ajax_info['param']['idgrupos_receitas']))
-          {
-              $this->idgrupos_receitas = $this->NM_ajax_info['param']['idgrupos_receitas'];
-          }
           if (isset($this->NM_ajax_info['param']['idnota_fiscal']))
           {
               $this->idnota_fiscal = $this->NM_ajax_info['param']['idnota_fiscal'];
@@ -205,10 +202,6 @@ class form_contas_receber_criar_titulo_apl
           if (isset($this->NM_ajax_info['param']['nmgp_parms']))
           {
               $this->nmgp_parms = $this->NM_ajax_info['param']['nmgp_parms'];
-          }
-          if (isset($this->NM_ajax_info['param']['nmgp_refresh_fields']))
-          {
-              $this->nmgp_refresh_fields = $this->NM_ajax_info['param']['nmgp_refresh_fields'];
           }
           if (isset($this->NM_ajax_info['param']['nmgp_url_saida']))
           {
@@ -920,6 +913,7 @@ class form_contas_receber_criar_titulo_apl
       {
           $this->nmgp_dados_form = $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['dados_form'];
           if (!isset($this->idforma_pagamento)){$this->idforma_pagamento = $this->nmgp_dados_form['idforma_pagamento'];} 
+          if (!isset($this->idgrupos_receitas)){$this->idgrupos_receitas = $this->nmgp_dados_form['idgrupos_receitas'];} 
           if (!isset($this->idorcamento)){$this->idorcamento = $this->nmgp_dados_form['idorcamento'];} 
           if (!isset($this->numero_conta)){$this->numero_conta = $this->nmgp_dados_form['numero_conta'];} 
           if ($this->nmgp_opcao == "incluir" && $this->nmgp_dados_form['data_pagamento'] != "null"){
@@ -933,6 +927,7 @@ class form_contas_receber_criar_titulo_apl
           if (!isset($this->data_alteracao)){$this->data_alteracao = $this->nmgp_dados_form['data_alteracao'];} 
           if (!isset($this->taxa_administrativa)){$this->taxa_administrativa = $this->nmgp_dados_form['taxa_administrativa'];} 
           if (!isset($this->troco)){$this->troco = $this->nmgp_dados_form['troco'];} 
+          if (!isset($this->inf_tipo_receita)){$this->inf_tipo_receita = $this->nmgp_dados_form['inf_tipo_receita'];} 
       }
       $glo_senha_protect = (isset($_SESSION['scriptcase']['glo_senha_protect'])) ? $_SESSION['scriptcase']['glo_senha_protect'] : "S";
       $this->aba_iframe = false;
@@ -1153,16 +1148,13 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
             if(!empty($img_width) && !empty($img_height)){
                 $sc_obj_img->setWidth($img_width);
                 $sc_obj_img->setHeight($img_height);
-            }
-                $sc_obj_img->setManterAspecto(true);
-            $sc_obj_img->createImg($_SERVER['DOCUMENT_ROOT'].$out1_img_cache);
+            }            $sc_obj_img->createImg($_SERVER['DOCUMENT_ROOT'].$out1_img_cache);
             echo $out1_img_cache;
                exit;
             }
       if (isset($this->idcontas_receber)) { $this->nm_limpa_alfa($this->idcontas_receber); }
       if (isset($this->idcliente)) { $this->nm_limpa_alfa($this->idcliente); }
       if (isset($this->idforma_pagamento_prevista)) { $this->nm_limpa_alfa($this->idforma_pagamento_prevista); }
-      if (isset($this->idgrupos_receitas)) { $this->nm_limpa_alfa($this->idgrupos_receitas); }
       if (isset($this->idtipos_receitas)) { $this->nm_limpa_alfa($this->idtipos_receitas); }
       if (isset($this->idnota_fiscal)) { $this->nm_limpa_alfa($this->idnota_fiscal); }
       if (isset($this->valor_a_receber)) { $this->nm_limpa_alfa($this->valor_a_receber); }
@@ -1202,12 +1194,6 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
       $this->field_config['idcontas_receber']['symbol_dec'] = '';
       $this->field_config['idcontas_receber']['symbol_neg'] = $_SESSION['scriptcase']['reg_conf']['simb_neg'];
       $this->field_config['idcontas_receber']['format_neg'] = $_SESSION['scriptcase']['reg_conf']['neg_num'];
-      //-- competencia
-      $this->field_config['competencia']                 = array();
-      $this->field_config['competencia']['date_format']  = $_SESSION['scriptcase']['reg_conf']['date_format'];
-      $this->field_config['competencia']['date_sep']     = $_SESSION['scriptcase']['reg_conf']['date_sep'];
-      $this->field_config['competencia']['date_display'] = "mmaaaa";
-      $this->new_date_format('DT', 'competencia');
       //-- valor_a_receber
       $this->field_config['valor_a_receber']               = array();
       $this->field_config['valor_a_receber']['symbol_grp'] = $_SESSION['scriptcase']['reg_conf']['grup_val'];
@@ -1360,10 +1346,6 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
           if ('validate_idforma_pagamento_prevista' == $this->NM_ajax_opcao)
           {
               $this->Valida_campos($Campos_Crit, $Campos_Falta, $Campos_Erros, 'idforma_pagamento_prevista');
-          }
-          if ('validate_idgrupos_receitas' == $this->NM_ajax_opcao)
-          {
-              $this->Valida_campos($Campos_Crit, $Campos_Falta, $Campos_Erros, 'idgrupos_receitas');
           }
           if ('validate_idtipos_receitas' == $this->NM_ajax_opcao)
           {
@@ -2028,9 +2010,6 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
            case 'idforma_pagamento_prevista':
                return "FORMA DE PAGAMENTO";
                break;
-           case 'idgrupos_receitas':
-               return "GRUPO DE RECEITAS";
-               break;
            case 'idtipos_receitas':
                return "TIPO DE RECEITAS";
                break;
@@ -2070,6 +2049,9 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
            case 'idforma_pagamento':
                return "Idforma Pagamento";
                break;
+           case 'idgrupos_receitas':
+               return "GRUPO DE RECEITAS";
+               break;
            case 'idorcamento':
                return "Idorcamento";
                break;
@@ -2096,6 +2078,9 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
                break;
            case 'troco':
                return "Troco";
+               break;
+           case 'inf_tipo_receita':
+               return "inf_tipo_receita";
                break;
        }
 
@@ -2155,8 +2140,6 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
         $this->ValidateField_valor_a_receber($Campos_Crit, $Campos_Falta, $Campos_Erros);
       if ((!is_array($filtro) && ('' == $filtro || 'idforma_pagamento_prevista' == $filtro)) || (is_array($filtro) && in_array('idforma_pagamento_prevista', $filtro)))
         $this->ValidateField_idforma_pagamento_prevista($Campos_Crit, $Campos_Falta, $Campos_Erros);
-      if ((!is_array($filtro) && ('' == $filtro || 'idgrupos_receitas' == $filtro)) || (is_array($filtro) && in_array('idgrupos_receitas', $filtro)))
-        $this->ValidateField_idgrupos_receitas($Campos_Crit, $Campos_Falta, $Campos_Erros);
       if ((!is_array($filtro) && ('' == $filtro || 'idtipos_receitas' == $filtro)) || (is_array($filtro) && in_array('idtipos_receitas', $filtro)))
         $this->ValidateField_idtipos_receitas($Campos_Crit, $Campos_Falta, $Campos_Erros);
       if ((!is_array($filtro) && ('' == $filtro || 'idnota_fiscal' == $filtro)) || (is_array($filtro) && in_array('idnota_fiscal', $filtro)))
@@ -2311,37 +2294,13 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
     {
         global $teste_validade;
         $hasError = false;
-      nm_limpa_data($this->competencia, $this->field_config['competencia']['date_sep']) ; 
-      $trab_dt_min = ""; 
-      $trab_dt_max = ""; 
-      if ($this->nmgp_opcao != "excluir") 
+      $this->nm_tira_mask($this->competencia, "99/9999", "(){}[].,;:-+/ "); 
+      if ($this->nmgp_opcao != "excluir" && (!isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['php_cmp_required']['competencia']) || $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['php_cmp_required']['competencia'] == "on")) 
       { 
-          $guarda_datahora = $this->field_config['competencia']['date_format']; 
-          if (false !== strpos($guarda_datahora, ';')) $this->field_config['competencia']['date_format'] = substr($guarda_datahora, 0, strpos($guarda_datahora, ';'));
-          $Format_Data = $this->field_config['competencia']['date_format']; 
-          nm_limpa_data($Format_Data, $this->field_config['competencia']['date_sep']) ; 
-          if (trim($this->competencia) != "")  
+          if ($this->competencia == "")  
           { 
-              if ($teste_validade->Data($this->competencia, $Format_Data, $trab_dt_min, $trab_dt_max) == false)  
-              { 
-                  $hasError = true;
-                  $Campos_Crit .= "COMPETÊNCIA; " ; 
-                  if (!isset($Campos_Erros['competencia']))
-                  {
-                      $Campos_Erros['competencia'] = array();
-                  }
-                  $Campos_Erros['competencia'][] = "" . $this->Ini->Nm_lang['lang_errm_ajax_data'] . "";
-                  if (!isset($this->NM_ajax_info['errList']['competencia']) || !is_array($this->NM_ajax_info['errList']['competencia']))
-                  {
-                      $this->NM_ajax_info['errList']['competencia'] = array();
-                  }
-                  $this->NM_ajax_info['errList']['competencia'][] = "" . $this->Ini->Nm_lang['lang_errm_ajax_data'] . "";
-              } 
-          } 
-           elseif (!isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['php_cmp_required']['competencia']) || $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['php_cmp_required']['competencia'] == "on") 
-           { 
               $hasError = true;
-              $Campos_Falta[] = "COMPETÊNCIA" ; 
+              $Campos_Falta[] =  "COMPETÊNCIA" ; 
               if (!isset($Campos_Erros['competencia']))
               {
                   $Campos_Erros['competencia'] = array();
@@ -2352,9 +2311,26 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
                       $this->NM_ajax_info['errList']['competencia'] = array();
                   }
                   $this->NM_ajax_info['errList']['competencia'][] = $this->Ini->Nm_lang['lang_errm_ajax_rqrd'];
-           } 
-          $this->field_config['competencia']['date_format'] = $guarda_datahora; 
-       } 
+          } 
+      } 
+      if ($this->nmgp_opcao != "excluir") 
+      { 
+          if (NM_utf8_strlen($this->competencia) > 7) 
+          { 
+              $hasError = true;
+              $Campos_Crit .= "COMPETÊNCIA " . $this->Ini->Nm_lang['lang_errm_mxch'] . " 7 " . $this->Ini->Nm_lang['lang_errm_nchr']; 
+              if (!isset($Campos_Erros['competencia']))
+              {
+                  $Campos_Erros['competencia'] = array();
+              }
+              $Campos_Erros['competencia'][] = $this->Ini->Nm_lang['lang_errm_mxch'] . " 7 " . $this->Ini->Nm_lang['lang_errm_nchr'];
+              if (!isset($this->NM_ajax_info['errList']['competencia']) || !is_array($this->NM_ajax_info['errList']['competencia']))
+              {
+                  $this->NM_ajax_info['errList']['competencia'] = array();
+              }
+              $this->NM_ajax_info['errList']['competencia'][] = $this->Ini->Nm_lang['lang_errm_mxch'] . " 7 " . $this->Ini->Nm_lang['lang_errm_nchr'];
+          } 
+      } 
         if ($hasError) {
             global $sc_seq_vert;
             $fieldName = 'competencia';
@@ -2475,50 +2451,6 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
             $this->NM_ajax_info['fieldsWithErrors'][] = $fieldName;
         }
     } // ValidateField_idforma_pagamento_prevista
-
-    function ValidateField_idgrupos_receitas(&$Campos_Crit, &$Campos_Falta, &$Campos_Erros)
-    {
-        global $teste_validade;
-        $hasError = false;
-      if ($this->idgrupos_receitas == "" && $this->nmgp_opcao != "excluir" && (!isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['php_cmp_required']['idgrupos_receitas']) || $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['php_cmp_required']['idgrupos_receitas'] == "on"))
-      {
-          $hasError = true;
-          $Campos_Falta[] = "GRUPO DE RECEITAS" ; 
-          if (!isset($Campos_Erros['idgrupos_receitas']))
-          {
-              $Campos_Erros['idgrupos_receitas'] = array();
-          }
-          $Campos_Erros['idgrupos_receitas'][] = $this->Ini->Nm_lang['lang_errm_ajax_rqrd'];
-          if (!isset($this->NM_ajax_info['errList']['idgrupos_receitas']) || !is_array($this->NM_ajax_info['errList']['idgrupos_receitas']))
-          {
-              $this->NM_ajax_info['errList']['idgrupos_receitas'] = array();
-          }
-          $this->NM_ajax_info['errList']['idgrupos_receitas'][] = $this->Ini->Nm_lang['lang_errm_ajax_rqrd'];
-      }
-          if (!empty($this->idgrupos_receitas) && isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas']) && !in_array($this->idgrupos_receitas, $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas']))
-          {
-              $hasError = true;
-              $Campos_Crit .= $this->Ini->Nm_lang['lang_errm_ajax_data'];
-              if (!isset($Campos_Erros['idgrupos_receitas']))
-              {
-                  $Campos_Erros['idgrupos_receitas'] = array();
-              }
-              $Campos_Erros['idgrupos_receitas'][] = $this->Ini->Nm_lang['lang_errm_ajax_data'];
-              if (!isset($this->NM_ajax_info['errList']['idgrupos_receitas']) || !is_array($this->NM_ajax_info['errList']['idgrupos_receitas']))
-              {
-                  $this->NM_ajax_info['errList']['idgrupos_receitas'] = array();
-              }
-              $this->NM_ajax_info['errList']['idgrupos_receitas'][] = $this->Ini->Nm_lang['lang_errm_ajax_data'];
-          }
-        if ($hasError) {
-            global $sc_seq_vert;
-            $fieldName = 'idgrupos_receitas';
-            if (isset($sc_seq_vert) && '' != $sc_seq_vert) {
-                $fieldName .= $sc_seq_vert;
-            }
-            $this->NM_ajax_info['fieldsWithErrors'][] = $fieldName;
-        }
-    } // ValidateField_idgrupos_receitas
 
     function ValidateField_idtipos_receitas(&$Campos_Crit, &$Campos_Falta, &$Campos_Erros)
     {
@@ -3055,7 +2987,6 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
     $this->nmgp_dados_form['competencia'] = $this->competencia;
     $this->nmgp_dados_form['valor_a_receber'] = $this->valor_a_receber;
     $this->nmgp_dados_form['idforma_pagamento_prevista'] = $this->idforma_pagamento_prevista;
-    $this->nmgp_dados_form['idgrupos_receitas'] = $this->idgrupos_receitas;
     $this->nmgp_dados_form['idtipos_receitas'] = $this->idtipos_receitas;
     $this->nmgp_dados_form['idnota_fiscal'] = $this->idnota_fiscal;
     $this->nmgp_dados_form['data_emissao'] = $this->data_emissao;
@@ -3069,6 +3000,7 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
     $this->nmgp_dados_form['data_pagamento'] = $this->data_pagamento;
     $this->nmgp_dados_form['observacoes'] = $this->observacoes;
     $this->nmgp_dados_form['idforma_pagamento'] = $this->idforma_pagamento;
+    $this->nmgp_dados_form['idgrupos_receitas'] = $this->idgrupos_receitas;
     $this->nmgp_dados_form['idorcamento'] = $this->idorcamento;
     $this->nmgp_dados_form['numero_conta'] = $this->numero_conta;
     $this->nmgp_dados_form['valor_recebido'] = $this->valor_recebido;
@@ -3078,6 +3010,7 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
     $this->nmgp_dados_form['data_alteracao'] = $this->data_alteracao;
     $this->nmgp_dados_form['taxa_administrativa'] = $this->taxa_administrativa;
     $this->nmgp_dados_form['troco'] = $this->troco;
+    $this->nmgp_dados_form['inf_tipo_receita'] = $this->inf_tipo_receita;
     $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['dados_form'] = $this->nmgp_dados_form;
    }
    function nm_tira_formatacao()
@@ -3088,7 +3021,7 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
       $this->Before_unformat['idcontas_receber'] = $this->idcontas_receber;
       nm_limpa_numero($this->idcontas_receber, $this->field_config['idcontas_receber']['symbol_grp']) ; 
       $this->Before_unformat['competencia'] = $this->competencia;
-      nm_limpa_data($this->competencia, $this->field_config['competencia']['date_sep']) ; 
+      $this->nm_tira_mask($this->competencia, "99/9999", "(){}[].,;:-+/ "); 
       $this->Before_unformat['valor_a_receber'] = $this->valor_a_receber;
       if (!empty($this->field_config['valor_a_receber']['symbol_dec']))
       {
@@ -3186,6 +3119,10 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
       {
           nm_limpa_numero($this->idcontas_receber, $this->field_config['idcontas_receber']['symbol_grp']) ; 
       }
+      if ($Nome_Campo == "competencia")
+      {
+          $this->nm_tira_mask($this->competencia, "99/9999", "(){}[].,;:-+/ "); 
+      }
       if ($Nome_Campo == "valor_a_receber")
       {
           if (!empty($this->field_config['valor_a_receber']['symbol_dec']))
@@ -3251,14 +3188,9 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
       {
           nmgp_Form_Num_Val($this->idcontas_receber, $this->field_config['idcontas_receber']['symbol_grp'], $this->field_config['idcontas_receber']['symbol_dec'], "0", "S", $this->field_config['idcontas_receber']['format_neg'], "", "", "-", $this->field_config['idcontas_receber']['symbol_fmt']) ; 
       }
-      $this->competencia = trim($this->competencia);
-      if ($this->competencia == "")
-      {
-          $this->competencia = "";
-      }
       if (!empty($this->competencia) || (!empty($format_fields) && isset($format_fields['competencia'])))
       {
-          nm_conv_form_data($this->competencia, "", $this->field_config['competencia']['date_format'], array($this->field_config['competencia']['date_sep'])) ;  
+          $this->nm_gera_mask($this->competencia, "99/9999"); 
       }
       if ('' !== $this->valor_a_receber || (!empty($format_fields) && isset($format_fields['valor_a_receber'])))
       {
@@ -3786,7 +3718,6 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
           $this->ajax_return_values_competencia();
           $this->ajax_return_values_valor_a_receber();
           $this->ajax_return_values_idforma_pagamento_prevista();
-          $this->ajax_return_values_idgrupos_receitas();
           $this->ajax_return_values_idtipos_receitas();
           $this->ajax_return_values_idnota_fiscal();
           $this->ajax_return_values_data_emissao();
@@ -4053,7 +3984,7 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']
           $this->NM_ajax_info['fldList']['competencia'] = array(
                        'row'    => '',
                'type'    => 'text',
-               'valList' => array($sTmpValue),
+               'valList' => array($this->form_encode_input($sTmpValue)),
               );
           }
    }
@@ -4274,27 +4205,25 @@ else
           }
    }
 
-          //----- idgrupos_receitas
-   function ajax_return_values_idgrupos_receitas($bForce = false)
+          //----- idtipos_receitas
+   function ajax_return_values_idtipos_receitas($bForce = false)
    {
-          if ('navigate_form' == $this->NM_ajax_opcao || 'backup_line' == $this->NM_ajax_opcao || (isset($this->nmgp_refresh_fields) && in_array("idgrupos_receitas", $this->nmgp_refresh_fields)) || $bForce)
+          if ('navigate_form' == $this->NM_ajax_opcao || 'backup_line' == $this->NM_ajax_opcao || (isset($this->nmgp_refresh_fields) && in_array("idtipos_receitas", $this->nmgp_refresh_fields)) || $bForce)
           {
-              $sTmpValue = NM_charset_to_utf8($this->idgrupos_receitas);
+              $sTmpValue = NM_charset_to_utf8($this->idtipos_receitas);
               $aLookup = array();
-              $this->_tmp_lookup_idgrupos_receitas = $this->idgrupos_receitas;
+              $this->_tmp_lookup_idtipos_receitas = $this->idtipos_receitas;
 
  
 $nmgp_def_dados = "" ; 
-if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas']))
+if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']))
 {
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas']); 
+    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']); 
 }
 else
 {
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas'] = array(); 
+    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array(); 
 }
-$aLookup[] = array(form_contas_receber_criar_titulo_pack_protect_string('') => str_replace('<', '&lt;',form_contas_receber_criar_titulo_pack_protect_string(' ')));
-$_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas'][] = '';
    if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
    { 
        $GLOBALS["NM_ERRO_IBASE"] = 1;  
@@ -4388,147 +4317,7 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']
           $sc_field_4_val_str .= "'$Tmp_val_cmp'";
        }
    }
-   $nm_comando = "SELECT idgrupos_receitas, descricao  FROM grupos_receitas  ORDER BY descricao";
-
-   $this->idcontas_receber = $old_value_idcontas_receber;
-   $this->competencia = $old_value_competencia;
-   $this->valor_a_receber = $old_value_valor_a_receber;
-   $this->idnota_fiscal = $old_value_idnota_fiscal;
-   $this->data_emissao = $old_value_data_emissao;
-   $this->data_vencimento = $old_value_data_vencimento;
-   $this->sc_field_0 = $old_value_sc_field_0;
-   $this->sc_field_1 = $old_value_sc_field_1;
-   $this->data_pagamento = $old_value_data_pagamento;
-
-   $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
-   $_SESSION['scriptcase']['sc_sql_ult_conexao'] = '';
-   if ($nm_comando != "" && $rs = $this->Db->Execute($nm_comando))
-   {
-       while (!$rs->EOF) 
-       { 
-              $rs->fields[0] = str_replace(',', '.', $rs->fields[0]);
-              $rs->fields[0] = (strpos(strtolower($rs->fields[0]), "e")) ? (float)$rs->fields[0] : $rs->fields[0];
-              $rs->fields[0] = (string)$rs->fields[0];
-              $aLookup[] = array(form_contas_receber_criar_titulo_pack_protect_string(NM_charset_to_utf8($rs->fields[0])) => str_replace('<', '&lt;', form_contas_receber_criar_titulo_pack_protect_string(NM_charset_to_utf8($rs->fields[1]))));
-              $nmgp_def_dados .= $rs->fields[1] . "?#?" ; 
-              $nmgp_def_dados .= $rs->fields[0] . "?#?N?@?" ; 
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas'][] = $rs->fields[0];
-              $rs->MoveNext() ; 
-       } 
-       $rs->Close() ; 
-   } 
-   elseif ($GLOBALS["NM_ERRO_IBASE"] != 1 && $nm_comando != "")  
-   {  
-       $this->Erro->mensagem(__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dber'], $this->Db->ErrorMsg()); 
-       exit; 
-   } 
-   $GLOBALS["NM_ERRO_IBASE"] = 0; 
-          $aLookupOrig = $aLookup;
-          $sSelComp = "name=\"idgrupos_receitas\"";
-          if (isset($this->NM_ajax_info['select_html']['idgrupos_receitas']) && !empty($this->NM_ajax_info['select_html']['idgrupos_receitas']))
-          {
-              $sSelComp = str_replace('{SC_100PERC_CLASS_INPUT}', $this->classes_100perc_fields['input'], $this->NM_ajax_info['select_html']['idgrupos_receitas']);
-          }
-          $sLookup = '';
-          if (empty($aLookup))
-          {
-              $aLookup[] = array('' => '');
-          }
-          foreach ($aLookup as $aOption)
-          {
-              foreach ($aOption as $sValue => $sLabel)
-              {
-
-                  if ($this->idgrupos_receitas == $sValue)
-                  {
-                      $this->_tmp_lookup_idgrupos_receitas = $sLabel;
-                  }
-
-                  $sOpt     = ($sValue !== $sLabel) ? $sValue : $sLabel;
-                  $sLookup .= "<option value=\"" . $sOpt . "\">" . $sLabel . "</option>";
-              }
-          }
-          $aLookup  = $sLookup;
-          $this->NM_ajax_info['fldList']['idgrupos_receitas'] = array(
-                       'row'    => '',
-               'type'    => 'select',
-               'valList' => array($sTmpValue),
-               'optList' => $aLookup,
-              );
-          $aLabel     = array();
-          $aLabelTemp = array();
-          foreach ($this->NM_ajax_info['fldList']['idgrupos_receitas']['valList'] as $i => $v)
-          {
-              $this->NM_ajax_info['fldList']['idgrupos_receitas']['valList'][$i] = form_contas_receber_criar_titulo_pack_protect_string($v);
-          }
-          foreach ($aLookupOrig as $aValData)
-          {
-              if (in_array(key($aValData), $this->NM_ajax_info['fldList']['idgrupos_receitas']['valList']))
-              {
-                  $aLabelTemp[key($aValData)] = current($aValData);
-              }
-          }
-          foreach ($this->NM_ajax_info['fldList']['idgrupos_receitas']['valList'] as $iIndex => $sValue)
-          {
-              $aLabel[$iIndex] = (isset($aLabelTemp[$sValue])) ? $aLabelTemp[$sValue] : $sValue;
-          }
-          $this->NM_ajax_info['fldList']['idgrupos_receitas']['labList'] = $aLabel;
-          }
-   }
-
-          //----- idtipos_receitas
-   function ajax_return_values_idtipos_receitas($bForce = false)
-   {
-          if ('navigate_form' == $this->NM_ajax_opcao || 'backup_line' == $this->NM_ajax_opcao || (isset($this->nmgp_refresh_fields) && in_array("idtipos_receitas", $this->nmgp_refresh_fields)) || $bForce)
-          {
-              $sTmpValue = NM_charset_to_utf8($this->idtipos_receitas);
-              $aLookup = array();
-              $this->_tmp_lookup_idtipos_receitas = $this->idtipos_receitas;
-
- 
-$nmgp_def_dados = "" ; 
-if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']))
-{
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']); 
-}
-else
-{
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array(); 
-}
-if ($this->idgrupos_receitas != "")
-{ 
-   $this->nm_clear_val("idgrupos_receitas");
-   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
-   { 
-       $GLOBALS["NM_ERRO_IBASE"] = 1;  
-   } 
-   $nm_nao_carga = false;
-   $nmgp_def_dados = "" ; 
-
-   $old_value_idcontas_receber = $this->idcontas_receber;
-   $old_value_competencia = $this->competencia;
-   $old_value_valor_a_receber = $this->valor_a_receber;
-   $old_value_idnota_fiscal = $this->idnota_fiscal;
-   $old_value_data_emissao = $this->data_emissao;
-   $old_value_data_vencimento = $this->data_vencimento;
-   $old_value_sc_field_0 = $this->sc_field_0;
-   $old_value_sc_field_1 = $this->sc_field_1;
-   $old_value_data_pagamento = $this->data_pagamento;
-   $this->nm_tira_formatacao();
-   $this->nm_converte_datas(false);
-
-
-   $unformatted_value_idcontas_receber = $this->idcontas_receber;
-   $unformatted_value_competencia = $this->competencia;
-   $unformatted_value_valor_a_receber = $this->valor_a_receber;
-   $unformatted_value_idnota_fiscal = $this->idnota_fiscal;
-   $unformatted_value_data_emissao = $this->data_emissao;
-   $unformatted_value_data_vencimento = $this->data_vencimento;
-   $unformatted_value_sc_field_0 = $this->sc_field_0;
-   $unformatted_value_sc_field_1 = $this->sc_field_1;
-   $unformatted_value_data_pagamento = $this->data_pagamento;
-
-   $nm_comando = "SELECT idtipos_receitas, descricao  FROM tipos_receitas  where idgrupos_receita = $this->idgrupos_receitas ORDER BY descricao";
+   $nm_comando = "SELECT idtipos_receitas, descricao  FROM tipos_receitas ORDER BY descricao";
 
    $this->idcontas_receber = $old_value_idcontas_receber;
    $this->competencia = $old_value_competencia;
@@ -4563,7 +4352,6 @@ if ($this->idgrupos_receitas != "")
        exit; 
    } 
    $GLOBALS["NM_ERRO_IBASE"] = 0; 
-} 
           $aLookupOrig = $aLookup;
           $sSelComp = "name=\"idtipos_receitas\"";
           if (isset($this->NM_ajax_info['select_html']['idtipos_receitas']) && !empty($this->NM_ajax_info['select_html']['idtipos_receitas']))
@@ -4592,7 +4380,7 @@ if ($this->idgrupos_receitas != "")
           $aLookup  = $sLookup;
           $this->NM_ajax_info['fldList']['idtipos_receitas'] = array(
                        'row'    => '',
-               'type'    => 'select',
+               'type'    => 'selectdd',
                'valList' => array($sTmpValue),
                'optList' => $aLookup,
               );
@@ -5007,6 +4795,32 @@ $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']
    } // ajax_add_parameters
   function nm_proc_onload($bFormat = true)
   {
+      if (!$this->NM_ajax_flag || !isset($this->nmgp_refresh_fields)) {
+      $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'on';
+if (isset($this->NM_ajax_flag) && $this->NM_ajax_flag)
+{
+    $original_competencia = $this->competencia;
+}
+  $v_data_atual = date('mY');
+
+$this->competencia  = $v_data_atual;
+if (isset($this->NM_ajax_flag) && $this->NM_ajax_flag)
+{
+    if (($original_competencia != $this->competencia || (isset($bFlagRead_competencia) && $bFlagRead_competencia)))
+    {
+        $this->ajax_return_values_competencia(true);
+    }
+}
+$_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off'; 
+      }
+      if (empty($this->data_insercao))
+      {
+          $this->data_insercao_hora = $this->data_insercao;
+      }
+      if (empty($this->data_alteracao))
+      {
+          $this->data_alteracao_hora = $this->data_alteracao;
+      }
       $this->nm_guardar_campos();
       if ($bFormat) $this->nm_formatar_campos();
   }
@@ -5297,7 +5111,6 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
       $NM_val_form['competencia'] = $this->competencia;
       $NM_val_form['valor_a_receber'] = $this->valor_a_receber;
       $NM_val_form['idforma_pagamento_prevista'] = $this->idforma_pagamento_prevista;
-      $NM_val_form['idgrupos_receitas'] = $this->idgrupos_receitas;
       $NM_val_form['idtipos_receitas'] = $this->idtipos_receitas;
       $NM_val_form['idnota_fiscal'] = $this->idnota_fiscal;
       $NM_val_form['data_emissao'] = $this->data_emissao;
@@ -5311,6 +5124,7 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
       $NM_val_form['data_pagamento'] = $this->data_pagamento;
       $NM_val_form['observacoes'] = $this->observacoes;
       $NM_val_form['idforma_pagamento'] = $this->idforma_pagamento;
+      $NM_val_form['idgrupos_receitas'] = $this->idgrupos_receitas;
       $NM_val_form['idorcamento'] = $this->idorcamento;
       $NM_val_form['numero_conta'] = $this->numero_conta;
       $NM_val_form['valor_recebido'] = $this->valor_recebido;
@@ -5320,6 +5134,7 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
       $NM_val_form['data_alteracao'] = $this->data_alteracao;
       $NM_val_form['taxa_administrativa'] = $this->taxa_administrativa;
       $NM_val_form['troco'] = $this->troco;
+      $NM_val_form['inf_tipo_receita'] = $this->inf_tipo_receita;
       if ($this->idcontas_receber === "" || is_null($this->idcontas_receber))  
       { 
           $this->idcontas_receber = 0;
@@ -5460,6 +5275,13 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
               $this->data_alteracao = "null"; 
               $NM_val_null[] = "data_alteracao";
           } 
+          $this->inf_tipo_receita_before_qstr = $this->inf_tipo_receita;
+          $this->inf_tipo_receita = substr($this->Db->qstr($this->inf_tipo_receita), 1, -1); 
+          if ($this->inf_tipo_receita == "" && in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))  
+          { 
+              $this->inf_tipo_receita = "null"; 
+              $NM_val_null[] = "inf_tipo_receita";
+          } 
       }
       if ($this->nmgp_opcao == "alterar") 
       {
@@ -5516,26 +5338,30 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
               if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_access))
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento_prevista = $this->idforma_pagamento_prevista, idgrupos_receitas = $this->idgrupos_receitas, idtipos_receitas = $this->idtipos_receitas, idnota_fiscal = $this->idnota_fiscal, data_emissao = '$this->data_emissao', data_vencimento = '$this->data_vencimento', valor_a_receber = $this->valor_a_receber, data_pagamento = '$this->data_pagamento', pago = '$this->pago', observacoes = '$this->observacoes', competencia = '$this->competencia'"; 
+                  $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento_prevista = $this->idforma_pagamento_prevista, idtipos_receitas = $this->idtipos_receitas, idnota_fiscal = $this->idnota_fiscal, data_emissao = '$this->data_emissao', data_vencimento = '$this->data_vencimento', valor_a_receber = $this->valor_a_receber, data_pagamento = '$this->data_pagamento', pago = '$this->pago', observacoes = '$this->observacoes', competencia = '$this->competencia'"; 
               } 
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_mysql))
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento_prevista = $this->idforma_pagamento_prevista, idgrupos_receitas = $this->idgrupos_receitas, idtipos_receitas = $this->idtipos_receitas, idnota_fiscal = $this->idnota_fiscal, data_emissao = '$this->data_emissao', data_vencimento = '$this->data_vencimento', valor_a_receber = $this->valor_a_receber, data_pagamento = '$this->data_pagamento', pago = '$this->pago', observacoes = '$this->observacoes', competencia = '$this->competencia'"; 
+                  $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento_prevista = $this->idforma_pagamento_prevista, idtipos_receitas = $this->idtipos_receitas, idnota_fiscal = $this->idnota_fiscal, data_emissao = '$this->data_emissao', data_vencimento = '$this->data_vencimento', valor_a_receber = $this->valor_a_receber, data_pagamento = '$this->data_pagamento', pago = '$this->pago', observacoes = '$this->observacoes', competencia = '$this->competencia'"; 
               } 
               elseif (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento_prevista = $this->idforma_pagamento_prevista, idgrupos_receitas = $this->idgrupos_receitas, idtipos_receitas = $this->idtipos_receitas, idnota_fiscal = $this->idnota_fiscal, data_emissao = '$this->data_emissao', data_vencimento = '$this->data_vencimento', valor_a_receber = $this->valor_a_receber, data_pagamento = '$this->data_pagamento', pago = '$this->pago', competencia = '$this->competencia'"; 
+                  $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento_prevista = $this->idforma_pagamento_prevista, idtipos_receitas = $this->idtipos_receitas, idnota_fiscal = $this->idnota_fiscal, data_emissao = '$this->data_emissao', data_vencimento = '$this->data_vencimento', valor_a_receber = $this->valor_a_receber, data_pagamento = '$this->data_pagamento', pago = '$this->pago', competencia = '$this->competencia'"; 
               } 
               else 
               { 
                   $comando = "UPDATE " . $this->Ini->nm_tabela . " SET ";  
-                  $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento_prevista = $this->idforma_pagamento_prevista, idgrupos_receitas = $this->idgrupos_receitas, idtipos_receitas = $this->idtipos_receitas, idnota_fiscal = $this->idnota_fiscal, data_emissao = '$this->data_emissao', data_vencimento = '$this->data_vencimento', valor_a_receber = $this->valor_a_receber, data_pagamento = '$this->data_pagamento', pago = '$this->pago', observacoes = '$this->observacoes', competencia = '$this->competencia'"; 
+                  $SC_fields_update[] = "idcliente = $this->idcliente, idforma_pagamento_prevista = $this->idforma_pagamento_prevista, idtipos_receitas = $this->idtipos_receitas, idnota_fiscal = $this->idnota_fiscal, data_emissao = '$this->data_emissao', data_vencimento = '$this->data_vencimento', valor_a_receber = $this->valor_a_receber, data_pagamento = '$this->data_pagamento', pago = '$this->pago', observacoes = '$this->observacoes', competencia = '$this->competencia'"; 
               } 
               if (isset($NM_val_form['idforma_pagamento']) && $NM_val_form['idforma_pagamento'] != $this->nmgp_dados_select['idforma_pagamento']) 
               { 
                   $SC_fields_update[] = "idforma_pagamento = $this->idforma_pagamento"; 
+              } 
+              if (isset($NM_val_form['idgrupos_receitas']) && $NM_val_form['idgrupos_receitas'] != $this->nmgp_dados_select['idgrupos_receitas']) 
+              { 
+                  $SC_fields_update[] = "idgrupos_receitas = $this->idgrupos_receitas"; 
               } 
               if (isset($NM_val_form['idorcamento']) && $NM_val_form['idorcamento'] != $this->nmgp_dados_select['idorcamento']) 
               { 
@@ -5616,6 +5442,7 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
               $this->pago = $this->pago_before_qstr;
               $this->observacoes = $this->observacoes_before_qstr;
               $this->competencia = $this->competencia_before_qstr;
+              $this->inf_tipo_receita = $this->inf_tipo_receita_before_qstr;
               if (in_array(strtolower($this->Ini->nm_tpbanco), $nm_bases_lob_geral))
               { 
                   if (isset($NM_val_form['observacoes']) && $NM_val_form['observacoes'] != $this->nmgp_dados_select['observacoes']) 
@@ -5654,8 +5481,6 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
               elseif (isset($this->idcliente)) { $this->nm_limpa_alfa($this->idcliente); }
               if     (isset($NM_val_form) && isset($NM_val_form['idforma_pagamento_prevista'])) { $this->idforma_pagamento_prevista = $NM_val_form['idforma_pagamento_prevista']; }
               elseif (isset($this->idforma_pagamento_prevista)) { $this->nm_limpa_alfa($this->idforma_pagamento_prevista); }
-              if     (isset($NM_val_form) && isset($NM_val_form['idgrupos_receitas'])) { $this->idgrupos_receitas = $NM_val_form['idgrupos_receitas']; }
-              elseif (isset($this->idgrupos_receitas)) { $this->nm_limpa_alfa($this->idgrupos_receitas); }
               if     (isset($NM_val_form) && isset($NM_val_form['idtipos_receitas'])) { $this->idtipos_receitas = $NM_val_form['idtipos_receitas']; }
               elseif (isset($this->idtipos_receitas)) { $this->nm_limpa_alfa($this->idtipos_receitas); }
               if     (isset($NM_val_form) && isset($NM_val_form['idnota_fiscal'])) { $this->idnota_fiscal = $NM_val_form['idnota_fiscal']; }
@@ -5672,7 +5497,7 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
               $this->nm_formatar_campos();
 
               $aOldRefresh               = $this->nmgp_refresh_fields;
-              $this->nmgp_refresh_fields = array_diff(array('idcontas_receber', 'idcliente', 'competencia', 'valor_a_receber', 'idforma_pagamento_prevista', 'idgrupos_receitas', 'idtipos_receitas', 'idnota_fiscal', 'data_emissao', 'data_vencimento', 'sc_field_0', 'sc_field_1', 'sc_field_2', 'sc_field_3', 'sc_field_4', 'pago', 'data_pagamento', 'observacoes'), $aDoNotUpdate);
+              $this->nmgp_refresh_fields = array_diff(array('idcontas_receber', 'idcliente', 'competencia', 'valor_a_receber', 'idforma_pagamento_prevista', 'idtipos_receitas', 'idnota_fiscal', 'data_emissao', 'data_vencimento', 'sc_field_0', 'sc_field_1', 'sc_field_2', 'sc_field_3', 'sc_field_4', 'pago', 'data_pagamento', 'observacoes'), $aDoNotUpdate);
               $this->ajax_return_values();
               $this->nmgp_refresh_fields = $aOldRefresh;
 
@@ -5876,6 +5701,7 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
               $this->pago = $this->pago_before_qstr;
               $this->observacoes = $this->observacoes_before_qstr;
               $this->competencia = $this->competencia_before_qstr;
+              $this->inf_tipo_receita = $this->inf_tipo_receita_before_qstr;
               if (in_array(strtolower($this->Ini->nm_tpbanco), $nm_bases_lob_geral))
               { 
                   if (trim($this->observacoes ) != "") 
@@ -5908,6 +5734,7 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
               $this->pago = $this->pago_before_qstr;
               $this->observacoes = $this->observacoes_before_qstr;
               $this->competencia = $this->competencia_before_qstr;
+              $this->inf_tipo_receita = $this->inf_tipo_receita_before_qstr;
               if (empty($this->sc_erro_insert)) {
                   $this->record_insert_ok = true;
               } 
@@ -6358,7 +6185,7 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
               $this->nmgp_dados_form["situacao"] = $this->situacao;
               $this->juros = "";  
               $this->nmgp_dados_form["juros"] = $this->juros;
-              $this->competencia =  date('Y') . "-" . date('m')  . "-" . date('d');
+              $this->competencia = "";  
               $this->nmgp_dados_form["competencia"] = $this->competencia;
               $this->data_insercao = "";  
               $this->data_insercao_hora = "" ;  
@@ -6380,6 +6207,8 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
               $this->nmgp_dados_form["sc_field_3"] = $this->sc_field_3;
               $this->sc_field_4 = "";  
               $this->nmgp_dados_form["sc_field_4"] = $this->sc_field_4;
+              $this->inf_tipo_receita = "";  
+              $this->nmgp_dados_form["inf_tipo_receita"] = $this->inf_tipo_receita;
               $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['dados_form'] = $this->nmgp_dados_form;
               $this->formatado = false;
           }
@@ -6442,6 +6271,46 @@ function gravar_contas_receber()
 {
 $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'on';
   
+$check_sql = "SELECT idgrupos_receita"
+   . " FROM tipos_receitas"
+   . " WHERE idtipos_receitas = '" . $this->idtipos_receitas  . "'";
+ 
+      $nm_select = $check_sql; 
+      $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_select; 
+      $_SESSION['scriptcase']['sc_sql_ult_conexao'] = ''; 
+      $this->rs = array();
+      if ($SCrx = $this->Db->Execute($nm_select)) 
+      { 
+          $SCy = 0; 
+          $nm_count = $SCrx->FieldCount();
+          while (!$SCrx->EOF)
+          { 
+                 for ($SCx = 0; $SCx < $nm_count; $SCx++)
+                 { 
+                      $this->rs[$SCy] [$SCx] = $SCrx->fields[$SCx];
+                 }
+                 $SCy++; 
+                 $SCrx->MoveNext();
+          } 
+          $SCrx->Close();
+      } 
+      elseif (isset($GLOBALS["NM_ERRO_IBASE"]) && $GLOBALS["NM_ERRO_IBASE"] != 1)  
+      { 
+          $this->rs = false;
+          $this->rs_erro = $this->Db->ErrorMsg();
+      } 
+;
+
+if (isset($this->rs[0][0]))     
+{
+    $v_idgrupos_receitas= $this->rs[0][0];
+}
+		else     
+{
+	$v_idgrupos_receitas= '1';
+}
+
+
 $xValorParcela = $this->valor_a_receber ;
 
 if($this->sc_field_2  == 'T'){
@@ -6507,7 +6376,7 @@ $procedure_fields = array(
      "'".$this->idcliente ."'",
      "'".$this->idforma_pagamento_prevista ."'",
 	 "'".$this->idforma_pagamento ."'",
-	 "'".$this->idgrupos_receitas ."'",
+	 "'".$v_idgrupos_receitas."'",
 	 "'".$this->idtipos_receitas ."'",
 	 "'".$this->idorcamento ."'",
 	 "'".$this->idnota_fiscal ."'",
@@ -6618,14 +6487,13 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'on'
 $original_idcliente = $this->idcliente;
 $original_competencia = $this->competencia;
 $original_valor_a_receber = $this->valor_a_receber;
-$original_idgrupos_receitas = $this->idgrupos_receitas;
 $original_pago = $this->pago;
 $original_data_pagamento = $this->data_pagamento;
+$original_idtipos_receitas = $this->idtipos_receitas;
 $original_sc_field_2 = $this->sc_field_2;
 $original_sc_field_0 = $this->sc_field_0;
 $original_data_vencimento = $this->data_vencimento;
 $original_idforma_pagamento_prevista = $this->idforma_pagamento_prevista;
-$original_idtipos_receitas = $this->idtipos_receitas;
 $original_idnota_fiscal = $this->idnota_fiscal;
 $original_data_emissao = $this->data_emissao;
 $original_observacoes = $this->observacoes;
@@ -6636,32 +6504,33 @@ $original_sc_field_4 = $this->sc_field_4;
 if($this->idcliente  == ''){
 	$this->nm_mens_alert[] = "Selecione um cliente!"; $this->nm_params_alert[] = array(); if ($this->NM_ajax_flag) { $this->sc_ajax_alert("Selecione um cliente!"); }}else if(($this->competencia  == '') or ($this->competencia  == 'MM/AAAA')){
 	$this->nm_mens_alert[] = "Coloque o mês e ano de competência!"; $this->nm_params_alert[] = array(); if ($this->NM_ajax_flag) { $this->sc_ajax_alert("Coloque o mês e ano de competência!"); }}else if(($this->valor_a_receber  == '') or ($this->valor_a_receber  == 0.00)){
-	$this->nm_mens_alert[] = "Informe o valor a receber!"; $this->nm_params_alert[] = array(); if ($this->NM_ajax_flag) { $this->sc_ajax_alert("Informe o valor a receber!"); }}else if($this->idgrupos_receitas  == ''){
-	$this->nm_mens_alert[] = "Informe o grupo de receitas!"; $this->nm_params_alert[] = array(); if ($this->NM_ajax_flag) { $this->sc_ajax_alert("Informe o grupo de receitas!"); }}else if(($this->pago  == 'T') && ($this->data_pagamento  == '')){
+	$this->nm_mens_alert[] = "Informe o valor a receber!"; $this->nm_params_alert[] = array(); if ($this->NM_ajax_flag) { $this->sc_ajax_alert("Informe o valor a receber!"); }}else if(($this->pago  == 'T') && ($this->data_pagamento  == '')){
 	$this->nm_mens_alert[] = "Informe a data de recebimento!"; $this->nm_params_alert[] = array(); if ($this->NM_ajax_flag) { $this->sc_ajax_alert("Informe a data de recebimento!"); }}else {
 	$this->gravar_contas_receber();	
 	$this->sc_ajax_javascript('reload');
 	$this->nm_mens_alert[] = "Registro incluido com sucesso!"; $this->nm_params_alert[] = array(); if ($this->NM_ajax_flag) { $this->sc_ajax_alert("Registro incluido com sucesso!"); }}
 
 
+
+
+
 $modificado_idcliente = $this->idcliente;
 $modificado_competencia = $this->competencia;
 $modificado_valor_a_receber = $this->valor_a_receber;
-$modificado_idgrupos_receitas = $this->idgrupos_receitas;
 $modificado_pago = $this->pago;
 $modificado_data_pagamento = $this->data_pagamento;
+$modificado_idtipos_receitas = $this->idtipos_receitas;
 $modificado_sc_field_2 = $this->sc_field_2;
 $modificado_sc_field_0 = $this->sc_field_0;
 $modificado_data_vencimento = $this->data_vencimento;
 $modificado_idforma_pagamento_prevista = $this->idforma_pagamento_prevista;
-$modificado_idtipos_receitas = $this->idtipos_receitas;
 $modificado_idnota_fiscal = $this->idnota_fiscal;
 $modificado_data_emissao = $this->data_emissao;
 $modificado_observacoes = $this->observacoes;
 $modificado_sc_field_3 = $this->sc_field_3;
 $modificado_sc_field_1 = $this->sc_field_1;
 $modificado_sc_field_4 = $this->sc_field_4;
-$this->nm_formatar_campos('idcliente', 'competencia', 'valor_a_receber', 'idgrupos_receitas', 'pago', 'data_pagamento', 'sc_field_2', 'sc_field_0', 'data_vencimento', 'idforma_pagamento_prevista', 'idtipos_receitas', 'idnota_fiscal', 'data_emissao', 'observacoes', 'sc_field_3', 'sc_field_1', 'sc_field_4');
+$this->nm_formatar_campos('idcliente', 'competencia', 'valor_a_receber', 'pago', 'data_pagamento', 'idtipos_receitas', 'sc_field_2', 'sc_field_0', 'data_vencimento', 'idforma_pagamento_prevista', 'idnota_fiscal', 'data_emissao', 'observacoes', 'sc_field_3', 'sc_field_1', 'sc_field_4');
 if ($original_idcliente !== $modificado_idcliente || isset($this->nmgp_cmp_readonly['idcliente']) || (isset($bFlagRead_idcliente) && $bFlagRead_idcliente))
 {
     $this->ajax_return_values_idcliente(true);
@@ -6674,10 +6543,6 @@ if ($original_valor_a_receber !== $modificado_valor_a_receber || isset($this->nm
 {
     $this->ajax_return_values_valor_a_receber(true);
 }
-if ($original_idgrupos_receitas !== $modificado_idgrupos_receitas || isset($this->nmgp_cmp_readonly['idgrupos_receitas']) || (isset($bFlagRead_idgrupos_receitas) && $bFlagRead_idgrupos_receitas))
-{
-    $this->ajax_return_values_idgrupos_receitas(true);
-}
 if ($original_pago !== $modificado_pago || isset($this->nmgp_cmp_readonly['pago']) || (isset($bFlagRead_pago) && $bFlagRead_pago))
 {
     $this->ajax_return_values_pago(true);
@@ -6685,6 +6550,10 @@ if ($original_pago !== $modificado_pago || isset($this->nmgp_cmp_readonly['pago'
 if ($original_data_pagamento !== $modificado_data_pagamento || isset($this->nmgp_cmp_readonly['data_pagamento']) || (isset($bFlagRead_data_pagamento) && $bFlagRead_data_pagamento))
 {
     $this->ajax_return_values_data_pagamento(true);
+}
+if ($original_idtipos_receitas !== $modificado_idtipos_receitas || isset($this->nmgp_cmp_readonly['idtipos_receitas']) || (isset($bFlagRead_idtipos_receitas) && $bFlagRead_idtipos_receitas))
+{
+    $this->ajax_return_values_idtipos_receitas(true);
 }
 if ($original_sc_field_2 !== $modificado_sc_field_2 || isset($this->nmgp_cmp_readonly['sc_field_2']) || (isset($bFlagRead_sc_field_2) && $bFlagRead_sc_field_2))
 {
@@ -6701,10 +6570,6 @@ if ($original_data_vencimento !== $modificado_data_vencimento || isset($this->nm
 if ($original_idforma_pagamento_prevista !== $modificado_idforma_pagamento_prevista || isset($this->nmgp_cmp_readonly['idforma_pagamento_prevista']) || (isset($bFlagRead_idforma_pagamento_prevista) && $bFlagRead_idforma_pagamento_prevista))
 {
     $this->ajax_return_values_idforma_pagamento_prevista(true);
-}
-if ($original_idtipos_receitas !== $modificado_idtipos_receitas || isset($this->nmgp_cmp_readonly['idtipos_receitas']) || (isset($bFlagRead_idtipos_receitas) && $bFlagRead_idtipos_receitas))
-{
-    $this->ajax_return_values_idtipos_receitas(true);
 }
 if ($original_idnota_fiscal !== $modificado_idnota_fiscal || isset($this->nmgp_cmp_readonly['idnota_fiscal']) || (isset($bFlagRead_idnota_fiscal) && $bFlagRead_idnota_fiscal))
 {
@@ -6860,10 +6725,10 @@ $_SESSION['scriptcase']['form_contas_receber_criar_titulo']['contr_erro'] = 'off
     function form_highlight_search_quicksearch(&$result, $field, $value)
     {
         $searchOk = false;
-        if ('SC_all_Cmp' == $this->nmgp_fast_search && in_array($field, array("idcontas_receber", "idcliente", "competencia", "valor_a_receber", "idforma_pagamento_prevista", "idgrupos_receitas", "idtipos_receitas", "idnota_fiscal", "data_emissao", "data_vencimento", "pago", "data_pagamento", "observacoes"))) {
+        if ('SC_all_Cmp' == $this->nmgp_fast_search && in_array($field, array("idcontas_receber", "idcliente", "competencia", "valor_a_receber", "idforma_pagamento_prevista", "idtipos_receitas", "idnota_fiscal", "data_emissao", "data_vencimento", "pago", "data_pagamento", "observacoes"))) {
             $searchOk = true;
         }
-        elseif ($field == $this->nmgp_fast_search && in_array($field, array("idcontas_receber", "idcliente", "competencia", "valor_a_receber", "idforma_pagamento_prevista", "idgrupos_receitas", "idtipos_receitas", "idnota_fiscal", "data_emissao", "data_vencimento", "pago", "data_pagamento", "observacoes"))) {
+        elseif ($field == $this->nmgp_fast_search && in_array($field, array("idcontas_receber", "idcliente", "competencia", "valor_a_receber", "idforma_pagamento_prevista", "idtipos_receitas", "idnota_fiscal", "data_emissao", "data_vencimento", "pago", "data_pagamento", "observacoes"))) {
             $searchOk = true;
         }
 
@@ -7650,16 +7515,16 @@ else
    return $todo;
 
    }
-   function Form_lookup_idgrupos_receitas()
+   function Form_lookup_idtipos_receitas()
    {
 $nmgp_def_dados = "" ; 
-if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas']))
+if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']))
 {
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas']); 
+    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']); 
 }
 else
 {
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas'] = array(); 
+    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array(); 
 }
    if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
    { 
@@ -7667,13 +7532,13 @@ else
    } 
    $nm_nao_carga = false;
    $nmgp_def_dados = "" ; 
-   if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas']))
+   if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']))
    {
-       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas']); 
+       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']); 
    }
    else
    {
-       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas'] = array(); 
+       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array(); 
     }
 
    $old_value_idcontas_receber = $this->idcontas_receber;
@@ -7762,98 +7627,7 @@ else
           $sc_field_4_val_str .= "'$Tmp_val_cmp'";
        }
    }
-   $nm_comando = "SELECT idgrupos_receitas, descricao  FROM grupos_receitas  ORDER BY descricao";
-
-   $this->idcontas_receber = $old_value_idcontas_receber;
-   $this->competencia = $old_value_competencia;
-   $this->valor_a_receber = $old_value_valor_a_receber;
-   $this->idnota_fiscal = $old_value_idnota_fiscal;
-   $this->data_emissao = $old_value_data_emissao;
-   $this->data_vencimento = $old_value_data_vencimento;
-   $this->sc_field_0 = $old_value_sc_field_0;
-   $this->sc_field_1 = $old_value_sc_field_1;
-   $this->data_pagamento = $old_value_data_pagamento;
-
-   $_SESSION['scriptcase']['sc_sql_ult_comando'] = $nm_comando;
-   $_SESSION['scriptcase']['sc_sql_ult_conexao'] = '';
-   if ($nm_comando != "" && $rs = $this->Db->Execute($nm_comando))
-   {
-       while (!$rs->EOF) 
-       { 
-              $rs->fields[0] = str_replace(',', '.', $rs->fields[0]);
-              $rs->fields[0] = (strpos(strtolower($rs->fields[0]), "e")) ? (float)$rs->fields[0] : $rs->fields[0];
-              $rs->fields[0] = (string)$rs->fields[0];
-              $nmgp_def_dados .= $rs->fields[1] . "?#?" ; 
-              $nmgp_def_dados .= $rs->fields[0] . "?#?N?@?" ; 
-              $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idgrupos_receitas'][] = $rs->fields[0];
-              $rs->MoveNext() ; 
-       } 
-       $rs->Close() ; 
-   } 
-   elseif ($GLOBALS["NM_ERRO_IBASE"] != 1 && $nm_comando != "")  
-   {  
-       $this->Erro->mensagem(__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dber'], $this->Db->ErrorMsg()); 
-       exit; 
-   } 
-   $GLOBALS["NM_ERRO_IBASE"] = 0; 
-   $todox = str_replace("?#?@?#?", "?#?@ ?#?", trim($nmgp_def_dados)) ; 
-   $todo  = explode("?@?", $todox) ; 
-   return $todo;
-
-   }
-   function Form_lookup_idtipos_receitas()
-   {
-$nmgp_def_dados = "" ; 
-if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']))
-{
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']); 
-}
-else
-{
-    $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array(); 
-}
-if ($this->idgrupos_receitas != "")
-{ 
-   $this->nm_clear_val("idgrupos_receitas");
-   if (in_array(strtolower($this->Ini->nm_tpbanco), $this->Ini->nm_bases_ibase))
-   { 
-       $GLOBALS["NM_ERRO_IBASE"] = 1;  
-   } 
-   $nm_nao_carga = false;
-   $nmgp_def_dados = "" ; 
-   if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']))
-   {
-       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array_unique($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas']); 
-   }
-   else
-   {
-       $_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_receber_criar_titulo']['Lookup_idtipos_receitas'] = array(); 
-    }
-
-   $old_value_idcontas_receber = $this->idcontas_receber;
-   $old_value_competencia = $this->competencia;
-   $old_value_valor_a_receber = $this->valor_a_receber;
-   $old_value_idnota_fiscal = $this->idnota_fiscal;
-   $old_value_data_emissao = $this->data_emissao;
-   $old_value_data_vencimento = $this->data_vencimento;
-   $old_value_sc_field_0 = $this->sc_field_0;
-   $old_value_sc_field_1 = $this->sc_field_1;
-   $old_value_data_pagamento = $this->data_pagamento;
-   $this->nm_tira_formatacao();
-   $this->nm_converte_datas(false);
-
-
-   $unformatted_value_idcontas_receber = $this->idcontas_receber;
-   $unformatted_value_competencia = $this->competencia;
-   $unformatted_value_valor_a_receber = $this->valor_a_receber;
-   $unformatted_value_idnota_fiscal = $this->idnota_fiscal;
-   $unformatted_value_data_emissao = $this->data_emissao;
-   $unformatted_value_data_vencimento = $this->data_vencimento;
-   $unformatted_value_sc_field_0 = $this->sc_field_0;
-   $unformatted_value_sc_field_1 = $this->sc_field_1;
-   $unformatted_value_data_pagamento = $this->data_pagamento;
-
-   $nm_comando = "SELECT idtipos_receitas, descricao  FROM tipos_receitas  where idgrupos_receita = $this->idgrupos_receitas ORDER BY descricao";
+   $nm_comando = "SELECT idtipos_receitas, descricao  FROM tipos_receitas ORDER BY descricao";
 
    $this->idcontas_receber = $old_value_idcontas_receber;
    $this->competencia = $old_value_competencia;
@@ -7887,7 +7661,6 @@ if ($this->idgrupos_receitas != "")
        exit; 
    } 
    $GLOBALS["NM_ERRO_IBASE"] = 0; 
-} 
    $todox = str_replace("?#?@?#?", "?#?@ ?#?", trim($nmgp_def_dados)) ; 
    $todo  = explode("?@?", $todox) ; 
    return $todo;
@@ -7981,14 +7754,6 @@ if ($this->idgrupos_receitas != "")
               if (is_array($data_lookup) && !empty($data_lookup)) 
               {
                   $this->SC_monta_condicao($comando, "idforma_pagamento_prevista", $arg_search, $data_lookup, "INT", false);
-              }
-          }
-          if ($field == "SC_all_Cmp" || $field == "idgrupos_receitas") 
-          {
-              $data_lookup = $this->SC_lookup_idgrupos_receitas($arg_search, $data_search);
-              if (is_array($data_lookup) && !empty($data_lookup)) 
-              {
-                  $this->SC_monta_condicao($comando, "idgrupos_receitas", $arg_search, $data_lookup, "INT", false);
               }
           }
           if ($field == "SC_all_Cmp" || $field == "idtipos_receitas") 
@@ -8447,12 +8212,12 @@ if ($this->idgrupos_receitas != "")
            exit; 
        } 
    }
-   function SC_lookup_idgrupos_receitas($condicao, $campo)
+   function SC_lookup_idtipos_receitas($condicao, $campo)
    {
        $result = array();
        $campo_orig = $campo;
        $campo  = substr($this->Db->qstr($campo), 1, -1);
-       $nm_comando = "SELECT descricao, idgrupos_receitas FROM grupos_receitas WHERE (#cmp_idescricao#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos)" ; 
+       $nm_comando = "SELECT descricao, idtipos_receitas FROM tipos_receitas WHERE (#cmp_idescricao#cmp_f#cmp_apos LIKE '%#arg_i" . $campo . "#arg_f%'#arg_apos)" ; 
        if ($condicao == "ii")
        {
            $nm_comando = str_replace("LIKE '%#arg_i" . $campo . "#arg_f%'", "LIKE '#arg_i" . $campo . "#arg_f%'", $nm_comando);
@@ -8536,10 +8301,6 @@ if ($this->idgrupos_receitas != "")
            $this->Erro->mensagem(__FILE__, __LINE__, "banco", $this->Ini->Nm_lang['lang_errm_dber'], $this->Db->ErrorMsg()); 
            exit; 
        } 
-   }
-   function SC_lookup_idtipos_receitas($condicao, $campo)
-   {
-       return $campo;
    }
    function SC_lookup_pago($condicao, $campo)
    {
@@ -8958,8 +8719,6 @@ if (parent && parent.scAjaxDetailValue)
                 return 'desc';
             case "idforma_pagamento_prevista":
                 return 'desc';
-            case "idgrupos_receitas":
-                return 'desc';
             case "idtipos_receitas":
                 return 'desc';
             case "idnota_fiscal":
@@ -8971,6 +8730,8 @@ if (parent && parent.scAjaxDetailValue)
             case "data_pagamento":
                 return 'desc';
             case "idforma_pagamento":
+                return 'desc';
+            case "idgrupos_receitas":
                 return 'desc';
             case "idorcamento":
                 return 'desc';

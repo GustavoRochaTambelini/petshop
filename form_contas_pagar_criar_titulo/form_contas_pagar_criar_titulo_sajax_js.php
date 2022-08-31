@@ -3134,43 +3134,6 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
     scAjaxSetFocus();
   } // do_ajax_form_contas_pagar_criar_titulo_validate_idforma_pagamento_prevista_cb
 
-  // ---------- Validate idgrupo_contas
-  function do_ajax_form_contas_pagar_criar_titulo_validate_idgrupo_contas()
-  {
-    var nomeCampo_idgrupo_contas = "idgrupo_contas";
-    var var_idgrupo_contas = scAjaxGetFieldSelect(nomeCampo_idgrupo_contas);
-    var var_script_case_init = document.F1.script_case_init.value;
-    x_ajax_form_contas_pagar_criar_titulo_validate_idgrupo_contas(var_idgrupo_contas, var_script_case_init, do_ajax_form_contas_pagar_criar_titulo_validate_idgrupo_contas_cb);
-  } // do_ajax_form_contas_pagar_criar_titulo_validate_idgrupo_contas
-
-  function do_ajax_form_contas_pagar_criar_titulo_validate_idgrupo_contas_cb(sResp)
-  {
-    oResp = scAjaxResponse(sResp);
-    scAjaxRedir();
-    sFieldValid = "idgrupo_contas";
-    scEventControl_onBlur(sFieldValid);
-    scAjaxUpdateFieldErrors(sFieldValid, "valid");
-    sFieldErrors = scAjaxListFieldErrors(sFieldValid, false);
-    if ("" == sFieldErrors)
-    {
-      var sImgStatus = sc_img_status_ok;
-      scAjaxHideErrorDisplay(sFieldValid);
-    }
-    else
-    {
-      var sImgStatus = sc_img_status_err;
-      scAjaxShowErrorDisplay(sFieldValid, sFieldErrors);
-    }
-    var $oImg = $('#id_sc_status_' + sFieldValid);
-    if (0 < $oImg.length)
-    {
-      $oImg.attr('src', sImgStatus).css('display', '');
-    }
-    scAjaxShowDebug();
-    scAjaxSetMaster();
-    scAjaxSetFocus();
-  } // do_ajax_form_contas_pagar_criar_titulo_validate_idgrupo_contas_cb
-
   // ---------- Validate idtipo_contas
   function do_ajax_form_contas_pagar_criar_titulo_validate_idtipo_contas()
   {
@@ -3578,28 +3541,6 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
     scAjaxSetFocus();
   } // do_ajax_form_contas_pagar_criar_titulo_validate_observacao_cb
 
-  // ---------- Refresh idgrupo_contas
-  function do_ajax_form_contas_pagar_criar_titulo_refresh_idgrupo_contas()
-  {
-    var var_idgrupo_contas = scAjaxGetFieldSelect("idgrupo_contas");
-    var var_nmgp_refresh_fields = "idtipo_contas";
-    var var_script_case_init = document.F2.script_case_init.value;
-    scAjaxProcOn(true);
-    x_ajax_form_contas_pagar_criar_titulo_refresh_idgrupo_contas(var_idgrupo_contas, var_nmgp_refresh_fields, var_script_case_init, do_ajax_form_contas_pagar_criar_titulo_refresh_idgrupo_contas_cb);
-  } // do_ajax_form_contas_pagar_criar_titulo_refresh_idgrupo_contas
-
-  function do_ajax_form_contas_pagar_criar_titulo_refresh_idgrupo_contas_cb(sResp)
-  {
-    scAjaxProcOff(true);
-    oResp = scAjaxResponse(sResp);
-    scAjaxRedir();
-    scAjaxSetFields(false);
-    scAjaxSetVariables();
-    scAjaxShowDebug();
-    scAjaxSetMaster();
-    scAjaxSetFocus();
-  } // do_ajax_form_contas_pagar_criar_titulo_refresh_idgrupo_contas_cb
-
   // ---------- Event onchange pago
   function do_ajax_form_contas_pagar_criar_titulo_event_pago_onchange()
   {
@@ -3652,7 +3593,6 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
     var var_idcliente = scAjaxGetFieldSelect("idcliente");
     var var_competencia = scAjaxGetFieldText("competencia");
     var var_valor_a_pagar = scAjaxGetFieldText("valor_a_pagar");
-    var var_idgrupo_contas = scAjaxGetFieldSelect("idgrupo_contas");
     var var_pago = scAjaxGetFieldSelect("pago");
     var var_sc_field_0 = scAjaxGetFieldCheckbox("sc_field_0", ";");
     var var_sc_field_3 = scAjaxGetFieldText("sc_field_3");
@@ -3667,7 +3607,7 @@ if (isset($_SESSION['scriptcase']['device_mobile']) && $_SESSION['scriptcase']['
     var var_sc_field_1 = scAjaxGetFieldCheckbox("sc_field_1", ";");
     var var_script_case_init = document.F2.script_case_init.value;
     scAjaxProcOn(true);
-    x_ajax_form_contas_pagar_criar_titulo_event_scajaxbutton_salvar_onclick(var_idcliente, var_competencia, var_valor_a_pagar, var_idgrupo_contas, var_pago, var_sc_field_0, var_sc_field_3, var_data_vencimanto, var_idforma_pagamento_prevista, var_idtipo_contas, var_data_emissao, var_nota_fiscal, var_observacao, var_sc_field_4, var_sc_field_2, var_sc_field_1, var_script_case_init, do_ajax_form_contas_pagar_criar_titulo_event_scajaxbutton_salvar_onclick_cb);
+    x_ajax_form_contas_pagar_criar_titulo_event_scajaxbutton_salvar_onclick(var_idcliente, var_competencia, var_valor_a_pagar, var_pago, var_sc_field_0, var_sc_field_3, var_data_vencimanto, var_idforma_pagamento_prevista, var_idtipo_contas, var_data_emissao, var_nota_fiscal, var_observacao, var_sc_field_4, var_sc_field_2, var_sc_field_1, var_script_case_init, do_ajax_form_contas_pagar_criar_titulo_event_scajaxbutton_salvar_onclick_cb);
   } // do_ajax_form_contas_pagar_criar_titulo_event_scajaxbutton_salvar_onclick
 
   function do_ajax_form_contas_pagar_criar_titulo_event_scajaxbutton_salvar_onclick_cb(sResp)
@@ -4005,7 +3945,6 @@ function scJs_sweetalert_params(params) {
     var var_competencia = scAjaxGetFieldText("competencia");
     var var_valor_a_pagar = scAjaxGetFieldText("valor_a_pagar");
     var var_idforma_pagamento_prevista = scAjaxGetFieldSelect("idforma_pagamento_prevista");
-    var var_idgrupo_contas = scAjaxGetFieldSelect("idgrupo_contas");
     var var_idtipo_contas = scAjaxGetFieldSelect("idtipo_contas");
     var var_nota_fiscal = scAjaxGetFieldText("nota_fiscal");
     var var_data_emissao = scAjaxGetFieldText("data_emissao");
@@ -4026,7 +3965,7 @@ function scJs_sweetalert_params(params) {
     var var_script_case_init = document.F1.script_case_init.value;
     var var_csrf_token = scAjaxGetFieldText("csrf_token");
     scAjaxProcOn();
-    x_ajax_form_contas_pagar_criar_titulo_submit_form(var_idcontas_pagar, var_idcliente, var_competencia, var_valor_a_pagar, var_idforma_pagamento_prevista, var_idgrupo_contas, var_idtipo_contas, var_nota_fiscal, var_data_emissao, var_data_vencimanto, var_sc_field_3, var_sc_field_2, var_sc_field_0, var_sc_field_4, var_sc_field_1, var_pago, var_observacao, var_nm_form_submit, var_nmgp_url_saida, var_nmgp_opcao, var_nmgp_ancora, var_nmgp_num_form, var_nmgp_parms, var_script_case_init, var_csrf_token, do_ajax_form_contas_pagar_criar_titulo_submit_form_cb);
+    x_ajax_form_contas_pagar_criar_titulo_submit_form(var_idcontas_pagar, var_idcliente, var_competencia, var_valor_a_pagar, var_idforma_pagamento_prevista, var_idtipo_contas, var_nota_fiscal, var_data_emissao, var_data_vencimanto, var_sc_field_3, var_sc_field_2, var_sc_field_0, var_sc_field_4, var_sc_field_1, var_pago, var_observacao, var_nm_form_submit, var_nmgp_url_saida, var_nmgp_opcao, var_nmgp_ancora, var_nmgp_num_form, var_nmgp_parms, var_script_case_init, var_csrf_token, do_ajax_form_contas_pagar_criar_titulo_submit_form_cb);
   } // do_ajax_form_contas_pagar_criar_titulo_submit_form
 
   function do_ajax_form_contas_pagar_criar_titulo_submit_form_cb(sResp)
@@ -4055,7 +3994,6 @@ function scJs_sweetalert_params(params) {
       scAjaxHideErrorDisplay("competencia");
       scAjaxHideErrorDisplay("valor_a_pagar");
       scAjaxHideErrorDisplay("idforma_pagamento_prevista");
-      scAjaxHideErrorDisplay("idgrupo_contas");
       scAjaxHideErrorDisplay("idtipo_contas");
       scAjaxHideErrorDisplay("nota_fiscal");
       scAjaxHideErrorDisplay("data_emissao");
@@ -4134,7 +4072,6 @@ if (isset($_SESSION['sc_session'][$this->Ini->sc_page]['form_contas_pagar_criar_
     scAjaxHideErrorDisplay("competencia");
     scAjaxHideErrorDisplay("valor_a_pagar");
     scAjaxHideErrorDisplay("idforma_pagamento_prevista");
-    scAjaxHideErrorDisplay("idgrupo_contas");
     scAjaxHideErrorDisplay("idtipo_contas");
     scAjaxHideErrorDisplay("nota_fiscal");
     scAjaxHideErrorDisplay("data_emissao");
@@ -4236,18 +4173,17 @@ if ($this->Embutida_form)
   ajax_field_list[2] = "competencia";
   ajax_field_list[3] = "valor_a_pagar";
   ajax_field_list[4] = "idforma_pagamento_prevista";
-  ajax_field_list[5] = "idgrupo_contas";
-  ajax_field_list[6] = "idtipo_contas";
-  ajax_field_list[7] = "nota_fiscal";
-  ajax_field_list[8] = "data_emissao";
-  ajax_field_list[9] = "data_vencimanto";
-  ajax_field_list[10] = "sc_field_3";
-  ajax_field_list[11] = "sc_field_2";
-  ajax_field_list[12] = "sc_field_0";
-  ajax_field_list[13] = "sc_field_4";
-  ajax_field_list[14] = "sc_field_1";
-  ajax_field_list[15] = "pago";
-  ajax_field_list[16] = "observacao";
+  ajax_field_list[5] = "idtipo_contas";
+  ajax_field_list[6] = "nota_fiscal";
+  ajax_field_list[7] = "data_emissao";
+  ajax_field_list[8] = "data_vencimanto";
+  ajax_field_list[9] = "sc_field_3";
+  ajax_field_list[10] = "sc_field_2";
+  ajax_field_list[11] = "sc_field_0";
+  ajax_field_list[12] = "sc_field_4";
+  ajax_field_list[13] = "sc_field_1";
+  ajax_field_list[14] = "pago";
+  ajax_field_list[15] = "observacao";
 
   var ajax_block_list = new Array();
   ajax_block_list[0] = "0";
@@ -4262,7 +4198,6 @@ if ($this->Embutida_form)
     "competencia": {"label": "COMPETÊNCIA", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "valor_a_pagar": {"label": "VALOR A PAGAR", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "idforma_pagamento_prevista": {"label": "FORMA DE PAGAMENTO", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
-    "idgrupo_contas": {"label": "GRUPO DE CONTAS", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "idtipo_contas": {"label": "TIPO DE CONTAS", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "nota_fiscal": {"label": "NOTA FISCAL VINCULADA", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
     "data_emissao": {"label": "DATA DE EMISSÃO", "valid": new Array(), "onblur": new Array(), "onchange": new Array(), "onclick": new Array(), "onfocus": new Array(), "timeout": 5},
@@ -4299,7 +4234,6 @@ if ($this->Embutida_form)
     "competencia": new Array(),
     "valor_a_pagar": new Array(),
     "idforma_pagamento_prevista": new Array(),
-    "idgrupo_contas": new Array(),
     "idtipo_contas": new Array(),
     "nota_fiscal": new Array(),
     "data_emissao": new Array(),
@@ -4317,7 +4251,6 @@ if ($this->Embutida_form)
   ajax_field_mult["competencia"][1] = "competencia";
   ajax_field_mult["valor_a_pagar"][1] = "valor_a_pagar";
   ajax_field_mult["idforma_pagamento_prevista"][1] = "idforma_pagamento_prevista";
-  ajax_field_mult["idgrupo_contas"][1] = "idgrupo_contas";
   ajax_field_mult["idtipo_contas"][1] = "idtipo_contas";
   ajax_field_mult["nota_fiscal"][1] = "nota_fiscal";
   ajax_field_mult["data_emissao"][1] = "data_emissao";
@@ -4336,7 +4269,6 @@ if ($this->Embutida_form)
     "competencia": new Array("hidden_field_label_competencia", "hidden_field_data_competencia"),
     "valor_a_pagar": new Array("hidden_field_label_valor_a_pagar", "hidden_field_data_valor_a_pagar"),
     "idforma_pagamento_prevista": new Array("hidden_field_label_idforma_pagamento_prevista", "hidden_field_data_idforma_pagamento_prevista"),
-    "idgrupo_contas": new Array("hidden_field_label_idgrupo_contas", "hidden_field_data_idgrupo_contas"),
     "idtipo_contas": new Array("hidden_field_label_idtipo_contas", "hidden_field_data_idtipo_contas"),
     "nota_fiscal": new Array("hidden_field_label_nota_fiscal", "hidden_field_data_nota_fiscal"),
     "data_emissao": new Array("hidden_field_label_data_emissao", "hidden_field_data_data_emissao"),
@@ -4356,7 +4288,6 @@ if ($this->Embutida_form)
     "competencia": "off",
     "valor_a_pagar": "off",
     "idforma_pagamento_prevista": "off",
-    "idgrupo_contas": "off",
     "idtipo_contas": "off",
     "nota_fiscal": "off",
     "data_emissao": "off",
@@ -4448,23 +4379,6 @@ if ($this->Embutida_form)
       return;
     }
     if ("idforma_pagamento_prevista" == sIndex)
-    {
-      scAjaxSetFieldSelect(sIndex, aValue, null);
-      updateHeaderFooter(sIndex, aValue);
-
-      if ($("#id_sc_field_" + sIndex).length) {
-          $("#id_sc_field_" + sIndex).change();
-      }
-      else if (document.F1.elements[sIndex]) {
-          $(document.F1.elements[sIndex]).change();
-      }
-      else if (document.F1.elements[sFieldName + "[]"]) {
-          $(document.F1.elements[sFieldName + "[]"]).change();
-      }
-
-      return;
-    }
-    if ("idgrupo_contas" == sIndex)
     {
       scAjaxSetFieldSelect(sIndex, aValue, null);
       updateHeaderFooter(sIndex, aValue);
